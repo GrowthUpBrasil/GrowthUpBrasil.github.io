@@ -164,8 +164,8 @@
                 { name: 'Samsung TV', active: false },
                 { name: 'LG TV', active: false },
                 { name: 'RokuTV', active: false },
-                { name: 'Fire Stick Amazon', active: false },
-                { name: 'TV Box Android', active: true }
+                { name: 'TV Android', active: true },
+                { name: 'Fire Stick Amazon', active: false }
             ];
 
             return (
@@ -417,7 +417,7 @@
             
             const handleDesktopDeviceSelect = (device) => {
                 // Por enquanto, apenas o Android inicia o vídeo
-                if (device === 'TV Box Android') {
+                if (device === 'TV Android') {
                     setDesktopVideoStage('playing');
                 }
             };
@@ -428,7 +428,7 @@
             };
             
             const handleMobileDeviceSelect = (device) => {
-                 if (device === 'TV Box Android') {
+                 if (device === 'TV Android') {
                     setMobileVideoStage('playing');
                 }
             };

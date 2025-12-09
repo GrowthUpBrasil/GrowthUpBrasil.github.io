@@ -24,11 +24,22 @@
             transform: translateZ(0);
         }
 
+        /* Classes para animação de Scroll */
+        .fade-in-section {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1), transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+            will-change: opacity, transform;
+        }
+        .fade-in-section.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
         @keyframes shine { 0% { left: -100%; } 100% { left: 100%; } }
         @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-10px); } }
         @keyframes fadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
         
-        /* Animação de queda suave para as partículas */
         @keyframes fallInfinite {
             0% { transform: translateY(-50px) rotate(0deg); opacity: 0; }
             10% { opacity: 1; }
@@ -57,7 +68,41 @@
     <script type="text/babel">
         const { useState, useEffect, useRef, useMemo } = React;
 
-        // --- ÍCONES (SVG Puro para máxima compatibilidade) ---
+        // --- COMPONENTE DE ANIMAÇÃO AO ROLAR (SCROLL REVEAL) ---
+        const FadeIn = ({ children, delay = 0, className = "" }) => {
+            const [isVisible, setIsVisible] = useState(false);
+            const domRef = useRef();
+
+            useEffect(() => {
+                const observer = new IntersectionObserver(entries => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            // Adiciona um pequeno delay opcional para efeito cascata
+                            setTimeout(() => setIsVisible(true), delay);
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                }, { threshold: 0.1 }); // Dispara quando 10% do elemento aparece
+                
+                const { current } = domRef;
+                if (current) observer.observe(current);
+                
+                return () => {
+                    if (current) observer.unobserve(current);
+                };
+            }, [delay]);
+
+            return (
+                <div
+                    ref={domRef}
+                    className={`fade-in-section ${isVisible ? 'is-visible' : ''} ${className}`}
+                >
+                    {children}
+                </div>
+            );
+        };
+
+        // --- ÍCONES ---
         const Icons = {
             Play: (props) => <svg {...props} width="24" height="24" viewBox="0 0 24 24" fill={props.fill || "none"} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>,
             Monitor: (props) => <svg {...props} width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>,
@@ -77,7 +122,7 @@
             Youtube: (props) => <svg {...props} width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17"></path><path d="m10 15 5-3-5-3z"></path></svg>
         };
 
-        // --- PARTÍCULAS OTIMIZADAS (CSS) ---
+        // --- PARTÍCULAS ---
         const ParticleRain = ({ type, active }) => {
             if (!active) return null;
             
@@ -92,7 +137,6 @@
             const imageUrl = particleImages[type];
             if (!imageUrl) return null;
 
-            // Gera partículas fixas e deixa o CSS animar
             const particles = useMemo(() => {
                 return Array.from({ length: 15 }).map((_, i) => ({
                     id: i,
@@ -302,23 +346,18 @@
             );
         };
 
-        // --- APP ---
+        // --- APP PRINCIPAL ---
         const App = () => {
             const [isScrolled, setIsScrolled] = useState(false);
             const [isMenuOpen, setIsMenuOpen] = useState(false);
             const [globalRotation, setGlobalRotation] = useState({ x: 0, y: 0 }); 
+            const [showVideo, setShowVideo] = useState(false);
+            const [showMobileVideo, setShowMobileVideo] = useState(false);
             const [desktopVideoStage, setDesktopVideoStage] = useState('idle');
             const [mobileVideoStage, setMobileVideoStage] = useState('idle');
             
             const whatsappNumber = "5511991396481"; 
             
-            useEffect(() => {
-                const handleScroll = () => { setIsScrolled(window.scrollY > 50); };
-                window.addEventListener('scroll', handleScroll);
-                return () => window.removeEventListener('scroll', handleScroll);
-            }, []);
-
-            // Permissão de Giroscópio
             useEffect(() => {
                 const handleOrientation = (event) => {
                     if (window.innerWidth < 768) { 
@@ -329,22 +368,30 @@
                         setGlobalRotation({ x: rotateX, y: rotateY });
                     }
                 };
+
                 const requestPermission = () => {
                     if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
                         DeviceOrientationEvent.requestPermission()
-                             .then(permissionState => { if (permissionState === 'granted') window.addEventListener('deviceorientation', handleOrientation); })
-                             .catch(console.error);
+                            .then(permissionState => {
+                                if (permissionState === 'granted') {
+                                    window.addEventListener('deviceorientation', handleOrientation);
+                                }
+                            })
+                            .catch(console.error);
                     } else {
                         window.addEventListener('deviceorientation', handleOrientation);
                     }
                 };
+
                 const handleInteraction = () => {
                     requestPermission();
                     window.removeEventListener('click', handleInteraction);
                     window.removeEventListener('touchstart', handleInteraction);
                 };
+
                 window.addEventListener('click', handleInteraction);
                 window.addEventListener('touchstart', handleInteraction);
+
                 return () => {
                     window.removeEventListener('deviceorientation', handleOrientation);
                     window.removeEventListener('click', handleInteraction);
@@ -359,10 +406,31 @@
                 return `https://wa.me/${whatsappNumber}?text=${text}`;
             };
 
-            const handleDesktopClick = () => { if (desktopVideoStage === 'idle') setDesktopVideoStage('selecting'); };
-            const handleDesktopDeviceSelect = (device) => { if (device === 'TV Android') setDesktopVideoStage('playing'); };
-            const handleMobileClick = () => { if (mobileVideoStage === 'idle') setMobileVideoStage('selecting'); };
-            const handleMobileDeviceSelect = (device) => { if (device === 'TV Android') setMobileVideoStage('playing'); };
+            useEffect(() => {
+                const handleScroll = () => { setIsScrolled(window.scrollY > 50); };
+                window.addEventListener('scroll', handleScroll);
+                return () => window.removeEventListener('scroll', handleScroll);
+            }, []);
+
+            const handleDesktopClick = () => {
+                if (desktopVideoStage === 'idle') setDesktopVideoStage('selecting');
+            };
+            
+            const handleDesktopDeviceSelect = (device) => {
+                if (device === 'TV Android') {
+                    setDesktopVideoStage('playing');
+                }
+            };
+
+            const handleMobileClick = () => {
+                 if (mobileVideoStage === 'idle') setMobileVideoStage('selecting');
+            };
+            
+            const handleMobileDeviceSelect = (device) => {
+                 if (device === 'TV Android') {
+                    setMobileVideoStage('playing');
+                }
+            };
 
             const benefits = [
                 { icon: <Icons.Monitor className="w-8 h-8" />, title: "Sua Smart TV Potencializada", desc: "Transforme sua Roku, Samsung ou LG em uma central de cinema completa." },
@@ -480,73 +548,78 @@
                     <section id="inicio" className="relative z-10 min-h-screen flex items-center pt-20 px-6 overflow-hidden pb-32">
                         <div className="container mx-auto max-w-7xl grid lg:grid-cols-2 gap-16 items-center">
                             <div className="relative z-20 text-center lg:text-left">
-                                <div className="inline-flex items-center gap-3 px-4 py-2 border border-white/10 bg-white/5 rounded-full mb-8 backdrop-blur-md">
-                                    <span className="flex h-2 w-2 rounded-full bg-green-500 shadow-green-500/50 animate-pulse"></span>
-                                    <span className="text-[10px] md:text-xs font-bold uppercase tracking-[0.1em] text-gray-300">Descubra uma nova forma, simples e eficiente, de consumir mídia em casa.</span>
-                                </div>
-                                <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-4xl xl:text-5xl font-black leading-[1.1] mb-8 tracking-tighter text-white drop-shadow-2xl">
-                                    MODERNIZE SUA <br/><span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-500 animate-gradient-x">SALA DE ESTAR</span> <br/><span className="whitespace-nowrap">COM A GROWTH UP BRASIL</span>
-                                </h1>
-                                <p className="text-base sm:text-lg md:text-xl text-gray-400 mb-10 max-w-xl leading-relaxed border-l-0 lg:border-l-4 border-cyan-500 pl-0 lg:pl-6 mx-auto lg:mx-0">
-                                    Somos especialistas em integrar a melhor tecnologia de entretenimento aos seus dispositivos atuais. Liberte o potencial da sua <strong className="text-white">Smart TV, Roku ou TV Box</strong>, ou leve tudo no bolso com nosso <strong className="text-white">App para Celular Android e iOS</strong>. Uma experiência premium e sem limitações.
-                                </p>
-                                <div className="flex flex-col sm:flex-row gap-4 items-center lg:items-start justify-center lg:justify-start">
-                                    <a href={getWhatsAppLink()} target="_blank" rel="noopener noreferrer" className="group relative px-8 py-4 bg-white text-black font-black uppercase tracking-widest text-sm hover:bg-cyan-50 transition-all shadow-lg hover:shadow-cyan-500/50 overflow-hidden skew-x-[-10deg]">
-                                        <div className="skew-x-[10deg] flex items-center justify-center gap-3 relative z-10"><Icons.Play size={18} fill="black" /> QUERO MODERNIZAR AGORA</div>
-                                        <div className="absolute top-0 -left-full w-full h-full bg-gradient-to-r from-transparent via-white/80 to-transparent skew-x-[-20deg] group-hover:animate-shine"></div>
-                                    </a>
-                                    <a href="#planos" className="px-8 py-4 border border-white/20 text-white font-bold uppercase tracking-widest text-sm hover:border-cyan-400 hover:text-cyan-400 transition-all hover:bg-cyan-950/30 skew-x-[-10deg] flex items-center justify-center"><span className="skew-x-[10deg]">Ver Opções</span></a>
-                                </div>
+                                <FadeIn>
+                                    <div className="inline-flex items-center gap-3 px-4 py-2 border border-white/10 bg-white/5 rounded-full mb-8 backdrop-blur-md">
+                                        <span className="flex h-2 w-2 rounded-full bg-green-500 shadow-green-500/50 animate-pulse"></span>
+                                        <span className="text-[10px] md:text-xs font-bold uppercase tracking-[0.1em] text-gray-300">Descubra uma nova forma, simples e eficiente, de consumir mídia em casa.</span>
+                                    </div>
+                                    <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-4xl xl:text-5xl font-black leading-[1.1] mb-8 tracking-tighter text-white drop-shadow-2xl">
+                                        MODERNIZE SUA <br/><span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-500 animate-gradient-x">SALA DE ESTAR</span> <br/><span className="whitespace-nowrap">COM A GROWTH UP BRASIL</span>
+                                    </h1>
+                                    <p className="text-base sm:text-lg md:text-xl text-gray-400 mb-10 max-w-xl leading-relaxed border-l-0 lg:border-l-4 border-cyan-500 pl-0 lg:pl-6 mx-auto lg:mx-0">
+                                        Somos especialistas em integrar a melhor tecnologia de entretenimento aos seus dispositivos atuais. Liberte o potencial da sua <strong className="text-white">Smart TV, Roku ou TV Box</strong>, ou leve tudo no bolso com nosso <strong className="text-white">App para Celular Android e iOS</strong>. Uma experiência premium e sem limitações.
+                                    </p>
+                                    <div className="flex flex-col sm:flex-row gap-4 items-center lg:items-start justify-center lg:justify-start">
+                                        <a href={getWhatsAppLink()} target="_blank" rel="noopener noreferrer" className="group relative px-8 py-4 bg-white text-black font-black uppercase tracking-widest text-sm hover:bg-cyan-50 transition-all shadow-lg hover:shadow-cyan-500/50 overflow-hidden skew-x-[-10deg]">
+                                            <div className="skew-x-[10deg] flex items-center justify-center gap-3 relative z-10"><Icons.Play size={18} fill="black" /> QUERO MODERNIZAR AGORA</div>
+                                            <div className="absolute top-0 -left-full w-full h-full bg-gradient-to-r from-transparent via-white/80 to-transparent skew-x-[-20deg] group-hover:animate-shine"></div>
+                                        </a>
+                                        <a href="#planos" className="px-8 py-4 border border-white/20 text-white font-bold uppercase tracking-widest text-sm hover:border-cyan-400 hover:text-cyan-400 transition-all hover:bg-cyan-950/30 skew-x-[-10deg] flex items-center justify-center"><span className="skew-x-[10deg]">Ver Opções</span></a>
+                                    </div>
+                                </FadeIn>
                             </div>
                             
                             {/* TV SECTION (PC) */}
                             <div className="relative hidden lg:block">
-                                <div className="absolute -top-12 left-1/2 -translate-x-1/2 w-full text-center z-30">
-                                    <h2 className="text-xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500 tracking-[0.2em] uppercase drop-shadow-[0_0_10px_rgba(34,211,238,0.5)]">
-                                        EXPERIÊNCIA VÍDEO
-                                    </h2>
-                                    <p className="text-xs text-gray-400 font-bold tracking-widest mt-1">VEJA COMO FUNCIONA NA PRÁTICA.</p>
-                                </div>
-
-                                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-cyan-500/10 blur-[100px] rounded-full"></div>
-                                <div className="relative z-10 transform rotate-y-[-10deg] rotate-x-[5deg] hover:rotate-0 transition-transform duration-700">
-                                    <div 
-                                        className="bg-black border-[6px] border-[#222] rounded-xl shadow-2xl relative overflow-hidden aspect-video cursor-pointer" 
-                                        onClick={handleDesktopClick}
-                                    >
-                                        {desktopVideoStage === 'selecting' && (
-                                            <DeviceSelector onSelect={handleDesktopDeviceSelect} />
-                                        )}
-
-                                        {desktopVideoStage !== 'playing' ? (
-                                            <>
-                                                <div className="absolute inset-0 bg-gradient-to-br from-slate-900 to-black flex items-center justify-center overflow-hidden">
-                                                    <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1593784991095-a20506948430?auto=format&fit=crop&w=800&q=80')] bg-cover opacity-40 mix-blend-overlay"></div>
-                                                    <div className="text-center relative z-10">
-                                                        <div className="inline-block p-4 rounded-full bg-white/10 backdrop-blur-md mb-4 border border-white/20 shadow-cyan-500/30">
-                                                            <Icons.Play size={48} className="text-white fill-white ml-2" />
-                                                        </div>
-                                                        <h3 className="text-2xl font-bold tracking-widest text-white uppercase">Assista o video</h3>
-                                                        <p className="text-cyan-400 text-sm mt-2 tracking-widest">Clique para tocar</p>
-                                                    </div>
-                                                </div>
-                                                <div className="absolute top-0 right-0 w-2/3 h-full bg-gradient-to-l from-white/5 to-transparent skew-x-[-20deg]"></div>
-                                            </>
-                                        ) : (
-                                            <iframe 
-                                                width="100%" 
-                                                height="100%" 
-                                                src="https://www.youtube.com/embed/oiKr--jnBh4?autoplay=1" 
-                                                title="Growth Up Brasil Shorts" 
-                                                frameBorder="0" 
-                                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                                                allowFullScreen
-                                                className="w-full h-full"
-                                            ></iframe>
-                                        )}
+                                <FadeIn delay={200}>
+                                    <div className="absolute -top-12 left-1/2 -translate-x-1/2 w-full text-center z-30">
+                                        <h2 className="text-xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500 tracking-[0.2em] uppercase drop-shadow-[0_0_10px_rgba(34,211,238,0.5)]">
+                                            EXPERIÊNCIA VÍDEO
+                                        </h2>
+                                        <p className="text-xs text-gray-400 font-bold tracking-widest mt-1">VEJA COMO FUNCIONA NA PRÁTICA.</p>
                                     </div>
-                                    <div className="h-4 w-1/3 bg-[#333] mx-auto rounded-b-xl mt-1 shadow-lg"></div>
-                                </div>
+
+                                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-cyan-500/10 blur-[100px] rounded-full"></div>
+                                    <div className="relative z-10 transform rotate-y-[-10deg] rotate-x-[5deg] hover:rotate-0 transition-transform duration-700">
+                                        <div 
+                                            className="bg-black border-[6px] border-[#222] rounded-xl shadow-2xl relative overflow-hidden aspect-video cursor-pointer" 
+                                            onClick={handleDesktopClick}
+                                        >
+                                            {/* SELETOR DE DISPOSITIVOS (PC) */}
+                                            {desktopVideoStage === 'selecting' && (
+                                                <DeviceSelector onSelect={handleDesktopDeviceSelect} />
+                                            )}
+
+                                            {desktopVideoStage !== 'playing' ? (
+                                                <>
+                                                    <div className="absolute inset-0 bg-gradient-to-br from-slate-900 to-black flex items-center justify-center overflow-hidden">
+                                                        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1593784991095-a20506948430?auto=format&fit=crop&w=800&q=80')] bg-cover opacity-40 mix-blend-overlay"></div>
+                                                        <div className="text-center relative z-10">
+                                                            <div className="inline-block p-4 rounded-full bg-white/10 backdrop-blur-md mb-4 border border-white/20 shadow-cyan-500/30">
+                                                                <Icons.Play size={48} className="text-white fill-white ml-2" />
+                                                            </div>
+                                                            <h3 className="text-2xl font-bold tracking-widest text-white uppercase">Assista o video</h3>
+                                                            <p className="text-cyan-400 text-sm mt-2 tracking-widest">Clique para tocar</p>
+                                                        </div>
+                                                    </div>
+                                                    <div className="absolute top-0 right-0 w-2/3 h-full bg-gradient-to-l from-white/5 to-transparent skew-x-[-20deg]"></div>
+                                                </>
+                                            ) : (
+                                                <iframe 
+                                                    width="100%" 
+                                                    height="100%" 
+                                                    src="https://www.youtube.com/embed/oiKr--jnBh4?autoplay=1" 
+                                                    title="Growth Up Brasil Shorts" 
+                                                    frameBorder="0" 
+                                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                                    allowFullScreen
+                                                    className="w-full h-full"
+                                                ></iframe>
+                                            )}
+                                        </div>
+                                        <div className="h-4 w-1/3 bg-[#333] mx-auto rounded-b-xl mt-1 shadow-lg"></div>
+                                    </div>
+                                </FadeIn>
                             </div>
                         </div>
                         <div className="absolute bottom-4 left-0 w-full flex flex-col items-center gap-2 z-50 animate-bounce pointer-events-none">
@@ -560,35 +633,37 @@
                         <div className="container mx-auto px-6">
                             <div className="flex flex-col md:flex-row items-center gap-16">
                                 <div className="w-full md:w-1/2">
-                                    <div className="flex items-center gap-3 mb-6"><div className="h-[2px] w-12 bg-cyan-500"></div><span className="text-cyan-500 text-xs font-bold uppercase tracking-[0.3em]">Credibilidade Total</span></div>
-                                    <h2 className="text-3xl md:text-5xl font-black text-white uppercase leading-tight mb-6">Não somos uma <br/> aventura digital. <br/><span className="text-gray-500">Somos Reais.</span></h2>
-                                    <p className="text-gray-400 text-lg leading-relaxed mb-8">Diferente de serviços instáveis que desaparecem, a <strong className="text-white">Growth Up Brasil</strong> possui raízes sólidas no coração financeiro do país. Operamos com transparência e infraestrutura profissional na Avenida Paulista.</p>
-                                    <div className="flex flex-col gap-4">
-                                        <div className="group flex items-center gap-5 p-5 bg-white/5 border border-white/5 hover:border-cyan-500/50 transition-all rounded-lg cursor-default">
-                                            <div className="bg-cyan-900/20 p-3 rounded-full text-cyan-400 group-hover:scale-110 transition-transform"><Icons.MapPin /></div>
-                                            <div><h4 className="font-bold text-white uppercase tracking-wider text-sm">Sede Própria</h4><p className="text-gray-500 text-sm">Av. Paulista, 302 - São Paulo</p></div>
+                                    <FadeIn>
+                                        <div className="flex items-center gap-3 mb-6"><div className="h-[2px] w-12 bg-cyan-500"></div><span className="text-cyan-500 text-xs font-bold uppercase tracking-[0.3em]">Credibilidade Total</span></div>
+                                        <h2 className="text-3xl md:text-5xl font-black text-white uppercase leading-tight mb-6">Não somos uma <br/> aventura digital. <br/><span className="text-gray-500">Somos Reais.</span></h2>
+                                        <p className="text-gray-400 text-lg leading-relaxed mb-8">Diferente de serviços instáveis que desaparecem, a <strong className="text-white">Growth Up Brasil</strong> possui raízes sólidas no coração financeiro do país. Operamos com transparência e infraestrutura profissional na Avenida Paulista.</p>
+                                        <div className="flex flex-col gap-4">
+                                            <div className="group flex items-center gap-5 p-5 bg-white/5 border border-white/5 hover:border-cyan-500/50 transition-all rounded-lg cursor-default">
+                                                <div className="bg-cyan-900/20 p-3 rounded-full text-cyan-400 group-hover:scale-110 transition-transform"><Icons.MapPin /></div>
+                                                <div><h4 className="font-bold text-white uppercase tracking-wider text-sm">Sede Própria</h4><p className="text-gray-500 text-sm">Av. Paulista, 302 - São Paulo</p></div>
+                                            </div>
+                                            <div className="group flex items-center gap-5 p-5 bg-white/5 border border-white/5 hover:border-cyan-500/50 transition-all rounded-lg cursor-default">
+                                                <div className="bg-cyan-900/20 p-3 rounded-full text-cyan-400 group-hover:scale-110 transition-transform"><Icons.ShieldCheck /></div>
+                                                <div><h4 className="font-bold text-white uppercase tracking-wider text-sm">Garantia Growth</h4><p className="text-gray-500 text-sm">Desde 2019 entregando excelência</p></div>
+                                            </div>
                                         </div>
-                                        <div className="group flex items-center gap-5 p-5 bg-white/5 border border-white/5 hover:border-cyan-500/50 transition-all rounded-lg cursor-default">
-                                            <div className="bg-cyan-900/20 p-3 rounded-full text-cyan-400 group-hover:scale-110 transition-transform"><Icons.ShieldCheck /></div>
-                                            <div><h4 className="font-bold text-white uppercase tracking-wider text-sm">Garantia Growth</h4><p className="text-gray-500 text-sm">Desde 2019 entregando excelência</p></div>
-                                        </div>
-                                    </div>
+                                    </FadeIn>
                                 </div>
                                 <div className="w-full md:w-1/2 grid grid-cols-2 gap-3 relative">
                                     <div className="absolute -inset-4 bg-cyan-500/20 blur-2xl rounded-full opacity-20 pointer-events-none"></div>
-                                    <div className="h-64 bg-gray-800 rounded-lg overflow-hidden border border-white/10 relative group">
+                                    <FadeIn delay={200} className="h-64 bg-gray-800 rounded-lg overflow-hidden border border-white/10 relative group">
                                         <div className="absolute inset-0 bg-cyan-500/20 opacity-0 group-hover:opacity-100 transition-opacity z-10"></div>
                                         <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=600&q=80" className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700" alt="Office" />
-                                    </div>
+                                    </FadeIn>
                                     <div className="space-y-3">
-                                        <div className="h-32 bg-gray-800 rounded-lg overflow-hidden border border-white/10 relative group">
+                                        <FadeIn delay={400} className="h-32 bg-gray-800 rounded-lg overflow-hidden border border-white/10 relative group">
                                             <div className="absolute inset-0 bg-cyan-500/20 opacity-0 group-hover:opacity-100 transition-opacity z-10"></div>
                                             <img src="https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&fit=crop&w=600&q=80" className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700" alt="Meeting" />
-                                        </div>
-                                        <div className="h-30 bg-gray-800 rounded-lg overflow-hidden border border-white/10 relative group">
+                                        </FadeIn>
+                                        <FadeIn delay={600} className="h-30 bg-gray-800 rounded-lg overflow-hidden border border-white/10 relative group">
                                             <div className="absolute inset-0 bg-cyan-500/20 opacity-0 group-hover:opacity-100 transition-opacity z-10"></div>
                                             <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=600&q=80" className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700" alt="View" />
-                                        </div>
+                                        </FadeIn>
                                     </div>
                                 </div>
                             </div>
@@ -600,11 +675,11 @@
                         <div className="container mx-auto px-6">
                             <div className="grid md:grid-cols-4 gap-8">
                                 {benefits.map((item, idx) => (
-                                    <div key={idx} className="p-6 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-cyan-500/30 hover:bg-white/[0.05] transition-all group">
+                                    <FadeIn key={idx} delay={idx * 150} className="p-6 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-cyan-500/30 hover:bg-white/[0.05] transition-all group">
                                         <div className="mb-4 text-cyan-500 group-hover:text-white transition-colors group-hover:scale-110 transform duration-300 origin-left">{item.icon}</div>
                                         <h3 className="text-lg font-bold text-white mb-3">{item.title}</h3>
                                         <p className="text-sm text-gray-500 leading-relaxed group-hover:text-gray-400">{item.desc}</p>
-                                    </div>
+                                    </FadeIn>
                                 ))}
                             </div>
                         </div>
@@ -615,15 +690,19 @@
                         <div className="absolute top-1/4 left-0 w-[500px] h-[500px] bg-purple-900/10 blur-[120px] rounded-full pointer-events-none"></div>
                         <div className="absolute bottom-1/4 right-0 w-[500px] h-[500px] bg-cyan-900/10 blur-[120px] rounded-full pointer-events-none"></div>
                         <div className="container mx-auto relative z-10">
-                            <div className="text-center mb-10 md:mb-20">
-                                <h2 className="text-3xl md:text-6xl font-black text-white uppercase tracking-tighter mb-4 drop-shadow-xl">
-                                    Escolha o seu <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-white">Nível</span>
-                                </h2>
-                                <p className="text-gray-400 tracking-widest text-sm uppercase max-w-2xl mx-auto">Planos desenhados para entregar a máxima performance.</p>
-                            </div>
+                            <FadeIn>
+                                <div className="text-center mb-10 md:mb-20">
+                                    <h2 className="text-3xl md:text-6xl font-black text-white uppercase tracking-tighter mb-4 drop-shadow-xl">
+                                        Escolha o seu <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-white">Nível</span>
+                                    </h2>
+                                    <p className="text-gray-400 tracking-widest text-sm uppercase max-w-2xl mx-auto">Planos desenhados para entregar a máxima performance.</p>
+                                </div>
+                            </FadeIn>
                             <div className="flex flex-wrap justify-center gap-8 items-stretch perspective-1000">
                                 {plans.map((plan, idx) => (
-                                    <PlanCard key={idx} plan={plan} getWhatsAppLink={getWhatsAppLink} globalRotation={globalRotation} />
+                                    <FadeIn key={idx} delay={idx * 150}>
+                                        <PlanCard plan={plan} getWhatsAppLink={getWhatsAppLink} globalRotation={globalRotation} />
+                                    </FadeIn>
                                 ))}
                             </div>
                         </div>
@@ -632,97 +711,103 @@
                     {/* Mobile Reels Section (iPhone Mockup) */}
                     <section className="relative z-10 py-16 md:hidden">
                         <div className="container mx-auto px-6">
-                            <div className="text-center mb-10">
-                                <h2 className="text-3xl font-black text-white uppercase tracking-tighter mb-4 drop-shadow-xl">
-                                    Experiência <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-white">Reels</span>
-                                </h2>
-                                <p className="text-gray-400 tracking-widest text-sm uppercase max-w-2xl mx-auto">Veja como funciona na prática.</p>
-                            </div>
-                            <div className="relative mx-auto w-[280px] h-[580px] bg-black rounded-[40px] shadow-xl overflow-hidden border-[8px] border-gray-800">
-                                <div className="absolute top-0 w-full h-6 bg-gray-800 z-20 rounded-t-[32px]"></div>
-                                <div className="absolute bottom-0 w-full h-6 bg-gray-800 z-20 rounded-b-[32px]"></div>
-                                {/* Dynamic Island Mockup */}
-                                <div className="absolute top-3 left-1/2 -translate-x-1/2 w-28 h-7 bg-black rounded-full z-30 flex items-center justify-center"></div>
-                                
-                                <div 
-                                    className="w-full h-full relative cursor-pointer" 
-                                    onClick={handleMobileClick}
-                                >
-                                    {/* SELETOR DE DISPOSITIVOS (MOBILE) */}
-                                    {mobileVideoStage === 'selecting' && (
-                                        <DeviceSelector onSelect={handleMobileDeviceSelect} />
-                                    )}
-
-                                    {mobileVideoStage !== 'playing' ? (
-                                        <>
-                                            <div className="absolute inset-0 bg-gradient-to-b from-slate-900 to-black flex items-center justify-center overflow-hidden">
-                                                <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1611162616475-46b635cb6868?auto=format&fit=crop&w=600&q=80')] bg-cover bg-center opacity-50 mix-blend-overlay"></div>
-                                                <div className="text-center relative z-10 p-6">
-                                                    <div className="inline-block p-4 rounded-full bg-white/10 backdrop-blur-md mb-4 border border-white/20 shadow-cyan-500/30">
-                                                        <Icons.Play size={48} className="text-white fill-white ml-2" />
-                                                    </div>
-                                                    <h3 className="text-2xl font-bold tracking-widest text-white uppercase">Assista o Reels</h3>
-                                                    <p className="text-cyan-400 text-sm mt-2 tracking-widest">Clique para Tocar</p>
-                                                </div>
-                                            </div>
-                                            <div className="absolute bottom-0 left-0 w-full h-1/3 bg-gradient-to-t from-black to-transparent"></div>
-                                        </>
-                                    ) : (
-                                        <iframe 
-                                            width="100%" 
-                                            height="100%" 
-                                            src="https://www.youtube.com/embed/oiKr--jnBh4?autoplay=1" 
-                                            title="Growth Up Brasil Shorts" 
-                                            frameBorder="0" 
-                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                                            allowFullScreen
-                                            className="w-full h-full object-cover"
-                                        ></iframe>
-                                    )}
+                            <FadeIn>
+                                <div className="text-center mb-10">
+                                    <h2 className="text-3xl font-black text-white uppercase tracking-tighter mb-4 drop-shadow-xl">
+                                        Experiência <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-white">Reels</span>
+                                    </h2>
+                                    <p className="text-gray-400 tracking-widest text-sm uppercase max-w-2xl mx-auto">Veja como funciona na prática.</p>
                                 </div>
-                            </div>
+                            </FadeIn>
+                            <FadeIn delay={200}>
+                                <div className="relative mx-auto w-[280px] h-[580px] bg-black rounded-[40px] shadow-xl overflow-hidden border-[8px] border-gray-800">
+                                    <div className="absolute top-0 w-full h-6 bg-gray-800 z-20 rounded-t-[32px]"></div>
+                                    <div className="absolute bottom-0 w-full h-6 bg-gray-800 z-20 rounded-b-[32px]"></div>
+                                    {/* Dynamic Island Mockup */}
+                                    <div className="absolute top-3 left-1/2 -translate-x-1/2 w-28 h-7 bg-black rounded-full z-30 flex items-center justify-center"></div>
+                                    
+                                    <div 
+                                        className="w-full h-full relative cursor-pointer" 
+                                        onClick={handleMobileClick}
+                                    >
+                                        {/* SELETOR DE DISPOSITIVOS (MOBILE) */}
+                                        {mobileVideoStage === 'selecting' && (
+                                            <DeviceSelector onSelect={handleMobileDeviceSelect} />
+                                        )}
+
+                                        {mobileVideoStage !== 'playing' ? (
+                                            <>
+                                                <div className="absolute inset-0 bg-gradient-to-b from-slate-900 to-black flex items-center justify-center overflow-hidden">
+                                                    <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1611162616475-46b635cb6868?auto=format&fit=crop&w=600&q=80')] bg-cover bg-center opacity-50 mix-blend-overlay"></div>
+                                                    <div className="text-center relative z-10 p-6">
+                                                        <div className="inline-block p-4 rounded-full bg-white/10 backdrop-blur-md mb-4 border border-white/20 shadow-cyan-500/30">
+                                                            <Icons.Play size={48} className="text-white fill-white ml-2" />
+                                                        </div>
+                                                        <h3 className="text-2xl font-bold tracking-widest text-white uppercase">Assista o Reels</h3>
+                                                        <p className="text-cyan-400 text-sm mt-2 tracking-widest">Clique para Tocar</p>
+                                                    </div>
+                                                </div>
+                                                <div className="absolute bottom-0 left-0 w-full h-1/3 bg-gradient-to-t from-black to-transparent"></div>
+                                            </>
+                                        ) : (
+                                            <iframe 
+                                                width="100%" 
+                                                height="100%" 
+                                                src="https://www.youtube.com/embed/oiKr--jnBh4?autoplay=1" 
+                                                title="Growth Up Brasil Shorts" 
+                                                frameBorder="0" 
+                                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                                allowFullScreen
+                                                className="w-full h-full object-cover"
+                                            ></iframe>
+                                        )}
+                                    </div>
+                                </div>
+                            </FadeIn>
                         </div>
                     </section>
 
                     {/* Footer */}
                     <footer className="relative z-10 border-t border-white/10 bg-black pt-12 md:pt-16 pb-8 text-center md:text-left">
                         <div className="container mx-auto px-6">
-                            <div className="flex flex-col md:flex-row justify-between items-center md:items-start gap-8 mb-12">
-                                <div className="flex-1">
-                                    <h4 className="text-3xl font-black text-white uppercase tracking-tighter mb-2 italic">Growth Up Brasil</h4>
-                                    <p className="text-[10px] text-gray-500 uppercase tracking-[0.2em]">Since 2019 • São Paulo</p>
-                                </div>
-                                <div className="flex gap-8 md:gap-16 flex-col md:flex-row w-full md:w-auto justify-center md:justify-start">
-                                    <div>
-                                        <p className="text-xs font-bold text-gray-400 uppercase mb-4 tracking-wider">Contato</p>
-                                        <div className="flex flex-col gap-2">
-                                            <p className="text-sm text-white hover:text-cyan-400 cursor-pointer transition-colors">(11) 99139-6481</p>
-                                            <p className="text-sm text-white hover:text-cyan-400 cursor-pointer transition-colors">growthupbrasil@gmail.com</p>
+                            <FadeIn>
+                                <div className="flex flex-col md:flex-row justify-between items-center md:items-start gap-8 mb-12">
+                                    <div className="flex-1">
+                                        <h4 className="text-3xl font-black text-white uppercase tracking-tighter mb-2 italic">Growth Up Brasil</h4>
+                                        <p className="text-[10px] text-gray-500 uppercase tracking-[0.2em]">Since 2019 • São Paulo</p>
+                                    </div>
+                                    <div className="flex gap-8 md:gap-16 flex-col md:flex-row w-full md:w-auto justify-center md:justify-start">
+                                        <div>
+                                            <p className="text-xs font-bold text-gray-400 uppercase mb-4 tracking-wider">Contato</p>
+                                            <div className="flex flex-col gap-2">
+                                                <p className="text-sm text-white hover:text-cyan-400 cursor-pointer transition-colors">(11) 99139-6481</p>
+                                                <p className="text-sm text-white hover:text-cyan-400 cursor-pointer transition-colors">growthupbrasil@gmail.com</p>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <p className="text-xs font-bold text-gray-400 uppercase mb-4 tracking-wider">Siga-nos</p>
+                                            <div className="flex gap-4 justify-center md:justify-start">
+                                                <a href="https://www.instagram.com/growthupbrasil/" target="_blank" rel="noopener noreferrer" className="text-white hover:text-cyan-400 transition-colors">
+                                                    <Icons.Instagram />
+                                                </a>
+                                                <a href="https://www.facebook.com/GrowthupBrasil/" target="_blank" rel="noopener noreferrer" className="text-white hover:text-cyan-400 transition-colors">
+                                                    <Icons.Facebook />
+                                                </a>
+                                                <a href="https://www.youtube.com/@GrowthUpBRA" target="_blank" rel="noopener noreferrer" className="text-white hover:text-cyan-400 transition-colors">
+                                                    <Icons.Youtube />
+                                                </a>
+                                                <a href="https://share.google/y59claggyjy7aCaLo" target="_blank" rel="noopener noreferrer" className="text-white hover:text-cyan-400 transition-colors">
+                                                    <Icons.MapPin />
+                                                </a>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div>
-                                        <p className="text-xs font-bold text-gray-400 uppercase mb-4 tracking-wider">Siga-nos</p>
-                                        <div className="flex gap-4 justify-center md:justify-start">
-                                            <a href="https://www.instagram.com/growthupbrasil/" target="_blank" rel="noopener noreferrer" className="text-white hover:text-cyan-400 transition-colors">
-                                                <Icons.Instagram />
-                                            </a>
-                                            <a href="https://www.facebook.com/GrowthupBrasil/" target="_blank" rel="noopener noreferrer" className="text-white hover:text-cyan-400 transition-colors">
-                                                <Icons.Facebook />
-                                            </a>
-                                            <a href="https://www.youtube.com/@GrowthUpBRA" target="_blank" rel="noopener noreferrer" className="text-white hover:text-cyan-400 transition-colors">
-                                                <Icons.Youtube />
-                                            </a>
-                                            <a href="https://share.google/y59claggyjy7aCaLo" target="_blank" rel="noopener noreferrer" className="text-white hover:text-cyan-400 transition-colors">
-                                                <Icons.MapPin />
-                                            </a>
-                                        </div>
-                                    </div>
                                 </div>
-                            </div>
-                            <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-[10px] text-gray-600 uppercase tracking-widest">
-                                <p>© 2026 Growth Up Brasil. Todos os direitos reservados.</p>
-                                <div className="flex gap-4"><Icons.ShieldCheck size={14} /><Icons.Globe size={14} /></div>
-                            </div>
+                                <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-[10px] text-gray-600 uppercase tracking-widest">
+                                    <p>© 2026 Growth Up Brasil. Todos os direitos reservados.</p>
+                                    <div className="flex gap-4"><Icons.ShieldCheck size={14} /><Icons.Globe size={14} /></div>
+                                </div>
+                            </FadeIn>
                         </div>
                     </footer>
 

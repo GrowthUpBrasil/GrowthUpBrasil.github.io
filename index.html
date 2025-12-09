@@ -27,20 +27,9 @@
           0% { left: -100%; }
           100% { left: 100%; }
         }
-        .animate-shine {
-          animation: shine 1.5s linear infinite;
-        }
-        .animate-pulse-slow {
-          animation: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-        }
-        .animate-gradient-x {
-          background-size: 200% 200%;
-          animation: gradient-x 3s ease infinite;
-        }
-        @keyframes gradient-x {
-          0% { background-position: 0% 50% }
-          50% { background-position: 100% 50% }
-          100% { background-position: 0% 50% }
+        @keyframes float {
+          0%, 100% { transform: translateY(0px); }
+          50% { transform: translateY(-10px); }
         }
         @keyframes fall {
           0% { transform: translateY(-50px) rotate(0deg); opacity: 0; }
@@ -48,20 +37,28 @@
           100% { transform: translateY(500px) rotate(720deg); opacity: 0; }
         }
         
-        /* Utilitários 3D para o efeito dos cards */
+        .animate-shine { animation: shine 1.5s linear infinite; }
+        .animate-float { animation: float 6s ease-in-out infinite; }
+        .animate-gradient-x { background-size: 200% 200%; animation: gradient-x 3s ease infinite; }
+        
+        @keyframes gradient-x {
+          0% { background-position: 0% 50% }
+          50% { background-position: 100% 50% }
+          100% { background-position: 0% 50% }
+        }
+        
+        /* Utilitários 3D */
         .perspective-1000 { perspective: 1000px; }
         .transform-style-3d { transform-style: preserve-3d; }
     </style>
 </head>
 <body>
-    <!-- Onde o React vai montar o site -->
     <div id="root"></div>
 
-    <!-- CÓDIGO DO SITE (React dentro do HTML) -->
     <script type="text/babel">
         const { useState, useEffect, useRef } = React;
 
-        // --- ÍCONES (SVG Inline para garantir que não quebre) ---
+        // --- ÍCONES ---
         const Icons = {
             Play: (props) => <svg {...props} width="24" height="24" viewBox="0 0 24 24" fill={props.fill || "none"} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>,
             Monitor: (props) => <svg {...props} width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>,
@@ -78,12 +75,11 @@
             X: (props) => <svg {...props} width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
         };
 
-        // --- SISTEMA DE PARTÍCULAS (CHUVA REALISTA) ---
+        // --- PARTÍCULAS (Chuva) ---
         const ParticleRain = ({ type, active }) => {
             const [particles, setParticles] = useState([]);
             const requestRef = useRef();
             
-            // URLs de imagens PNG com transparência
             const particleImages = {
                 bronze: 'https://purepng.com/public/uploads/large/purepng.com-bronze-coincoinmoneycurrencybronze-coin-14215264622687x2p8.png',
                 silver: 'https://purepng.com/public/uploads/large/purepng.com-silver-coinsilver-coinmoneycurrency-14215264624061x2p8.png',
@@ -95,7 +91,6 @@
             const getParticleStyle = (type, size) => {
                 const imageUrl = particleImages[type];
                 if (!imageUrl) return {};
-
                 return {
                     backgroundImage: `url(${imageUrl})`,
                     backgroundSize: 'contain',
@@ -112,7 +107,6 @@
             useEffect(() => {
                 let lastTime = Date.now();
                 const interval = (type === 'diamond' || type === 'ruby') ? 250 : 180;
-
                 const animate = () => {
                     if (active) {
                         const now = Date.now();
@@ -121,20 +115,17 @@
                             const startX = Math.random() * 100;
                             const duration = 2 + Math.random() * 2;
                             const rotate = Math.random() * 360;
-                            
                             let baseSize = 24;
                             if (type === 'gold') baseSize = 28;
                             if (type === 'diamond') baseSize = 26;
                             if (type === 'ruby') baseSize = 28;
                             const size = baseSize + (Math.random() * 12 - 6);
-
                             setParticles(prev => [...prev, { id, startX, duration, rotate, size }]);
                             lastTime = now;
                         }
                     }
                     requestRef.current = requestAnimationFrame(animate);
                 };
-
                 requestRef.current = requestAnimationFrame(animate);
                 return () => cancelAnimationFrame(requestRef.current);
             }, [active, type]);
@@ -162,73 +153,55 @@
             );
         };
 
-        // --- CARD INDIVIDUAL ---
-        const PlanCard = ({ plan, getWhatsAppLink }) => {
+        // --- PLAN CARD COMPONENT ---
+        const PlanCard = ({ plan, getWhatsAppLink, globalRotation }) => {
             const cardRef = useRef(null);
-            const [rotation, setRotation] = useState({ x: 0, y: 0 });
-            const [shinePosition, setShinePosition] = useState({ x: 50, y: 50 }); // Posição do brilho (50% 50% default)
+            const [localRotation, setLocalRotation] = useState({ x: 0, y: 0 });
+            const [shinePosition, setShinePosition] = useState({ x: 50, y: 50 });
             const [isHovered, setIsHovered] = useState(false);
+            const [isMobile, setIsMobile] = useState(false);
 
-            // Listener para Giroscópio (Movimento do Celular)
             useEffect(() => {
-                const handleOrientation = (event) => {
-                    if (window.innerWidth < 768 && !isHovered) { 
-                        // Default to 0 se null
-                        const gamma = event.gamma || 0; // Esquerda/Direita
-                        const beta = event.beta || 0;   // Frente/Trás
-                        
-                        // Limita os valores para o card não virar demais
-                        const rotateY = Math.min(Math.max(gamma, -25), 25); 
-                        // Beta 45 é segurando normal. Ajustamos o "zero" para 45 graus.
-                        const rotateX = Math.min(Math.max(beta - 45, -25), 25) * -1; 
+                setIsMobile(window.innerWidth < 768);
+                const handleResize = () => setIsMobile(window.innerWidth < 768);
+                window.addEventListener('resize', handleResize);
+                return () => window.removeEventListener('resize', handleResize);
+            }, []);
 
-                        setRotation({ x: rotateX, y: rotateY });
+            // Usa rotação global no mobile, local no desktop
+            const currentRotation = isMobile ? globalRotation : localRotation;
 
-                        // ATUALIZAÇÃO DO BRILHO (SHINE) NO MOBILE
-                        // Mapeia a rotação (-25 a 25) para porcentagem (0 a 100)
-                        const shineX = ((rotateY + 25) / 50) * 100;
-                        const shineY = ((rotateX + 25) / 50) * 100;
-                        setShinePosition({ x: 100 - shineX, y: 100 - shineY }); // Inverte para parecer reflexo
-                    }
-                };
-
-                // Adiciona listener
-                window.addEventListener('deviceorientation', handleOrientation);
-                return () => window.removeEventListener('deviceorientation', handleOrientation);
-            }, [isHovered]);
+            // Efeito de brilho baseado na rotação (para mobile)
+            useEffect(() => {
+                if (isMobile) {
+                    const shineX = ((currentRotation.y + 20) / 40) * 100;
+                    const shineY = ((currentRotation.x + 20) / 40) * 100;
+                    setShinePosition({ x: 100 - shineX, y: 100 - shineY, isPixel: false });
+                }
+            }, [currentRotation, isMobile]);
 
             const handleMouseMove = (e) => {
-                if (!cardRef.current) return;
+                if (!cardRef.current || isMobile) return;
                 const rect = cardRef.current.getBoundingClientRect();
                 const x = e.clientX - rect.left;
                 const y = e.clientY - rect.top;
-                
-                // Mouse logic (Desktop)
                 const centerX = rect.width / 2;
                 const centerY = rect.height / 2;
                 const rotateX = ((y - centerY) / centerY) * -10; 
                 const rotateY = ((x - centerX) / centerX) * 10;
-                
-                setRotation({ x: rotateX, y: rotateY });
-                // Para desktop, usamos pixel position para o gradiente
-                setShinePosition({ x: x, y: y, isPixel: true });
+                setLocalRotation({ x: rotateX, y: rotateY });
+                setShinePosition({ x, y, isPixel: true });
             };
 
             const handleMouseEnter = () => setIsHovered(true);
             const handleMouseLeave = () => {
                 setIsHovered(false);
-                setRotation({ x: 0, y: 0 });
-            };
-            
-            const handleTouchEnd = () => {
-                setIsHovered(false);
-                setRotation({ x: 0, y: 0 });
+                setLocalRotation({ x: 0, y: 0 });
             };
 
-            // Define o estilo do background do brilho baseado se é mouse (pixel) ou mobile (%)
             const shineStyle = shinePosition.isPixel 
                 ? `radial-gradient(circle at ${shinePosition.x}px ${shinePosition.y}px, rgba(255,255,255,0.3) 0%, transparent 60%)`
-                : `radial-gradient(circle at ${shinePosition.x}% ${shinePosition.y}%, rgba(255,255,255,0.3) 0%, transparent 60%)`;
+                : `radial-gradient(circle at ${shinePosition.x}% ${shinePosition.y}%, rgba(255,255,255,0.4) 0%, transparent 70%)`; // Mais forte no mobile
 
             return (
                 <div 
@@ -236,14 +209,17 @@
                     onMouseMove={handleMouseMove}
                     onMouseEnter={handleMouseEnter}
                     onMouseLeave={handleMouseLeave}
-                    onTouchEnd={handleTouchEnd}
-                    className={`relative w-full md:w-[320px] rounded-2xl transition-all duration-300 ease-out ${plan.highlight ? 'z-20 md:scale-105' : 'z-10'} ${isHovered ? 'z-30 scale-105' : ''}`}
+                    className={`relative w-full md:w-[320px] rounded-2xl transition-all duration-300 ease-out 
+                        ${plan.highlight ? 'z-20 md:scale-105' : 'z-10'} 
+                        ${isHovered ? 'z-30 scale-105' : ''}
+                        ${isMobile ? 'animate-float' : ''} 
+                    `}
                     style={{ perspective: '1000px' }}
                 >
                     <div 
-                        className={`relative h-full w-full rounded-2xl p-8 overflow-hidden border ${plan.style.border} ${plan.style.bg} flex flex-col transition-all duration-300 ease-out shadow-2xl transform-style-3d`}
+                        className={`relative h-full w-full rounded-2xl p-8 overflow-hidden border ${plan.style.border} ${plan.style.bg} flex flex-col transition-transform duration-100 ease-out shadow-2xl transform-style-3d`}
                         style={{
-                            transform: `rotateX(${rotation.x}deg) rotateY(${rotation.y}deg)`,
+                            transform: `rotateX(${currentRotation.x}deg) rotateY(${currentRotation.y}deg)`,
                             boxShadow: isHovered ? `0 20px 50px -10px ${plan.style.shadowColor}` : '0 10px 30px -10px rgba(0,0,0,0.5)'
                         }}
                     >
@@ -253,24 +229,25 @@
                         <div 
                             className="absolute inset-0 pointer-events-none"
                             style={{
-                                transform: `translateX(${rotation.y * -1.5}px) translateY(${rotation.x * -1.5}px) scale(1.1)`,
+                                transform: `translateX(${currentRotation.y * -1.5}px) translateY(${currentRotation.x * -1.5}px) scale(1.1)`,
                                 transition: 'transform 0.1s ease-out'
                             }}
                         >
-                            <img src={plan.bgImage} alt="Textura de fundo" className="w-full h-full object-cover opacity-30 mix-blend-luminosity filter contrast-125" />
+                            <img src={plan.bgImage} alt="Textura" className="w-full h-full object-cover opacity-30 mix-blend-luminosity filter contrast-125" />
                             <div className={`absolute inset-0 bg-gradient-to-t ${plan.style.bgOverlay} opacity-90`}></div>
                         </div>
 
-                        {/* Brilho do Mouse/Giroscópio */}
+                        {/* Brilho */}
                         <div 
                             className="absolute inset-0 pointer-events-none transition-opacity duration-300"
                             style={{
-                                opacity: (isHovered || (window.innerWidth < 768)) ? 0.4 : 0, // Mostra brilho sempre no mobile se tiver movimento
+                                opacity: (isHovered || isMobile) ? 0.4 : 0, 
                                 background: shineStyle,
                                 mixBlendMode: 'overlay'
                             }}
                         ></div>
 
+                        {/* Conteúdo */}
                         <div className="relative z-10 flex flex-col h-full" style={{ transform: 'translateZ(30px)' }}>
                             {plan.tag && (
                                 <div className="absolute -top-6 left-1/2 -translate-x-1/2 bg-yellow-500 text-black text-[9px] font-black px-3 py-1 rounded-full uppercase tracking-widest shadow-[0_0_20px_rgba(234,179,8,0.5)] whitespace-nowrap z-20">
@@ -324,35 +301,51 @@
         const App = () => {
             const [isScrolled, setIsScrolled] = useState(false);
             const [isMenuOpen, setIsMenuOpen] = useState(false);
+            const [globalRotation, setGlobalRotation] = useState({ x: 0, y: 0 }); // Cérebro do movimento
             const whatsappNumber = "5511991396481"; 
             
-            // Função para solicitar permissão do giroscópio no iOS (precisa de clique)
-            const requestMotionPermission = () => {
-                if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
-                    DeviceOrientationEvent.requestPermission()
-                        .then(permissionState => {
-                            if (permissionState === 'granted') {
-                                // Permissão concedida, o listener no componente PlanCard vai começar a funcionar
-                            }
-                        })
-                        .catch(console.error);
-                }
-            };
-
-            // Adiciona listener global de clique para tentar pedir permissão na primeira interação
+            // Gerenciamento Robusto de Permissão e Sensores
             useEffect(() => {
-                const handleFirstInteraction = () => {
-                    requestMotionPermission();
-                    window.removeEventListener('click', handleFirstInteraction);
-                    window.removeEventListener('touchstart', handleFirstInteraction);
+                const handleOrientation = (event) => {
+                    if (window.innerWidth < 768) { 
+                        const gamma = event.gamma || 0; 
+                        const beta = event.beta || 0;
+                        // Limites suaves para movimento natural
+                        const rotateY = Math.min(Math.max(gamma, -20), 20); 
+                        const rotateX = Math.min(Math.max(beta - 45, -20), 20) * -1; 
+                        setGlobalRotation({ x: rotateX, y: rotateY });
+                    }
                 };
-                
-                window.addEventListener('click', handleFirstInteraction);
-                window.addEventListener('touchstart', handleFirstInteraction);
-                
+
+                const requestPermission = () => {
+                    if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
+                        DeviceOrientationEvent.requestPermission()
+                            .then(permissionState => {
+                                if (permissionState === 'granted') {
+                                    window.addEventListener('deviceorientation', handleOrientation);
+                                }
+                            })
+                            .catch(console.error);
+                    } else {
+                        // Android e iOS antigos não precisam de permissão explícita
+                        window.addEventListener('deviceorientation', handleOrientation);
+                    }
+                };
+
+                // Tenta ativar no primeiro toque em qualquer lugar da tela
+                const handleInteraction = () => {
+                    requestPermission();
+                    window.removeEventListener('click', handleInteraction);
+                    window.removeEventListener('touchstart', handleInteraction);
+                };
+
+                window.addEventListener('click', handleInteraction);
+                window.addEventListener('touchstart', handleInteraction);
+
                 return () => {
-                    window.removeEventListener('click', handleFirstInteraction);
-                    window.removeEventListener('touchstart', handleFirstInteraction);
+                    window.removeEventListener('deviceorientation', handleOrientation);
+                    window.removeEventListener('click', handleInteraction);
+                    window.removeEventListener('touchstart', handleInteraction);
                 };
             }, []);
             
@@ -523,7 +516,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div className="absolute bottom-4 left-0 w-full flex flex-col items-center gap-2 z-20 animate-bounce">
+                        <div className="absolute bottom-4 left-0 w-full flex flex-col items-center gap-2 z-50 animate-bounce pointer-events-none">
                             <span className="text-[10px] uppercase tracking-widest text-gray-500">Role para baixo</span>
                             <div className="w-[1px] h-12 bg-gradient-to-b from-transparent via-cyan-500 to-transparent"></div>
                         </div>
@@ -597,7 +590,7 @@
                             </div>
                             <div className="flex flex-wrap justify-center gap-8 items-stretch perspective-1000">
                                 {plans.map((plan, idx) => (
-                                    <PlanCard key={idx} plan={plan} getWhatsAppLink={getWhatsAppLink} />
+                                    <PlanCard key={idx} plan={plan} getWhatsAppLink={getWhatsAppLink} globalRotation={globalRotation} />
                                 ))}
                             </div>
                         </div>

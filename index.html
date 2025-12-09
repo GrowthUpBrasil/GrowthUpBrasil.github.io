@@ -15,7 +15,9 @@
     <!-- Carrega o Babel (Tradutor de código para o navegador) -->
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
-    <!-- Estilos Personalizados e Animações -->
+    <!-- Ícones Lucide (Versão Script Global) -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
     <style>
         html { scroll-behavior: smooth; }
         body { background-color: #050505; color: white; overflow-x: hidden; font-family: system-ui, -apple-system, sans-serif; }
@@ -164,20 +166,33 @@
         const PlanCard = ({ plan, getWhatsAppLink }) => {
             const cardRef = useRef(null);
             const [rotation, setRotation] = useState({ x: 0, y: 0 });
-            const [shinePosition, setShinePosition] = useState({ x: 0, y: 0 });
+            const [shinePosition, setShinePosition] = useState({ x: 50, y: 50 }); // Posição do brilho (50% 50% default)
             const [isHovered, setIsHovered] = useState(false);
 
             // Listener para Giroscópio (Movimento do Celular)
             useEffect(() => {
                 const handleOrientation = (event) => {
                     if (window.innerWidth < 768 && !isHovered) { 
-                        const gamma = event.gamma; 
-                        const beta = event.beta;
-                        const rotateY = Math.min(Math.max(gamma, -20), 20); 
-                        const rotateX = Math.min(Math.max(beta - 45, -20), 20) * -1; 
+                        // Default to 0 se null
+                        const gamma = event.gamma || 0; // Esquerda/Direita
+                        const beta = event.beta || 0;   // Frente/Trás
+                        
+                        // Limita os valores para o card não virar demais
+                        const rotateY = Math.min(Math.max(gamma, -25), 25); 
+                        // Beta 45 é segurando normal. Ajustamos o "zero" para 45 graus.
+                        const rotateX = Math.min(Math.max(beta - 45, -25), 25) * -1; 
+
                         setRotation({ x: rotateX, y: rotateY });
+
+                        // ATUALIZAÇÃO DO BRILHO (SHINE) NO MOBILE
+                        // Mapeia a rotação (-25 a 25) para porcentagem (0 a 100)
+                        const shineX = ((rotateY + 25) / 50) * 100;
+                        const shineY = ((rotateX + 25) / 50) * 100;
+                        setShinePosition({ x: 100 - shineX, y: 100 - shineY }); // Inverte para parecer reflexo
                     }
                 };
+
+                // Adiciona listener
                 window.addEventListener('deviceorientation', handleOrientation);
                 return () => window.removeEventListener('deviceorientation', handleOrientation);
             }, [isHovered]);
@@ -187,12 +202,16 @@
                 const rect = cardRef.current.getBoundingClientRect();
                 const x = e.clientX - rect.left;
                 const y = e.clientY - rect.top;
+                
+                // Mouse logic (Desktop)
                 const centerX = rect.width / 2;
                 const centerY = rect.height / 2;
                 const rotateX = ((y - centerY) / centerY) * -10; 
                 const rotateY = ((x - centerX) / centerX) * 10;
+                
                 setRotation({ x: rotateX, y: rotateY });
-                setShinePosition({ x, y });
+                // Para desktop, usamos pixel position para o gradiente
+                setShinePosition({ x: x, y: y, isPixel: true });
             };
 
             const handleMouseEnter = () => setIsHovered(true);
@@ -205,6 +224,11 @@
                 setIsHovered(false);
                 setRotation({ x: 0, y: 0 });
             };
+
+            // Define o estilo do background do brilho baseado se é mouse (pixel) ou mobile (%)
+            const shineStyle = shinePosition.isPixel 
+                ? `radial-gradient(circle at ${shinePosition.x}px ${shinePosition.y}px, rgba(255,255,255,0.3) 0%, transparent 60%)`
+                : `radial-gradient(circle at ${shinePosition.x}% ${shinePosition.y}%, rgba(255,255,255,0.3) 0%, transparent 60%)`;
 
             return (
                 <div 
@@ -225,6 +249,7 @@
                     >
                         <ParticleRain type={plan.particleType} active={isHovered} />
                         
+                        {/* Imagem de Fundo com Paralaxe */}
                         <div 
                             className="absolute inset-0 pointer-events-none"
                             style={{
@@ -236,11 +261,12 @@
                             <div className={`absolute inset-0 bg-gradient-to-t ${plan.style.bgOverlay} opacity-90`}></div>
                         </div>
 
+                        {/* Brilho do Mouse/Giroscópio */}
                         <div 
-                            className="absolute inset-0 pointer-events-none opacity-0 transition-opacity duration-300"
+                            className="absolute inset-0 pointer-events-none transition-opacity duration-300"
                             style={{
-                                opacity: isHovered ? 0.4 : 0,
-                                background: `radial-gradient(circle at ${shinePosition.x}px ${shinePosition.y}px, rgba(255,255,255,0.3) 0%, transparent 60%)`,
+                                opacity: (isHovered || (window.innerWidth < 768)) ? 0.4 : 0, // Mostra brilho sempre no mobile se tiver movimento
+                                background: shineStyle,
                                 mixBlendMode: 'overlay'
                             }}
                         ></div>
@@ -299,6 +325,36 @@
             const [isScrolled, setIsScrolled] = useState(false);
             const [isMenuOpen, setIsMenuOpen] = useState(false);
             const whatsappNumber = "5511991396481"; 
+            
+            // Função para solicitar permissão do giroscópio no iOS (precisa de clique)
+            const requestMotionPermission = () => {
+                if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
+                    DeviceOrientationEvent.requestPermission()
+                        .then(permissionState => {
+                            if (permissionState === 'granted') {
+                                // Permissão concedida, o listener no componente PlanCard vai começar a funcionar
+                            }
+                        })
+                        .catch(console.error);
+                }
+            };
+
+            // Adiciona listener global de clique para tentar pedir permissão na primeira interação
+            useEffect(() => {
+                const handleFirstInteraction = () => {
+                    requestMotionPermission();
+                    window.removeEventListener('click', handleFirstInteraction);
+                    window.removeEventListener('touchstart', handleFirstInteraction);
+                };
+                
+                window.addEventListener('click', handleFirstInteraction);
+                window.addEventListener('touchstart', handleFirstInteraction);
+                
+                return () => {
+                    window.removeEventListener('click', handleFirstInteraction);
+                    window.removeEventListener('touchstart', handleFirstInteraction);
+                };
+            }, []);
             
             const getWhatsAppLink = (planName) => {
                 const text = planName 

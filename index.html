@@ -483,8 +483,7 @@
                                         Economize assinando por 3 meses. Ótima opção de médio prazo.
                                     </p>
                                 </div>
-                                
-                                {/* CORREÇÃO: A tag </a> estava faltando, e havia um } extra após o "Assinar Agora" */}
+
                                 <a href={getWhatsAppLink('Plano Plus')} target="_blank" className="w-full bg-white hover:bg-zinc-200 text-black font-extrabold text-sm py-3.5 rounded-lg transition-colors mb-8 uppercase tracking-wide text-center block">
                                     Assinar Agora
                                 </a>
@@ -910,7 +909,7 @@
                             {/* Grid ajustado para 6 colunas no Desktop (lg:grid-cols-6) */}
                             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
                                 
-                                {/* Card 1: Lançamentos */}
+                                {/* Card 1: Revertido para Animação (Imagem Anterior) */}
                                 <div className="movie-card relative aspect-video rounded-lg overflow-hidden cursor-pointer group bg-gray-800 shadow-lg shadow-red-900/40">
                                     <img src="https://images.unsplash.com/photo-1626814026160-2237a95fc5a0?q=80&w=1740&auto=format&fit=crop" alt="Lançamentos" className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity" />
                                     <div className="absolute inset-0 flex items-center justify-center">
@@ -919,6 +918,7 @@
                                         </div>
                                     </div>
                                     <div className="absolute bottom-2 left-2">
+                                        {/* Mantendo a etiqueta LANÇAMENTOS solicitada */}
                                         <span className="text-[10px] font-bold text-yellow-400 drop-shadow-md bg-black/60 px-1.5 py-0.5 rounded tracking-wide">LANÇAMENTOS</span>
                                     </div>
                                 </div>
@@ -931,27 +931,23 @@
                                             <i className="fa-solid fa-play text-white text-sm ml-0.5"></i>
                                         </div>
                                     </div>
+                                    {/* Adicionado Texto: Cinema em casa */}
                                     <div className="absolute bottom-0 left-0 w-full p-2 bg-gradient-to-t from-black/80 to-transparent text-left">
                                         <p className="text-[10px] font-bold text-white uppercase tracking-wider">CINEMA EM CASA</p>
                                     </div>
                                 </div>
 
-                                {/* Card 3: SÉRIES (ALTERADO) */}
+                                {/* Card 3: Drama -> Agora Ação */}
                                 <div className="movie-card relative aspect-video rounded-lg overflow-hidden cursor-pointer group bg-gray-800 shadow-lg shadow-black/50">
-                                    <img 
-                                        src="https://images.unsplash.com/photo-1549419168-f9b2f2184d0b?q=80&w=1974&auto=format&fit=crop" 
-                                        alt="Cena de Série de Ficção/Mistério" 
-                                        class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity" 
-                                        onerror="this.src='https://placehold.co/1974x1120/7f1d1d/ffffff?text=Series+Placeholder'"
-                                    />
+                                    <img src="https://images.unsplash.com/photo-1485846234645-a62644f84728?q=80&w=1718&auto=format&fit=crop" alt="Filme Drama" className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity" />
                                     <div className="absolute inset-0 flex items-center justify-center">
                                         <div className="play-btn w-10 h-10 rounded-full flex items-center justify-center border border-white/30">
                                             <i className="fa-solid fa-play text-white text-sm ml-0.5"></i>
                                         </div>
                                     </div>
                                      <div className="absolute bottom-0 left-0 w-full p-2 bg-gradient-to-t from-black/80 to-transparent text-left">
-                                        {/* ALTERADO: Texto para SÉRIES */}
-                                        <p className="text-xs font-bold uppercase tracking-wider text-white">SÉRIES</p>
+                                        {/* Alterado de Original para Ação */}
+                                        <p className="text-xs font-bold uppercase tracking-wider text-white">Ação</p>
                                     </div>
                                 </div>
 
@@ -982,21 +978,16 @@
                                     </div>
                                 </div>
 
-                                {/* Card 6: Anime - NOVA IMAGEM DE ANIME (CORRIGIDO) */}
+                                {/* Card 6: Anime (Alterado para Dragon Ball) */}
                                 <div className="movie-card relative aspect-video rounded-lg overflow-hidden cursor-pointer group bg-gray-800 shadow-lg shadow-black/50">
-                                    <img 
-                                        src="https://images.unsplash.com/photo-1616782500140-5e87a2a11b65?q=80&w=1974&auto=format&fit=crop" 
-                                        alt="Desenho Animado Japonês (Estilo de TV)" 
-                                        class="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity" 
-                                        onerror="this.src='https://placehold.co/1974x1120/4a4a4a/ffffff?text=Anime+TV+Series'"
-                                    />
+                                    <img src="https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?q=80&w=1974&auto=format&fit=crop" alt="Anime Dragon Ball" className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity" />
                                     <div className="absolute inset-0 flex items-center justify-center">
                                         <div className="play-btn w-10 h-10 rounded-full flex items-center justify-center border border-white/30">
                                             <i className="fa-solid fa-play text-white text-sm ml-0.5"></i>
                                         </div>
                                     </div>
                                     <div className="absolute bottom-0 left-0 w-full p-2 bg-gradient-to-t from-black/80 to-transparent text-left">
-                                        <p className="text-xs font-bold uppercase tracking-wider text-pink-500">Anime Clássico</p>
+                                        <p className="text-xs font-bold uppercase tracking-wider text-pink-500">Anime</p>
                                     </div>
                                 </div>
 
@@ -1052,7 +1043,7 @@
                                 <div className="container mx-auto px-6">
                                     <RevealOnScroll className="text-center mb-10">
                                         <h2 className="text-3xl font-black text-white uppercase tracking-tighter mb-4 drop-shadow-xl">
-                                            Experiência <span className="text-transparent bg-clip-clip bg-gradient-to-r from-red-500 to-red-800">Reels</span>
+                                            Experiência <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-red-800">Reels</span>
                                         </h2>
                                         <p className="text-gray-400 tracking-widest text-sm uppercase max-w-2xl mx-auto">Veja como funciona na prática.</p>
                                     </RevealOnScroll>

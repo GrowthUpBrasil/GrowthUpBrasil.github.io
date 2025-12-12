@@ -37,15 +37,17 @@
 
         /* --- NOVOS ESTILOS DO HERO --- */
         .btn-gradient {
-            /* Tema atualizado para Cyan/Blue/Purple com animação */
-            background: linear-gradient(90deg, #22d3ee 0%, #3b82f6 50%, #a855f7 100%);
+            /* Tema Stranger Things: Vermelho Neon / Laranja */
+            background: linear-gradient(90deg, #ef4444 0%, #b91c1c 50%, #7f1d1d 100%);
             background-size: 200% 200%;
             animation: gradient-x 3s ease infinite;
             transition: transform 0.2s, opacity 0.2s;
+            box-shadow: 0 0 15px rgba(239, 68, 68, 0.5);
         }
         .btn-gradient:hover {
             opacity: 0.9;
             transform: scale(1.02);
+            box-shadow: 0 0 25px rgba(239, 68, 68, 0.8);
         }
 
         .movie-card {
@@ -62,7 +64,14 @@
             transition: background 0.3s;
         }
         .movie-card:hover .play-btn {
-            background: rgba(255, 255, 255, 0.4);
+            background: rgba(239, 68, 68, 0.6); /* Vermelho no hover */
+        }
+
+        /* ANIMAÇÃO DE MOVIMENTO DO FUNDO (Stranger Things Vibe) */
+        @keyframes strangerPan {
+            0% { transform: scale(1.1) translate(0, 0); }
+            50% { transform: scale(1.2) translate(-2%, 2%); }
+            100% { transform: scale(1.1) translate(0, 0); }
         }
 
         .bg-hero {
@@ -72,15 +81,15 @@
             width: 100%;
             height: 100%;
             z-index: -1;
-            /* Nova imagem mais impactante: Cinema/Projetor/Luzes abstratas */
-            background-image: linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.8) 100%), 
-                              radial-gradient(circle at center, transparent 0%, #000 100%),
-                              url('https://images.unsplash.com/photo-1574267432553-4b4628081c31?q=80&w=2031&auto=format&fit=crop'); 
+            /* Imagem: Floresta com neblina */
+            background-image: url('https://images.unsplash.com/photo-1518066000714-58c45f1a2c0a?q=80&w=2070&auto=format&fit=crop'); 
             background-size: cover;
             background-position: center;
             opacity: 0.6;
-            /* Filtro para transformar o vermelho das cadeiras em Azul/Ciano */
-            filter: hue-rotate(210deg) saturate(1.2) brightness(0.9);
+            /* Filtro avermelhado/azulado escuro */
+            filter: contrast(1.3) brightness(0.7) sepia(0.3) hue-rotate(-30deg) saturate(1.5);
+            /* Aplica a animação */
+            animation: strangerPan 60s ease-in-out infinite alternate;
         }
         
         .bg-overlay {
@@ -89,12 +98,34 @@
             left: 0;
             width: 100%;
             height: 100%;
-            /* Ajuste para escurecer mais o fundo e dar destaque ao texto centralizado */
-            background: radial-gradient(circle at center, transparent 0%, #000 90%);
+            /* Vinheta forte nas bordas */
+            background: radial-gradient(circle at 50% 40%, transparent 0%, rgba(0,0,0,0.4) 40%, #000 90%);
             z-index: -1;
         }
 
-        /* --- ESTILOS ANTIGOS MANTIDOS (Para o resto da página) --- */
+        /* EFEITO DE ESPOROS/CINZAS (Mundo Invertido) */
+        .spores-container {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+        .spore {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 50%;
+            box-shadow: 0 0 4px rgba(255, 255, 255, 0.8);
+            animation: floatUp linear infinite;
+        }
+        @keyframes floatUp {
+            0% { transform: translateY(100vh) scale(0); opacity: 0; }
+            20% { opacity: 0.8; }
+            80% { opacity: 0.6; }
+            100% { transform: translateY(-20vh) scale(1); opacity: 0; }
+        }
+
+        /* --- ESTILOS ANTIGOS MANTIDOS --- */
         @keyframes shine { 0% { left: -100%; } 100% { left: 100%; } }
         .animate-shine { animation: shine 1.5s linear infinite; }
         .animate-gradient-x { background-size: 200% 200%; animation: gradient-x 3s ease infinite; }
@@ -139,9 +170,10 @@
         .font-geometric { font-family: 'Poppins', sans-serif; }
         .samsung-font { font-weight: 700; letter-spacing: 0.1em; }
         .roku-font { font-weight: 800; letter-spacing: -0.05em; }
-        .check-gradient { color: #22d3ee; }
+        /* Ajuste do Check para Vermelho/Stranger Things */
+        .check-gradient { color: #ef4444; }
         .card-bg { background-color: #111111; }
-        .card-border { border: 1px solid #222; }
+        .card-border { border: 1px solid #333; }
         
         .logo-box {
             background-color: white;
@@ -153,6 +185,30 @@
             overflow: hidden; 
             padding: 2px;
             transition: all 0.3s ease;
+        }
+
+        /* --- NOVO EFEITO DE FOGO (RODAPÉ) COM BRILHO EXTERNO --- */
+        .fire-text {
+            /* Gradiente vertical de fogo: Vermelho escuro -> Vermelho -> Amarelo */
+            background: linear-gradient(0deg, #7f1d1d 0%, #ef4444 40%, #fbbf24 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            /* Filtro de sombra para o brilho (Glow) - AUMENTADO PARA BRILHO EXTERNO */
+            filter: drop-shadow(0 0 10px rgba(220, 38, 38, 0.8)) drop-shadow(0 0 20px rgba(220, 38, 38, 0.4));
+            animation: burn 0.5s ease-in-out infinite alternate;
+        }
+
+        @keyframes burn {
+            from {
+                /* Brilho base */
+                filter: drop-shadow(0 0 5px rgba(220, 38, 38, 0.8)) drop-shadow(0 0 15px rgba(220, 38, 38, 0.4));
+                transform: scale(1);
+            }
+            to {
+                /* Brilho expandido (pulsação) */
+                filter: drop-shadow(0 0 10px rgba(239, 68, 68, 1)) drop-shadow(0 0 30px rgba(251, 191, 36, 0.6));
+                transform: scale(1.02);
+            }
         }
     </style>
 </head>
@@ -189,6 +245,37 @@
             );
         };
 
+        // --- COMPONENTE DE ESPOROS (STRANGER THINGS) ---
+        const UpsideDownSpores = () => {
+            const spores = useMemo(() => {
+                return Array.from({ length: 30 }).map((_, i) => ({
+                    id: i,
+                    left: Math.random() * 100,
+                    size: Math.random() * 3 + 1,
+                    duration: Math.random() * 10 + 10, // 10s a 20s
+                    delay: Math.random() * 5
+                }));
+            }, []);
+
+            return (
+                <div className="spores-container">
+                    {spores.map((s) => (
+                        <div 
+                            key={s.id}
+                            className="spore"
+                            style={{
+                                left: `${s.left}%`,
+                                width: `${s.size}px`,
+                                height: `${s.size}px`,
+                                animationDuration: `${s.duration}s`,
+                                animationDelay: `-${s.delay}s` // Começa já animado
+                            }}
+                        ></div>
+                    ))}
+                </div>
+            );
+        };
+
         // --- SEÇÃO DE INSTALAÇÃO DO APP ---
         const InstallAppSection = () => {
             return (
@@ -201,46 +288,39 @@
                             
                             <h1 className="text-3xl md:text-5xl lg:text-6xl font-medium text-white leading-tight max-w-4xl mx-auto">
                                 Instale o 
-                                <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-500 animate-gradient-x font-bold mx-2">Nosso APP</span> 
+                                <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-red-800 animate-pulse font-bold mx-2">Nosso APP</span> 
                                 na sua SmartTV,<br className="hidden md:block"/>
                                 celular ou qualquer outro dispositivo.
                             </h1>
                         </RevealOnScroll>
 
                         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-10 items-center justify-items-center opacity-80 hover:opacity-100 transition-opacity duration-500 text-white">
-                            
                             {/* Samsung */}
                             <div className="group flex items-center justify-center cursor-pointer transform transition-all duration-300 hover:scale-110 opacity-50 hover:opacity-100">
                                 <span className="samsung-font text-2xl transition-colors">SAMSUNG</span>
                             </div>
-
                             {/* LG */}
                             <div className="group flex items-center justify-center gap-2 cursor-pointer transform transition-all duration-300 hover:scale-110 opacity-50 hover:opacity-100">
                                 <span className="text-2xl font-bold transition-colors">LG</span>
                             </div>
-
                             {/* Android */}
                             <div className="group flex items-center justify-center gap-2 cursor-pointer transform transition-all duration-300 hover:scale-110 opacity-50 hover:opacity-100">
                                 <span className="text-xl font-medium transition-colors">Android</span>
                                 <i className="fa-brands fa-android text-2xl transition-colors"></i>
                             </div>
-
                             {/* Amazon */}
                             <div className="group flex items-center justify-center cursor-pointer transform transition-all duration-300 hover:scale-110 opacity-50 hover:opacity-100">
                                 <i className="fa-brands fa-amazon text-3xl mt-2 transition-colors"></i>
                             </div>
-
                             {/* Roku */}
                             <div className="group flex items-center justify-center cursor-pointer transform transition-all duration-300 hover:scale-110 opacity-50 hover:opacity-100">
                                 <span className="roku-font text-2xl transition-colors">Roku</span>
                             </div>
-
                             {/* Chrome / Browser */}
                             <div className="group flex items-center justify-center gap-2 cursor-pointer transform transition-all duration-300 hover:scale-110 opacity-50 hover:opacity-100">
                                 <i className="fa-brands fa-chrome text-2xl transition-colors"></i>
                                 <span className="text-xl font-medium transition-colors">Browser</span>
                             </div>
-
                         </div>
                           <p className="text-center text-xs text-gray-600 mt-12 font-medium tracking-wide uppercase">
                             Compatível com as principais plataformas do mercado.
@@ -278,7 +358,7 @@
                                 
                                 <h1 className="text-4xl md:text-6xl font-bold leading-tight">
                                     <span className="block">
-                                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-500 animate-gradient-x">Menos custo</span>,
+                                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-red-800">Menos custo</span>,
                                     </span>
                                     mais controle.<br/>
                                     Tudo no mesmo lugar.
@@ -294,7 +374,7 @@
                         <div className="grid grid-cols-3 gap-4">
                             {brands.map((item, idx) => (
                                 <RevealOnScroll key={idx} delay={idx * 50} className="w-full">
-                                    <div className="brand-card h-24 rounded-lg flex items-center justify-center p-4 w-full cursor-default text-white">
+                                    <div className="brand-card h-24 rounded-lg flex items-center justify-center p-4 w-full cursor-default text-white hover:border-red-900/50">
                                         {item.type === 'text-script' && <div className="text-center"><span className="font-script text-3xl">{item.main}</span><span className={item.subStyle}>{item.sub}</span></div>}
                                         {item.type === 'text-geo' && <span className="font-geometric text-4xl tracking-tighter font-black lowercase">{item.text}</span>}
                                         {item.type === 'img' && <img src={item.src} alt={item.alt} className="h-10 filter invert brightness-0 invert-100 opacity-90" />}
@@ -321,7 +401,7 @@
                     <RevealOnScroll className="text-center max-w-4xl mx-auto mb-16">
                         <h2 className="text-zinc-500 text-xs md:text-sm font-semibold tracking-[0.2em] uppercase mb-3">PLANOS</h2>
                         {/* TITULO ANIMADO */}
-                        <h1 className="text-4xl md:text-5xl font-extrabold mb-6 tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-500 animate-gradient-x">Escolha o seu plano</h1>
+                        <h1 className="text-4xl md:text-5xl font-extrabold mb-6 tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-red-800 animate-pulse">Escolha o seu plano</h1>
                         <p className="text-zinc-400 text-sm md:text-base max-w-2xl mx-auto leading-relaxed font-light">
                             Com o GrowthUP+, você tem acesso a todos os canais abertos, pagos e streamings que ama. Você aproveita muito mais, por muito menos. Confira os planos abaixo:
                         </p>
@@ -360,15 +440,14 @@
                                         <span>+12 plataformas</span>
                                     </div>
                                     <div className="grid grid-cols-5 gap-2">
-                                        {/* LOGOS SEM SCALE, COM RING NO HOVER DO CARD */}
-                                        <div className="logo-box group-hover:ring-2 group-hover:ring-cyan-400 group-hover:shadow-[0_0_15px_rgba(34,211,238,0.5)]"><span className="font-geometric text-[13px] tracking-tighter font-black lowercase text-black">max</span></div>
-                                        <div className="logo-box group-hover:ring-2 group-hover:ring-cyan-400 group-hover:shadow-[0_0_15px_rgba(34,211,238,0.5)] transition-all delay-75"><img src="https://upload.wikimedia.org/wikipedia/commons/3/3e/Disney%2B_logo.svg" alt="Disney+" className="w-10 h-auto filter brightness-0"/></div>
-                                        <div className="logo-box flex-col pt-1 group-hover:ring-2 group-hover:ring-cyan-400 group-hover:shadow-[0_0_15px_rgba(34,211,238,0.5)] transition-all delay-100">
+                                        <div className="logo-box group-hover:ring-2 group-hover:ring-red-500"><span className="font-geometric text-[13px] tracking-tighter font-black lowercase text-black">max</span></div>
+                                        <div className="logo-box group-hover:ring-2 group-hover:ring-red-500 transition-all delay-75"><img src="https://upload.wikimedia.org/wikipedia/commons/3/3e/Disney%2B_logo.svg" alt="Disney+" className="w-10 h-auto filter brightness-0"/></div>
+                                        <div className="logo-box flex-col pt-1 group-hover:ring-2 group-hover:ring-red-500 transition-all delay-100">
                                             <span className="font-bold text-[8px] tracking-tight text-black leading-none">prime video</span>
                                             <svg className="w-8 h-2 mt-0.5 text-black" viewBox="0 0 100 20" fill="none" stroke="currentColor" strokeWidth="8"><path d="M10,5 Q50,25 90,5" strokeLinecap="round" /><path d="M90,5 L80,10" strokeWidth="0" fill="currentColor"/></svg>
                                         </div>
-                                        <div className="logo-box group-hover:ring-2 group-hover:ring-cyan-400 group-hover:shadow-[0_0_15px_rgba(34,211,238,0.5)] transition-all delay-150"><span className="font-condensed text-black text-[11px] tracking-tighter font-bold transform scale-y-110">NETFLIX</span></div>
-                                        <div className="logo-box group-hover:ring-2 group-hover:ring-cyan-400 group-hover:shadow-[0_0_15px_rgba(34,211,238,0.5)] transition-all delay-200"><span className="font-condensed text-black text-[7px] tracking-widest font-bold uppercase">Telecine</span></div>
+                                        <div className="logo-box group-hover:ring-2 group-hover:ring-red-500 transition-all delay-150"><span className="font-condensed text-black text-[11px] tracking-tighter font-bold transform scale-y-110">NETFLIX</span></div>
+                                        <div className="logo-box group-hover:ring-2 group-hover:ring-red-500 transition-all delay-200"><span className="font-condensed text-black text-[7px] tracking-widest font-bold uppercase">Telecine</span></div>
                                     </div>
                                 </div>
 
@@ -385,9 +464,7 @@
                         {/* === PLANO 2: PLUS (Trimestral) === */}
                         <RevealOnScroll delay={100} className="h-full">
                             <div className="card-bg rounded-3xl p-6 flex flex-col relative card-border h-full hover:border-zinc-700 transition-colors group">
-                                
-                                {/* Badge 17% OFF */}
-                                <div className="absolute top-6 right-6 bg-[#a5f3fc] text-black text-[10px] font-black px-3 py-1.5 rounded-full leading-tight text-center shadow-lg shadow-cyan-500/20 z-20">
+                                <div className="absolute top-6 right-6 bg-red-200 text-red-900 text-[10px] font-black px-3 py-1.5 rounded-full leading-tight text-center shadow-lg z-20">
                                     17% de<br/>desconto
                                 </div>
 
@@ -418,14 +495,14 @@
                                         <span>+12 plataformas</span>
                                     </div>
                                     <div className="grid grid-cols-5 gap-2">
-                                        <div className="logo-box group-hover:ring-2 group-hover:ring-cyan-400 group-hover:shadow-[0_0_15px_rgba(34,211,238,0.5)]"><span className="font-geometric text-[13px] tracking-tighter font-black lowercase text-black">max</span></div>
-                                        <div className="logo-box group-hover:ring-2 group-hover:ring-cyan-400 group-hover:shadow-[0_0_15px_rgba(34,211,238,0.5)] transition-all delay-75"><img src="https://upload.wikimedia.org/wikipedia/commons/3/3e/Disney%2B_logo.svg" alt="Disney+" className="w-10 h-auto filter brightness-0"/></div>
-                                        <div className="logo-box flex-col pt-1 group-hover:ring-2 group-hover:ring-cyan-400 group-hover:shadow-[0_0_15px_rgba(34,211,238,0.5)] transition-all delay-100">
+                                        <div className="logo-box group-hover:ring-2 group-hover:ring-red-500"><span className="font-geometric text-[13px] tracking-tighter font-black lowercase text-black">max</span></div>
+                                        <div className="logo-box group-hover:ring-2 group-hover:ring-red-500 transition-all delay-75"><img src="https://upload.wikimedia.org/wikipedia/commons/3/3e/Disney%2B_logo.svg" alt="Disney+" className="w-10 h-auto filter brightness-0"/></div>
+                                        <div className="logo-box flex-col pt-1 group-hover:ring-2 group-hover:ring-red-500 transition-all delay-100">
                                             <span className="font-bold text-[8px] tracking-tight text-black leading-none">prime video</span>
                                             <svg className="w-8 h-2 mt-0.5 text-black" viewBox="0 0 100 20" fill="none" stroke="currentColor" strokeWidth="8"><path d="M10,5 Q50,25 90,5" strokeLinecap="round" /><path d="M90,5 L80,10" strokeWidth="0" fill="currentColor"/></svg>
                                         </div>
-                                        <div className="logo-box group-hover:ring-2 group-hover:ring-cyan-400 group-hover:shadow-[0_0_15px_rgba(34,211,238,0.5)] transition-all delay-150"><span className="font-condensed text-black text-[11px] tracking-tighter font-bold transform scale-y-110">NETFLIX</span></div>
-                                        <div className="logo-box group-hover:ring-2 group-hover:ring-cyan-400 group-hover:shadow-[0_0_15px_rgba(34,211,238,0.5)] transition-all delay-200"><span className="font-condensed text-black text-[7px] tracking-widest font-bold uppercase">Telecine</span></div>
+                                        <div className="logo-box group-hover:ring-2 group-hover:ring-red-500 transition-all delay-150"><span className="font-condensed text-black text-[11px] tracking-tighter font-bold transform scale-y-110">NETFLIX</span></div>
+                                        <div className="logo-box group-hover:ring-2 group-hover:ring-red-500 transition-all delay-200"><span className="font-condensed text-black text-[7px] tracking-widest font-bold uppercase">Telecine</span></div>
                                     </div>
                                 </div>
 
@@ -441,17 +518,17 @@
 
                         {/* === PLANO 3: PRO (Semestral) === */}
                         <RevealOnScroll delay={200} className="h-full z-10">
-                            <div className="card-bg rounded-3xl p-6 flex flex-col relative border-2 border-cyan-500/60 shadow-[0_0_40px_rgba(34,211,238,0.15)] h-full transform xl:-translate-y-4 hover:border-cyan-400 hover:shadow-[0_0_50px_rgba(34,211,238,0.25)] transition-all duration-300 group">
+                            <div className="card-bg rounded-3xl p-6 flex flex-col relative border-2 border-red-900/60 shadow-[0_0_40px_rgba(220,38,38,0.15)] h-full transform xl:-translate-y-4 hover:border-red-600 hover:shadow-[0_0_50px_rgba(220,38,38,0.25)] transition-all duration-300 group">
                                 
                                 {/* Badge 20% OFF */}
-                                <div className="absolute top-6 right-6 bg-cyan-400 text-black text-[10px] font-black px-3 py-1.5 rounded-full leading-tight text-center shadow-lg shadow-cyan-500/20 z-20">
+                                <div className="absolute top-6 right-6 bg-red-600 text-white text-[10px] font-black px-3 py-1.5 rounded-full leading-tight text-center shadow-lg z-20">
                                     20% de<br/>desconto
                                 </div>
 
                                 <div className="mb-6">
                                     {/* MAIS ESCOLHIDO ANIMADO */}
                                     <div className="mb-1">
-                                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-500 animate-gradient-x text-sm font-black italic tracking-widest uppercase drop-shadow-[0_2px_4px_rgba(34,211,238,0.4)]">
+                                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-red-800 animate-pulse text-sm font-black italic tracking-widest uppercase drop-shadow-[0_2px_4px_rgba(220,38,38,0.4)]">
                                             MAIS ESCOLHIDO
                                         </span>
                                     </div>
@@ -471,7 +548,7 @@
                                 </div>
                                 
                                 {/* BOTÃO PRO ANIMADO */}
-                                <a href={getWhatsAppLink('Plano Pro')} target="_blank" className="w-full bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-500 animate-gradient-x text-white font-extrabold text-sm py-3.5 rounded-lg hover:opacity-90 transition-opacity mb-8 shadow-lg shadow-cyan-500/20 uppercase tracking-wide transform group-hover:scale-[1.02] duration-200 text-center block">
+                                <a href={getWhatsAppLink('Plano Pro')} target="_blank" className="w-full bg-gradient-to-r from-red-600 to-red-900 text-white font-extrabold text-sm py-3.5 rounded-lg hover:opacity-90 transition-opacity mb-8 shadow-lg shadow-red-900/50 uppercase tracking-wide transform group-hover:scale-[1.02] duration-200 text-center block">
                                     Assinar Agora
                                 </a>
 
@@ -482,14 +559,14 @@
                                         <span>+12 plataformas</span>
                                     </div>
                                      <div className="grid grid-cols-5 gap-2">
-                                        <div className="logo-box group-hover:ring-2 group-hover:ring-cyan-400 group-hover:shadow-[0_0_15px_rgba(34,211,238,0.5)]"><span className="font-geometric text-[13px] tracking-tighter font-black lowercase text-black">max</span></div>
-                                        <div className="logo-box group-hover:ring-2 group-hover:ring-cyan-400 group-hover:shadow-[0_0_15px_rgba(34,211,238,0.5)] transition-all delay-75"><img src="https://upload.wikimedia.org/wikipedia/commons/3/3e/Disney%2B_logo.svg" alt="Disney+" className="w-10 h-auto filter brightness-0"/></div>
-                                        <div className="logo-box flex-col pt-1 group-hover:ring-2 group-hover:ring-cyan-400 group-hover:shadow-[0_0_15px_rgba(34,211,238,0.5)] transition-all delay-100">
+                                        <div className="logo-box group-hover:ring-2 group-hover:ring-red-500"><span className="font-geometric text-[13px] tracking-tighter font-black lowercase text-black">max</span></div>
+                                        <div className="logo-box group-hover:ring-2 group-hover:ring-red-500 transition-all delay-75"><img src="https://upload.wikimedia.org/wikipedia/commons/3/3e/Disney%2B_logo.svg" alt="Disney+" className="w-10 h-auto filter brightness-0"/></div>
+                                        <div className="logo-box flex-col pt-1 group-hover:ring-2 group-hover:ring-red-500 transition-all delay-100">
                                              <span className="font-bold text-[8px] tracking-tight text-black leading-none">prime video</span>
                                              <svg className="w-8 h-2 mt-0.5 text-black" viewBox="0 0 100 20" fill="none" stroke="currentColor" strokeWidth="8"><path d="M10,5 Q50,25 90,5" strokeLinecap="round" /><path d="M90,5 L80,10" strokeWidth="0" fill="currentColor"/></svg>
                                         </div>
-                                        <div className="logo-box group-hover:ring-2 group-hover:ring-cyan-400 group-hover:shadow-[0_0_15px_rgba(34,211,238,0.5)] transition-all delay-150"><span className="font-condensed text-black text-[11px] tracking-tighter font-bold transform scale-y-110">NETFLIX</span></div>
-                                        <div className="logo-box group-hover:ring-2 group-hover:ring-cyan-400 group-hover:shadow-[0_0_15px_rgba(34,211,238,0.5)] transition-all delay-200"><span className="font-condensed text-black text-[7px] tracking-widest font-bold uppercase">Telecine</span></div>
+                                        <div className="logo-box group-hover:ring-2 group-hover:ring-red-500 transition-all delay-150"><span className="font-condensed text-black text-[11px] tracking-tighter font-bold transform scale-y-110">NETFLIX</span></div>
+                                        <div className="logo-box group-hover:ring-2 group-hover:ring-red-500 transition-all delay-200"><span className="font-condensed text-black text-[7px] tracking-widest font-bold uppercase">Telecine</span></div>
                                     </div>
                                 </div>
 
@@ -505,17 +582,17 @@
 
                         {/* === PLANO 4: PREMIUM (Anual) === */}
                         <RevealOnScroll delay={300} className="h-full z-10">
-                            <div className="card-bg rounded-3xl p-6 flex flex-col relative border-2 border-blue-500/60 shadow-[0_0_40px_rgba(59,130,246,0.15)] h-full transform xl:-translate-y-4 hover:border-blue-400 hover:shadow-[0_0_50px_rgba(59,130,246,0.25)] transition-all duration-300 group">
+                            <div className="card-bg rounded-3xl p-6 flex flex-col relative border-2 border-red-900/40 shadow-[0_0_40px_rgba(185,28,28,0.1)] h-full transform xl:-translate-y-4 hover:border-red-700 hover:shadow-[0_0_50px_rgba(185,28,28,0.2)] transition-all duration-300 group">
                                  
                                  {/* Badge 26% OFF */}
-                                 <div className="absolute top-6 right-6 bg-blue-400 text-black text-[10px] font-black px-3 py-1.5 rounded-full leading-tight text-center shadow-lg shadow-blue-500/20 z-20">
+                                 <div className="absolute top-6 right-6 bg-red-800 text-white text-[10px] font-black px-3 py-1.5 rounded-full leading-tight text-center shadow-lg z-20">
                                     26% de<br/>desconto
                                 </div>
 
                                 <div className="mb-6">
                                      {/* MAIOR ECONOMIA ANIMADO */}
                                      <div className="mb-1">
-                                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-500 animate-gradient-x text-sm font-black italic tracking-widest uppercase drop-shadow-[0_2px_4px_rgba(59,130,246,0.4)]">
+                                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-red-600 animate-pulse text-sm font-black italic tracking-widest uppercase">
                                             MAIOR ECONOMIA
                                         </span>
                                     </div>
@@ -535,7 +612,7 @@
                                 </div>
                                 
                                 {/* BOTÃO PREMIUM ANIMADO */}
-                                <a href={getWhatsAppLink('Plano Premium')} target="_blank" className="w-full bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-500 animate-gradient-x text-white font-extrabold text-sm py-3.5 rounded-lg hover:opacity-90 transition-opacity mb-8 shadow-lg shadow-blue-500/20 uppercase tracking-wide text-center block">
+                                <a href={getWhatsAppLink('Plano Premium')} target="_blank" className="w-full bg-gradient-to-r from-red-700 to-red-950 text-white font-extrabold text-sm py-3.5 rounded-lg hover:opacity-90 transition-opacity mb-8 shadow-lg shadow-red-900/40 uppercase tracking-wide text-center block">
                                     Assinar Agora
                                 </a>
 
@@ -546,14 +623,14 @@
                                         <span>+12 plataformas</span>
                                     </div>
                                      <div className="grid grid-cols-5 gap-2">
-                                        <div className="logo-box group-hover:ring-2 group-hover:ring-cyan-400 group-hover:shadow-[0_0_15px_rgba(34,211,238,0.5)]"><span className="font-geometric text-[13px] tracking-tighter font-black lowercase text-black">max</span></div>
-                                        <div className="logo-box group-hover:ring-2 group-hover:ring-cyan-400 group-hover:shadow-[0_0_15px_rgba(34,211,238,0.5)] transition-all delay-75"><img src="https://upload.wikimedia.org/wikipedia/commons/3/3e/Disney%2B_logo.svg" alt="Disney+" className="w-10 h-auto filter brightness-0"/></div>
-                                        <div className="logo-box flex-col pt-1 group-hover:ring-2 group-hover:ring-cyan-400 group-hover:shadow-[0_0_15px_rgba(34,211,238,0.5)] transition-all delay-100">
+                                        <div className="logo-box group-hover:ring-2 group-hover:ring-red-500"><span className="font-geometric text-[13px] tracking-tighter font-black lowercase text-black">max</span></div>
+                                        <div className="logo-box group-hover:ring-2 group-hover:ring-red-500 transition-all delay-75"><img src="https://upload.wikimedia.org/wikipedia/commons/3/3e/Disney%2B_logo.svg" alt="Disney+" className="w-10 h-auto filter brightness-0"/></div>
+                                        <div className="logo-box flex-col pt-1 group-hover:ring-2 group-hover:ring-red-500 transition-all delay-100">
                                              <span className="font-bold text-[8px] tracking-tight text-black leading-none">prime video</span>
                                              <svg className="w-8 h-2 mt-0.5 text-black" viewBox="0 0 100 20" fill="none" stroke="currentColor" strokeWidth="8"><path d="M10,5 Q50,25 90,5" strokeLinecap="round" /><path d="M90,5 L80,10" strokeWidth="0" fill="currentColor"/></svg>
                                         </div>
-                                        <div className="logo-box group-hover:ring-2 group-hover:ring-cyan-400 group-hover:shadow-[0_0_15px_rgba(34,211,238,0.5)] transition-all delay-150"><span className="font-condensed text-black text-[11px] tracking-tighter font-bold transform scale-y-110">NETFLIX</span></div>
-                                        <div className="logo-box group-hover:ring-2 group-hover:ring-cyan-400 group-hover:shadow-[0_0_15px_rgba(34,211,238,0.5)] transition-all delay-200"><span className="font-condensed text-black text-[7px] tracking-widest font-bold uppercase">Telecine</span></div>
+                                        <div className="logo-box group-hover:ring-2 group-hover:ring-red-500 transition-all delay-150"><span className="font-condensed text-black text-[11px] tracking-tighter font-bold transform scale-y-110">NETFLIX</span></div>
+                                        <div className="logo-box group-hover:ring-2 group-hover:ring-red-500 transition-all delay-200"><span className="font-condensed text-black text-[7px] tracking-widest font-bold uppercase">Telecine</span></div>
                                     </div>
                                 </div>
 
@@ -580,7 +657,7 @@
                         onClick={onClick}
                         className="w-full py-6 flex items-center justify-between text-left focus:outline-none group"
                     >
-                        <span className={`text-lg md:text-xl font-bold transition-colors ${isOpen ? 'text-cyan-400' : 'text-gray-300 group-hover:text-white'}`}>
+                        <span className={`text-lg md:text-xl font-bold transition-colors ${isOpen ? 'text-red-500' : 'text-gray-300 group-hover:text-white'}`}>
                             {question}
                         </span>
                         <div className={`relative w-6 h-6 flex items-center justify-center transition-transform duration-300 ${isOpen ? 'rotate-45' : ''}`}>
@@ -610,7 +687,7 @@
                     q: "Como utilizar o aplicativo?", 
                     a: (
                         <span>
-                            É muito simples! Basta instalar o app no seu dispositivo e fazer login. Para um guia visual rápido, veja nosso: <button onClick={(e) => { e.stopPropagation(); onOpenTutorial(); }} className="text-cyan-400 font-bold hover:text-cyan-300 hover:underline cursor-pointer ml-1 transition-colors uppercase tracking-wider text-xs border border-cyan-500/30 px-2 py-0.5 rounded bg-cyan-500/10">Tutorial</button>
+                            É muito simples! Basta instalar o app no seu dispositivo e fazer login. Para um guia visual rápido, veja nosso: <button onClick={(e) => { e.stopPropagation(); onOpenTutorial(); }} className="text-red-500 font-bold hover:text-red-400 hover:underline cursor-pointer ml-1 transition-colors uppercase tracking-wider text-xs border border-red-500/30 px-2 py-0.5 rounded bg-red-500/10">Tutorial</button>
                         </span>
                     )
                 },
@@ -625,7 +702,7 @@
                 <section className="relative z-10 py-16 md:py-24 bg-[#050505]">
                     <div className="container mx-auto px-6 max-w-4xl">
                         <RevealOnScroll className="text-center mb-12">
-                            <span className="text-cyan-500 font-bold tracking-[0.3em] text-xs uppercase mb-2 block">Dúvidas?</span>
+                            <span className="text-red-600 font-bold tracking-[0.3em] text-xs uppercase mb-2 block">Dúvidas?</span>
                             <h2 className="text-3xl md:text-4xl font-black text-white uppercase tracking-tight">Perguntas Frequentes</h2>
                         </RevealOnScroll>
                         
@@ -672,56 +749,6 @@
             Youtube: (props) => <svg {...props} width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17"></path><path d="m10 15 5-3-5-3z"></path></svg>
         };
 
-        // --- PARTÍCULAS ---
-        const ParticleRain = ({ type, active }) => {
-            if (!active) return null;
-            
-            const particleImages = {
-                bronze: 'https://purepng.com/public/uploads/large/purepng.com-bronze-coincoinmoneycurrencybronze-coin-14215264622687x2p8.png',
-                silver: 'https://purepng.com/public/uploads/large/purepng.com-silver-coinsilver-coinmoneycurrency-14215264624061x2p8.png',
-                gold: 'https://purepng.com/public/uploads/large/purepng.com-gold-coingold-coinmoneycurrency-14215264625571x2p8.png',
-                diamond: 'https://purepng.com/public/uploads/large/purepng.com-diamonddiamondgemstonecarbonbrilliant-14215264630051x2p8.png',
-                ruby: 'https://purepng.com/public/uploads/large/purepng.com-ruby-gemstonegemstonerubyprecious-stone-14215264632561x2p8.png'
-            };
-
-            const imageUrl = particleImages[type];
-            if (!imageUrl) return null;
-
-            const particles = useMemo(() => {
-                return Array.from({ length: 15 }).map((_, i) => ({
-                    id: i,
-                    left: Math.random() * 90 + 5,
-                    delay: Math.random() * 2,
-                    duration: 3 + Math.random() * 2,
-                    size: type === 'diamond' || type === 'ruby' ? 24 + Math.random() * 12 : 28 + Math.random() * 12
-                }));
-            }, [type]);
-
-            return (
-                <div className="absolute inset-0 pointer-events-none overflow-hidden rounded-2xl z-20">
-                    {particles.map(p => (
-                        <div
-                            key={p.id}
-                            className="absolute top-[-60px] hardware-accelerated"
-                            style={{
-                                left: `${p.left}%`,
-                                width: `${p.size}px`,
-                                height: `${p.size}px`,
-                                backgroundImage: `url(${imageUrl})`,
-                                backgroundSize: 'contain',
-                                backgroundRepeat: 'no-repeat',
-                                animation: `fallInfinite ${p.duration}s linear infinite`,
-                                animationDelay: `${p.delay}s`,
-                                filter: type === 'diamond' ? 'drop-shadow(0 0 5px rgba(137, 207, 240, 0.8)) brightness(1.2)' : 
-                                        type === 'ruby' ? 'drop-shadow(0 0 5px rgba(220, 20, 60, 0.8)) brightness(1.1)' : 
-                                        'drop-shadow(0 4px 6px rgba(0,0,0,0.4))'
-                            }}
-                        />
-                    ))}
-                </div>
-            );
-        };
-
         // --- SELETOR DE DISPOSITIVOS ---
         const DeviceSelector = ({ onSelect }) => {
             const devices = [
@@ -744,7 +771,7 @@
                                 className={`
                                     py-1.5 px-3 rounded border font-bold text-[10px] md:text-xs transition-all duration-300
                                     ${device.active 
-                                        ? 'bg-gradient-to-r from-green-600 to-green-500 border-green-400/50 text-white shadow-[0_0_15px_rgba(34,197,94,0.3)] hover:scale-105 hover:shadow-[0_0_25px_rgba(34,197,94,0.5)] cursor-pointer' 
+                                        ? 'bg-gradient-to-r from-red-600 to-red-900 border-red-500/50 text-white shadow-[0_0_15px_rgba(220,38,38,0.3)] hover:scale-105 hover:shadow-[0_0_25px_rgba(220,38,38,0.5)] cursor-pointer' 
                                         : 'bg-white/5 border-white/10 text-gray-500 cursor-not-allowed opacity-60'}
                                 `}
                             >
@@ -822,21 +849,26 @@
             ];
 
             return (
-                <div className="min-h-screen">
+                /* ADICIONADO 'relative' AQUI PARA SEGURAR O BACKGROUND ABSOLUTO */
+                <div className="min-h-screen relative bg-black">
                     {/* Background do novo Hero */}
-                    <div className="bg-hero"></div>
-                    <div className="bg-overlay"></div>
+                    <div className="fixed inset-0 w-full h-full overflow-hidden pointer-events-none">
+                        <div className="bg-hero"></div>
+                        <div className="bg-overlay"></div>
+                        <UpsideDownSpores />
+                    </div>
 
                     {/* Navigation - Novo Estilo Cápsula com Pouco Blur */}
                     <div className="fixed w-full flex justify-center pt-6 px-4 z-50">
                         <nav className="bg-black/40 backdrop-blur-sm border border-white/10 rounded-full px-6 py-3 flex items-center justify-between w-full max-w-5xl shadow-2xl transition-all duration-300 hover:bg-black/60">
                             {/* Logo */}
                             <div className="flex items-center gap-2">
-                                <div className="w-8 h-8 bg-white rounded-md flex items-center justify-center text-black font-bold text-lg">
+                                {/* APLICADO AQUI: btn-gradient e texto branco no quadrado do G */}
+                                <div className="w-8 h-8 rounded-md flex items-center justify-center text-white font-bold text-lg btn-gradient">
                                     G
                                 </div>
-                                {/* Aplicado o tema Cyan no "+" */}
-                                <span className="text-xl font-semibold tracking-wide">GrowthUP<span className="text-cyan-400">+</span></span>
+                                {/* Aplicado o tema Vermelho no "+" */}
+                                <span className="text-xl font-semibold tracking-wide">GrowthUP<span className="text-red-500">+</span></span>
                             </div>
 
                             {/* Links (Hidden on mobile) */}
@@ -865,7 +897,7 @@
                                 SEM LIMITES.
                             </h1>
                             <p className="text-gray-300 text-lg md:text-xl font-light leading-relaxed max-w-2xl mx-auto">
-                                Desbloqueie o potencial máximo do seu entretenimento.<br className="hidden md:block"/>
+                                Desbloqueie o potencial máximo do seu entretenimento.<br />
                                 Milhares de conteúdos em 4K.
                             </p>
                         </RevealOnScroll>
@@ -874,7 +906,8 @@
                         <RevealOnScroll delay={200} className="w-full mb-8">
                             <h2 className="text-white text-lg font-semibold mb-6 pl-1 text-center md:text-left">Filmes, Séries, Canais e muito mais</h2>
                             
-                            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+                            {/* Grid ajustado para 6 colunas no Desktop (lg:grid-cols-6) */}
+                            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
                                 
                                 {/* Card 1 */}
                                 <div className="movie-card relative aspect-video rounded-lg overflow-hidden cursor-pointer group bg-gray-800 shadow-lg shadow-black/50">
@@ -922,18 +955,21 @@
                                     </div>
                                 </div>
 
-                                {/* Card 5 */}
+                                {/* Card 5: Futebol (Imagem trocada por jogadores em campo) */}
                                 <div className="movie-card relative aspect-video rounded-lg overflow-hidden cursor-pointer group bg-gray-800 shadow-lg shadow-black/50">
-                                    <img src="https://images.unsplash.com/photo-1605379399642-870262d3d051?q=80&w=1812&auto=format&fit=crop" alt="Série Suspense" className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity" />
+                                    <img src="https://images.unsplash.com/photo-1579952363873-27f3bade9f55?q=80&w=2070&auto=format&fit=crop" alt="Futebol ao Vivo" className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity" />
                                     <div className="absolute inset-0 flex items-center justify-center">
                                         <div className="play-btn w-10 h-10 rounded-full flex items-center justify-center border border-white/30">
                                             <i className="fa-solid fa-play text-white text-sm ml-0.5"></i>
                                         </div>
                                     </div>
+                                    <div className="absolute bottom-2 left-2">
+                                        <span className="text-xs font-bold text-green-400 drop-shadow-md bg-black/50 px-1 rounded animate-pulse">AO VIVO</span>
+                                    </div>
                                 </div>
 
-                                {/* Card 6: Capitão América (Visível apenas em Mobile/Tablet para fechar o grid) */}
-                                <div className="movie-card relative aspect-video rounded-lg overflow-hidden cursor-pointer group bg-gray-800 shadow-lg shadow-black/50 lg:hidden">
+                                {/* Card 6: Capitão América (Agora visível em TODAS as resoluções) */}
+                                <div className="movie-card relative aspect-video rounded-lg overflow-hidden cursor-pointer group bg-gray-800 shadow-lg shadow-black/50">
                                     <img src="https://images.unsplash.com/photo-1569003339405-ea396a5a8a90?q=80&w=2070&auto=format&fit=crop" alt="Capitão América Marvel" className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity" />
                                     <div className="absolute inset-0 flex items-center justify-center">
                                         <div className="play-btn w-10 h-10 rounded-full flex items-center justify-center border border-white/30">
@@ -968,8 +1004,8 @@
                             <div className="grid md:grid-cols-4 gap-8">
                                 {benefits.map((item, idx) => (
                                     <RevealOnScroll key={idx} delay={idx * 100}>
-                                        <div className="p-6 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-cyan-500/30 hover:bg-white/[0.05] transition-all group">
-                                            <div className="mb-4 text-cyan-500 group-hover:text-white transition-colors group-hover:scale-110 transform duration-300 origin-left">{item.icon}</div>
+                                        <div className="p-6 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-red-900/30 hover:bg-white/[0.05] transition-all group">
+                                            <div className="mb-4 text-red-600 group-hover:text-white transition-colors group-hover:scale-110 transform duration-300 origin-left">{item.icon}</div>
                                             <h3 className="text-lg font-bold text-white mb-3">{item.title}</h3>
                                             <p className="text-sm text-gray-500 leading-relaxed group-hover:text-gray-400">{item.desc}</p>
                                         </div>
@@ -997,7 +1033,7 @@
                                 <div className="container mx-auto px-6">
                                     <RevealOnScroll className="text-center mb-10">
                                         <h2 className="text-3xl font-black text-white uppercase tracking-tighter mb-4 drop-shadow-xl">
-                                            Experiência <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-white">Reels</span>
+                                            Experiência <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-red-800">Reels</span>
                                         </h2>
                                         <p className="text-gray-400 tracking-widest text-sm uppercase max-w-2xl mx-auto">Veja como funciona na prática.</p>
                                     </RevealOnScroll>
@@ -1018,11 +1054,11 @@
                                                         <div className="absolute inset-0 bg-gradient-to-b from-slate-900 to-black flex items-center justify-center overflow-hidden">
                                                             <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1611162616475-46b635cb6868?auto=format&fit=crop&w=600&q=80')] bg-cover bg-center opacity-50 mix-blend-overlay"></div>
                                                             <div className="text-center relative z-10 p-6">
-                                                                <div className="inline-block p-4 rounded-full bg-white/10 backdrop-blur-md mb-4 border border-white/20 shadow-cyan-500/30">
+                                                                <div className="inline-block p-4 rounded-full bg-white/10 backdrop-blur-md mb-4 border border-white/20 shadow-red-900/30">
                                                                     <Icons.Play size={48} className="text-white fill-white ml-2" />
                                                                 </div>
                                                                 <h3 className="text-2xl font-bold tracking-widest text-white uppercase">Assista o Reels</h3>
-                                                                <p className="text-cyan-400 text-sm mt-2 tracking-widest">Clique para Tocar</p>
+                                                                <p className="text-red-500 text-sm mt-2 tracking-widest">Clique para Tocar</p>
                                                             </div>
                                                         </div>
                                                         <div className="absolute bottom-0 left-0 w-full h-1/3 bg-gradient-to-t from-black to-transparent"></div>
@@ -1040,14 +1076,14 @@
                             <section className="relative z-10 py-20 bg-black hidden md:block border-t border-white/5">
                                 <div className="container mx-auto max-w-5xl px-6">
                                     <RevealOnScroll className="text-center mb-12">
-                                        <h2 className="text-xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500 tracking-[0.2em] uppercase drop-shadow-[0_0_10px_rgba(34,211,238,0.5)]">
+                                        <h2 className="text-xl font-black text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-red-800 tracking-[0.2em] uppercase drop-shadow-[0_0_10px_rgba(220,38,38,0.5)]">
                                             EXPERIÊNCIA VÍDEO
                                         </h2>
                                         <p className="text-xs text-gray-400 font-bold tracking-widest mt-1">VEJA COMO FUNCIONA NA PRÁTICA.</p>
                                     </RevealOnScroll>
 
                                     <RevealOnScroll delay={200} className="relative perspective-1000">
-                                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-cyan-500/10 blur-[100px] rounded-full"></div>
+                                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-red-900/10 blur-[100px] rounded-full"></div>
                                         <div className="relative z-10 transform hover:scale-[1.01] transition-transform duration-700">
                                             <div 
                                                 className="bg-black border-[6px] border-[#222] rounded-xl shadow-2xl relative overflow-hidden aspect-video cursor-pointer" 
@@ -1063,11 +1099,11 @@
                                                         <div className="absolute inset-0 bg-gradient-to-br from-slate-900 to-black flex items-center justify-center overflow-hidden">
                                                             <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1593784991095-a20506948430?auto=format&fit=crop&w=800&q=80')] bg-cover opacity-40 mix-blend-overlay"></div>
                                                             <div className="text-center relative z-10">
-                                                                <div className="inline-block p-4 rounded-full bg-white/10 backdrop-blur-md mb-4 border border-white/20 shadow-cyan-500/30">
+                                                                <div className="inline-block p-4 rounded-full bg-white/10 backdrop-blur-md mb-4 border border-white/20 shadow-red-900/30">
                                                                     <Icons.Play size={48} className="text-white fill-white ml-2" />
                                                                 </div>
                                                                 <h3 className="text-2xl font-bold tracking-widest text-white uppercase">Assista o video</h3>
-                                                                <p className="text-cyan-400 text-sm mt-2 tracking-widest">Clique para tocar</p>
+                                                                <p className="text-red-500 text-sm mt-2 tracking-widest">Clique para tocar</p>
                                                             </div>
                                                         </div>
                                                         <div className="absolute top-0 right-0 w-2/3 h-full bg-gradient-to-l from-white/5 to-transparent skew-x-[-20deg]"></div>
@@ -1089,29 +1125,31 @@
                         <div className="container mx-auto px-6">
                             <div className="flex flex-col md:flex-row justify-between items-center md:items-start gap-8 mb-12">
                                 <div className="flex-1">
-                                    <h4 className="text-3xl font-black text-white uppercase tracking-tighter mb-2 italic">Growth Up Brasil</h4>
+                                    <h4 className="text-3xl font-black text-white uppercase tracking-tighter mb-2 italic">
+                                        GrowthUP<span className="text-red-500">+</span>
+                                    </h4>
                                     <p className="text-[10px] text-gray-500 uppercase tracking-[0.2em]">Since 2019 • São Paulo</p>
                                 </div>
                                 <div className="flex gap-8 md:gap-16 flex-col md:flex-row w-full md:w-auto justify-center md:justify-start">
                                     <div>
                                         <p className="text-xs font-bold text-gray-400 uppercase mb-4 tracking-wider">Contato</p>
                                         <div className="flex flex-col gap-2">
-                                            <p className="text-sm text-white hover:text-cyan-400 cursor-pointer transition-colors">(11) 99139-6481</p>
-                                            <p className="text-sm text-white hover:text-cyan-400 cursor-pointer transition-colors">growthupbrasil@gmail.com</p>
+                                            <p className="text-sm text-white hover:text-red-500 cursor-pointer transition-colors">(11) 99139-6481</p>
+                                            <p className="text-sm text-white hover:text-red-500 cursor-pointer transition-colors">growthupbrasil@gmail.com</p>
                                         </div>
                                     </div>
                                     <div>
                                         <p className="text-xs font-bold text-gray-400 uppercase mb-4 tracking-wider">Siga-nos</p>
                                         <div className="flex gap-4 justify-center md:justify-start">
-                                            <a href="https://www.instagram.com/growthupbrasil/" target="_blank" rel="noopener noreferrer" className="text-white hover:text-cyan-400 transition-colors"><Icons.Instagram /></a>
-                                            <a href="https://www.facebook.com/GrowthupBrasil/" target="_blank" rel="noopener noreferrer" className="text-white hover:text-cyan-400 transition-colors"><Icons.Facebook /></a>
-                                            <a href="https://www.youtube.com/@GrowthUpBRA" target="_blank" rel="noopener noreferrer" className="text-white hover:text-cyan-400 transition-colors"><Icons.Youtube /></a>
+                                            <a href="https://www.instagram.com/growthupbrasil/" target="_blank" rel="noopener noreferrer" className="text-white hover:text-red-500 transition-colors"><Icons.Instagram /></a>
+                                            <a href="https://www.facebook.com/GrowthupBrasil/" target="_blank" rel="noopener noreferrer" className="text-white hover:text-red-500 transition-colors"><Icons.Facebook /></a>
+                                            <a href="https://www.youtube.com/@GrowthUpBRA" target="_blank" rel="noopener noreferrer" className="text-white hover:text-red-500 transition-colors"><Icons.Youtube /></a>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-[10px] text-gray-600 uppercase tracking-widest">
-                                <p>© 2026 Growth Up Brasil. Todos os direitos reservados.</p>
+                                <p>© 2026 GrowthUP+. Todos os direitos reservados.</p>
                                 <div className="flex gap-4"><Icons.ShieldCheck size={14} /><Icons.Globe size={14} /></div>
                             </div>
                         </div>

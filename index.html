@@ -5,8 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GrowthUP+ | Streaming Ilimitado</title>
     
-    <!-- Meta Pixel Code -->
+    <!-- Meta Pixel Code & DataLayer Fallback -->
     <script>
+    // 1. Camada de Dados (Fallback/Backup)
+    window.dataLayer = window.dataLayer || [];
+
     /* Instruções de Configuração do Pixel:
        Substitua 'SEU_ID_DO_PIXEL_AQUI' pelo ID numérico do seu Pixel do Meta.
     */
@@ -26,7 +29,20 @@
     if(typeof fbq === 'undefined') {
         window.fbq = function() { console.log('Pixel Event Disparado:', arguments); };
     }
+
+    // 2. PageView Padrão
     fbq('track', 'PageView');
+
+    // 3. ViewContent Rico (Melhora o aprendizado do algoritmo)
+    // Dispara logo após o carregamento para marcar usuários qualificados
+    setTimeout(function() {
+        fbq('track', 'ViewContent', {
+            content_name: 'LP_GrowthUP',
+            content_category: 'Streaming',
+            value: 18.90, // Valor base para ancoragem
+            currency: 'BRL'
+        });
+    }, 2000); // Pequeno delay para não pegar rejeição imediata
     </script>
     <noscript><img height="1" width="1" style="display:none"
     src="https://www.facebook.com/tr?id=SEU_ID_DO_PIXEL_AQUI&ev=PageView&noscript=1"
@@ -284,7 +300,7 @@
         try {
             const { useState, useEffect, useRef, useMemo } = React;
 
-            // --- DEFINIÇÃO DOS ÍCONES (MOVIDO PARA O TOPO PARA EVITAR ERROS) ---
+            // --- DEFINIÇÃO DOS ÍCONES (MOVIDO PARA O TOPO PARA SEGURANÇA) ---
             const Icons = {
                 Play: (props) => <svg {...props} width="24" height="24" viewBox="0 0 24 24" fill={props.fill || "none"} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>,
                 Monitor: (props) => <svg {...props} width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>,
@@ -640,7 +656,7 @@
                                             Tenha acesso completo a todos os recursos. O plano perfeito para você e sua família.
                                         </p>
                                     </div>
-                                    <a href="https://pay.cakto.com.br/7kjywct_686205" target="_blank" className="w-full bg-white hover:bg-zinc-200 text-black font-extrabold text-sm py-3.5 rounded-lg transition-colors mb-8 uppercase tracking-wide text-center block" onClick={() => trackHighIntent()}>
+                                    <a href="https://pay.cakto.com.br/7kjywct_686205" target="_blank" className="w-full bg-white hover:bg-zinc-200 text-black font-extrabold text-sm py-3.5 rounded-lg transition-colors mb-8 uppercase tracking-wide text-center block" onClick={() => trackHighIntent('Basic')}>
                                         Assinar Agora
                                     </a>
                                     <div className="mb-8">
@@ -678,7 +694,7 @@
                                         </div>
                                         <p className="text-zinc-400 text-xs leading-relaxed min-h-[40px]">Economize assinando por 3 meses. Ótima opção de médio prazo.</p>
                                     </div>
-                                    <a href="https://pay.cakto.com.br/jpjps2w" target="_blank" className="w-full bg-white hover:bg-zinc-200 text-black font-extrabold text-sm py-3.5 rounded-lg transition-colors mb-8 uppercase tracking-wide text-center block" onClick={() => trackHighIntent()}>
+                                    <a href="https://pay.cakto.com.br/jpjps2w" target="_blank" className="w-full bg-white hover:bg-zinc-200 text-black font-extrabold text-sm py-3.5 rounded-lg transition-colors mb-8 uppercase tracking-wide text-center block" onClick={() => trackHighIntent('Plus')}>
                                         Assinar Agora
                                     </a>
                                     <div className="mb-8">
@@ -716,7 +732,7 @@
                                         </div>
                                         <p className="text-zinc-400 text-xs leading-relaxed min-h-[40px]">O plano ideal para quem quer garantir entretenimento por mais tempo.</p>
                                     </div>
-                                    <a href="https://pay.cakto.com.br/mq6kaat" target="_blank" className="w-full bg-gradient-to-r from-red-600 to-red-900 text-white font-extrabold text-sm py-3.5 rounded-lg hover:opacity-90 transition-opacity mb-8 shadow-lg shadow-red-900/50 uppercase tracking-wide transform group-hover:scale-[1.02] duration-200 text-center block" onClick={() => trackHighIntent()}>
+                                    <a href="https://pay.cakto.com.br/mq6kaat" target="_blank" className="w-full bg-gradient-to-r from-red-600 to-red-900 text-white font-extrabold text-sm py-3.5 rounded-lg hover:opacity-90 transition-opacity mb-8 shadow-lg shadow-red-900/50 uppercase tracking-wide transform group-hover:scale-[1.02] duration-200 text-center block" onClick={() => trackHighIntent('Pro')}>
                                         Assinar Agora
                                     </a>
                                     <div className="mb-8">
@@ -754,7 +770,7 @@
                                         </div>
                                         <p className="text-zinc-400 text-xs leading-relaxed min-h-[40px]">O maior desconto e acesso anual. Perfeito para você e sua família.</p>
                                     </div>
-                                    <a href="https://pay.cakto.com.br/367ifhv" target="_blank" className="w-full bg-gradient-to-r from-red-700 to-red-950 text-white font-extrabold text-sm py-3.5 rounded-lg hover:opacity-90 transition-opacity mb-8 shadow-lg shadow-red-900/40 uppercase tracking-wide text-center block" onClick={() => trackHighIntent()}>
+                                    <a href="https://pay.cakto.com.br/367ifhv" target="_blank" className="w-full bg-gradient-to-r from-red-700 to-red-950 text-white font-extrabold text-sm py-3.5 rounded-lg hover:opacity-90 transition-opacity mb-8 shadow-lg shadow-red-900/40 uppercase tracking-wide text-center block" onClick={() => trackHighIntent('Premium')}>
                                         Assinar Agora
                                     </a>
                                     <div className="mb-8">
@@ -838,16 +854,46 @@
                 const [hasShownExitPopup, setHasShownExitPopup] = useState(false);
                 const whatsappNumber = "5511991396481"; 
                 
+                // Função de Link WhatsApp com UTMs e Texto Personalizado
                 const getWhatsAppLink = (planName) => {
-                    const text = planName ? `Olá! Tenho interesse no *${planName}* da GrowthUP+.` : "Olá! Quero economizar e assistir tudo em um só lugar com a GrowthUP+";
-                    return `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(text)}`;
+                    let text = "";
+                    // UTMs base
+                    let utm = "&utm_source=lp&utm_medium=organic&utm_campaign=growthup";
+                    
+                    if (planName && planName !== 'Botão Flutuante' && planName !== 'Assinar Agora Menu' && planName !== 'Hero Mobile' && planName !== 'Exit Popup') {
+                        // É um plano específico (Basic, Plus, Pro, Premium)
+                        text = `Olá! Vim pelo site e quero o *Plano ${planName}*.`;
+                        utm += `&utm_content=plan_${planName.toLowerCase()}&utm_intent=high`;
+                    } else if (planName === 'Exit Popup') {
+                        text = "Olá! Vim pelo site e quero ver como funciona.";
+                        utm += `&utm_content=exit_popup&utm_intent=interest`;
+                    } else {
+                        // Interesse geral (Botão flutuante, menu, etc)
+                        text = "Olá! Vim pelo site e quero entender melhor como funciona.";
+                        utm += `&utm_content=general_interest&utm_intent=interest`;
+                    }
+                    
+                    return `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(text)}${utm}`;
                 };
 
                 const trackInterest = () => {
                     if (typeof fbq !== 'undefined') fbq('trackCustom', 'WhatsApp_Click');
                 };
-                const trackHighIntent = () => {
-                    if (typeof fbq !== 'undefined') fbq('trackCustom', 'HighIntent_WhatsApp');
+                
+                // Tracking Granular por Plano + InitiateCheckout
+                const trackHighIntent = (planName) => {
+                    if (typeof fbq !== 'undefined') {
+                        // Custom Event para Remarketing
+                        fbq('trackCustom', 'HighIntent_WhatsApp', { plan: planName });
+                        // Standard Event para Conversão
+                        fbq('track', 'InitiateCheckout', { 
+                            content_name: `Plano ${planName}`, 
+                            value: 18.90, // Valor base
+                            currency: 'BRL' 
+                        });
+                    }
+                    // Fallback DataLayer
+                    window.dataLayer.push({ event: 'high_intent', plan: planName });
                 };
 
                 const handleOpenTutorial = () => {
@@ -870,12 +916,8 @@
                         }
                     };
                     window.addEventListener('scroll', handleScroll);
-                    const viewContentTimer = setTimeout(() => {
-                        if (typeof fbq !== 'undefined') fbq('track', 'ViewContent');
-                    }, 5000);
                     return () => {
                         window.removeEventListener('scroll', handleScroll);
-                        clearTimeout(viewContentTimer);
                     };
                 }, []);
 
@@ -1092,7 +1134,7 @@
                             </div>
                         </footer>
                         <a href={getWhatsAppLink('Botão Flutuante')} target="_blank" rel="noopener noreferrer" className="fixed bottom-6 right-6 z-50 group flex items-center gap-3" aria-label="WhatsApp" onClick={() => trackInterest()}>
-                            <div className="bg-white text-black font-bold text-sm py-2 px-4 rounded-full shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none md:pointer-events-auto md:opacity-100">Falar no WhatsApp</div>
+                            <div className="bg-white text-black font-bold text-sm py-2 px-4 rounded-full shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none md:pointer-events-auto md:opacity-100">Teste grátis agora</div>
                             <div className="relative">
                                 <div className="absolute inset-0 bg-green-500 blur-lg opacity-40 group-hover:opacity-60 transition-opacity animate-pulse"></div>
                                 <div className="relative bg-green-600 border border-green-400 text-white p-4 rounded-full shadow-2xl hover:scale-110 hover:bg-green-500 transition-all duration-300"><Icons.WhatsApp width={32} height={32} fill="currentColor" /></div>

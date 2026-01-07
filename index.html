@@ -399,9 +399,60 @@
 
         // --- SESSÃO DE PREÇOS (PRICING) ---
         const PricingSection = ({ getWhatsAppLink }) => {
+            const [showCampaignInfo, setShowCampaignInfo] = useState(false);
+
             return (
                 <section className="relative z-10 py-16 px-4 bg-[#050505] text-white flex flex-col items-center border-t border-white/5" id="planos">
-                    <RevealOnScroll className="text-center max-w-4xl mx-auto mb-16">
+                    <RevealOnScroll className="text-center max-w-4xl mx-auto mb-16 relative">
+                        
+                        {/* Campaign Badge Interativo */}
+                        <div 
+                            className="relative inline-block z-30 cursor-pointer"
+                            onMouseEnter={() => setShowCampaignInfo(true)}
+                            onMouseLeave={() => setShowCampaignInfo(false)}
+                            onClick={() => setShowCampaignInfo(!showCampaignInfo)}
+                        >
+                            <div className="bg-gradient-to-r from-red-600/20 to-orange-600/20 border border-red-500/30 rounded-full px-4 py-1.5 mb-4 backdrop-blur-md hover:bg-red-900/20 transition-all duration-300">
+                                <span className="text-red-400 text-xs font-bold tracking-widest uppercase flex items-center gap-2">
+                                    <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>
+                                    Campanha de Janeiro <i className={`fas fa-chevron-down ml-1 text-[10px] transition-transform duration-300 ${showCampaignInfo ? 'rotate-180' : ''}`}></i>
+                                </span>
+                            </div>
+
+                            {/* Tooltip Resumo */}
+                            <div className={`absolute left-1/2 -translate-x-1/2 top-full mt-1 w-[290px] bg-[#0a0a0a] border border-red-900/40 rounded-xl shadow-2xl shadow-red-900/10 p-5 transition-all duration-300 origin-top z-50 ${showCampaignInfo ? 'opacity-100 scale-100 translate-y-0 visible' : 'opacity-0 scale-95 -translate-y-2 invisible pointer-events-none'}`}>
+                                
+                                {/* Seta do Tooltip */}
+                                <div className="absolute -top-1.5 left-1/2 -translate-x-1/2 w-3 h-3 bg-[#0a0a0a] border-t border-l border-red-900/40 transform rotate-45"></div>
+
+                                <h4 className="text-white font-bold text-xs uppercase tracking-wider mb-4 text-center border-b border-white/5 pb-2">
+                                    Resumo de Benefícios
+                                </h4>
+                                
+                                <div className="space-y-3">
+                                    <div className="flex justify-between items-center">
+                                        <span className="text-zinc-400 text-xs font-medium">Mensal</span>
+                                        <span className="text-[10px] font-bold text-green-400 bg-green-500/10 px-2 py-0.5 rounded border border-green-500/20">+1 Tela</span>
+                                    </div>
+                                    <div className="flex justify-between items-center">
+                                        <span className="text-zinc-400 text-xs font-medium">Trimestral</span>
+                                        <span className="text-[10px] font-bold text-green-400 bg-green-500/10 px-2 py-0.5 rounded border border-green-500/20">+1 Mês & +1 Tela</span>
+                                    </div>
+                                    <div className="flex justify-between items-center">
+                                        <span className="text-zinc-400 text-xs font-medium">Semestral</span>
+                                        <span className="text-[10px] font-bold text-green-400 bg-green-500/10 px-2 py-0.5 rounded border border-green-500/20">+3 Meses & +1 Tela</span>
+                                    </div>
+                                    <div className="flex justify-between items-center">
+                                        <span className="text-zinc-400 text-xs font-medium">Anual</span>
+                                        <span className="text-[10px] font-bold text-green-400 bg-green-500/10 px-2 py-0.5 rounded border border-green-500/20">+6 Meses & +2 Telas</span>
+                                    </div>
+                                </div>
+                                <div className="mt-4 pt-3 border-t border-white/5 text-center">
+                                    <p className="text-[9px] text-zinc-500">Oferta válida por tempo limitado.</p>
+                                </div>
+                            </div>
+                        </div>
+
                         <h2 className="text-zinc-500 text-xs md:text-sm font-semibold tracking-[0.2em] uppercase mb-3">PLANOS</h2>
                         <h1 className="text-4xl md:text-5xl font-extrabold mb-6 tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-red-800 animate-pulse">Escolha o seu plano</h1>
                         <p className="text-zinc-400 text-sm md:text-base max-w-2xl mx-auto leading-relaxed font-light">
@@ -437,11 +488,14 @@
                                     </div>
                                 </div>
                                 <ul className="space-y-3.5 text-xs text-zinc-300 mt-auto font-medium">
-                                    <li className="flex items-start gap-3"><i className="fas fa-check-circle text-zinc-700 text-sm mt-0.5"></i><span>Acesso em 1 tela</span></li>
-                                    <li className="flex items-start gap-3"><i className="fas fa-check-circle text-zinc-700 text-sm mt-0.5"></i><span>Mais de 10.000 Canais, Filmes e Séries.</span></li>
-                                    <li className="flex items-start gap-3"><i className="fas fa-check-circle text-zinc-700 text-sm mt-0.5"></i><span>Tudo em SD/HD/FHD/4K</span></li>
-                                    <li className="flex items-start gap-3"><i className="fas fa-check-circle text-zinc-700 text-sm mt-0.5"></i><span>Multiplataforma</span></li>
-                                    <li className="flex items-start gap-3"><i className="fas fa-check-circle text-zinc-700 text-sm mt-0.5"></i><span>Acesso mensal</span></li>
+                                    <li className="flex items-start gap-3">
+                                        <i className="fas fa-check-circle text-green-500 text-sm mt-0.5"></i>
+                                        <span className="font-bold text-white">Acesso em 2 telas <span className="text-[9px] bg-green-500/20 text-green-400 px-1.5 py-0.5 rounded ml-1 uppercase border border-green-500/30">Bônus +1 Tela</span></span>
+                                    </li>
+                                    <li className="flex items-start gap-3"><i className="fas fa-check-circle check-gradient text-sm mt-0.5"></i><span>Mais de 10.000 Canais, Filmes e Séries.</span></li>
+                                    <li className="flex items-start gap-3"><i className="fas fa-check-circle check-gradient text-sm mt-0.5"></i><span>Tudo em SD/HD/FHD/4K</span></li>
+                                    <li className="flex items-start gap-3"><i className="fas fa-check-circle check-gradient text-sm mt-0.5"></i><span>Multiplataforma</span></li>
+                                    <li className="flex items-start gap-3"><i className="fas fa-check-circle check-gradient text-sm mt-0.5"></i><span>Acesso mensal</span></li>
                                 </ul>
                             </div>
                         </RevealOnScroll>
@@ -474,11 +528,14 @@
                                     </div>
                                 </div>
                                 <ul className="space-y-3.5 text-xs text-zinc-300 mt-auto font-medium">
-                                    <li className="flex items-start gap-3"><i className="fas fa-check-circle check-gradient text-sm mt-0.5"></i><span>Acesso em 1 tela</span></li>
+                                    <li className="flex items-start gap-3">
+                                        <i className="fas fa-check-circle text-green-500 text-sm mt-0.5"></i>
+                                        <span className="font-bold text-white">Acesso em 2 telas <span className="text-[9px] bg-green-500/20 text-green-400 px-1.5 py-0.5 rounded ml-1 uppercase border border-green-500/30">Bônus +1 Tela</span></span>
+                                    </li>
                                     <li className="flex items-start gap-3"><i className="fas fa-check-circle check-gradient text-sm mt-0.5"></i><span>Mais de 10.000 Canais, Filmes e Séries.</span></li>
                                     <li className="flex items-start gap-3"><i className="fas fa-check-circle check-gradient text-sm mt-0.5"></i><span>Tudo em FHD/4K</span></li>
                                     <li className="flex items-start gap-3"><i className="fas fa-check-circle check-gradient text-sm mt-0.5"></i><span>Multiplataforma</span></li>
-                                    <li className="flex items-start gap-3"><i className="fas fa-check-circle check-gradient text-sm mt-0.5"></i><span>Acesso por 3 meses</span></li>
+                                    <li className="flex items-start gap-3"><i className="fas fa-check-circle text-green-500 text-sm mt-0.5"></i><span className="font-bold text-white">Acesso por 4 meses <span className="text-[9px] bg-green-500/20 text-green-400 px-1.5 py-0.5 rounded ml-1 uppercase border border-green-500/30">Bônus +1 Mês</span></span></li>
                                 </ul>
                             </div>
                         </RevealOnScroll>
@@ -511,11 +568,14 @@
                                     </div>
                                 </div>
                                 <ul className="space-y-3.5 text-xs text-zinc-300 mt-auto font-medium">
-                                    <li className="flex items-start gap-3"><i className="fas fa-check-circle check-gradient text-sm mt-0.5"></i><span>Acesso em até 2 telas simultâneas</span></li>
+                                    <li className="flex items-start gap-3">
+                                        <i className="fas fa-check-circle text-green-500 text-sm mt-0.5"></i>
+                                        <span className="font-bold text-white">Acesso em 3 telas <span className="text-[9px] bg-green-500/20 text-green-400 px-1.5 py-0.5 rounded ml-1 uppercase border border-green-500/30">Bônus +1 Tela</span></span>
+                                    </li>
                                     <li className="flex items-start gap-3"><i className="fas fa-check-circle check-gradient text-sm mt-0.5"></i><span>Mais de 10.000 Canais, Filmes e Séries.</span></li>
                                     <li className="flex items-start gap-3"><i className="fas fa-check-circle check-gradient text-sm mt-0.5"></i><span>Tudo em FHD/4K</span></li>
                                     <li className="flex items-start gap-3"><i className="fas fa-check-circle check-gradient text-sm mt-0.5"></i><span>Multiplataforma</span></li>
-                                    <li className="flex items-start gap-3"><i className="fas fa-check-circle check-gradient text-sm mt-0.5"></i><span>Acesso por 6 meses</span></li>
+                                    <li className="flex items-start gap-3"><i className="fas fa-check-circle text-green-500 text-sm mt-0.5"></i><span className="font-bold text-white">Acesso por 9 meses <span className="text-[9px] bg-green-500/20 text-green-400 px-1.5 py-0.5 rounded ml-1 uppercase border border-green-500/30">Bônus +3 Meses</span></span></li>
                                 </ul>
                             </div>
                         </RevealOnScroll>
@@ -548,12 +608,87 @@
                                     </div>
                                 </div>
                                 <ul className="space-y-3.5 text-xs text-zinc-300 mt-auto font-medium">
-                                    <li className="flex items-start gap-3"><i className="fas fa-check-circle check-gradient text-sm mt-0.5"></i><span>Acesso em até 2 telas simultâneas</span></li>
+                                    <li className="flex items-start gap-3">
+                                        <i className="fas fa-check-circle text-green-500 text-sm mt-0.5"></i>
+                                        <span className="font-bold text-white">Acesso em 4 telas <span className="text-[9px] bg-green-500/20 text-green-400 px-1.5 py-0.5 rounded ml-1 uppercase border border-green-500/30">Bônus +2 Telas</span></span>
+                                    </li>
                                     <li className="flex items-start gap-3"><i className="fas fa-check-circle check-gradient text-sm mt-0.5"></i><span>Mais de 10.000 Canais, Filmes e Séries.</span></li>
                                     <li className="flex items-start gap-3"><i className="fas fa-check-circle check-gradient text-sm mt-0.5"></i><span>Tudo em FHD/4K</span></li>
                                     <li className="flex items-start gap-3"><i className="fas fa-check-circle check-gradient text-sm mt-0.5"></i><span>Multiplataforma</span></li>
-                                    <li className="flex items-start gap-3"><i className="fas fa-check-circle check-gradient text-sm mt-0.5"></i><span>Acesso por 1 ano</span></li>
+                                    <li className="flex items-start gap-3"><i className="fas fa-check-circle text-green-500 text-sm mt-0.5"></i><span className="font-bold text-white">Acesso por 18 meses <span className="text-[9px] bg-green-500/20 text-green-400 px-1.5 py-0.5 rounded ml-1 uppercase border border-green-500/30">Bônus +6 Meses</span></span></li>
                                 </ul>
+                            </div>
+                        </RevealOnScroll>
+                    </div>
+                </section>
+            );
+        };
+
+        // --- SEÇÃO DE ALERTA DE GOLPES ---
+        const ScamAlertSection = () => {
+            return (
+                <section className="relative z-20 bg-[#050505] pb-16 px-4">
+                    <div className="max-w-4xl mx-auto">
+                        <RevealOnScroll>
+                            <div className="bg-red-950/20 border border-red-600/30 rounded-2xl p-8 relative overflow-hidden">
+                                <div className="absolute -top-10 -right-10 w-40 h-40 bg-red-600/10 rounded-full blur-3xl"></div>
+                                
+                                <div className="flex flex-col items-center text-center mb-8">
+                                    <div className="bg-red-600/20 p-3 rounded-full mb-4 border border-red-500/30 animate-pulse">
+                                        <i className="fas fa-exclamation-triangle text-2xl text-red-500"></i>
+                                    </div>
+                                    <h2 className="text-2xl md:text-3xl font-bold text-white uppercase tracking-tight mb-2">
+                                        Comunicado Importante
+                                    </h2>
+                                    <p className="text-red-400 text-sm font-bold tracking-widest uppercase border-b border-red-500/30 pb-1">
+                                        Atenção a Golpes
+                                    </p>
+                                </div>
+
+                                <div className="space-y-6 text-gray-300 text-sm md:text-base leading-relaxed">
+                                    <p>
+                                        Nos últimos tempos, surgiram diversas ofertas na internet prometendo <span className="text-white font-bold">“streaming vitalício”</span> ou <span className="text-white font-bold">“acesso para sempre”</span>.
+                                    </p>
+                                    
+                                    <div className="bg-black/40 rounded-xl p-6 border border-white/5">
+                                        <p className="text-white font-semibold mb-4 text-center">
+                                            É importante deixar algo bem claro: <span className="text-red-500 underline decoration-red-500/50">Esse tipo de serviço NÃO EXISTE.</span>
+                                        </p>
+                                        
+                                        <p className="mb-3 font-medium text-gray-400">Plataformas que prometem acesso vitalício:</p>
+                                        <ul className="space-y-2 mb-6">
+                                            <li className="flex items-start gap-3"><i className="fas fa-times text-red-500 mt-1"></i><span>Não são sustentáveis.</span></li>
+                                            <li className="flex items-start gap-3"><i className="fas fa-times text-red-500 mt-1"></i><span>Não conseguem manter servidores ativos indefinidamente.</span></li>
+                                            <li className="flex items-start gap-3"><i className="fas fa-times text-red-500 mt-1"></i><span>Costumam sair do ar sem aviso.</span></li>
+                                            <li className="flex items-start gap-3"><i className="fas fa-times text-red-500 mt-1"></i><span>Geralmente caracterizam fraude ou golpe.</span></li>
+                                        </ul>
+
+                                        <p className="mb-3 font-medium text-gray-400">Serviços de streaming sérios dependem de:</p>
+                                        <ul className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                                            <li className="flex items-center gap-2 bg-white/5 px-3 py-2 rounded text-xs"><div className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse shadow-[0_0_8px_rgba(34,197,94,0.6)]"></div>Infraestrutura de servidores</li>
+                                            <li className="flex items-center gap-2 bg-white/5 px-3 py-2 rounded text-xs"><div className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse shadow-[0_0_8px_rgba(34,197,94,0.6)]"></div>Custos contínuos de manutenção</li>
+                                            <li className="flex items-center gap-2 bg-white/5 px-3 py-2 rounded text-xs"><div className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse shadow-[0_0_8px_rgba(34,197,94,0.6)]"></div>Atualizações constantes</li>
+                                            <li className="flex items-center gap-2 bg-white/5 px-3 py-2 rounded text-xs"><div className="w-1.5 h-1.5 bg-green-500 rounded-full animate-pulse shadow-[0_0_8px_rgba(34,197,94,0.6)]"></div>Operação recorrente</li>
+                                        </ul>
+                                    </div>
+
+                                    <p className="text-center italic text-gray-400 text-xs md:text-sm">
+                                        Por esse motivo, nenhum serviço sério consegue oferecer acesso “para a vida toda”.
+                                    </p>
+
+                                    <div className="border-l-2 border-red-500 pl-4 py-1">
+                                        <p>
+                                            A <span className="text-white font-bold">GrowthUP+</span> trabalha de forma transparente, com planos claros, prazos definidos e foco em continuidade, estabilidade e suporte real ao cliente.
+                                        </p>
+                                    </div>
+
+                                    <div className="flex flex-col items-center justify-center pt-4 gap-2">
+                                        <span className="flex items-center gap-2 text-yellow-400 font-bold uppercase text-xs tracking-wider">
+                                            <i className="fas fa-exclamation-circle"></i> Desconfie de promessas irreais
+                                        </span>
+                                        <p className="text-white font-black tracking-tight text-lg">Transparência sempre será a melhor escolha.</p>
+                                    </div>
+                                </div>
                             </div>
                         </RevealOnScroll>
                     </div>
@@ -667,105 +802,10 @@
             );
         };
 
-        // --- NOVO COMPONENTE: NOTIFICAÇÃO DE CUPOM ---
-        const CouponBanner = ({ onClose }) => {
-            const [copied, setCopied] = useState(false);
-
-            const handleCopy = () => {
-                const text = "30off";
-                const textArea = document.createElement("textarea");
-                textArea.value = text;
-                document.body.appendChild(textArea);
-                textArea.select();
-                try {
-                    document.execCommand('copy');
-                    setCopied(true);
-                    setTimeout(() => setCopied(false), 2000);
-                } catch (err) {
-                    console.error('Failed to copy', err);
-                }
-                document.body.removeChild(textArea);
-            };
-
-            return (
-                <div id="coupon-banner" className="fixed top-0 left-0 w-full z-[100] bg-gradient-to-r from-red-900 via-red-600 to-orange-600 shadow-2xl border-b border-white/10 animate-fade-in-down h-auto py-3 md:h-auto">
-                    {/* Conteúdo Mobile Estilo 'Bonitão' restaurado (Visual Rico) mas ajustado para não quebrar */}
-                    <div className="md:hidden flex flex-col items-center gap-3 px-4 relative">
-                        <p className="text-white text-xs font-medium text-center leading-snug max-w-[90%]">
-                            Garanta o <span className="font-bold border-b border-yellow-300/50">Plano Premium (12 Meses)</span> com <span className="text-yellow-300 font-black text-lg">30% OFF</span>
-                        </p>
-                        
-                        <div className="flex items-center gap-3 w-full justify-center">
-                            {/* Timer Badge */}
-                            <div className="bg-red-900/40 border border-red-500/30 rounded-lg px-2.5 py-1.5 flex items-center gap-1.5 backdrop-blur-sm">
-                                <span className="text-[10px] font-bold text-red-100 uppercase tracking-wide">⏳ Até 05/Jan</span>
-                            </div>
-
-                            {/* Coupon Button */}
-                            <div 
-                                onClick={handleCopy}
-                                className="bg-black/20 border border-white/20 rounded-lg pl-3 pr-2 py-1.5 flex items-center gap-2 active:scale-95 transition-transform cursor-pointer backdrop-blur-sm hover:bg-black/30"
-                            >
-                                <span className="text-[10px] text-white/80 font-bold uppercase tracking-wider">CUPOM:</span>
-                                <span className="text-yellow-300 font-mono font-black text-sm tracking-widest">30off</span>
-                                {copied ? <Icons.CheckCircle size={14} className="text-green-400" /> : <Icons.Copy size={14} className="text-white" />}
-                            </div>
-                        </div>
-
-                        {/* Botão Fechar posicionado absolutamente no canto */}
-                        <button 
-                            onClick={onClose}
-                            className="absolute right-0 top-0 p-2 text-white/50 hover:text-white"
-                            aria-label="Fechar notificação"
-                        >
-                            <Icons.X size={18} />
-                        </button>
-                    </div>
-
-                    {/* Conteúdo Desktop (Completo) */}
-                    <div className="hidden md:flex flex-row items-center justify-center px-8 gap-3 text-center w-full relative">
-                        <div className="flex items-center gap-3">
-                            <div className="bg-white/20 p-1.5 rounded-full animate-pulse">
-                                <Icons.Zap size={14} className="text-yellow-300 fill-yellow-300" />
-                            </div>
-                            <span className="text-sm font-medium tracking-wide text-white">
-                                Garanta o <span className="font-bold border-b border-white/40 mx-1">Plano Premium (12 Meses)</span> com <span className="font-black text-yellow-300 text-lg mx-1 drop-shadow-md">30% OFF</span>
-                            </span>
-                            <span className="text-xs font-bold bg-black/20 px-2 py-0.5 rounded text-red-100 border border-white/10 flex items-center">
-                                ⏳ Até 05/Jan
-                            </span>
-                            <div 
-                                onClick={handleCopy}
-                                className="flex items-center group cursor-pointer bg-black/30 hover:bg-black/50 border border-white/20 hover:border-yellow-400/50 rounded-full pl-3 pr-2 py-1 transition-all duration-300 active:scale-95"
-                            >
-                                <span className="text-[10px] text-gray-300 font-bold mr-2 uppercase tracking-wider">Cupom:</span>
-                                <span className="font-mono text-base font-black text-white tracking-widest mr-2 group-hover:text-yellow-300 transition-colors">30off</span>
-                                <div className="bg-white/10 p-1 rounded-full group-hover:bg-white/20 transition-colors">
-                                    {copied ? <Icons.CheckCircle size={12} className="text-green-400" /> : <Icons.Copy size={12} className="text-white" />}
-                                </div>
-                            </div>
-                        </div>
-
-                        {/* Botão Fechar */}
-                        <button 
-                            onClick={onClose}
-                            className="absolute right-4 top-1/2 -translate-y-1/2 p-1 text-white/50 hover:text-white hover:bg-white/10 rounded-full transition-all"
-                            aria-label="Fechar notificação"
-                        >
-                            <Icons.X size={16} />
-                        </button>
-                    </div>
-                </div>
-            );
-        };
-
         // --- APP PRINCIPAL ---
         const App = () => {
             const [isScrolled, setIsScrolled] = useState(false);
             const [isMenuOpen, setIsMenuOpen] = useState(false);
-            
-            // Estado para o Banner de Cupom
-            const [showBanner, setShowBanner] = useState(true);
             
             // Estado para controlar a visibilidade da seção de vídeo
             const [showVideoSection, setShowVideoSection] = useState(false);
@@ -829,9 +869,6 @@
                 /* ADICIONADO 'relative' AQUI PARA SEGURAR O BACKGROUND ABSOLUTO */
                 <div className="min-h-screen relative bg-black">
                     
-                    {/* BANNER DE CUPOM */}
-                    {showBanner && <CouponBanner onClose={() => setShowBanner(false)} />}
-
                     {/* Background do novo Hero */}
                     <div className="fixed inset-0 w-full h-full overflow-hidden pointer-events-none">
                         <div className="bg-hero"></div>
@@ -840,8 +877,8 @@
                     </div>
 
                     {/* Navigation - Novo Estilo Cápsula com Pouco Blur */}
-                    {/* Ajuste "Cirúrgico": Se o banner 'Bonitão' estiver ativo, o menu desce 100px (top-[100px]) no mobile para não sobrepor */}
-                    <div className={`fixed w-full flex justify-center px-4 z-50 transition-all duration-500 ease-in-out ${showBanner ? 'top-[110px] md:top-[60px]' : 'top-6'}`}>
+                    {/* Ajuste "Cirúrgico": Removido o top dinâmico pois o banner não existe mais */}
+                    <div className="fixed w-full flex justify-center px-4 z-50 transition-all duration-500 ease-in-out top-6">
                         <nav className="bg-black/40 backdrop-blur-sm border border-white/10 rounded-full px-6 py-3 flex items-center justify-between w-full max-w-5xl shadow-2xl transition-all duration-300 hover:bg-black/60 pointer-events-auto">
                             {/* Logo */}
                             <div className="flex items-center gap-2">
@@ -870,8 +907,8 @@
                     </div>
 
                     {/* Hero Section - AQUI ESTÁ A CORREÇÃO DE PADDING PARA O TEXTO DESCER */}
-                    {/* Se o banner estiver ativo, aumentamos o padding-top para pt-64 (256px) no mobile para garantir que o texto "SUA TV" apareça abaixo do menu que desceu */}
-                    <section id="inicio" className={`relative z-10 min-h-screen flex flex-col justify-center items-center text-center px-6 md:px-12 lg:px-24 pb-12 w-full max-w-7xl mx-auto transition-all duration-500 ${showBanner ? 'pt-64 md:pt-48' : 'pt-32'}`}>
+                    {/* Removido o padding top dinâmico e fixado em pt-32 pois não há mais banner */}
+                    <section id="inicio" className="relative z-10 min-h-screen flex flex-col justify-center items-center text-center px-6 md:px-12 lg:px-24 pb-12 w-full max-w-7xl mx-auto transition-all duration-500 pt-32">
                         
                         {/* Hero Text */}
                         <RevealOnScroll className="max-w-3xl mb-12 mx-auto">
@@ -1014,6 +1051,9 @@
 
                     {/* Pricing Section */}
                     <PricingSection getWhatsAppLink={getWhatsAppLink} />
+
+                    {/* Nova Seção: Alerta de Golpes */}
+                    <ScamAlertSection />
 
                     {/* FAQ Section (Agora recebe o handler do tutorial) */}
                     <FAQSection onOpenTutorial={handleOpenTutorial} />

@@ -5,6 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GrowthUP+ | Streaming Ilimitado</title>
     
+    <!-- Meta Pixel Code -->
+    <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', 'SEU_PIXEL_ID_AQUI'); // <--- IMPORTANTE: TROQUE PELO SEU ID REAL
+    fbq('track', 'PageView');
+    </script>
+    <noscript><img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=SEU_PIXEL_ID_AQUI&ev=PageView&noscript=1"
+    /></noscript>
+    <!-- End Meta Pixel Code -->
+    
     <!-- Carrega o Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
@@ -219,6 +236,31 @@
     <script type="text/babel">
         const { useState, useEffect, useRef, useMemo } = React;
 
+        // --- TRACKING HELPERS (PIXEL) ---
+        // Função segura para chamar o pixel apenas se estiver carregado
+        const trackLead = () => {
+            if (typeof fbq === 'function') {
+                fbq('track', 'Lead', {
+                    content_name: 'WhatsApp Click',
+                    content_category: 'Contato',
+                    value: 1,
+                    currency: 'BRL'
+                });
+                console.log('Evento Lead Disparado');
+            }
+        };
+
+        const trackInitiateCheckout = (planName, value) => {
+            if (typeof fbq === 'function') {
+                fbq('track', 'InitiateCheckout', {
+                    content_name: `Plano ${planName}`,
+                    value: value,
+                    currency: 'BRL'
+                });
+                console.log(`Evento InitiateCheckout Disparado: ${planName} - R$${value}`);
+            }
+        };
+
         // --- COMPONENTES UTILITÁRIOS ---
 
         const RevealOnScroll = ({ children, delay = 0, className = "" }) => {
@@ -276,6 +318,17 @@
             );
         };
 
+        // --- ÍCONES PERSONALIZADOS (CUSTOM CHECK) ---
+        const CustomCheck = ({ color = "green" }) => {
+            // Um check mais estiloso e "grosso" para parecer mais personalizado
+            const strokeColor = color === "green" ? "#22c55e" : "#ef4444"; 
+            return (
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="mt-0.5 flex-shrink-0">
+                    <path d="M5 13L9 17L19 7" stroke={strokeColor} strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+            );
+        };
+
         // --- SEÇÃO DE INSTALAÇÃO DO APP ---
         const InstallAppSection = () => {
             return (
@@ -293,43 +346,43 @@
                             </h1>
                         </RevealOnScroll>
 
-                        {/* GRID DE DISPOSITIVOS REORGANIZADO PARA MELHOR DISTRIBUIÇÃO */}
-                        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-y-10 gap-x-12 items-center justify-items-center opacity-80 hover:opacity-100 transition-opacity duration-500 text-white">
+                        {/* GRID DE DISPOSITIVOS - Opacidade removida (Agora sólido por padrão) */}
+                        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-y-10 gap-x-12 items-center justify-items-center text-white">
                             
-                            {/* Samsung - Adicionado mr-8 para mover para a esquerda e separar do Android */}
-                            <div className="group flex items-center justify-center cursor-pointer transform transition-all duration-300 hover:scale-110 opacity-50 hover:opacity-100 mr-8">
+                            {/* Samsung */}
+                            <div className="group flex items-center justify-center cursor-pointer transform transition-all duration-300 hover:scale-110 mr-8">
                                 <span className="samsung-font text-2xl transition-colors">SAMSUNG</span>
                             </div>
                             
-                            {/* Android (Movido para cá para separar da Apple) */}
-                            <div className="group flex items-center justify-center gap-2 cursor-pointer transform transition-all duration-300 hover:scale-110 opacity-50 hover:opacity-100">
+                            {/* Android */}
+                            <div className="group flex items-center justify-center gap-2 cursor-pointer transform transition-all duration-300 hover:scale-110">
                                 <span className="text-xl font-medium transition-colors">Android</span>
                                 <i className="fa-brands fa-android text-2xl transition-colors"></i>
                             </div>
 
                              {/* LG */}
-                             <div className="group flex items-center justify-center gap-2 cursor-pointer transform transition-all duration-300 hover:scale-110 opacity-50 hover:opacity-100">
+                             <div className="group flex items-center justify-center gap-2 cursor-pointer transform transition-all duration-300 hover:scale-110">
                                 <span className="text-2xl font-bold transition-colors">LG</span>
                             </div>
 
                             {/* Roku */}
-                            <div className="group flex items-center justify-center cursor-pointer transform transition-all duration-300 hover:scale-110 opacity-50 hover:opacity-100">
+                            <div className="group flex items-center justify-center cursor-pointer transform transition-all duration-300 hover:scale-110">
                                 <span className="roku-font text-2xl transition-colors">Roku</span>
                             </div>
 
-                             {/* Apple (Separado do Android) */}
-                             <div className="group flex items-center justify-center gap-2 cursor-pointer transform transition-all duration-300 hover:scale-110 opacity-50 hover:opacity-100">
+                             {/* Apple */}
+                             <div className="group flex items-center justify-center gap-2 cursor-pointer transform transition-all duration-300 hover:scale-110">
                                 <i className="fa-brands fa-apple text-3xl transition-colors"></i>
                                 <span className="text-xl font-medium transition-colors">Apple</span>
                             </div>
                             
                             {/* Amazon */}
-                            <div className="group flex items-center justify-center cursor-pointer transform transition-all duration-300 hover:scale-110 opacity-50 hover:opacity-100">
+                            <div className="group flex items-center justify-center cursor-pointer transform transition-all duration-300 hover:scale-110">
                                 <i className="fa-brands fa-amazon text-3xl mt-2 transition-colors"></i>
                             </div>
                             
-                            {/* Browser - Centralizado no mobile */}
-                            <div className="group col-span-2 md:col-span-1 flex items-center justify-center gap-2 cursor-pointer transform transition-all duration-300 hover:scale-110 opacity-50 hover:opacity-100">
+                            {/* Browser */}
+                            <div className="group col-span-2 md:col-span-1 flex items-center justify-center gap-2 cursor-pointer transform transition-all duration-300 hover:scale-110">
                                 <i className="fa-brands fa-chrome text-2xl transition-colors"></i>
                                 <span className="text-xl font-medium transition-colors">Browser</span>
                             </div>
@@ -350,7 +403,10 @@
                 { type: 'img', src: 'https://upload.wikimedia.org/wikipedia/commons/3/3e/Disney%2B_logo.svg', alt: 'Disney+' },
                 { type: 'prime' },
                 { type: 'text-condensed', text: 'NETFLIX' },
+                { type: 'img', src: 'https://upload.wikimedia.org/wikipedia/commons/d/de/HBO_logo.svg', alt: 'HBO' },
+                { type: 'img', src: 'https://upload.wikimedia.org/wikipedia/commons/5/51/Globoplay_logo_2020.svg', alt: 'Globoplay' },
                 { type: 'text-condensed', text: 'Telecine', style: 'text-2xl uppercase' },
+                { type: 'img', src: 'https://upload.wikimedia.org/wikipedia/commons/2/2f/ESPN_wordmark.svg', alt: 'ESPN' },
                 { type: 'text-looke', text: 'Looke' },
                 { type: 'text-custom', content: <span className="font-bold text-lg tracking-tight lowercase">crunchyroll</span> },
                 { type: 'text-custom', content: <span className="font-bold text-lg">Rakuten <span className="font-black">Viki</span></span> },
@@ -371,7 +427,7 @@
                                     Tudo no mesmo lugar.
                                 </h1>
                                 <p className="text-zinc-400 text-lg leading-relaxed">
-                                    Chega de pagar várias contas. Com o Growth Up Brasil você economiza <span className="text-white font-bold">R$3.876</span> por ano. Com uma única assinatura, você tem acesso a todos os streaming, pague uma leve todos.
+                                    Chega de pagar várias contas. Com o GrowthUP+ você economiza até <span className="text-white font-bold">R$3.876</span> por ano. Com uma única assinatura, você tem acesso a diversos streamings em um só lugar.
                                 </p>
                             </RevealOnScroll>
                         </div>
@@ -381,7 +437,7 @@
                                     <div className="brand-card h-24 rounded-lg flex items-center justify-center p-4 w-full cursor-default text-white hover:border-red-900/50">
                                         {item.type === 'text-script' && <div className="text-center"><span className="font-script text-3xl">{item.main}</span><span className={item.subStyle}>{item.sub}</span></div>}
                                         {item.type === 'text-geo' && <span className="font-geometric text-4xl tracking-tighter font-black lowercase">{item.text}</span>}
-                                        {item.type === 'img' && <img src={item.src} alt={item.alt} className="h-10 filter invert brightness-0 invert-100 opacity-90" />}
+                                        {item.type === 'img' && <img src={item.src} alt={item.alt} className="h-10 w-auto object-contain filter invert brightness-0 invert-100 opacity-90" />}
                                         {item.type === 'prime' && <div className="flex flex-col items-center justify-center w-full"><div className="flex items-center gap-1"><span className="font-bold text-xl tracking-tight">prime video</span></div><svg className="w-16 h-4 mt-1" viewBox="0 0 100 20" fill="none" stroke="currentColor" strokeWidth="3"><path d="M10,5 Q50,20 90,5" strokeLinecap="round" /><path d="M90,5 L85,8 M90,5 L88,1" strokeWidth="0" fill="currentColor"/> <polygon points="88,0 95,5 86,10" fill="currentColor" /></svg></div>}
                                         {item.type === 'text-condensed' && <span className={`font-condensed tracking-widest font-bold ${item.style || 'text-3xl'}`}>{item.text}</span>}
                                         {item.type === 'text-looke' && <span className="font-looke text-3xl tracking-wide">{item.text}</span>}
@@ -405,14 +461,14 @@
                 <section className="relative z-10 py-16 px-4 bg-[#050505] text-white flex flex-col items-center border-t border-white/5" id="planos">
                     <RevealOnScroll className="text-center max-w-4xl mx-auto mb-16 relative">
                         
-                        {/* Campaign Badge Interativo */}
+                        {/* Campaign Badge Interativo - AGORA COM FUNDO SÓLIDO */}
                         <div 
                             className="relative inline-block z-30 cursor-pointer"
                             onMouseEnter={() => setShowCampaignInfo(true)}
                             onMouseLeave={() => setShowCampaignInfo(false)}
                             onClick={() => setShowCampaignInfo(!showCampaignInfo)}
                         >
-                            <div className="bg-gradient-to-r from-red-600/20 to-orange-600/20 border border-red-500/30 rounded-full px-4 py-1.5 mb-4 backdrop-blur-md hover:bg-red-900/20 transition-all duration-300">
+                            <div className="bg-[#1c0505] border border-red-500 rounded-full px-4 py-1.5 mb-4 hover:bg-[#2b0808] transition-all duration-300">
                                 <span className="text-red-400 text-xs font-bold tracking-widest uppercase flex items-center gap-2">
                                     <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>
                                     Campanha de Janeiro <i className={`fas fa-chevron-down ml-1 text-[10px] transition-transform duration-300 ${showCampaignInfo ? 'rotate-180' : ''}`}></i>
@@ -476,7 +532,14 @@
                                         Tenha acesso completo a todos os recursos. O plano perfeito para você e sua família.
                                     </p>
                                 </div>
-                                <a href="https://pay.cakto.com.br/7kjywct_686205" target="_blank" className="w-full bg-white hover:bg-zinc-200 text-black font-extrabold text-sm py-3.5 rounded-lg transition-colors mb-8 uppercase tracking-wide text-center block">Assinar Agora</a>
+                                <a 
+                                    href="https://pay.cakto.com.br/7kjywct_686205" 
+                                    target="_blank" 
+                                    className="w-full bg-white hover:bg-zinc-200 text-black font-extrabold text-sm py-3.5 rounded-lg transition-colors mb-8 uppercase tracking-wide text-center block"
+                                    onClick={() => trackInitiateCheckout('Basic', 18.90)}
+                                >
+                                    Assinar Agora
+                                </a>
                                 <div className="mb-8">
                                     <div className="flex justify-between items-center text-[10px] font-semibold text-zinc-400 uppercase tracking-wider mb-3"><span>Inclui:</span><span>+12 plataformas</span></div>
                                     <div className="grid grid-cols-5 gap-2">
@@ -489,13 +552,13 @@
                                 </div>
                                 <ul className="space-y-3.5 text-xs text-zinc-300 mt-auto font-medium">
                                     <li className="flex items-start gap-3">
-                                        <i className="fas fa-check-circle text-green-500 text-sm mt-0.5"></i>
+                                        <CustomCheck color="green" />
                                         <span className="font-bold text-white">Acesso em 2 telas <span className="text-[9px] bg-green-500/20 text-green-400 px-1.5 py-0.5 rounded ml-1 uppercase border border-green-500/30">Bônus +1 Tela</span></span>
                                     </li>
-                                    <li className="flex items-start gap-3"><i className="fas fa-check-circle check-gradient text-sm mt-0.5"></i><span>Mais de 10.000 Canais, Filmes e Séries.</span></li>
-                                    <li className="flex items-start gap-3"><i className="fas fa-check-circle check-gradient text-sm mt-0.5"></i><span>Tudo em SD/HD/FHD/4K</span></li>
-                                    <li className="flex items-start gap-3"><i className="fas fa-check-circle check-gradient text-sm mt-0.5"></i><span>Multiplataforma</span></li>
-                                    <li className="flex items-start gap-3"><i className="fas fa-check-circle check-gradient text-sm mt-0.5"></i><span>Acesso mensal</span></li>
+                                    <li className="flex items-start gap-3"><CustomCheck color="red" /><span>Mais de 10.000 Canais, Filmes e Séries.</span></li>
+                                    <li className="flex items-start gap-3"><CustomCheck color="red" /><span>Tudo em SD/HD/FHD/4K</span></li>
+                                    <li className="flex items-start gap-3"><CustomCheck color="red" /><span>Multiplataforma</span></li>
+                                    <li className="flex items-start gap-3"><CustomCheck color="red" /><span>Acesso mensal</span></li>
                                 </ul>
                             </div>
                         </RevealOnScroll>
@@ -515,7 +578,14 @@
                                     </div>
                                     <p className="text-zinc-400 text-xs leading-relaxed min-h-[40px]">Economize assinando por 3 meses. Ótima opção de médio prazo.</p>
                                 </div>
-                                <a href="https://pay.cakto.com.br/jpjps2w" target="_blank" className="w-full bg-white hover:bg-zinc-200 text-black font-extrabold text-sm py-3.5 rounded-lg transition-colors mb-8 uppercase tracking-wide text-center block">Assinar Agora</a>
+                                <a 
+                                    href="https://pay.cakto.com.br/jpjps2w" 
+                                    target="_blank" 
+                                    className="w-full bg-white hover:bg-zinc-200 text-black font-extrabold text-sm py-3.5 rounded-lg transition-colors mb-8 uppercase tracking-wide text-center block"
+                                    onClick={() => trackInitiateCheckout('Plus', 48.90)}
+                                >
+                                    Assinar Agora
+                                </a>
                                 {/* Logos (Repeated for structure) */}
                                 <div className="mb-8">
                                     <div className="flex justify-between items-center text-[10px] font-semibold text-zinc-400 uppercase tracking-wider mb-3"><span>Inclui:</span><span>+12 plataformas</span></div>
@@ -529,13 +599,13 @@
                                 </div>
                                 <ul className="space-y-3.5 text-xs text-zinc-300 mt-auto font-medium">
                                     <li className="flex items-start gap-3">
-                                        <i className="fas fa-check-circle text-green-500 text-sm mt-0.5"></i>
+                                        <CustomCheck color="green" />
                                         <span className="font-bold text-white">Acesso em 2 telas <span className="text-[9px] bg-green-500/20 text-green-400 px-1.5 py-0.5 rounded ml-1 uppercase border border-green-500/30">Bônus +1 Tela</span></span>
                                     </li>
-                                    <li className="flex items-start gap-3"><i className="fas fa-check-circle check-gradient text-sm mt-0.5"></i><span>Mais de 10.000 Canais, Filmes e Séries.</span></li>
-                                    <li className="flex items-start gap-3"><i className="fas fa-check-circle check-gradient text-sm mt-0.5"></i><span>Tudo em FHD/4K</span></li>
-                                    <li className="flex items-start gap-3"><i className="fas fa-check-circle check-gradient text-sm mt-0.5"></i><span>Multiplataforma</span></li>
-                                    <li className="flex items-start gap-3"><i className="fas fa-check-circle text-green-500 text-sm mt-0.5"></i><span className="font-bold text-white">Acesso por 4 meses <span className="text-[9px] bg-green-500/20 text-green-400 px-1.5 py-0.5 rounded ml-1 uppercase border border-green-500/30">Bônus +1 Mês</span></span></li>
+                                    <li className="flex items-start gap-3"><CustomCheck color="red" /><span>Mais de 10.000 Canais, Filmes e Séries.</span></li>
+                                    <li className="flex items-start gap-3"><CustomCheck color="red" /><span>Tudo em FHD/4K</span></li>
+                                    <li className="flex items-start gap-3"><CustomCheck color="red" /><span>Multiplataforma</span></li>
+                                    <li className="flex items-start gap-3"><CustomCheck color="green" /><span className="font-bold text-white">Acesso por 4 meses <span className="text-[9px] bg-green-500/20 text-green-400 px-1.5 py-0.5 rounded ml-1 uppercase border border-green-500/30">Bônus +1 Mês</span></span></li>
                                 </ul>
                             </div>
                         </RevealOnScroll>
@@ -555,7 +625,14 @@
                                     </div>
                                     <p className="text-zinc-400 text-xs leading-relaxed min-h-[40px]">O plano ideal para quem quer garantir entretenimento por mais tempo.</p>
                                 </div>
-                                <a href="https://pay.cakto.com.br/mq6kaat" target="_blank" className="w-full bg-gradient-to-r from-red-600 to-red-900 text-white font-extrabold text-sm py-3.5 rounded-lg hover:opacity-90 transition-opacity mb-8 shadow-lg shadow-red-900/50 uppercase tracking-wide transform group-hover:scale-[1.02] duration-200 text-center block">Assinar Agora</a>
+                                <a 
+                                    href="https://pay.cakto.com.br/mq6kaat" 
+                                    target="_blank" 
+                                    className="w-full bg-gradient-to-r from-red-600 to-red-900 text-white font-extrabold text-sm py-3.5 rounded-lg hover:opacity-90 transition-opacity mb-8 shadow-lg shadow-red-900/50 uppercase tracking-wide text-center block"
+                                    onClick={() => trackInitiateCheckout('Pro', 89.90)}
+                                >
+                                    Assinar Agora
+                                </a>
                                 {/* Logos */}
                                 <div className="mb-8">
                                     <div className="flex justify-between items-center text-[10px] font-semibold text-zinc-400 uppercase tracking-wider mb-3"><span>Inclui:</span><span>+12 plataformas</span></div>
@@ -569,13 +646,13 @@
                                 </div>
                                 <ul className="space-y-3.5 text-xs text-zinc-300 mt-auto font-medium">
                                     <li className="flex items-start gap-3">
-                                        <i className="fas fa-check-circle text-green-500 text-sm mt-0.5"></i>
+                                        <CustomCheck color="green" />
                                         <span className="font-bold text-white">Acesso em 3 telas <span className="text-[9px] bg-green-500/20 text-green-400 px-1.5 py-0.5 rounded ml-1 uppercase border border-green-500/30">Bônus +1 Tela</span></span>
                                     </li>
-                                    <li className="flex items-start gap-3"><i className="fas fa-check-circle check-gradient text-sm mt-0.5"></i><span>Mais de 10.000 Canais, Filmes e Séries.</span></li>
-                                    <li className="flex items-start gap-3"><i className="fas fa-check-circle check-gradient text-sm mt-0.5"></i><span>Tudo em FHD/4K</span></li>
-                                    <li className="flex items-start gap-3"><i className="fas fa-check-circle check-gradient text-sm mt-0.5"></i><span>Multiplataforma</span></li>
-                                    <li className="flex items-start gap-3"><i className="fas fa-check-circle text-green-500 text-sm mt-0.5"></i><span className="font-bold text-white">Acesso por 9 meses <span className="text-[9px] bg-green-500/20 text-green-400 px-1.5 py-0.5 rounded ml-1 uppercase border border-green-500/30">Bônus +3 Meses</span></span></li>
+                                    <li className="flex items-start gap-3"><CustomCheck color="red" /><span>Mais de 10.000 Canais, Filmes e Séries.</span></li>
+                                    <li className="flex items-start gap-3"><CustomCheck color="red" /><span>Tudo em FHD/4K</span></li>
+                                    <li className="flex items-start gap-3"><CustomCheck color="red" /><span>Multiplataforma</span></li>
+                                    <li className="flex items-start gap-3"><CustomCheck color="green" /><span className="font-bold text-white">Acesso por 9 meses <span className="text-[9px] bg-green-500/20 text-green-400 px-1.5 py-0.5 rounded ml-1 uppercase border border-green-500/30">Bônus +3 Meses</span></span></li>
                                 </ul>
                             </div>
                         </RevealOnScroll>
@@ -595,7 +672,14 @@
                                     </div>
                                     <p className="text-zinc-400 text-xs leading-relaxed min-h-[40px]">O maior desconto e acesso anual. Perfeito para você e sua família.</p>
                                 </div>
-                                <a href="https://pay.cakto.com.br/367ifhv" target="_blank" className="w-full bg-gradient-to-r from-red-700 to-red-950 text-white font-extrabold text-sm py-3.5 rounded-lg hover:opacity-90 transition-opacity mb-8 shadow-lg shadow-red-900/40 uppercase tracking-wide text-center block">Assinar Agora</a>
+                                <a 
+                                    href="https://pay.cakto.com.br/367ifhv" 
+                                    target="_blank" 
+                                    className="w-full bg-gradient-to-r from-red-700 to-red-950 text-white font-extrabold text-sm py-3.5 rounded-lg hover:opacity-90 transition-opacity mb-8 shadow-lg shadow-red-900/40 uppercase tracking-wide text-center block"
+                                    onClick={() => trackInitiateCheckout('Premium', 147.90)}
+                                >
+                                    Assinar Agora
+                                </a>
                                 {/* Logos */}
                                 <div className="mb-8">
                                     <div className="flex justify-between items-center text-[10px] font-semibold text-zinc-400 uppercase tracking-wider mb-3"><span>Inclui:</span><span>+12 plataformas</span></div>
@@ -609,13 +693,13 @@
                                 </div>
                                 <ul className="space-y-3.5 text-xs text-zinc-300 mt-auto font-medium">
                                     <li className="flex items-start gap-3">
-                                        <i className="fas fa-check-circle text-green-500 text-sm mt-0.5"></i>
+                                        <CustomCheck color="green" />
                                         <span className="font-bold text-white">Acesso em 4 telas <span className="text-[9px] bg-green-500/20 text-green-400 px-1.5 py-0.5 rounded ml-1 uppercase border border-green-500/30">Bônus +2 Telas</span></span>
                                     </li>
-                                    <li className="flex items-start gap-3"><i className="fas fa-check-circle check-gradient text-sm mt-0.5"></i><span>Mais de 10.000 Canais, Filmes e Séries.</span></li>
-                                    <li className="flex items-start gap-3"><i className="fas fa-check-circle check-gradient text-sm mt-0.5"></i><span>Tudo em FHD/4K</span></li>
-                                    <li className="flex items-start gap-3"><i className="fas fa-check-circle check-gradient text-sm mt-0.5"></i><span>Multiplataforma</span></li>
-                                    <li className="flex items-start gap-3"><i className="fas fa-check-circle text-green-500 text-sm mt-0.5"></i><span className="font-bold text-white">Acesso por 18 meses <span className="text-[9px] bg-green-500/20 text-green-400 px-1.5 py-0.5 rounded ml-1 uppercase border border-green-500/30">Bônus +6 Meses</span></span></li>
+                                    <li className="flex items-start gap-3"><CustomCheck color="red" /><span>Mais de 10.000 Canais, Filmes e Séries.</span></li>
+                                    <li className="flex items-start gap-3"><CustomCheck color="red" /><span>Tudo em FHD/4K</span></li>
+                                    <li className="flex items-start gap-3"><CustomCheck color="red" /><span>Multiplataforma</span></li>
+                                    <li className="flex items-start gap-3"><CustomCheck color="green" /><span className="font-bold text-white">Acesso por 18 meses <span className="text-[9px] bg-green-500/20 text-green-400 px-1.5 py-0.5 rounded ml-1 uppercase border border-green-500/30">Bônus +6 Meses</span></span></li>
                                 </ul>
                             </div>
                         </RevealOnScroll>
@@ -630,7 +714,7 @@
                 <section className="relative z-20 bg-[#050505] pb-16 px-4">
                     <div className="max-w-4xl mx-auto">
                         <RevealOnScroll>
-                            <div className="bg-red-950/20 border border-red-600/30 rounded-2xl p-8 relative overflow-hidden">
+                            <div className="bg-[#1c0505] border border-red-600 rounded-2xl p-8 relative overflow-hidden">
                                 <div className="absolute -top-10 -right-10 w-40 h-40 bg-red-600/10 rounded-full blur-3xl"></div>
                                 
                                 <div className="flex flex-col items-center text-center mb-8">
@@ -650,7 +734,7 @@
                                         Nos últimos tempos, surgiram diversas ofertas na internet prometendo <span className="text-white font-bold">“streaming vitalício”</span> ou <span className="text-white font-bold">“acesso para sempre”</span>.
                                     </p>
                                     
-                                    <div className="bg-black/40 rounded-xl p-6 border border-white/5">
+                                    <div className="bg-[#0a0a0a] rounded-xl p-6 border border-white/5">
                                         <p className="text-white font-semibold mb-4 text-center">
                                             É importante deixar algo bem claro: <span className="text-red-500 underline decoration-red-500/50">Esse tipo de serviço NÃO EXISTE.</span>
                                         </p>
@@ -1154,43 +1238,77 @@
                         </div>
                     )}
 
-                    {/* Footer */}
-                    <footer className="relative z-10 border-t border-white/10 bg-black pt-12 md:pt-16 pb-8 text-center md:text-left">
-                        <div className="container mx-auto px-6">
-                            <div className="flex flex-col md:flex-row justify-between items-center md:items-start gap-8 mb-12">
-                                <div className="flex-1">
-                                    <h4 className="text-3xl font-black text-white uppercase tracking-tighter mb-2 italic">
-                                        GrowthUP<span className="text-red-500">+</span>
-                                    </h4>
-                                    <p className="text-[10px] text-gray-500 uppercase tracking-[0.2em]">Since 2019 • São Paulo</p>
+                    {/* Footer Novo - Ajustado */}
+                    <footer className="bg-black text-gray-300 py-12 px-5 font-sans border-t border-white/10 relative z-20">
+                        <div className="max-w-[1200px] mx-auto grid grid-cols-1 md:grid-cols-3 gap-10">
+
+                            {/* COLUNA 1 - MARCA / CONTATO */}
+                            <div>
+                                <div className="flex items-center gap-2.5 mb-4">
+                                    <div className="w-9 h-9 bg-red-600 text-white font-extrabold flex items-center justify-center rounded-md shadow-[0_0_15px_rgba(220,38,38,0.5)]">G</div>
+                                    <span className="text-xl font-bold text-white tracking-tight">GrowthUP<span className="text-red-500">+</span></span>
                                 </div>
-                                <div className="flex gap-8 md:gap-16 flex-col md:flex-row w-full md:w-auto justify-center md:justify-start">
-                                    <div>
-                                        <p className="text-xs font-bold text-gray-400 uppercase mb-4 tracking-wider">Contato</p>
-                                        <div className="flex flex-col gap-2">
-                                            <p className="text-sm text-white hover:text-red-500 cursor-pointer transition-colors">(11) 99139-6481</p>
-                                            <p className="text-sm text-white hover:text-red-500 cursor-pointer transition-colors">growthupbrasil@gmail.com</p>
-                                        </div>
+
+                                <a href={getWhatsAppLink()} target="_blank" rel="noopener noreferrer" onClick={trackLead} className="block text-sm mb-2.5 font-medium hover:text-white transition-colors cursor-pointer">📧 contato@growthupbrasil.com</a>
+                                <a href={getWhatsAppLink()} target="_blank" rel="noopener noreferrer" onClick={trackLead} className="block text-sm mb-2.5 font-medium hover:text-white transition-colors cursor-pointer">📱 (11) 99139-6481</a>
+                                <a href={getWhatsAppLink()} target="_blank" rel="noopener noreferrer" onClick={trackLead} className="block text-sm font-medium hover:text-white transition-colors cursor-pointer">📞 Suporte via WhatsApp</a>
+                            </div>
+
+                            {/* COLUNA 2 - PAGAMENTOS */}
+                            <div>
+                                <h4 className="text-white text-sm mb-4 tracking-widest font-bold uppercase border-b border-red-900/30 pb-2 inline-block">FORMAS DE PAGAMENTO</h4>
+
+                                <div className="flex flex-wrap gap-2.5 mb-5">
+                                    <img src="https://img.icons8.com/color/48/visa.png" className="h-8 brightness-90 hover:brightness-110 transition-all" alt="Visa" />
+                                    <img src="https://img.icons8.com/color/48/mastercard.png" className="h-8 brightness-90 hover:brightness-110 transition-all" alt="Mastercard" />
+                                    <img src="https://img.icons8.com/color/48/amex.png" className="h-8 brightness-90 hover:brightness-110 transition-all" alt="Amex" />
+                                    <img src="https://img.icons8.com/color/48/boleto-bankario.png" className="h-8 brightness-90 hover:brightness-110 transition-all" alt="Boleto" />
+                                    <img src="https://img.icons8.com/color/48/pix.png" className="h-8 brightness-90 hover:brightness-110 transition-all" alt="Pix" />
+                                </div>
+                            </div>
+
+                            {/* COLUNA 3 - SEGURANÇA */}
+                            <div>
+                                <h4 className="text-white text-sm mb-4 tracking-widest font-bold uppercase border-b border-red-900/30 pb-2 inline-block">SEGURANÇA</h4>
+
+                                <div className="flex flex-col gap-3">
+                                    <div className="flex items-center gap-2.5 group">
+                                        <img src="https://img.icons8.com/color/48/lock--v1.png" className="h-7 group-hover:scale-110 transition-transform" alt="SSL" />
+                                        <span className="text-sm font-medium group-hover:text-white transition-colors">Conexão segura (SSL)</span>
                                     </div>
-                                    <div>
-                                        <p className="text-xs font-bold text-gray-400 uppercase mb-4 tracking-wider">Siga-nos</p>
-                                        <div className="flex gap-4 justify-center md:justify-start">
-                                            <a href="https://www.instagram.com/growthupbrasil/" target="_blank" rel="noopener noreferrer" className="text-white hover:text-red-500 transition-colors"><Icons.Instagram /></a>
-                                            <a href="https://www.facebook.com/GrowthupBrasil/" target="_blank" rel="noopener noreferrer" className="text-white hover:text-red-500 transition-colors"><Icons.Facebook /></a>
-                                            <a href="https://www.youtube.com/@GrowthUpBRA" target="_blank" rel="noopener noreferrer" className="text-white hover:text-red-500 transition-colors"><Icons.Youtube /></a>
-                                        </div>
+
+                                    <div className="flex items-center gap-2.5 group">
+                                        <img src="https://img.icons8.com/color/48/google-safe-browsing.png" className="h-7 group-hover:scale-110 transition-transform" alt="Safe Browsing" />
+                                        <span className="text-sm font-medium group-hover:text-white transition-colors">Navegação protegida</span>
+                                    </div>
+
+                                    <div className="flex items-center gap-2.5 group">
+                                        <img src="https://img.icons8.com/color/48/shield.png" className="h-7 group-hover:scale-110 transition-transform" alt="Shield" />
+                                        <span className="text-sm font-medium group-hover:text-white transition-colors">Ambiente monitorado</span>
                                     </div>
                                 </div>
                             </div>
-                            <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-[10px] text-gray-600 uppercase tracking-widest">
-                                <p>© 2026 GrowthUP+. Todos os direitos reservados.</p>
-                                <div className="flex gap-4"><Icons.ShieldCheck size={14} /><Icons.Globe size={14} /></div>
-                            </div>
+
+                        </div>
+
+                        {/* LINKS */}
+                        <div className="max-w-[1200px] mx-auto mt-12 mb-6 border-t border-white/10 pt-6 flex flex-wrap gap-6 justify-center text-[13px] font-medium tracking-wide">
+                            <a href="#inicio" className="text-gray-400 hover:text-white hover:underline decoration-red-500/50 underline-offset-4 transition-all">Início</a>
+                            <a href="#diferenciais" className="text-gray-400 hover:text-white hover:underline decoration-red-500/50 underline-offset-4 transition-all">Vantagens</a>
+                            <a href="#planos" className="text-gray-400 hover:text-white hover:underline decoration-red-500/50 underline-offset-4 transition-all">Planos</a>
+                            <a href="#faq" className="text-gray-400 hover:text-white hover:underline decoration-red-500/50 underline-offset-4 transition-all">FAQ</a>
+                            <a href="#" className="text-gray-400 hover:text-white hover:underline decoration-red-500/50 underline-offset-4 transition-all">Termos de Uso</a>
+                            <a href="#" className="text-gray-400 hover:text-white hover:underline decoration-red-500/50 underline-offset-4 transition-all">Política de Privacidade</a>
+                        </div>
+
+                        {/* COPYRIGHT */}
+                        <div className="text-center text-[11px] text-gray-500 mt-2.5 font-medium uppercase tracking-widest">
+                            © 2026 GrowthUP+. Todos os direitos reservados.
                         </div>
                     </footer>
 
                     {/* Floating WhatsApp */}
-                    <a href={getWhatsAppLink()} target="_blank" rel="noopener noreferrer" className="fixed bottom-6 right-6 z-50 group" aria-label="WhatsApp">
+                    <a href={getWhatsAppLink()} target="_blank" rel="noopener noreferrer" onClick={trackLead} className="fixed bottom-6 right-6 z-50 group" aria-label="WhatsApp">
                         <div className="absolute inset-0 bg-green-500 blur-lg opacity-40 group-hover:opacity-60 transition-opacity animate-pulse"></div>
                         <div className="relative bg-black border border-green-500/50 text-green-400 p-4 rounded-full shadow-2xl hover:scale-110 hover:text-white hover:bg-green-600 transition-all duration-300">
                             {/* Usando o novo ícone oficial do WhatsApp */}

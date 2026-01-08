@@ -3,490 +3,229 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GrowthUP+ App Section</title>
+    <title>GrowthUP+ | Streaming Ilimitado</title>
     
-    <!-- Importando Fonte Inter para um visual moderno -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
+    <!-- Meta Pixel Code -->
+    <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', 'SEU_PIXEL_ID_AQUI'); 
+    fbq('track', 'PageView');
+    </script>
+    <noscript><img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=SEU_PIXEL_ID_AQUI&ev=PageView&noscript=1"
+    /></noscript>
+    <!-- End Meta Pixel Code -->
     
-    <!-- Font Awesome -->
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Great+Vibes&family=Oswald:wght@500;700&family=Poppins:wght@700;800;900&family=Pacifico&display=swap" rel="stylesheet">
+    
+    <!-- React -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    
+    <!-- Babel -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
     <style>
-        /* Reset básico */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        :root { --ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1); }
+        html { scroll-behavior: smooth; }
+        body { background-color: #000; color: white; overflow-x: hidden; font-family: 'Inter', system-ui, -apple-system, sans-serif; }
+        
+        .hardware-accelerated { will-change: transform, opacity; transform: translateZ(0); }
+
+        /* HERO & BUTTONS */
+        .btn-gradient {
+            background: linear-gradient(90deg, #ef4444 0%, #b91c1c 50%, #7f1d1d 100%);
+            background-size: 200% 200%;
+            animation: gradient-x 3s ease infinite;
+            transition: transform 0.2s, opacity 0.2s;
+            box-shadow: 0 0 15px rgba(239, 68, 68, 0.5);
+        }
+        .btn-gradient:hover { opacity: 0.9; transform: scale(1.02); box-shadow: 0 0 25px rgba(239, 68, 68, 0.8); }
+
+        @keyframes strangerPan {
+            0% { transform: scale(1.1) translate(0, 0); }
+            50% { transform: scale(1.2) translate(-2%, 2%); }
+            100% { transform: scale(1.1) translate(0, 0); }
         }
 
-        body {
-            font-family: 'Inter', sans-serif;
-            background-color: #050505;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            overscroll-behavior: none;
+        .bg-hero {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
+            background-image: url('https://images.unsplash.com/photo-1518066000714-58c45f1a2c0a?q=80&w=2070&auto=format&fit=crop'); 
+            background-size: cover; background-position: center; opacity: 0.6;
+            filter: contrast(1.3) brightness(0.7) sepia(0.3) hue-rotate(-30deg) saturate(1.5);
+            animation: strangerPan 60s ease-in-out infinite alternate;
+        }
+        
+        .bg-overlay {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at 50% 40%, transparent 0%, rgba(0,0,0,0.4) 40%, #000 90%);
+            z-index: -1;
         }
 
-        /* ===================== */
-        /* SECTION APP GROWTHUP+ */
-        /* ===================== */
+        .spores-container { position: absolute; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+        .spore {
+            position: absolute; background: rgba(255, 255, 255, 0.7); border-radius: 50%;
+            box-shadow: 0 0 4px rgba(255, 255, 255, 0.8); animation: floatUp linear infinite;
+        }
+        @keyframes floatUp {
+            0% { transform: translateY(100vh) scale(0); opacity: 0; }
+            20% { opacity: 0.8; }
+            80% { opacity: 0.6; }
+            100% { transform: translateY(-20vh) scale(1); opacity: 0; }
+        }
 
+        @keyframes gradient-x { 0% { background-position: 0% 50% } 50% { background-position: 100% 50% } 100% { background-position: 0% 50% } }
+        
+        .perspective-1000 { perspective: 1000px; }
+        .transform-style-3d { transform-style: preserve-3d; }
+
+        .reveal-element { opacity: 0; transform: translateY(30px); transition: opacity 1s var(--ease-out-expo), transform 1s var(--ease-out-expo); }
+        .reveal-element.visible { opacity: 1; transform: translateY(0); }
+        
+        .accordion-content { transition: max-height 0.3s ease-out, opacity 0.3s ease-out; max-height: 0; overflow: hidden; opacity: 0; }
+        .accordion-content.open { max-height: 500px; opacity: 1; }
+
+        /* FONTS */
+        .font-script { font-family: 'Great Vibes', cursive; }
+        .font-looke { font-family: 'Pacifico', cursive; }
+        .font-condensed { font-family: 'Oswald', sans-serif; }
+        .font-geometric { font-family: 'Poppins', sans-serif; }
+        .samsung-font { font-weight: 700; letter-spacing: 0.1em; }
+        .roku-font { font-weight: 800; letter-spacing: -0.05em; }
+        
+        .card-bg { background-color: #111111; }
+        .card-border { border: 1px solid #333; }
+        .logo-box { background-color: white; border-radius: 6px; aspect-ratio: 1/1; display: flex; align-items: center; justify-content: center; overflow: hidden; padding: 2px; transition: all 0.3s ease; }
+
+        .scroll-mt-32 { scroll-margin-top: 130px; }
+
+        /* --- CARTAZES EXPANSÍVEIS --- */
+        .expand-card {
+            flex: 1; transition: flex 0.6s cubic-bezier(0.25, 1, 0.5, 1), filter 0.4s ease;
+            position: relative; overflow: hidden; filter: brightness(0.6) grayscale(20%);
+        }
+        .expand-card:hover { flex: 5; filter: brightness(1.1) grayscale(0%); z-index: 10; }
+        .posters-container:hover .expand-card:not(:hover) { filter: brightness(0.3) grayscale(100%); }
+
+        /* --- LOGOS INTERATIVAS --- */
+        .brand-card-item {
+            transition: transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.3s ease, filter 0.3s ease;
+            opacity: 0.5; filter: grayscale(100%) brightness(150%); transform: scale(1); cursor: pointer;
+        }
+        .brand-card-item img { transition: all 0.3s ease; filter: brightness(0) invert(1); }
+        .brand-card-item:hover {
+            opacity: 1 !important; filter: grayscale(0%) brightness(100%) !important;
+            transform: scale(1.15); z-index: 10;
+        }
+        
+        /* Cores Específicas */
+        .brand-card-item.brand-paramount:hover { color: #0064FF; }
+        .brand-card-item.brand-max:hover { color: #002BE7; }
+        .brand-card-item.brand-prime:hover { color: #00A8E1; }
+        .brand-card-item.brand-prime:hover svg { stroke: #00A8E1; fill: #00A8E1; }
+        .brand-card-item.brand-netflix:hover { color: #E50914; }
+        .brand-card-item.brand-globoplay:hover span { background: linear-gradient(90deg, #ff7a00 0%, #ff0042 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .brand-card-item.brand-telecine:hover { color: #FF0038; }
+        .brand-card-item.brand-looke:hover { color: #FFCC00; }
+        .brand-card-item.brand-crunchyroll:hover span { color: #F47521; }
+        .brand-card-item.brand-viki:hover span { color: #3C9CD7; }
+        .brand-card-item.brand-viki:hover span.font-black { color: #0084CC; }
+        .brand-card-item.brand-apple:hover { color: #A6A6A6; }
+        .brand-card-item.brand-premiere:hover { color: #97D700; }
+        .brand-card-item.brand-18:hover { color: #FF0000; border-color: #FF0000; box-shadow: 0 0 10px rgba(255,0,0,0.3); }
+        .brand-card-item.brand-espn:hover img { filter: none !important; }
+        .brand-card-item.brand-disney:hover img { filter: brightness(0) invert(1) drop-shadow(0 0 5px rgba(17, 60, 207, 0.8)) !important; }
+        .brand-card-item.brand-hbo:hover img { filter: brightness(0) invert(1) drop-shadow(0 0 5px rgba(255, 255, 255, 0.6)) !important; }
+
+        /* --- APP SHOWCASE STYLES --- */
         .app-section {
-            /* Fundo transparente e sem bordas */
-            background: transparent;
-            padding: 0; /* Remove padding extra */
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            align-items: center;
-            gap: 40px;
-            max-width: 1000px; /* Reduzi um pouco a largura máxima para ficar mais compacto */
-            width: 100%;
-            margin: 0 auto;
-            color: #fff;
-            position: relative;
-            /* Sombras e bordas removidas */
-            box-shadow: none;
-            border: none;
+            background: transparent; padding: 0; display: grid; grid-template-columns: 1fr 1fr;
+            align-items: center; gap: 40px; max-width: 1000px; width: 100%; margin: 0 auto;
+            color: #fff; position: relative;
         }
-
-        /* Removido o efeito de brilho de fundo */
-        .app-section::before {
-            display: none;
-        }
-
-        .app-phone {
-            display: flex;
-            justify-content: center;
-            flex-direction: column; 
-            align-items: center;
-            position: relative;
-            /* Z-index altíssimo para garantir que o touch funcione em toda a área */
-            z-index: 9999; 
-        }
-
-        /* --- Título Acima do Celular --- */
-        .app-phone-title {
-            font-size: 14px;
-            font-weight: 600;
-            color: #ef4444; /* Vermelho do tema */
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 25px;
-            text-shadow: 0 2px 10px rgba(239, 68, 68, 0.3);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            animation: fadeIn 1s ease-out;
-            pointer-events: none; 
-        }
-
-        .app-phone-title i {
-            font-size: 12px;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .app-phone-container {
-            position: relative;
-            animation: floatPhone 6s ease-in-out infinite;
-            transform: perspective(1000px) rotateY(-5deg) rotateZ(2deg);
-            transform-style: preserve-3d;
-            transition: transform 0.3s ease;
-        }
-        
-        .app-phone-container:hover {
-            animation-play-state: paused;
-        }
-
-        /* --- CSS PHONE MOCKUP --- */
-        .phone-mockup {
-            width: 300px;
-            height: 615px; 
-            background: #000;
-            border-radius: 54px; 
-            border: 6px solid #0a0a0a; 
-            position: relative;
-            box-shadow: 
-                inset 0 0 0 1px rgba(255,255,255,0.1),
-                0 0 0 1.5px #777, 
-                0 0 0 3px #222,
-                0 30px 60px -12px rgba(0, 0, 0, 0.9),
-                -10px 10px 30px rgba(0,0,0,0.6);
-            overflow: hidden;
-        }
-
-        .phone-mockup::after {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            border-radius: 48px; 
-            box-shadow: inset 0 0 15px rgba(255,255,255,0.15);
-            pointer-events: none;
-            z-index: 100;
-        }
-
-        .phone-notch {
-            position: absolute;
-            top: 11px; 
-            left: 50%;
-            transform: translateX(-50%);
-            width: 90px;
-            height: 26px;
-            background: #000;
-            border-radius: 20px; 
-            z-index: 101;
-        }
-
-        .phone-notch::after {
-            content: '';
-            position: absolute;
-            right: 6px;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 8px;
-            height: 8px;
-            background: rgba(255,255,255,0.1);
-            border-radius: 50%;
-        }
-
-        .phone-screen {
-            width: 100%;
-            height: 100%;
-            background: #0f0f0f;
-            display: flex;
-            flex-direction: column;
-            position: relative;
-            overflow: hidden;
-            border-radius: 46px; 
-        }
-
-        /* --- INTERFACE INTERNA DO APP --- */
-
-        .app-ui-header {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            padding: 45px 20px 15px 20px; 
-            background: linear-gradient(to bottom, rgba(0,0,0,0.95), transparent);
-            z-index: 50;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            pointer-events: none; 
-        }
-        
-        .app-ui-header > * {
-            pointer-events: auto; 
-        }
-
-        .app-ui-logo {
-            font-size: 16px;
-            font-weight: 800;
-            color: #fff;
-            letter-spacing: 0.5px;
-        }
-
-        .app-ui-icons {
-            display: flex;
-            gap: 15px;
-            font-size: 14px;
-            color: #fff;
-            align-items: center;
-            pointer-events: auto;
-        }
-
-        /* --- TOOLTIPS DE ÍCONES (Geral) --- */
-        .user-icon-wrapper, .search-icon-wrapper {
-            position: relative;
-            display: inline-flex;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-            padding: 5px; 
-            margin: -5px; 
-            z-index: 60; 
-        }
-
-        .user-tooltip, .search-tooltip {
-            position: absolute;
-            top: 100%;
-            right: 0;
-            width: 160px;
-            background: rgba(30, 30, 30, 0.95);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            color: #fff;
-            font-size: 11px;
-            font-weight: 500;
-            text-align: center;
-            padding: 10px 12px;
-            border-radius: 12px;
-            margin-top: 10px;
-            opacity: 0;
-            visibility: hidden;
-            transform: translateY(-8px) scale(0.95);
-            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-            z-index: 1000; 
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            pointer-events: none;
-        }
-
-        /* Tooltip específico da Lupa (mais largo e ajuste de posição) */
-        .search-tooltip {
-            width: 200px;
-            right: -60px; /* Ajuste para centralizar melhor */
-        }
-
-        .user-tooltip::before, .search-tooltip::before {
-            content: '';
-            position: absolute;
-            top: -6px;
-            right: 8px;
-            width: 0; 
-            height: 0; 
-            border-left: 6px solid transparent;
-            border-right: 6px solid transparent;
-            border-bottom: 6px solid rgba(30, 30, 30, 0.95);
-        }
-        
-        /* Ajuste da setinha para a lupa */
-        .search-tooltip::before {
-            right: 68px; /* Ajustado para alinhar com o ícone */
-        }
-
-        .user-icon-wrapper:hover .user-tooltip,
-        .user-icon-wrapper.active .user-tooltip,
-        .search-icon-wrapper:hover .search-tooltip,
-        .search-icon-wrapper.active .search-tooltip {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(0) scale(1);
-        }
-
-        /* --- ÁREAS ROLÁVEIS DO APP --- */
-        .app-ui-scroll-content {
-            flex: 1;
-            overflow-y: auto; 
-            /* CORREÇÃO: Reduzi de 120px para 20px para o scroll terminar junto com o conteúdo */
-            padding-bottom: 20px;
-            scrollbar-width: none; 
-            -ms-overflow-style: none;
-            cursor: grab;
-            user-select: none; 
-            touch-action: none; 
-        }
+        .app-phone { display: flex; justify-content: center; flex-direction: column; align-items: center; position: relative; z-index: 40; }
+        .app-phone-title { font-size: 14px; font-weight: 600; color: #ef4444; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 25px; text-shadow: 0 2px 10px rgba(239, 68, 68, 0.3); display: flex; align-items: center; gap: 8px; animation: fadeIn 1s ease-out; pointer-events: none; }
+        .app-phone-container { position: relative; animation: floatPhone 6s ease-in-out infinite; transform: perspective(1000px) rotateY(-5deg) rotateZ(2deg); transform-style: preserve-3d; transition: transform 0.3s ease; }
+        .app-phone-container:hover { animation-play-state: paused; }
+        .phone-mockup { width: 300px; height: 615px; background: #000; border-radius: 54px; border: 6px solid #0a0a0a; position: relative; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.1), 0 0 0 1.5px #777, 0 0 0 3px #222, 0 30px 60px -12px rgba(0, 0, 0, 0.9), -10px 10px 30px rgba(0,0,0,0.6); overflow: hidden; }
+        .phone-mockup::after { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; border-radius: 48px; box-shadow: inset 0 0 15px rgba(255,255,255,0.15); pointer-events: none; z-index: 100; }
+        .phone-notch { position: absolute; top: 11px; left: 50%; transform: translateX(-50%); width: 90px; height: 26px; background: #000; border-radius: 20px; z-index: 101; }
+        .phone-notch::after { content: ''; position: absolute; right: 6px; top: 50%; transform: translateY(-50%); width: 8px; height: 8px; background: rgba(255,255,255,0.1); border-radius: 50%; }
+        .phone-screen { width: 100%; height: 100%; background: #0f0f0f; display: flex; flex-direction: column; position: relative; overflow: hidden; border-radius: 46px; }
+        .app-ui-header { position: absolute; top: 0; left: 0; width: 100%; padding: 45px 20px 15px 20px; background: linear-gradient(to bottom, rgba(0,0,0,0.95), transparent); z-index: 50; display: flex; justify-content: space-between; align-items: center; pointer-events: none; }
+        .app-ui-header > * { pointer-events: auto; }
+        .app-ui-icons { display: flex; gap: 15px; font-size: 14px; color: #fff; align-items: center; pointer-events: auto; }
+        .user-icon-wrapper, .search-icon-wrapper { position: relative; display: inline-flex; justify-content: center; align-items: center; cursor: pointer; padding: 5px; margin: -5px; z-index: 60; }
+        .user-tooltip, .search-tooltip { position: absolute; top: 100%; right: 0; width: 160px; background: rgba(30, 30, 30, 0.95); border: 1px solid rgba(255, 255, 255, 0.1); color: #fff; font-size: 11px; font-weight: 500; text-align: center; padding: 10px 12px; border-radius: 12px; margin-top: 10px; opacity: 0; visibility: hidden; transform: translateY(-8px) scale(0.95); transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); z-index: 1000; box-shadow: 0 10px 30px rgba(0,0,0,0.5); pointer-events: none; }
+        .search-tooltip { width: 200px; right: -60px; }
+        .user-tooltip::before, .search-tooltip::before { content: ''; position: absolute; top: -6px; right: 8px; width: 0; height: 0; border-left: 6px solid transparent; border-right: 6px solid transparent; border-bottom: 6px solid rgba(30, 30, 30, 0.95); }
+        .search-tooltip::before { right: 68px; }
+        .user-icon-wrapper:hover .user-tooltip, .user-icon-wrapper.active .user-tooltip, .search-icon-wrapper:hover .search-tooltip, .search-icon-wrapper.active .search-tooltip { opacity: 1; visibility: visible; transform: translateY(0) scale(1); }
+        .app-ui-scroll-content { flex: 1; overflow-y: auto; padding-bottom: 20px; scrollbar-width: none; cursor: grab; user-select: none; touch-action: none; }
         .app-ui-scroll-content::-webkit-scrollbar { display: none; }
-
-        .app-hero-banner {
-            height: 280px;
-            position: relative;
-            background: url('https://registrodemarca.arenamarcas.com.br/wp-content/uploads/2020/05/Hist%C3%B3ria-da-Champions-League.jpg') center/cover;
-            display: flex;
-            align-items: flex-end;
-            overflow: hidden; 
-        }
-
-        .hero-gif-container {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            z-index: 1; 
-            opacity: 0;
-            transition: opacity 0.8s ease-in-out; 
-            pointer-events: none; 
-        }
-
+        .app-hero-banner { height: 280px; position: relative; background: url('https://registrodemarca.arenamarcas.com.br/wp-content/uploads/2020/05/Hist%C3%B3ria-da-Champions-League.jpg') center/cover; display: flex; align-items: flex-end; overflow: hidden; }
+        .hero-gif-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; opacity: 0; transition: opacity 0.8s ease-in-out; pointer-events: none; }
         .hero-gif-container img { width: 100%; height: 100%; object-fit: cover; }
         .hero-gif-container.active { opacity: 1; pointer-events: auto; }
-
-        .app-hero-overlay {
-            position: absolute; inset: 0;
-            background: linear-gradient(to top, #0f0f0f 10%, transparent 80%);
-            z-index: 2; 
-        }
-
+        .app-hero-overlay { position: absolute; inset: 0; background: linear-gradient(to top, #0f0f0f 10%, transparent 80%); z-index: 2; }
         .hero-info { position: relative; z-index: 3; padding: 20px; width: 100%; }
-
-        .hero-tag {
-            background: #ef4444; color: white; font-size: 9px; font-weight: 800;
-            padding: 3px 8px; border-radius: 4px; display: inline-block;
-            margin-bottom: 6px; text-transform: uppercase;
-        }
-
-        .hero-title {
-            font-size: 22px; font-weight: 800; line-height: 1.1; margin-bottom: 8px;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.8);
-        }
-
+        .hero-tag { background: #ef4444; color: white; font-size: 9px; font-weight: 800; padding: 3px 8px; border-radius: 4px; display: inline-block; margin-bottom: 6px; text-transform: uppercase; }
+        .hero-title { font-size: 22px; font-weight: 800; line-height: 1.1; margin-bottom: 8px; text-shadow: 0 2px 10px rgba(0,0,0,0.8); }
         .hero-meta { font-size: 11px; color: #ddd; display: flex; gap: 10px; }
-
-        .app-section-title {
-            padding: 0 20px; margin: 25px 0 12px 0; font-size: 13px; font-weight: 700;
-            color: #fff; display: flex; justify-content: space-between; align-items: center;
-        }
-        
-        .app-section-title span { color: #ef4444; font-size: 10px; cursor: pointer; }
-
-        .horizontal-scroll {
-            display: flex; gap: 12px; padding: 0 20px;
-            overflow-x: auto; scrollbar-width: none;
-            cursor: grab; user-select: none;
-            /* Garante que o touch não acione navegação do browser */
-            touch-action: none;
-        }
+        .app-section-title { padding: 0 20px; margin: 25px 0 12px 0; font-size: 13px; font-weight: 700; color: #fff; display: flex; justify-content: space-between; align-items: center; }
+        .horizontal-scroll { display: flex; gap: 12px; padding: 0 20px; overflow-x: auto; scrollbar-width: none; cursor: grab; user-select: none; touch-action: none; }
         .horizontal-scroll::-webkit-scrollbar { display: none; }
-
-        .movie-card {
-            min-width: 90px; height: 160px; 
-            display: flex; flex-direction: column; gap: 6px;
-            text-decoration: none; color: white;
-            -webkit-user-drag: none; cursor: pointer;
-        }
-
-        .movie-poster {
-            width: 100%; height: 135px; background: #222;
-            border-radius: 6px; overflow: hidden; position: relative;
-        }
-        .movie-poster img { width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
-        
-        .movie-title-text {
-            font-size: 10px; font-weight: 500; color: #ddd; white-space: nowrap;
-            overflow: hidden; text-overflow: ellipsis; max-width: 90px;
-        }
-
-        .play-btn {
-            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            width: 40px; height: 40px; background: rgba(255,255,255,0.2);
-            backdrop-filter: blur(4px); border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            color: #fff; border: 1px solid rgba(255,255,255,0.4);
-            z-index: 4; cursor: pointer; transition: opacity 0.3s ease, transform 0.2s ease;
-        }
-        
-        .play-btn:hover {
-            transform: translate(-50%, -50%) scale(1.1);
-            background: rgba(239, 68, 68, 0.8); border-color: #ef4444;
-        }
-        .play-btn.hidden { opacity: 0; pointer-events: none; }
-
+        .movie-card-app { min-width: 90px; height: 160px; display: flex; flex-direction: column; gap: 6px; text-decoration: none; color: white; -webkit-user-drag: none; cursor: pointer; }
+        .movie-poster-app { width: 100%; height: 135px; background: #222; border-radius: 6px; overflow: hidden; position: relative; }
+        .movie-poster-app img { width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
+        .movie-title-text { font-size: 10px; font-weight: 500; color: #ddd; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 90px; }
+        .play-btn-app { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 40px; height: 40px; background: rgba(255,255,255,0.2); backdrop-filter: blur(4px); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; border: 1px solid rgba(255,255,255,0.4); z-index: 4; cursor: pointer; transition: opacity 0.3s ease, transform 0.2s ease; }
+        .play-btn-app:hover { transform: translate(-50%, -50%) scale(1.1); background: rgba(239, 68, 68, 0.8); border-color: #ef4444; }
+        .play-btn-app.hidden { opacity: 0; pointer-events: none; }
         .scroll-active { cursor: grabbing !important; }
-
-        /* --- VIDEO OVERLAY --- */
-        .video-overlay {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: #000; z-index: 200; 
-            display: flex; flex-direction: column; justify-content: center; align-items: center;
-            opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
-        }
+        .video-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 200; display: flex; flex-direction: column; justify-content: center; align-items: center; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; }
         .video-overlay.active { opacity: 1; pointer-events: auto; }
-
         .video-container { width: 100%; aspect-ratio: 16/9; background: #000; }
         .video-container iframe { width: 100%; height: 100%; }
-
-        .close-video-btn {
-            position: absolute; top: 50px; right: 20px;
-            width: 32px; height: 32px; background: rgba(255,255,255,0.2);
-            backdrop-filter: blur(5px); border: none; border-radius: 50%;
-            color: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center;
-            font-size: 16px; z-index: 201; transition: background 0.2s;
-        }
+        .close-video-btn { position: absolute; top: 50px; right: 20px; width: 32px; height: 32px; background: rgba(255,255,255,0.2); backdrop-filter: blur(5px); border: none; border-radius: 50%; color: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 16px; z-index: 201; transition: background 0.2s; }
         .close-video-btn:hover { background: rgba(239, 68, 68, 0.8); }
-
-        /* --- CONTEÚDO LATERAL (TEXTO) --- */
-        .app-content {
-            position: relative;
-            z-index: 2; 
-            pointer-events: none; 
-        }
-
-        /* Reabilita mouse apenas nos elementos interativos do texto */
-        .app-content .app-logo, 
-        .app-content .app-title, 
-        .app-content .app-text, 
-        .app-content .store-buttons,
-        .app-content .extra-text {
-            pointer-events: auto;
-        }
-
-        .app-logo {
-            display: flex; align-items: center; gap: 10px;
-            font-weight: 800; letter-spacing: 0.5px; margin-bottom: 20px;
-        }
-        .app-logo span { font-size: 20px; color: #fff; }
-        .app-logo .plus { color: #ef4444; font-size: 24px; }
-
-        .app-title {
-            font-size: 42px; font-weight: 900; line-height: 1.1; margin-bottom: 20px; color: #fff;
-        }
-        .app-title span {
-            background: linear-gradient(90deg, #ef4444, #b91c1c);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-        }
-
-        .app-text {
-            font-size: 16px; color: #b3b3b3; max-width: 460px;
-            margin-bottom: 32px; line-height: 1.6;
-        }
-
+        .app-content { position: relative; z-index: 2; pointer-events: none; }
+        .app-content .app-logo, .app-content .app-title, .app-content .app-text, .app-content .store-buttons, .app-content .extra-text { pointer-events: auto; }
+        .app-logo { display: flex; align-items: center; gap: 10px; font-weight: 800; letter-spacing: 0.5px; margin-bottom: 20px; }
+        .app-title { font-size: 42px; font-weight: 900; line-height: 1.1; margin-bottom: 20px; color: #fff; }
+        .app-title span { background: linear-gradient(90deg, #ef4444, #b91c1c); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .app-text { font-size: 16px; color: #b3b3b3; max-width: 460px; margin-bottom: 32px; line-height: 1.6; }
         .store-buttons { display: flex; gap: 16px; flex-wrap: wrap; }
-
-        .store-btn {
-            display: flex; align-items: center; justify-content: center; gap: 12px;
-            background: #111; border: 1px solid #333; padding: 14px 24px;
-            border-radius: 12px; color: #fff; text-decoration: none;
-            font-size: 14px; font-weight: 600; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative; overflow: hidden;
-        }
-        .store-btn::before {
-            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.05), transparent);
-            transform: translateX(-100%); transition: 0.5s;
-        }
+        .store-btn { display: flex; align-items: center; justify-content: center; gap: 12px; background: #111; border: 1px solid #333; padding: 14px 24px; border-radius: 12px; color: #fff; text-decoration: none; font-size: 14px; font-weight: 600; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); position: relative; overflow: hidden; }
+        .store-btn::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(45deg, transparent, rgba(255,255,255,0.05), transparent); transform: translateX(-100%); transition: 0.5s; }
         .store-btn:hover::before { transform: translateX(100%); }
-        .store-btn:hover {
-            transform: translateY(-4px); border-color: #ef4444; background: #1a1a1a;
-            box-shadow: 0 10px 20px -5px rgba(239, 68, 68, 0.3);
-        }
+        .store-btn:hover { transform: translateY(-4px); border-color: #ef4444; background: #1a1a1a; box-shadow: 0 10px 20px -5px rgba(239, 68, 68, 0.3); }
         .store-btn i { font-size: 24px; }
-
         .btn-text { display: flex; flex-direction: column; align-items: flex-start; line-height: 1.2; }
         .btn-text small { font-size: 10px; font-weight: 400; color: #888; text-transform: uppercase; }
         .btn-text strong { font-size: 14px; }
-
-        /* Texto extra abaixo dos botões */
-        .extra-text {
-            font-size: 13px;
-            color: #666;
-            margin-top: 24px;
-            max-width: 380px;
-            line-height: 1.5;
-            font-weight: 500;
-        }
-
-        @keyframes floatPhone {
-            0%, 100% { transform: translateY(0) rotateY(-5deg); }
-            50% { transform: translateY(-15px) rotateY(-5deg); }
-        }
-
+        .extra-text { font-size: 13px; color: #666; margin-top: 24px; max-width: 380px; line-height: 1.5; font-weight: 500; }
+        @keyframes floatPhone { 0%, 100% { transform: translateY(0) rotateY(-5deg); } 50% { transform: translateY(-15px) rotateY(-5deg); } }
         @media (max-width: 900px) {
-            .app-section {
-                grid-template-columns: 1fr; text-align: center; padding: 40px 20px; gap: 40px;
-            }
+            .app-section { grid-template-columns: 1fr; text-align: center; padding: 40px 20px; gap: 40px; }
             .app-content { order: 2; display: flex; flex-direction: column; align-items: center; }
             .app-phone { order: 1; }
             .phone-mockup { width: 250px; height: 500px; }
             .app-phone-container { transform: none; animation: floatPhoneMobile 6s ease-in-out infinite; }
-            @keyframes floatPhoneMobile {
-                0%, 100% { transform: translateY(0); }
-                50% { transform: translateY(-15px); }
-            }
+            @keyframes floatPhoneMobile { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
             .app-title { font-size: 32px; }
             .app-text { margin-left: auto; margin-right: auto; font-size: 14px; }
             .store-buttons { justify-content: center; width: 100%; }
@@ -495,337 +234,540 @@
     </style>
 </head>
 <body>
+    <div id="root"></div>
 
-    <section class="app-section">
-      
-        <!-- IMAGEM DO CELULAR -->
-        <div class="app-phone">
-            
-            <!-- TÍTULO SUPERIOR (Experimente.) -->
-            <h3 class="app-phone-title">
-                <i class="fa-solid fa-play-circle"></i>
-                Experimente.
-            </h3>
+    <script type="text/babel">
+        const { useState, useEffect, useRef, useMemo } = React;
 
-            <div class="app-phone-container">
-                <!-- Mockup do Celular feito em CSS -->
-                <div class="phone-mockup">
-                    <div class="phone-notch"></div>
-                    
-                    <div class="phone-screen">
-                        
-                        <!-- Header do App -->
-                        <div class="app-ui-header">
-                            <div class="app-ui-logo">
-                                <!-- Logo removido -->
-                            </div>
-                            <div class="app-ui-icons">
-                                
-                                <!-- LUPA COM TOOLTIP -->
-                                <div class="search-icon-wrapper" id="searchIconWrapper">
-                                    <i class="fa-solid fa-search"></i>
-                                    <div class="search-tooltip">
-                                        São mais de 80 mil conteúdos!
-                                    </div>
-                                </div>
-                                
-                                <!-- USUÁRIO COM TOOLTIP -->
-                                <div class="user-icon-wrapper" id="userIconWrapper">
-                                    <i class="fa-solid fa-user-circle"></i>
-                                    <div class="user-tooltip">
-                                        Logo logo você terá seu acesso! 😄
-                                    </div>
-                                </div>
-                            </div>
+        // --- ICONS (Definido primeiro para evitar erros de referência) ---
+        const Icons = {
+            Play: (props) => <svg {...props} width="24" height="24" viewBox="0 0 24 24" fill={props.fill || "none"} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>,
+            Monitor: (props) => <svg {...props} width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>,
+            Zap: (props) => <svg {...props} width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>,
+            Tv: (props) => <svg {...props} width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="7" width="20" height="15" rx="2" ry="2"></rect><polyline points="17 2 12 7 7 2"></polyline></svg>,
+            Layers: (props) => <svg {...props} width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>,
+            WhatsApp: (props) => <svg {...props} viewBox="0 0 24 24" fill={props.fill || "currentColor"} xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" /></svg>
+        };
+
+        // --- HELPERS ---
+        const trackLead = () => { if (typeof fbq === 'function') { fbq('track', 'Lead', { content_name: 'WhatsApp Click', content_category: 'Contato', value: 1, currency: 'BRL' }); } };
+        const trackInitiateCheckout = (planName, value) => { if (typeof fbq === 'function') { fbq('track', 'InitiateCheckout', { content_name: `Plano ${planName}`, value: value, currency: 'BRL' }); } };
+
+        // --- COMPONENTES UI BÁSICOS ---
+        const CustomCheck = ({ color = "green" }) => {
+            const strokeColor = color === "green" ? "#22c55e" : "#ef4444"; 
+            return (<svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="mt-0.5 flex-shrink-0"><path d="M5 13L9 17L19 7" stroke={strokeColor} strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/></svg>);
+        };
+
+        const RevealOnScroll = ({ children, delay = 0, className = "" }) => {
+            const [isVisible, setIsVisible] = useState(false);
+            const ref = useRef(null);
+            useEffect(() => {
+                const observer = new IntersectionObserver(([entry]) => { if (entry.isIntersecting) { setIsVisible(true); observer.unobserve(entry.target); } }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
+                if (ref.current) observer.observe(ref.current);
+                return () => { if (ref.current) observer.unobserve(ref.current); };
+            }, []);
+            return (<div ref={ref} className={`reveal-element ${isVisible ? 'visible' : ''} ${className}`} style={{ transitionDelay: `${delay}ms` }}>{children}</div>);
+        };
+
+        const UpsideDownSpores = () => {
+            const spores = useMemo(() => Array.from({ length: 30 }).map((_, i) => ({ id: i, left: Math.random() * 100, size: Math.random() * 3 + 1, duration: Math.random() * 10 + 10, delay: Math.random() * 5 })), []);
+            return (<div className="spores-container">{spores.map((s) => (<div key={s.id} className="spore" style={{ left: `${s.left}%`, width: `${s.size}px`, height: `${s.size}px`, animationDuration: `${s.duration}s`, animationDelay: `-${s.delay}s` }}></div>))}</div>);
+        };
+
+        // --- COMPONENTES DE SEÇÃO ---
+        const InstallAppSection = () => {
+            return (
+                <div className="w-full bg-black py-20 border-t border-white/5 relative z-20">
+                    <div className="container mx-auto px-6">
+                        <RevealOnScroll className="text-center mb-16">
+                            <p className="text-[10px] md:text-xs text-gray-500 uppercase tracking-[0.2em] mb-4 font-medium">Faça o Download</p>
+                            <h1 className="text-3xl md:text-5xl lg:text-6xl font-medium text-white leading-tight max-w-4xl mx-auto">Instale o <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-red-800 animate-pulse font-bold mx-2">Nosso APP</span> na sua SmartTV/Celular ou qualquer outro dispositivo.</h1>
+                        </RevealOnScroll>
+                        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-y-10 gap-x-12 items-center justify-items-center text-white">
+                            <div className="group flex items-center justify-center cursor-pointer transform transition-all duration-300 hover:scale-110 mr-8"><span className="samsung-font text-2xl transition-colors">SAMSUNG</span></div>
+                            <div className="group flex items-center justify-center gap-2 cursor-pointer transform transition-all duration-300 hover:scale-110"><span className="text-xl font-medium transition-colors">Android</span><i className="fa-brands fa-android text-2xl transition-colors"></i></div>
+                            <div className="group flex items-center justify-center gap-2 cursor-pointer transform transition-all duration-300 hover:scale-110"><span className="text-2xl font-bold transition-colors">LG</span></div>
+                            <div className="group flex items-center justify-center cursor-pointer transform transition-all duration-300 hover:scale-110"><span className="roku-font text-2xl transition-colors">Roku</span></div>
+                            <div className="group flex items-center justify-center gap-2 cursor-pointer transform transition-all duration-300 hover:scale-110"><i className="fa-brands fa-apple text-3xl transition-colors"></i><span className="text-xl font-medium transition-colors">Apple</span></div>
+                            <div className="group flex items-center justify-center cursor-pointer transform transition-all duration-300 hover:scale-110"><i className="fa-brands fa-amazon text-3xl mt-2 transition-colors"></i></div>
+                            <div className="group col-span-2 md:col-span-1 flex items-center justify-center gap-2 cursor-pointer transform transition-all duration-300 hover:scale-110"><i className="fa-brands fa-chrome text-2xl transition-colors"></i><span className="text-xl font-medium transition-colors">Browser</span></div>
                         </div>
-
-                        <!-- OVERLAY DE VÍDEO -->
-                        <div class="video-overlay" id="videoOverlay">
-                            <button class="close-video-btn" id="closeVideoBtn">
-                                <i class="fa-solid fa-xmark"></i>
-                            </button>
-                            <div class="video-container">
-                                <iframe id="youtubePlayer" src="" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-                            </div>
-                        </div>
-
-                        <!-- Conteúdo Rolável -->
-                        <div class="app-ui-scroll-content" id="mainScroll">
-                            
-                            <!-- Hero Banner -->
-                            <div class="app-hero-banner">
-                                <div class="hero-gif-container" id="heroGif">
-                                    <img src="https://i.pinimg.com/originals/a1/5a/b9/a15ab9f44fb47ab505b5a92ab5f98ed8.gif" alt="Futebol GIF">
-                                </div>
-                                <div class="app-hero-overlay"></div>
-                                <div class="play-btn" id="playBtn">
-                                    <i class="fa-solid fa-play"></i>
-                                </div>
-                                <div class="hero-info">
-                                    <span class="hero-tag">Ao Vivo Agora</span>
-                                    <h3 class="hero-title">Champions League</h3>
-                                    <div class="hero-meta">
-                                        <span><i class="fa-regular fa-clock"></i> 2º Tempo</span>
-                                        <span>• Final</span>
-                                        <span>• 4K HDR</span>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Seção 2: Filmes em Alta -->
-                            <div class="app-section-title">
-                                Destaques da Semana
-                            </div>
-                            <div class="movies-row horizontal-scroll">
-                                <div class="movie-card" data-video="qnR0s1QVknI">
-                                    <div class="movie-poster">
-                                        <img src="https://jardimdasamericas.com.br/uploads/2025/12/capa-filme-avatar-fogo-e-cinzas-966f9-large.png" alt="Avatar">
-                                    </div>
-                                    <span class="movie-title-text">Avatar: Fogo e Cinzas</span>
-                                </div>
-                                <div class="movie-card" data-video="g0GB20yE9JY">
-                                    <div class="movie-poster">
-                                        <img src="https://upload.wikimedia.org/wikipedia/pt/6/60/O_Agente_Secreto_%28Cartaz_brasileiro%29.jpg" alt="O Agente Secreto">
-                                    </div>
-                                    <span class="movie-title-text">O Agente Secreto</span>
-                                </div>
-                                <div class="movie-card" data-video="T7_zMl_ZhdQ">
-                                    <div class="movie-poster">
-                                        <img src="https://s2-g1.glbimg.com/JlPpzZaM6BQeHE8519IeNARgIJg=/0x0:1382x2048/984x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2021/k/m/sUy6NaRMiAMJOllVxvOQ/fb2miibwyairfgo.jpg" alt="Batman">
-                                    </div>
-                                    <span class="movie-title-text">The Batman II</span>
-                                </div>
-                                <div class="movie-card" data-video="ZiDphkXCZsQ">
-                                    <div class="movie-poster">
-                                        <img src="https://ingresso-a.akamaihd.net/prd/img/movie/f1-o-filme/3a0a118e-8bf3-4e10-b45d-f028cd49b001.webp" alt="F1 Movie">
-                                    </div>
-                                    <span class="movie-title-text">F1: O Filme</span>
-                                </div>
-                            </div>
-
-                             <!-- Seção 3: Séries / Populares -->
-                             <div class="app-section-title">
-                                Séries Populares
-                            </div>
-                            <div class="movies-row horizontal-scroll">
-                                <div class="movie-card" data-video="IcR-6y3Q9XI">
-                                    <div class="movie-poster">
-                                        <img src="https://i.imgur.com/ONufJIn.png" alt="TLOU">
-                                    </div>
-                                    <span class="movie-title-text">The Last of Us</span>
-                                </div>
-                                <div class="movie-card" data-video="Wb3kaP580kA">
-                                    <div class="movie-poster">
-                                        <img src="https://i.imgur.com/30zW0QK.png" alt="Stranger Things 5 Art">
-                                    </div>
-                                    <span class="movie-title-text">Stranger Things 5</span>
-                                </div>
-                                <div class="movie-card" data-video="IgyahanUcOk">
-                                    <div class="movie-poster">
-                                        <img src="https://preview.redd.it/tvn-spring-fever-teaser-poster-premieres-january-5-v0-kgb43b5drv4g1.jpg?width=640&crop=smart&auto=webp&s=4d0318de16fd82a564657498104302df46ef8b16" alt="Spring Fever">
-                                    </div>
-                                    <span class="movie-title-text">Spring Fever</span>
-                                </div>
-                            </div>
-
-                        </div> <!-- Fim do Scroll Content -->
-
+                        <p className="text-center text-xs text-gray-600 mt-12 font-medium tracking-wide uppercase">Compatível com as principais plataformas do mercado.</p>
                     </div>
                 </div>
-            </div>
-        </div>
-    
-        <!-- CONTEÚDO LATERAL -->
-        <div class="app-content">
-          
-            <div class="app-logo">
-                <!-- Logo removido -->
-            </div>
-    
-            <h2 class="app-title">
-                Para curtir <span>onde</span><br>
-                e <span>quando</span> quiser
-            </h2>
-    
-            <p class="app-text">
-                Tenha acesso completo direto no seu celular.
-                Assista filmes, séries, canais e esportes ao vivo com total liberdade.
-                Disponível para Android e iOS.
-            </p>
-    
-            <div class="store-buttons">
-                <a href="#" class="store-btn">
-                    <i class="fa-brands fa-apple"></i>
-                    <div class="btn-text">
-                        <small>Disponível na</small>
-                        <strong>Apple Store</strong>
-                    </div>
-                </a>
-    
-                <a href="#" class="store-btn">
-                    <i class="fa-brands fa-google-play"></i>
-                    <div class="btn-text">
-                        <small>Baixe no</small>
-                        <strong>Google Play</strong>
-                    </div>
-                </a>
-            </div>
+            );
+        };
 
-            <p class="extra-text">
-                Todos os seus lançamentos, filmes, séries, doramas, documentários e animes favoritos, com a experiência e qualidade que você merece.<br><br>
-                No GrowthUP+ você terá acesso a mais de 80.000 conteúdos, tudo em uma única plataforma.
-            </p>
-    
-        </div>
-    </section>
+        // --- NOVO COMPONENTE: APP SHOWCASE (O CÓDIGO QUE VOCÊ ENVIOU ADAPTADO) ---
+        const AppShowcaseSection = () => {
+            const [gifActive, setGifActive] = useState(false);
+            const [videoUrl, setVideoUrl] = useState(null);
+            const [activeTooltip, setActiveTooltip] = useState(null);
 
-    <!-- 
-      SCRIPT AVANÇADO CORRIGIDO 3.0 (CORREÇÃO DE BUBBLING HORIZONTAL)
-    -->
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            
-            // --- Play Button GIF ---
-            const playBtn = document.getElementById('playBtn');
-            const heroGif = document.getElementById('heroGif');
-            if (playBtn && heroGif) {
-                playBtn.addEventListener('click', (e) => {
-                    e.stopPropagation(); 
-                    heroGif.classList.add('active');
-                    playBtn.classList.add('hidden');
-                });
-            }
+            const mainScrollRef = useRef(null);
+            const horizontalScrollRef1 = useRef(null);
+            const horizontalScrollRef2 = useRef(null);
 
-            // --- Tooltips ---
-            const userIconWrapper = document.getElementById('userIconWrapper');
-            if (userIconWrapper) {
-                userIconWrapper.addEventListener('click', (e) => {
-                    e.stopPropagation(); 
-                    userIconWrapper.classList.toggle('active');
-                    setTimeout(() => userIconWrapper.classList.remove('active'), 3000);
-                });
-            }
-            const searchIconWrapper = document.getElementById('searchIconWrapper');
-            if (searchIconWrapper) {
-                searchIconWrapper.addEventListener('click', (e) => {
-                    e.stopPropagation(); 
-                    searchIconWrapper.classList.toggle('active');
-                    setTimeout(() => searchIconWrapper.classList.remove('active'), 3000);
-                });
-            }
-
-            // --- Player de Vídeo ---
-            const videoOverlay = document.getElementById('videoOverlay');
-            const youtubePlayer = document.getElementById('youtubePlayer');
-            const closeVideoBtn = document.getElementById('closeVideoBtn');
-            const movieCards = document.querySelectorAll('.movie-card');
-            let hasDragged = false;
-
-            movieCards.forEach(card => {
-                card.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    if (hasDragged) return; // Se arrastou, não clica
-
-                    const videoId = card.getAttribute('data-video');
-                    if (videoId) {
-                        const embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
-                        youtubePlayer.src = embedUrl;
-                        videoOverlay.classList.add('active');
-                    }
-                });
-            });
-
-            closeVideoBtn.addEventListener('click', () => {
-                videoOverlay.classList.remove('active');
-                youtubePlayer.src = "";
-            });
-
-            // --- Lógica de Drag Robusta ---
-            const mainScroller = document.getElementById('mainScroll');
-            const allDraggables = document.querySelectorAll('.app-ui-scroll-content, .horizontal-scroll');
-
-            let isDown = false;
-            let startX, startY;
-            let mainScrollStart;
-            let horizontalScrollStart = new Map();
-            let targetSlider = null;
-
-            const initDrag = (x, y, target) => {
-                isDown = true;
-                hasDragged = false;
-                startX = x;
-                startY = y;
-                mainScrollStart = mainScroller.scrollTop;
-
-                if (target.classList.contains('horizontal-scroll')) {
-                    targetSlider = target;
-                    horizontalScrollStart.set(target, target.scrollLeft);
-                } else {
-                    targetSlider = null;
+            const toggleTooltip = (id) => {
+                setActiveTooltip(activeTooltip === id ? null : id);
+                if (activeTooltip !== id) {
+                    setTimeout(() => setActiveTooltip(null), 3000);
                 }
             };
 
-            allDraggables.forEach(el => {
-                el.addEventListener('mousedown', (e) => {
-                    // CORREÇÃO CRÍTICA: stopPropagation aqui garante que se clicar 
-                    // no slider horizontal, o evento NÃO suba para o mainScroller.
-                    // Isso fixa o "targetSlider" corretamente.
-                    e.stopPropagation(); 
-                    initDrag(e.pageX, e.pageY, el);
-                });
+            const openVideo = (videoId) => {
+                setVideoUrl(`https://www.youtube.com/embed/${videoId}?autoplay=1`);
+            };
+            const closeVideo = () => {
+                setVideoUrl(null);
+            };
 
-                el.addEventListener('touchstart', (e) => {
+            useEffect(() => {
+                const mainScroller = mainScrollRef.current;
+                const sliders = [horizontalScrollRef1.current, horizontalScrollRef2.current];
+                const allDraggables = [mainScroller, ...sliders].filter(Boolean);
+
+                let isDown = false;
+                let startX, startY;
+                let mainScrollStart;
+                let horizontalScrollStart = new Map();
+                let targetSlider = null;
+                let hasDragged = false;
+
+                const initDrag = (x, y, target) => {
+                    isDown = true;
+                    hasDragged = false;
+                    startX = x;
+                    startY = y;
+                    mainScrollStart = mainScroller.scrollTop;
+
+                    if (target.classList.contains('horizontal-scroll')) {
+                        targetSlider = target;
+                        horizontalScrollStart.set(target, target.scrollLeft);
+                    } else {
+                        targetSlider = null;
+                    }
+                };
+
+                const endDrag = () => {
+                    isDown = false;
+                    if (mainScroller) mainScroller.classList.remove('scroll-active');
+                    targetSlider = null;
+                };
+
+                const performMove = (x, y, e) => {
+                    if (!isDown) return;
+                    
+                    const walkY = (y - startY) * 1.5; 
+                    const walkX = (x - startX) * 1.5; 
+
+                    if (Math.abs(x - startX) > 5 || Math.abs(y - startY) > 5) {
+                        hasDragged = true;
+                        if (mainScroller) mainScroller.classList.add('scroll-active');
+                    }
+
+                    if (Math.abs(walkY) > Math.abs(walkX)) {
+                        if (mainScroller) mainScroller.scrollTop = mainScrollStart - walkY;
+                    } else {
+                        if (targetSlider) {
+                            const startLeft = horizontalScrollStart.get(targetSlider);
+                            targetSlider.scrollLeft = startLeft - walkX;
+                        }
+                    }
+                };
+
+                const handleMouseDown = (e) => {
+                    e.stopPropagation();
+                    initDrag(e.pageX, e.pageY, e.currentTarget);
+                };
+
+                const handleTouchStart = (e) => {
                     e.stopPropagation();
                     const touch = e.touches[0];
-                    initDrag(touch.pageX, touch.pageY, el);
-                }, { passive: false });
-            });
+                    initDrag(touch.pageX, touch.pageY, e.currentTarget);
+                };
 
-            const endDrag = () => {
-                isDown = false;
-                mainScroller.classList.remove('scroll-active');
-                targetSlider = null;
-            };
+                allDraggables.forEach(el => {
+                    el.addEventListener('mousedown', handleMouseDown);
+                    el.addEventListener('touchstart', handleTouchStart, { passive: false });
+                });
 
-            const performMove = (x, y, e) => {
-                if (!isDown) return;
-                
-                const walkY = (y - startY) * 1.5; 
-                const walkX = (x - startX) * 1.5; 
+                const handleMouseMove = (e) => {
+                    if (!isDown) return;
+                    e.preventDefault();
+                    performMove(e.pageX, e.pageY, e);
+                };
 
-                if (Math.abs(x - startX) > 5 || Math.abs(y - startY) > 5) {
-                    hasDragged = true;
-                    mainScroller.classList.add('scroll-active');
-                }
+                const handleTouchMove = (e) => {
+                    if (!isDown) return;
+                    if (e.cancelable) e.preventDefault();
+                    const touch = e.touches[0];
+                    performMove(touch.pageX, touch.pageY, e);
+                };
 
-                if (Math.abs(walkY) > Math.abs(walkX)) {
-                    mainScroller.scrollTop = mainScrollStart - walkY;
-                } else {
-                    if (targetSlider) {
-                        const startLeft = horizontalScrollStart.get(targetSlider);
-                        targetSlider.scrollLeft = startLeft - walkX;
-                    }
-                }
-            };
+                document.addEventListener('mousemove', handleMouseMove);
+                document.addEventListener('touchmove', handleTouchMove, { passive: false });
+                document.addEventListener('mouseup', endDrag);
+                document.addEventListener('mouseleave', endDrag);
+                document.addEventListener('touchend', endDrag);
 
-            document.addEventListener('mousemove', (e) => {
-                if(!isDown) return;
-                e.preventDefault();
-                performMove(e.pageX, e.pageY, e);
-            });
+                return () => {
+                    allDraggables.forEach(el => {
+                        el.removeEventListener('mousedown', handleMouseDown);
+                        el.removeEventListener('touchstart', handleTouchStart);
+                    });
+                    document.removeEventListener('mousemove', handleMouseMove);
+                    document.removeEventListener('touchmove', handleTouchMove);
+                    document.removeEventListener('mouseup', endDrag);
+                    document.removeEventListener('mouseleave', endDrag);
+                    document.removeEventListener('touchend', endDrag);
+                };
+            }, []);
 
-            document.addEventListener('touchmove', (e) => {
-                if(!isDown) return;
-                if(e.cancelable) e.preventDefault(); 
-                const touch = e.touches[0];
-                performMove(touch.pageX, touch.pageY, e);
-            }, { passive: false });
+            return (
+                <section className="app-section">
+                    <div className="app-phone">
+                        <h3 className="app-phone-title">
+                            <i className="fa-solid fa-play-circle"></i>
+                            Experimente.
+                        </h3>
+                        <div className="app-phone-container">
+                            <div className="phone-mockup">
+                                <div className="phone-notch"></div>
+                                <div className="phone-screen">
+                                    <div className="app-ui-header">
+                                        <div className="app-ui-logo"></div>
+                                        <div className="app-ui-icons">
+                                            <div className={`search-icon-wrapper ${activeTooltip === 'search' ? 'active' : ''}`} onClick={() => toggleTooltip('search')}>
+                                                <i className="fa-solid fa-search"></i>
+                                                <div className="search-tooltip">São mais de 80 mil conteúdos!</div>
+                                            </div>
+                                            <div className={`user-icon-wrapper ${activeTooltip === 'user' ? 'active' : ''}`} onClick={() => toggleTooltip('user')}>
+                                                <i className="fa-solid fa-user-circle"></i>
+                                                <div className="user-tooltip">Logo logo você terá seu acesso! 😄</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className={`video-overlay ${videoUrl ? 'active' : ''}`}>
+                                        <button className="close-video-btn" onClick={closeVideo}><i className="fa-solid fa-xmark"></i></button>
+                                        <div className="video-container">
+                                            {videoUrl && <iframe src={videoUrl} frameBorder="0" allow="autoplay; encrypted-media" allowFullScreen></iframe>}
+                                        </div>
+                                    </div>
+                                    <div className="app-ui-scroll-content" ref={mainScrollRef}>
+                                        <div className="app-hero-banner">
+                                            <div className={`hero-gif-container ${gifActive ? 'active' : ''}`}><img src="https://i.pinimg.com/originals/a1/5a/b9/a15ab9f44fb47ab505b5a92ab5f98ed8.gif" alt="Futebol GIF" /></div>
+                                            <div className="app-hero-overlay"></div>
+                                            <div className={`play-btn-app ${gifActive ? 'hidden' : ''}`} onClick={() => setGifActive(true)}><i className="fa-solid fa-play"></i></div>
+                                            <div className="hero-info">
+                                                <span className="hero-tag">Ao Vivo Agora</span>
+                                                <h3 className="hero-title">Champions League</h3>
+                                                <div className="hero-meta"><span><i className="fa-regular fa-clock"></i> 2º Tempo</span><span>• Final</span><span>• 4K HDR</span></div>
+                                            </div>
+                                        </div>
+                                        <div className="app-section-title">Destaques da Semana</div>
+                                        <div className="movies-row horizontal-scroll" ref={horizontalScrollRef1}>
+                                            <div className="movie-card-app" onClick={() => openVideo('qnR0s1QVknI')}><div className="movie-poster-app"><img src="https://jardimdasamericas.com.br/uploads/2025/12/capa-filme-avatar-fogo-e-cinzas-966f9-large.png" alt="Avatar"/></div><span className="movie-title-text">Avatar: Fogo e Cinzas</span></div>
+                                            <div className="movie-card-app" onClick={() => openVideo('g0GB20yE9JY')}><div className="movie-poster-app"><img src="https://upload.wikimedia.org/wikipedia/pt/6/60/O_Agente_Secreto_%28Cartaz_brasileiro%29.jpg" alt="O Agente Secreto"/></div><span className="movie-title-text">O Agente Secreto</span></div>
+                                            <div className="movie-card-app" onClick={() => openVideo('T7_zMl_ZhdQ')}><div className="movie-poster-app"><img src="https://s2-g1.glbimg.com/JlPpzZaM6BQeHE8519IeNARgIJg=/0x0:1382x2048/984x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2021/k/m/sUy6NaRMiAMJOllVxvOQ/fb2miibwyairfgo.jpg" alt="Batman"/></div><span className="movie-title-text">The Batman II</span></div>
+                                            <div className="movie-card-app" onClick={() => openVideo('ZiDphkXCZsQ')}><div className="movie-poster-app"><img src="https://ingresso-a.akamaihd.net/prd/img/movie/f1-o-filme/3a0a118e-8bf3-4e10-b45d-f028cd49b001.webp" alt="F1"/></div><span className="movie-title-text">F1: O Filme</span></div>
+                                        </div>
+                                        <div className="app-section-title">Séries Populares</div>
+                                        <div className="movies-row horizontal-scroll" ref={horizontalScrollRef2}>
+                                            <div className="movie-card-app" onClick={() => openVideo('IcR-6y3Q9XI')}><div className="movie-poster-app"><img src="https://i.imgur.com/ONufJIn.png" alt="TLOU"/></div><span className="movie-title-text">The Last of Us</span></div>
+                                            <div className="movie-card-app" onClick={() => openVideo('Wb3kaP580kA')}><div className="movie-poster-app"><img src="https://i.imgur.com/30zW0QK.png" alt="Stranger Things"/></div><span className="movie-title-text">Stranger Things 5</span></div>
+                                            <div className="movie-card-app" onClick={() => openVideo('IgyahanUcOk')}><div className="movie-poster-app"><img src="https://preview.redd.it/tvn-spring-fever-teaser-poster-premieres-january-5-v0-kgb43b5drv4g1.jpg?width=640&crop=smart&auto=webp&s=4d0318de16fd82a564657498104302df46ef8b16" alt="Spring Fever"/></div><span className="movie-title-text">Spring Fever</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="app-content">
+                        <div className="app-logo"></div>
+                        <h2 className="app-title">Para curtir <span>onde</span><br/>e <span>quando</span> quiser</h2>
+                        <p className="app-text">Tenha acesso completo direto no seu celular. Assista filmes, séries, canais e esportes ao vivo com total liberdade. Disponível para Android e iOS.</p>
+                        <div className="store-buttons">
+                            <a href="#" className="store-btn"><i className="fa-brands fa-apple"></i><div className="btn-text"><small>Disponível na</small><strong>Apple Store</strong></div></a>
+                            <a href="#" className="store-btn"><i className="fa-brands fa-google-play"></i><div className="btn-text"><small>Baixe no</small><strong>Google Play</strong></div></a>
+                        </div>
+                        <p className="extra-text">Todos os seus lançamentos, filmes, séries, doramas, documentários e animes favoritos, com a experiência e qualidade que você merece.<br/><br/>No GrowthUP+ você terá acesso a mais de 80.000 conteúdos, tudo em uma única plataforma.</p>
+                    </div>
+                </section>
+            );
+        };
 
-            document.addEventListener('mouseup', endDrag);
-            document.addEventListener('mouseleave', endDrag);
-            document.addEventListener('touchend', endDrag);
-        });
+        const EconomySection = () => {
+            const brands = [
+                { type: 'text-script', main: 'Paramount', sub: '+', subStyle: 'text-2xl font-sans italic', className: 'brand-paramount' },
+                { type: 'text-geo', text: 'max', className: 'brand-max' },
+                { type: 'img', src: 'https://upload.wikimedia.org/wikipedia/commons/3/3e/Disney%2B_logo.svg', alt: 'Disney+', className: 'brand-disney' },
+                { type: 'prime', className: 'brand-prime' },
+                { type: 'text-condensed', text: 'NETFLIX', className: 'brand-netflix' },
+                { type: 'img', src: 'https://upload.wikimedia.org/wikipedia/commons/d/de/HBO_logo.svg', alt: 'HBO', className: 'brand-hbo' },
+                { type: 'text-custom', className: 'brand-globoplay', content: <span className="font-geometric text-3xl font-bold tracking-tight lowercase">globoplay</span> },
+                { type: 'text-condensed', text: 'Telecine', style: 'text-2xl uppercase', className: 'brand-telecine' },
+                { type: 'img', src: 'https://upload.wikimedia.org/wikipedia/commons/2/2f/ESPN_wordmark.svg', alt: 'ESPN', className: 'brand-espn' },
+                { type: 'text-looke', text: 'Looke', className: 'brand-looke' },
+                { type: 'text-custom', className: 'brand-crunchyroll', content: <span className="font-bold text-lg tracking-tight lowercase">crunchyroll</span> },
+                { type: 'text-custom', className: 'brand-viki', content: <span className="font-bold text-lg">Rakuten <span className="font-black">Viki</span></span> },
+                { type: 'apple', className: 'brand-apple' },
+                { type: 'text-condensed', text: 'PREMIERE', style: 'text-2xl font-bold uppercase tracking-[0.2em]', className: 'brand-premiere' },
+                { type: '18+', className: 'brand-18' }
+            ];
+            return (
+                <section className="relative z-10 py-16 md:py-24 bg-[#050505] text-white border-t border-white/5">
+                    <div className="max-w-7xl w-full mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center px-6">
+                        <div className="space-y-6 max-w-lg">
+                            <RevealOnScroll>
+                                <h3 className="text-zinc-500 text-sm tracking-wider font-semibold uppercase">Você economiza muito</h3>
+                                <h1 className="text-4xl md:text-6xl font-bold leading-tight"><span className="block"><span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-red-800">Menos custo</span>,</span> mais controle.<br/>Tudo no mesmo lugar.</h1>
+                                <p className="text-zinc-400 text-lg leading-relaxed">Chega de pagar várias contas. Com o GrowthUP+ você economiza até <span className="text-white font-bold">R$3.876</span> por ano. Com uma única assinatura, você tem acesso a diversos streamings em um só lugar.</p>
+                            </RevealOnScroll>
+                        </div>
+                        <div className="grid grid-cols-3 gap-4">
+                            {brands.map((item, idx) => (
+                                <RevealOnScroll key={idx} delay={idx * 50} className="w-full">
+                                    <div className={`brand-card-item h-24 rounded-lg flex items-center justify-center p-4 w-full ${item.className || ''}`}>
+                                        {item.type === 'text-script' && <div className="text-center"><span className="font-script text-3xl transition-colors">{item.main}</span><span className={item.subStyle}>{item.sub}</span></div>}
+                                        {item.type === 'text-geo' && <span className="font-geometric text-4xl tracking-tighter font-black lowercase transition-colors">{item.text}</span>}
+                                        {item.type === 'img' && <img src={item.src} alt={item.alt} className="h-10 w-auto object-contain" />}
+                                        {item.type === 'prime' && <div className="flex flex-col items-center justify-center w-full"><div className="flex items-center gap-1"><span className="font-bold text-xl tracking-tight transition-colors">prime video</span></div><svg className="w-16 h-4 mt-1 transition-colors" viewBox="0 0 100 20" fill="none" stroke="currentColor" strokeWidth="3"><path d="M10,5 Q50,20 90,5" strokeLinecap="round" /><path d="M90,5 L85,8 M90,5 L88,1" strokeWidth="0" fill="currentColor"/> <polygon points="88,0 95,5 86,10" fill="currentColor" /></svg></div>}
+                                        {item.type === 'text-condensed' && <span className={`font-condensed tracking-widest font-bold transition-colors ${item.style || 'text-3xl'}`}>{item.text}</span>}
+                                        {item.type === 'text-looke' && <span className="font-looke text-3xl tracking-wide transition-colors">{item.text}</span>}
+                                        {item.type === 'text-custom' && item.content}
+                                        {item.type === 'apple' && <div className="flex items-center gap-1"><i className="fab fa-apple text-2xl transition-colors"></i><span className="font-bold text-xl transition-colors">tv+</span></div>}
+                                        {item.type === '18+' && <div className="border-2 border-white rounded-full w-14 h-14 flex items-center justify-center transition-colors"><span className="font-bold text-xl">18<sup className="text-[0.6em]">+</sup></span></div>}
+                                    </div>
+                                </RevealOnScroll>
+                            ))}
+                        </div>
+                    </div>
+                </section>
+            );
+        };
+
+        const PricingSection = ({ getWhatsAppLink }) => {
+            const [showCampaignInfo, setShowCampaignInfo] = useState(false);
+            return (
+                <section className="relative z-10 py-16 px-4 bg-[#050505] text-white flex flex-col items-center border-t border-white/5" id="planos">
+                    <RevealOnScroll className="text-center max-w-4xl mx-auto mb-16 relative">
+                        <div className="relative inline-block z-30 cursor-pointer" onMouseEnter={() => setShowCampaignInfo(true)} onMouseLeave={() => setShowCampaignInfo(false)} onClick={() => setShowCampaignInfo(!showCampaignInfo)}>
+                            <div className="bg-[#1c0505] border border-red-500 rounded-full px-4 py-1.5 mb-4 hover:bg-[#2b0808] transition-all duration-300">
+                                <span className="text-red-400 text-xs font-bold tracking-widest uppercase flex items-center gap-2"><span className="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>Campanha de Janeiro <i className={`fas fa-chevron-down ml-1 text-[10px] transition-transform duration-300 ${showCampaignInfo ? 'rotate-180' : ''}`}></i></span>
+                            </div>
+                            <div className={`absolute left-1/2 -translate-x-1/2 top-full mt-1 w-[290px] bg-[#0a0a0a] border border-red-900/40 rounded-xl shadow-2xl shadow-red-900/10 p-5 transition-all duration-300 origin-top z-50 ${showCampaignInfo ? 'opacity-100 scale-100 translate-y-0 visible' : 'opacity-0 scale-95 -translate-y-2 invisible pointer-events-none'}`}>
+                                <div className="absolute -top-1.5 left-1/2 -translate-x-1/2 w-3 h-3 bg-[#0a0a0a] border-t border-l border-red-900/40 transform rotate-45"></div>
+                                <h4 className="text-white font-bold text-xs uppercase tracking-wider mb-4 text-center border-b border-white/5 pb-2">Resumo de Benefícios</h4>
+                                <div className="space-y-3">
+                                    <div className="flex justify-between items-center"><span className="text-zinc-400 text-xs font-medium">Mensal</span><span className="text-[10px] font-bold text-green-400 bg-green-500/10 px-2 py-0.5 rounded border border-green-500/20">+15 Dias & +1 Tela</span></div>
+                                    <div className="flex justify-between items-center"><span className="text-zinc-400 text-xs font-medium">Trimestral</span><span className="text-[10px] font-bold text-green-400 bg-green-500/10 px-2 py-0.5 rounded border border-green-500/20">+1 Mês & +1 Tela</span></div>
+                                    <div className="flex justify-between items-center"><span className="text-zinc-400 text-xs font-medium">Semestral</span><span className="text-[10px] font-bold text-green-400 bg-green-500/10 px-2 py-0.5 rounded border border-green-500/20">+3 Meses & +1 Tela</span></div>
+                                    <div className="flex justify-between items-center"><span className="text-zinc-400 text-xs font-medium">Anual</span><span className="text-[10px] font-bold text-green-400 bg-green-500/10 px-2 py-0.5 rounded border border-green-500/20">+6 Meses & +2 Telas</span></div>
+                                </div>
+                                <div className="mt-4 pt-3 border-t border-white/5 text-center"><p className="text-[9px] text-zinc-500">Oferta válida por tempo limitado.</p></div>
+                            </div>
+                        </div>
+                        <h2 className="text-zinc-500 text-xs md:text-sm font-semibold tracking-[0.2em] uppercase mb-3">PLANOS</h2>
+                        <h1 className="text-4xl md:text-5xl font-extrabold mb-6 tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-red-800 animate-pulse">Escolha o seu plano</h1>
+                        <p className="text-zinc-400 text-sm md:text-base max-w-2xl mx-auto leading-relaxed font-light">Com o GrowthUP+, você tem acesso a todos os canais abertos, pagos e streamings que ama. Você aproveita muito mais, por muito menos. Confira os planos abaixo:</p>
+                    </RevealOnScroll>
+                    <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4 max-w-7xl w-full items-start">
+                        {/* PLANOS */}
+                        <RevealOnScroll delay={0} className="h-full">
+                            <div className="card-bg rounded-3xl p-6 flex flex-col relative card-border h-full hover:border-zinc-700 transition-colors group">
+                                <div className="mb-6"><div className="h-6 mb-1"></div><h3 className="text-xl font-bold text-zinc-200 mb-1">Plano Basic</h3><p className="text-zinc-400 text-sm font-medium mb-5">Mensal</p><div className="flex items-end gap-1 mb-6"><span className="text-4xl font-extrabold text-white tracking-tight">R$ 18,90</span><span className="text-zinc-500 text-sm font-medium mb-1.5 ml-1">/mês</span></div><p className="text-zinc-400 text-xs leading-relaxed min-h-[40px]">Tenha acesso completo a todos os recursos. O plano perfeito para você e sua família.</p></div>
+                                <a href="https://pay.cakto.com.br/7kjywct_686205" target="_blank" className="w-full bg-white hover:bg-zinc-200 text-black font-extrabold text-sm py-3.5 rounded-lg transition-colors mb-8 uppercase tracking-wide text-center block" onClick={() => trackInitiateCheckout('Basic', 18.90)}>Assinar Agora</a>
+                                <div className="mb-8"><div className="flex justify-between items-center text-[10px] font-semibold text-zinc-400 uppercase tracking-wider mb-3"><span>Inclui:</span><span>+12 plataformas</span></div><div className="grid grid-cols-5 gap-2"><div className="logo-box group-hover:ring-2 group-hover:ring-red-500"><span className="font-geometric text-[13px] tracking-tighter font-black lowercase text-black">max</span></div><div className="logo-box group-hover:ring-2 group-hover:ring-red-500 transition-all delay-75"><img src="https://upload.wikimedia.org/wikipedia/commons/3/3e/Disney%2B_logo.svg" alt="Disney+" className="w-10 h-auto filter brightness-0"/></div><div className="logo-box flex-col pt-1 group-hover:ring-2 group-hover:ring-red-500 transition-all delay-100"><span className="font-bold text-[8px] tracking-tight text-black leading-none">prime video</span><svg className="w-8 h-2 mt-0.5 text-black" viewBox="0 0 100 20" fill="none" stroke="currentColor" strokeWidth="8"><path d="M10,5 Q50,25 90,5" strokeLinecap="round" /><path d="M90,5 L80,10" strokeWidth="0" fill="currentColor"/></svg></div><div className="logo-box group-hover:ring-2 group-hover:ring-red-500 transition-all delay-150"><span className="font-condensed text-black text-[11px] tracking-tighter font-bold transform scale-y-110">NETFLIX</span></div><div className="logo-box group-hover:ring-2 group-hover:ring-red-500 transition-all delay-200"><span className="font-condensed text-black text-[7px] tracking-widest font-bold uppercase">Telecine</span></div></div></div>
+                                <ul className="space-y-3.5 text-xs text-zinc-300 mt-auto font-medium"><li className="flex items-start gap-3"><CustomCheck color="green" /><span className="font-bold text-white">Acesso em 2 telas <span className="text-[9px] bg-green-500/20 text-green-400 px-1.5 py-0.5 rounded ml-1 uppercase border border-green-500/30">Bônus +1 Tela</span></span></li><li className="flex items-start gap-3"><CustomCheck color="red" /><span>Mais de 10.000 Canais, Filmes e Séries.</span></li><li className="flex items-start gap-3"><CustomCheck color="red" /><span>Tudo em SD/HD/FHD/4K</span></li><li className="flex items-start gap-3"><CustomCheck color="red" /><span>Multiplataforma</span></li><li className="flex items-start gap-3"><CustomCheck color="green" /><span className="font-bold text-white">Acesso por 45 dias <span className="text-[9px] bg-green-500/20 text-green-400 px-1.5 py-0.5 rounded ml-1 uppercase border border-green-500/30">Bônus +15 Dias</span></span></li></ul>
+                            </div>
+                        </RevealOnScroll>
+                        <RevealOnScroll delay={100} className="h-full">
+                            <div className="card-bg rounded-3xl p-6 flex flex-col relative card-border h-full hover:border-zinc-700 transition-colors group">
+                                <div className="absolute top-6 right-6 bg-red-200 text-red-900 text-[10px] font-black px-3 py-1.5 rounded-full leading-tight text-center shadow-lg z-20">17% de<br/>desconto</div>
+                                <div className="mb-6"><div className="h-6 mb-1"></div><h3 className="text-xl font-bold text-zinc-200 mb-1">Plano Plus</h3><p className="text-zinc-400 text-sm font-medium mb-5">Trimestral</p><div className="flex items-end mb-5"><span className="text-zinc-400 text-lg font-bold mb-1 mr-1">3x</span><span className="text-5xl font-extrabold text-white tracking-tighter">18,18</span><span className="text-zinc-500 text-[9px] font-bold uppercase tracking-wide mb-2 ml-2 leading-none whitespace-nowrap">OU R$48,90</span></div><p className="text-zinc-400 text-xs leading-relaxed min-h-[40px]">Economize assinando por 3 meses. Ótima opção de médio prazo.</p></div>
+                                <a href="https://pay.cakto.com.br/jpjps2w" target="_blank" className="w-full bg-white hover:bg-zinc-200 text-black font-extrabold text-sm py-3.5 rounded-lg transition-colors mb-8 uppercase tracking-wide text-center block" onClick={() => trackInitiateCheckout('Plus', 48.90)}>Assinar Agora</a>
+                                <div className="mb-8"><div className="flex justify-between items-center text-[10px] font-semibold text-zinc-400 uppercase tracking-wider mb-3"><span>Inclui:</span><span>+12 plataformas</span></div><div className="grid grid-cols-5 gap-2"><div className="logo-box group-hover:ring-2 group-hover:ring-red-500"><span className="font-geometric text-[13px] tracking-tighter font-black lowercase text-black">max</span></div><div className="logo-box group-hover:ring-2 group-hover:ring-red-500 transition-all delay-75"><img src="https://upload.wikimedia.org/wikipedia/commons/3/3e/Disney%2B_logo.svg" alt="Disney+" className="w-10 h-auto filter brightness-0"/></div><div className="logo-box flex-col pt-1 group-hover:ring-2 group-hover:ring-red-500 transition-all delay-100"><span className="font-bold text-[8px] tracking-tight text-black leading-none">prime video</span><svg className="w-8 h-2 mt-0.5 text-black" viewBox="0 0 100 20" fill="none" stroke="currentColor" strokeWidth="8"><path d="M10,5 Q50,25 90,5" strokeLinecap="round" /><path d="M90,5 L80,10" strokeWidth="0" fill="currentColor"/></svg></div><div className="logo-box group-hover:ring-2 group-hover:ring-red-500 transition-all delay-150"><span className="font-condensed text-black text-[11px] tracking-tighter font-bold transform scale-y-110">NETFLIX</span></div><div className="logo-box group-hover:ring-2 group-hover:ring-red-500 transition-all delay-200"><span className="font-condensed text-black text-[7px] tracking-widest font-bold uppercase">Telecine</span></div></div></div>
+                                <ul className="space-y-3.5 text-xs text-zinc-300 mt-auto font-medium"><li className="flex items-start gap-3"><CustomCheck color="green" /><span className="font-bold text-white">Acesso em 2 telas <span className="text-[9px] bg-green-500/20 text-green-400 px-1.5 py-0.5 rounded ml-1 uppercase border border-green-500/30">Bônus +1 Tela</span></span></li><li className="flex items-start gap-3"><CustomCheck color="red" /><span>Mais de 10.000 Canais, Filmes e Séries.</span></li><li className="flex items-start gap-3"><CustomCheck color="red" /><span>Tudo em FHD/4K</span></li><li className="flex items-start gap-3"><CustomCheck color="red" /><span>Multiplataforma</span></li><li className="flex items-start gap-3"><CustomCheck color="green" /><span className="font-bold text-white">Acesso por 4 meses <span className="text-[9px] bg-green-500/20 text-green-400 px-1.5 py-0.5 rounded ml-1 uppercase border border-green-500/30">Bônus +1 Mês</span></span></li></ul>
+                            </div>
+                        </RevealOnScroll>
+                        <RevealOnScroll delay={200} className="h-full z-10">
+                            <div className="card-bg rounded-3xl p-6 flex flex-col relative border-2 border-red-900/60 shadow-[0_0_40px_rgba(220,38,38,0.15)] h-full transform xl:-translate-y-4 hover:border-red-600 hover:shadow-[0_0_50px_rgba(220,38,38,0.25)] transition-all duration-300 group">
+                                <div className="absolute top-6 right-6 bg-red-600 text-white text-[10px] font-black px-3 py-1.5 rounded-full leading-tight text-center shadow-lg z-20">20% de<br/>desconto</div>
+                                <div className="mb-6"><div className="mb-1"><span className="text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-red-600 animate-pulse text-sm font-black italic tracking-widest uppercase drop-shadow-[0_2px_4px_rgba(220,38,38,0.4)]">MAIS ESCOLHIDO</span></div><h3 className="text-xl font-bold text-white mb-1">Plano Pro</h3><p className="text-zinc-400 text-sm font-medium mb-5">Semestral</p><div className="flex items-end mb-5"><span className="text-zinc-400 text-lg font-bold mb-1 mr-1">6x</span><span className="text-5xl font-extrabold text-white tracking-tighter">17,52</span><span className="text-zinc-500 text-[9px] font-bold uppercase tracking-wide mb-2 ml-2 leading-none whitespace-nowrap">OU R$89,90</span></div><p className="text-zinc-400 text-xs leading-relaxed min-h-[40px]">O plano ideal para quem quer garantir entretenimento por mais tempo.</p></div>
+                                <a href="https://pay.cakto.com.br/mq6kaat" target="_blank" className="w-full bg-gradient-to-r from-red-600 to-red-900 text-white font-extrabold text-sm py-3.5 rounded-lg hover:opacity-90 transition-opacity mb-8 shadow-lg shadow-red-900/50 uppercase tracking-wide text-center block" onClick={() => trackInitiateCheckout('Pro', 89.90)}>Assinar Agora</a>
+                                <div className="mb-8"><div className="flex justify-between items-center text-[10px] font-semibold text-zinc-400 uppercase tracking-wider mb-3"><span>Inclui:</span><span>+12 plataformas</span></div><div className="grid grid-cols-5 gap-2"><div className="logo-box group-hover:ring-2 group-hover:ring-red-500"><span className="font-geometric text-[13px] tracking-tighter font-black lowercase text-black">max</span></div><div className="logo-box group-hover:ring-2 group-hover:ring-red-500 transition-all delay-75"><img src="https://upload.wikimedia.org/wikipedia/commons/3/3e/Disney%2B_logo.svg" alt="Disney+" className="w-10 h-auto filter brightness-0"/></div><div className="logo-box flex-col pt-1 group-hover:ring-2 group-hover:ring-red-500 transition-all delay-100"><span className="font-bold text-[8px] tracking-tight text-black leading-none">prime video</span><svg className="w-8 h-2 mt-0.5 text-black" viewBox="0 0 100 20" fill="none" stroke="currentColor" strokeWidth="8"><path d="M10,5 Q50,25 90,5" strokeLinecap="round" /><path d="M90,5 L80,10" strokeWidth="0" fill="currentColor"/></svg></div><div className="logo-box group-hover:ring-2 group-hover:ring-red-500 transition-all delay-150"><span className="font-condensed text-black text-[11px] tracking-tighter font-bold transform scale-y-110">NETFLIX</span></div><div className="logo-box group-hover:ring-2 group-hover:ring-red-500 transition-all delay-200"><span className="font-condensed text-black text-[7px] tracking-widest font-bold uppercase">Telecine</span></div></div></div>
+                                <ul className="space-y-3.5 text-xs text-zinc-300 mt-auto font-medium"><li className="flex items-start gap-3"><CustomCheck color="green" /><span className="font-bold text-white">Acesso em 3 telas <span className="text-[9px] bg-green-500/20 text-green-400 px-1.5 py-0.5 rounded ml-1 uppercase border border-green-500/30">Bônus +1 Tela</span></span></li><li className="flex items-start gap-3"><CustomCheck color="red" /><span>Mais de 10.000 Canais, Filmes e Séries.</span></li><li className="flex items-start gap-3"><CustomCheck color="red" /><span>Tudo em FHD/4K</span></li><li className="flex items-start gap-3"><CustomCheck color="red" /><span>Multiplataforma</span></li><li className="flex items-start gap-3"><CustomCheck color="green" /><span className="font-bold text-white">Acesso por 9 meses <span className="text-[9px] bg-green-500/20 text-green-400 px-1.5 py-0.5 rounded ml-1 uppercase border border-green-500/30">Bônus +3 Meses</span></span></li></ul>
+                            </div>
+                        </RevealOnScroll>
+                        <RevealOnScroll delay={300} className="h-full z-10">
+                            <div className="card-bg rounded-3xl p-6 flex flex-col relative border-2 border-red-900/40 shadow-[0_0_40px_rgba(185,28,28,0.1)] h-full transform xl:-translate-y-4 hover:border-red-700 hover:shadow-[0_0_50px_rgba(185,28,28,0.2)] transition-all duration-300 group">
+                                <div className="absolute top-6 right-6 bg-red-800 text-white text-[10px] font-black px-3 py-1.5 rounded-full leading-tight text-center shadow-lg z-20">26% de<br/>desconto</div>
+                                <div className="mb-6"><div className="mb-1"><span className="text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-red-600 animate-pulse text-sm font-black italic tracking-widest uppercase">MAIOR ECONOMIA</span></div><h3 className="text-xl font-bold text-white mb-1">Plano Premium</h3><p className="text-zinc-400 text-sm font-medium mb-5">Anual</p><div className="flex items-end mb-5"><span className="text-zinc-400 text-lg font-bold mb-1 mr-1">12x</span><span className="text-5xl font-extrabold text-white tracking-tighter">17,08</span><span className="text-zinc-500 text-[9px] font-bold uppercase tracking-wide mb-2 ml-2 leading-none whitespace-nowrap">OU R$147,90</span></div><p className="text-zinc-400 text-xs leading-relaxed min-h-[40px]">O maior desconto e acesso anual. Perfeito para você e sua família.</p></div>
+                                <a href="https://pay.cakto.com.br/367ifhv" target="_blank" className="w-full bg-gradient-to-r from-red-700 to-red-950 text-white font-extrabold text-sm py-3.5 rounded-lg hover:opacity-90 transition-opacity mb-8 shadow-lg shadow-red-900/40 uppercase tracking-wide text-center block" onClick={() => trackInitiateCheckout('Premium', 147.90)}>Assinar Agora</a>
+                                <div className="mb-8"><div className="flex justify-between items-center text-[10px] font-semibold text-zinc-400 uppercase tracking-wider mb-3"><span>Inclui:</span><span>+12 plataformas</span></div><div className="grid grid-cols-5 gap-2"><div className="logo-box group-hover:ring-2 group-hover:ring-red-500"><span className="font-geometric text-[13px] tracking-tighter font-black lowercase text-black">max</span></div><div className="logo-box group-hover:ring-2 group-hover:ring-red-500 transition-all delay-75"><img src="https://upload.wikimedia.org/wikipedia/commons/3/3e/Disney%2B_logo.svg" alt="Disney+" className="w-10 h-auto filter brightness-0"/></div><div className="logo-box flex-col pt-1 group-hover:ring-2 group-hover:ring-red-500 transition-all delay-100"><span className="font-bold text-[8px] tracking-tight text-black leading-none">prime video</span><svg className="w-8 h-2 mt-0.5 text-black" viewBox="0 0 100 20" fill="none" stroke="currentColor" strokeWidth="8"><path d="M10,5 Q50,25 90,5" strokeLinecap="round" /><path d="M90,5 L80,10" strokeWidth="0" fill="currentColor"/></svg></div><div className="logo-box group-hover:ring-2 group-hover:ring-red-500 transition-all delay-150"><span className="font-condensed text-black text-[11px] tracking-tighter font-bold transform scale-y-110">NETFLIX</span></div><div className="logo-box group-hover:ring-2 group-hover:ring-red-500 transition-all delay-200"><span className="font-condensed text-black text-[7px] tracking-widest font-bold uppercase">Telecine</span></div></div></div>
+                                <ul className="space-y-3.5 text-xs text-zinc-300 mt-auto font-medium"><li className="flex items-start gap-3"><CustomCheck color="green" /><span className="font-bold text-white">Acesso em 4 telas <span className="text-[9px] bg-green-500/20 text-green-400 px-1.5 py-0.5 rounded ml-1 uppercase border border-green-500/30">Bônus +2 Telas</span></span></li><li className="flex items-start gap-3"><CustomCheck color="red" /><span>Mais de 10.000 Canais, Filmes e Séries.</span></li><li className="flex items-start gap-3"><CustomCheck color="red" /><span>Tudo em FHD/4K</span></li><li className="flex items-start gap-3"><CustomCheck color="red" /><span>Multiplataforma</span></li><li className="flex items-start gap-3"><CustomCheck color="green" /><span className="font-bold text-white">Acesso por 18 meses <span className="text-[9px] bg-green-500/20 text-green-400 px-1.5 py-0.5 rounded ml-1 uppercase border border-green-500/30">Bônus +6 Meses</span></span></li></ul>
+                            </div>
+                        </RevealOnScroll>
+                    </div>
+                </section>
+            );
+        };
+
+        const ScamAlertSection = () => {
+            const [isExpanded, setIsExpanded] = useState(false);
+            return (
+                <section className="relative z-20 bg-[#050505] py-8 px-4">
+                    <div className="max-w-3xl mx-auto">
+                        <RevealOnScroll>
+                            <div className="bg-[#1c0505] border border-red-600 rounded-xl p-5 relative overflow-hidden transition-all duration-500">
+                                <div className="absolute -top-10 -right-10 w-40 h-40 bg-red-600/10 rounded-full blur-3xl"></div>
+                                <div className="flex flex-col items-center text-center mb-3">
+                                    <div className="bg-red-600/20 p-2 rounded-full mb-2 border border-red-500/30 animate-pulse"><i className="fas fa-exclamation-triangle text-base text-red-500"></i></div>
+                                    <h2 className="text-lg font-bold text-white uppercase tracking-tight mb-1">Comunicado Importante</h2>
+                                    <p className="text-red-400 text-[10px] font-bold tracking-widest uppercase border-b border-red-500/30 pb-0.5">Atenção a Golpes</p>
+                                </div>
+                                <div className="space-y-3 text-gray-300 text-xs md:text-sm leading-relaxed">
+                                    <p className="text-center font-medium">Nos últimos tempos, surgiram diversas ofertas na internet prometendo <span className="text-white font-bold">“streaming vitalício”</span> ou <span className="text-white font-bold">“acesso para sempre”</span>.</p>
+                                    {!isExpanded ? (
+                                        <div className="flex justify-center mt-2"><button onClick={() => setIsExpanded(true)} className="group inline-flex h-7 items-center justify-center rounded-full bg-red-600 px-4 font-bold text-[10px] text-white transition-colors duration-300 hover:bg-red-700"><span className="mr-1.5 uppercase tracking-wider">Veja mais</span><i className="fas fa-chevron-down text-[9px] group-hover:translate-y-0.5 transition-transform"></i></button></div>
+                                    ) : (
+                                        <div className="animate-fade-in-down">
+                                            <div className="bg-[#0a0a0a] rounded-lg p-4 border border-white/5 mt-3"><p className="text-white text-xs font-semibold mb-3 text-center">É importante deixar algo bem claro: <span className="text-red-500 underline decoration-red-500/50">Esse tipo de serviço NÃO EXISTE.</span></p><p className="mb-2 font-medium text-gray-400 text-[10px] uppercase tracking-wider">Plataformas que prometem acesso vitalício:</p><ul className="space-y-1.5 mb-4 text-[11px]"><li className="flex items-start gap-2"><i className="fas fa-times text-red-500 mt-0.5 text-[10px]"></i><span>Não são sustentáveis.</span></li><li className="flex items-start gap-2"><i className="fas fa-times text-red-500 mt-0.5 text-[10px]"></i><span>Não conseguem manter servidores ativos indefinidamente.</span></li><li className="flex items-start gap-2"><i className="fas fa-times text-red-500 mt-0.5 text-[10px]"></i><span>Costumam sair do ar sem aviso.</span></li><li className="flex items-start gap-2"><i className="fas fa-times text-red-500 mt-0.5 text-[10px]"></i><span>Geralmente caracterizam fraude ou golpe.</span></li></ul><p className="mb-2 font-medium text-gray-400 text-[10px] uppercase tracking-wider">Serviços de streaming sérios dependem de:</p><ul className="grid grid-cols-1 md:grid-cols-2 gap-1.5 text-[10px]"><li className="flex items-center gap-2 bg-white/5 px-2 py-1.5 rounded"><div className="w-1 h-1 bg-green-500 rounded-full animate-pulse shadow-[0_0_8px_rgba(34,197,94,0.6)]"></div>Infraestrutura de servidores</li><li className="flex items-center gap-2 bg-white/5 px-2 py-1.5 rounded"><div className="w-1 h-1 bg-green-500 rounded-full animate-pulse shadow-[0_0_8px_rgba(34,197,94,0.6)]"></div>Custos contínuos de manutenção</li><li className="flex items-center gap-2 bg-white/5 px-2 py-1.5 rounded"><div className="w-1 h-1 bg-green-500 rounded-full animate-pulse shadow-[0_0_8px_rgba(34,197,94,0.6)]"></div>Atualizações constantes</li><li className="flex items-center gap-2 bg-white/5 px-2 py-1.5 rounded"><div className="w-1 h-1 bg-green-500 rounded-full animate-pulse shadow-[0_0_8px_rgba(34,197,94,0.6)]"></div>Operação recorrente</li></ul></div>
+                                            <p className="text-center italic text-gray-400 text-[10px] mt-4">Por esse motivo, nenhum serviço sério consegue oferecer acesso “para a vida toda”.</p>
+                                            <div className="border-l-2 border-red-500 pl-3 py-1 mt-3"><p className="text-xs">A <span className="text-white font-bold">GrowthUP+</span> trabalha de forma transparente, com planos claros, prazos definidos e foco em continuidade, estabilidade e suporte real ao cliente.</p></div>
+                                            <div className="flex flex-col items-center justify-center pt-3 gap-1 mt-1"><span className="flex items-center gap-1.5 text-yellow-400 font-bold uppercase text-[9px] tracking-wider"><i className="fas fa-exclamation-circle"></i> Desconfie de promessas irreais</span><p className="text-white font-bold tracking-tight text-sm">Transparência sempre será a melhor escolha.</p><button onClick={() => setIsExpanded(false)} className="text-zinc-500 hover:text-white text-[10px] mt-2 underline decoration-zinc-500/50 hover:decoration-white cursor-pointer transition-colors">Recolher</button></div>
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
+                        </RevealOnScroll>
+                    </div>
+                </section>
+            );
+        };
+
+        const FAQItem = ({ question, answer, isOpen, onClick }) => {
+            return (
+                <div className="border-b border-white/10 last:border-0">
+                    <button onClick={onClick} className="w-full py-6 flex items-center justify-between text-left focus:outline-none group">
+                        <span className={`text-lg md:text-xl font-bold transition-colors ${isOpen ? 'text-red-500' : 'text-gray-300 group-hover:text-white'}`}>{question}</span>
+                        <div className={`relative w-6 h-6 flex items-center justify-center transition-transform duration-300 ${isOpen ? 'rotate-45' : ''}`}><div className="absolute w-full h-0.5 bg-current"></div><div className="absolute h-full w-0.5 bg-current"></div></div>
+                    </button>
+                    <div className={`accordion-content ${isOpen ? 'open' : ''}`}><div className="pb-6 text-gray-400 leading-relaxed">{answer}</div></div>
+                </div>
+            );
+        };
+
+        const FAQSection = ({ onOpenTutorial }) => {
+            const [openIndex, setOpenIndex] = useState(null);
+            const faqs = [
+                { q: "Preciso de internet para assistir?", a: "Sim. O sistema utiliza sua conexão de internet para transmitir o conteúdo. Recomendamos uma velocidade mínima de 10 Megas para conteúdos HD e 30 Megas para 4K, garantindo uma experiência sem travamentos." },
+                { q: "Em quais dispositivos funciona?", a: "Funciona em praticamente tudo: Smart TVs (Samsung, LG, Android TV), TV Box, Fire Stick, Roku, Celulares (Android/iOS), Tablets, Computadores e Notebooks." },
+                { q: "Possui fidelidade ou multa?", a: "Zero fidelidade. Você é livre para cancelar ou pausar sua assinatura quando quiser, sem multas surpresas ou contratos de longo prazo." },
+                { q: "Consigo testar antes de assinar?", a: "Com certeza! Oferecemos uma garantia incondicional de 7 dias ou acesso a teste. Entre em contato pelo WhatsApp para verificar a disponibilidade imediata de um teste gratuito." },
+                { q: "Como utilizar o aplicativo?", a: (<span>É muito simples! Basta instalar o app no seu dispositivo e fazer login. Para um guia visual rápido, veja nosso: <button onClick={(e) => { e.stopPropagation(); onOpenTutorial(); }} className="text-red-500 font-bold hover:text-red-400 hover:underline cursor-pointer ml-1 transition-colors uppercase tracking-wider text-xs border border-red-500/30 px-2 py-0.5 rounded bg-red-500/10">Tutorial</button></span>) },
+                { q: "Libera na hora?", a: "Sim! Assim que o pagamento é confirmado, nosso sistema envia automaticamente seus dados de acesso. É praticamente instantâneo." }
+            ];
+            const toggleFAQ = (index) => { setOpenIndex(openIndex === index ? null : index); };
+            return (
+                <section className="relative z-10 py-16 md:py-24 bg-[#050505]">
+                    <div className="container mx-auto px-6 max-w-4xl">
+                        <RevealOnScroll className="text-center mb-12"><span className="text-red-600 font-bold tracking-[0.3em] text-xs uppercase mb-2 block">Dúvidas?</span><h2 className="text-3xl md:text-4xl font-black text-white uppercase tracking-tight">Perguntas Frequentes</h2></RevealOnScroll>
+                        <RevealOnScroll delay={200} className="bg-white/[0.02] border border-white/5 rounded-2xl p-6 md:p-10">{faqs.map((faq, index) => (<FAQItem key={index} question={faq.q} answer={faq.a} isOpen={openIndex === index} onClick={() => toggleFAQ(index)}/>))}</RevealOnScroll>
+                    </div>
+                </section>
+            );
+        };
+
+        const DeviceSelector = ({ onSelect }) => {
+            const devices = [{ name: 'Samsung TV', videoId: 'M-JHOJ9VTss', active: true }, { name: 'LG TV', videoId: 'i1I1sUQ8wOs', active: true }, { name: 'RokuTV', videoId: 'mM1wTGzZCLs', active: true }, { name: 'TV Android', videoId: 'oiKr--jnBh4', active: true }, { name: 'Fire Stick Amazon', videoId: 'RiB_zqlHwdU', active: true }];
+            return (<div className="absolute inset-0 bg-black/95 flex flex-col items-center justify-center p-4 z-50 animate-fade-in backdrop-blur-sm"><h3 className="text-base md:text-lg font-black text-white mb-2 uppercase tracking-wider text-center leading-tight">Escolha seu dispositivo</h3><div className="flex flex-col gap-1.5 w-full max-w-[200px] md:max-w-[240px]">{devices.map((device) => (<button key={device.name} disabled={!device.active} onClick={() => device.active && onSelect(device)} className={`py-1.5 px-3 rounded border font-bold text-[10px] md:text-xs transition-all duration-300 ${device.active ? 'bg-gradient-to-r from-red-600 to-red-900 border-red-500/50 text-white shadow-[0_0_15px_rgba(220,38,38,0.3)] hover:scale-105 hover:shadow-[0_0_25px_rgba(220,38,38,0.5)] cursor-pointer' : 'bg-white/5 border-white/10 text-gray-500 cursor-not-allowed opacity-60'}`}>{device.name}</button>))}</div><p className="mt-3 text-[9px] text-gray-500 uppercase tracking-widest">Selecione para reproduzir</p></div>);
+        };
+
+        const ExpandingPosters = () => {
+            const posters = [
+                { id: 1, title: "Lançamentos", img: "https://images.unsplash.com/photo-1626814026160-2237a95fc5a0?q=80&w=1740&auto=format&fit=crop", color: "from-blue-600" },
+                { id: 2, title: "Ação", img: "https://images.unsplash.com/photo-1536440136628-849c177e76a1?q=80&w=1625&auto=format&fit=crop", color: "from-red-600" },
+                { id: 3, title: "Animes", img: "https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?q=80&w=1974&auto=format&fit=crop", color: "from-pink-600" },
+                { id: 4, title: "Futebol", img: "https://images.unsplash.com/photo-1579952363873-27f3bade9f55?q=80&w=2070&auto=format&fit=crop", color: "from-green-600" },
+                { id: 5, title: "Marvel", img: "https://images.unsplash.com/photo-1635805737707-575885ab0820?q=80&w=1587&auto=format&fit=crop", color: "from-red-800" },
+                { id: 6, title: "Terror", img: "https://images.unsplash.com/photo-1505635552518-3448ff116af3?q=80&w=1664&auto=format&fit=crop", color: "from-purple-900" }
+            ];
+
+            return (
+                <div className="w-full h-[60vh] md:h-[70vh] flex bg-black posters-container overflow-hidden mt-8 mb-12 border-y border-white/10">
+                    {posters.map((poster) => (
+                        <div key={poster.id} className="expand-card group cursor-pointer relative">
+                            <img src={poster.img} alt={poster.title} className="absolute inset-0 w-full h-full object-cover object-center transition-transform duration-1000 ease-out group-hover:scale-105" />
+                            <div className={`absolute inset-0 bg-gradient-to-t ${poster.color} to-transparent opacity-0 group-hover:opacity-70 transition-opacity duration-500`}></div>
+                            <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-black/90 opacity-60 group-hover:opacity-0 transition-opacity duration-500"></div>
+                            <div className="absolute inset-0 flex items-center justify-center opacity-100 group-hover:opacity-0 transition-all duration-300 pointer-events-none">
+                                <h3 className="text-white/80 font-black text-xl md:text-3xl uppercase tracking-[0.2em] -rotate-90 whitespace-nowrap drop-shadow-md border-b-2 border-white/20 pb-2">{poster.title}</h3>
+                            </div>
+                            <div className="absolute bottom-0 left-0 w-full p-6 md:p-10 translate-y-10 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 delay-75 flex flex-col justify-end h-full bg-gradient-to-t from-black via-transparent to-transparent">
+                                <span className="text-white/80 text-xs font-bold uppercase tracking-widest mb-2 bg-white/10 w-fit px-2 py-1 rounded backdrop-blur-sm">Exclusivo</span>
+                                <h3 className="text-3xl md:text-6xl font-black text-white uppercase leading-none mb-4 drop-shadow-2xl">{poster.title}</h3>
+                                <p className="text-gray-200 text-sm md:text-lg font-medium max-w-lg leading-relaxed drop-shadow-lg hidden md:block">Aproveite a melhor seleção de {poster.title.toLowerCase()} em ultra definição. Disponível agora no GrowthUP+.</p>
+                                <div className="mt-6 flex items-center gap-4">
+                                    <button className="bg-white text-black font-bold text-xs md:text-sm px-6 py-3 rounded-full hover:bg-gray-200 transition-colors uppercase tracking-wide">Assistir Agora</button>
+                                    <div className="w-10 h-10 rounded-full border border-white/30 flex items-center justify-center text-white hover:bg-white/10 transition-colors"><i className="fas fa-plus"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            );
+        };
+
+        const App = () => {
+            const [isScrolled, setIsScrolled] = useState(false);
+            const [showVideoSection, setShowVideoSection] = useState(false);
+            const [desktopVideoStage, setDesktopVideoStage] = useState('idle');
+            const [desktopVideoId, setDesktopVideoId] = useState(null);
+            const [mobileVideoStage, setMobileVideoStage] = useState('idle');
+            const [mobileVideoId, setMobileVideoId] = useState(null);
+            const [isLoading, setIsLoading] = useState(true);
+            const whatsappNumber = "5511991396481"; 
+            const getWhatsAppLink = (planName) => { const text = "Olá! Quero testar minha TV/Celular SEM LIMITES com a GrowthUP+"; return `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(text)}`; };
+            const handleOpenTutorial = () => { setShowVideoSection(true); setTimeout(() => { const section = document.getElementById('video-tutorial-section'); if (section) { section.scrollIntoView({ behavior: 'smooth', block: 'center' }); } }, 100); };
+            useEffect(() => { const handleScroll = () => { setIsScrolled(window.scrollY > 50); }; window.addEventListener('scroll', handleScroll); return () => window.removeEventListener('scroll', handleScroll); }, []);
+            const handleDesktopClick = () => { if (desktopVideoStage === 'idle') setDesktopVideoStage('selecting'); };
+            const handleDesktopDeviceSelect = (device) => { setDesktopVideoId(device.videoId); setDesktopVideoStage('playing'); };
+            const handleMobileClick = () => { if (mobileVideoStage === 'idle') setMobileVideoStage('selecting'); };
+            const handleMobileDeviceSelect = (device) => { setMobileVideoId(device.videoId); setMobileVideoStage('playing'); };
+            const benefits = [{ icon: <Icons.Monitor className="w-8 h-8" />, title: "Sua Smart TV Potencializada", desc: "Transforme sua Roku, Samsung ou LG em uma central de cinema completa." }, { icon: <Icons.Zap className="w-8 h-8" />, title: "Streaming de Alta Performance", desc: "Infraestrutura dedicada para garantir fluidez total, sem travamentos irritantes." }, { icon: <Icons.Tv className="w-8 h-8" />, title: "Resolução Ultra 4K + 60 Fps", desc: "Veja cada detalhe. Qualidade de imagem cristalina que valoriza sua TV." }, { icon: <Icons.Layers className="w-8 h-8" />, title: "Biblioteca Universal", desc: "Todos os canais, lançamentos de cinema e séries em um só lugar." }];
+
+            return (
+                <div className="min-h-screen relative bg-black">
+                    <div className="fixed inset-0 w-full h-full overflow-hidden pointer-events-none"><div className="bg-hero"></div><div className="bg-overlay"></div><UpsideDownSpores /></div>
+                    <div className="fixed w-full flex justify-center px-4 z-50 transition-all duration-500 ease-in-out top-6"><nav className="bg-black/40 backdrop-blur-sm border border-white/10 rounded-full px-6 py-3 flex items-center justify-between w-full max-w-5xl shadow-2xl transition-all duration-300 hover:bg-black/60 pointer-events-auto"><div className="flex items-center gap-2"><div className="w-8 h-8 rounded-md flex items-center justify-center text-white font-bold text-lg btn-gradient">G</div><span className="text-xl font-semibold tracking-wide">GrowthUP<span className="text-red-500">+</span></span></div><div className="hidden md:flex items-center gap-8 text-sm font-medium text-gray-300">{['Início', 'Diferenciais', 'Planos'].map((item) => (<a key={item} href={`#${item.split(' ')[0].toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")}`} className="hover:text-white transition-colors">{item}</a>))}</div><a href="https://pay.cakto.com.br/367ifhv" target="_blank" className="btn-gradient text-white font-bold text-xs md:text-sm px-6 py-2 rounded-full uppercase tracking-wider">Assinar Agora</a></nav></div>
+                    <section id="inicio" className="relative z-10 min-h-screen flex flex-col justify-center items-center text-center px-6 md:px-12 lg:px-24 pb-12 w-full max-w-7xl mx-auto transition-all duration-500 pt-32">
+                        <RevealOnScroll className="max-w-3xl mb-12 mx-auto"><h1 className="text-4xl md:text-6xl font-semibold leading-tight mb-4 drop-shadow-2xl">SUA TV.<br/>SEM LIMITES.</h1><p className="text-gray-300 text-lg md:text-xl font-light leading-relaxed max-w-2xl mx-auto">Desbloqueie o potencial máximo do seu entretenimento.<br />Milhares de conteúdos em 4K.</p></RevealOnScroll>
+                        <RevealOnScroll delay={200} className="w-full mb-8"><h2 className="text-white text-lg font-semibold mb-6 pl-1 text-center md:text-left">Filmes, Séries, Canais e muito mais</h2><ExpandingPosters /></RevealOnScroll>
+                        <RevealOnScroll delay={300}><div className="flex flex-col md:flex-row justify-center items-center gap-6 mb-12 w-full"><p className="text-gray-400 text-sm max-w-2xl leading-relaxed text-center md:text-left mx-auto md:mx-0">Com o GrowthUP+ você vai ter acesso +2 mil canais ao vivo na sua Smart TV, tablet ou celular, incluindo Netflix, Amazon Prime, Viki, HBO Max, Disney+ Paramount.</p></div></RevealOnScroll>
+                    </section>
+                    
+                    <InstallAppSection />
+
+                    {/* NOVA SEÇÃO APP SHOWCASE */}
+                    <AppShowcaseSection />
+
+                    <section id="diferenciais" className="relative z-10 py-12 md:py-20 bg-gradient-to-b from-[#0a0a0a] to-[#050505] scroll-mt-32"><div className="container mx-auto px-6"><div className="grid md:grid-cols-4 gap-8">{benefits.map((item, idx) => (<RevealOnScroll key={idx} delay={idx * 100}><div className="p-6 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-red-900/30 hover:bg-white/[0.05] transition-all group"><div className="mb-4 text-red-600 group-hover:text-white transition-colors group-hover:scale-110 transform duration-300 origin-left">{item.icon}</div><h3 className="text-lg font-bold text-white mb-3">{item.title}</h3><p className="text-sm text-gray-500 leading-relaxed group-hover:text-gray-400">{item.desc}</p></div></RevealOnScroll>))}</div></div></section>
+                    <EconomySection />
+                    <PricingSection getWhatsAppLink={getWhatsAppLink} />
+                    <ScamAlertSection />
+                    <FAQSection onOpenTutorial={handleOpenTutorial} />
+                    {showVideoSection && (<div id="video-tutorial-section" className="animate-reveal"><section className="relative z-10 py-16 md:hidden border-t border-white/5 bg-black"><div className="container mx-auto px-6"><RevealOnScroll className="text-center mb-10"><h2 className="text-3xl font-black text-white uppercase tracking-tighter mb-4 drop-shadow-xl">Experiência <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-red-800">Reels</span></h2><p className="text-gray-400 tracking-widest text-sm uppercase max-w-2xl mx-auto">Veja como funciona na prática.</p></RevealOnScroll><RevealOnScroll delay={200}><div className="relative mx-auto w-full max-w-[280px] h-[580px] bg-black rounded-[20px] shadow-xl overflow-hidden border-2 border-gray-800/50"><div className="w-full h-full relative cursor-pointer" onClick={handleMobileClick}>{mobileVideoStage === 'selecting' && (<DeviceSelector onSelect={handleMobileDeviceSelect} />)}{mobileVideoStage !== 'playing' ? (<><div className="absolute inset-0 bg-gradient-to-b from-slate-900 to-black flex items-center justify-center overflow-hidden"><div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1611162616475-46b635cb6868?auto=format&fit=crop&w=600&q=80')] bg-cover bg-center opacity-50 mix-blend-overlay"></div><div className="text-center relative z-10 p-6"><div className="inline-block p-4 rounded-full bg-white/10 backdrop-blur-md mb-4 border border-white/20 shadow-red-900/30"><Icons.Play size={48} className="text-white fill-white ml-2" /></div><h3 className="text-2xl font-bold tracking-widest text-white uppercase">Assista o Reels</h3><p className="text-red-500 text-sm mt-2 tracking-widest">Clique para Tocar</p></div></div><div className="absolute bottom-0 left-0 w-full h-1/3 bg-gradient-to-t from-black to-transparent"></div></>) : (<iframe width="100%" height="100%" src={`https://www.youtube.com/embed/${mobileVideoId}?autoplay=1`} title="Growth Up Brasil Shorts" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen className="w-full h-full object-cover"></iframe>)}</div></div></RevealOnScroll></div></section><section className="relative z-10 py-20 bg-black hidden md:block border-t border-white/5"><div className="container mx-auto max-w-5xl px-6"><RevealOnScroll className="text-center mb-12"><h2 className="text-xl font-black text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-red-800 tracking-[0.2em] uppercase drop-shadow-[0_0_10px_rgba(220,38,38,0.5)]">EXPERIÊNCIA VÍDEO</h2><p className="text-xs text-gray-400 font-bold tracking-widest mt-1">VEJA COMO FUNCIONA NA PRÁTICA.</p></RevealOnScroll><RevealOnScroll delay={200} className="relative perspective-1000"><div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-red-900/10 blur-[100px] rounded-full"></div><div className="relative z-10 transform hover:scale-[1.01] transition-transform duration-700"><div className="bg-black border-[6px] border-[#222] rounded-xl shadow-2xl relative overflow-hidden aspect-video cursor-pointer" onClick={handleDesktopClick}>{desktopVideoStage === 'selecting' && (<DeviceSelector onSelect={handleDesktopDeviceSelect} />)}{desktopVideoStage !== 'playing' ? (<><div className="absolute inset-0 bg-gradient-to-br from-slate-900 to-black flex items-center justify-center overflow-hidden"><div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1593784991095-a20506948430?auto=format&fit=crop&w=800&q=80')] bg-cover opacity-40 mix-blend-overlay"></div><div className="text-center relative z-10"><div className="inline-block p-4 rounded-full bg-white/10 backdrop-blur-md mb-4 border border-white/20 shadow-red-900/30"><Icons.Play size={48} className="text-white fill-white ml-2" /></div><h3 className="text-2xl font-bold tracking-widest text-white uppercase">Assista o video</h3><p className="text-red-500 text-sm mt-2 tracking-widest">Clique para tocar</p></div></div><div className="absolute top-0 right-0 w-2/3 h-full bg-gradient-to-l from-white/5 to-transparent skew-x-[-20deg]"></div></>) : (<iframe width="100%" height="100%" src={`https://www.youtube.com/embed/${desktopVideoId}?autoplay=1`} title="Growth Up Brasil Shorts" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen className="w-full h-full"></iframe>)}</div><div className="h-4 w-1/3 bg-[#333] mx-auto rounded-b-xl mt-1 shadow-lg"></div></div></RevealOnScroll></div></section></div>)}
+                    <footer className="bg-black text-gray-300 py-12 px-5 font-sans border-t border-white/10 relative z-20"><div className="max-w-[1200px] mx-auto grid grid-cols-1 md:grid-cols-3 gap-10"><div><div className="flex items-center gap-2.5 mb-4"><div className="w-9 h-9 bg-red-600 text-white font-extrabold flex items-center justify-center rounded-md shadow-[0_0_15px_rgba(220,38,38,0.5)]">G</div><span className="text-xl font-bold text-white tracking-tight">GrowthUP<span className="text-red-500">+</span></span></div><a href={getWhatsAppLink()} target="_blank" rel="noopener noreferrer" onClick={trackLead} className="block text-sm mb-2.5 font-medium hover:text-white transition-colors cursor-pointer">📧 contato@growthupbrasil.com</a><a href={getWhatsAppLink()} target="_blank" rel="noopener noreferrer" onClick={trackLead} className="block text-sm mb-2.5 font-medium hover:text-white transition-colors cursor-pointer">📱 (11) 99139-6481</a><a href={getWhatsAppLink()} target="_blank" rel="noopener noreferrer" onClick={trackLead} className="block text-sm font-medium hover:text-white transition-colors cursor-pointer">📞 Suporte via WhatsApp</a></div><div><h4 className="text-white text-sm mb-4 tracking-widest font-bold uppercase border-b border-red-900/30 pb-2 inline-block">FORMAS DE PAGAMENTO</h4><div className="flex flex-wrap gap-2.5 mb-5"><img src="https://img.icons8.com/color/48/visa.png" className="h-8 brightness-90 hover:brightness-110 transition-all" alt="Visa" /><img src="https://img.icons8.com/color/48/mastercard.png" className="h-8 brightness-90 hover:brightness-110 transition-all" alt="Mastercard" /><img src="https://img.icons8.com/color/48/amex.png" className="h-8 brightness-90 hover:brightness-110 transition-all" alt="Amex" /><img src="https://img.icons8.com/color/48/boleto-bankario.png" className="h-8 brightness-90 hover:brightness-110 transition-all" alt="Boleto" /><img src="https://img.icons8.com/color/48/pix.png" className="h-8 brightness-90 hover:brightness-110 transition-all" alt="Pix" /></div></div><div><h4 className="text-white text-sm mb-4 tracking-widest font-bold uppercase border-b border-red-900/30 pb-2 inline-block">SEGURANÇA</h4><div className="flex flex-col gap-3"><div className="flex items-center gap-2.5 group"><img src="https://img.icons8.com/color/48/lock--v1.png" className="h-7 group-hover:scale-110 transition-transform" alt="SSL" /><span className="text-sm font-medium group-hover:text-white transition-colors">Conexão segura (SSL)</span></div><div className="flex items-center gap-2.5 group"><img src="https://img.icons8.com/color/48/google-safe-browsing.png" className="h-7 group-hover:scale-110 transition-transform" alt="Safe Browsing" /><span className="text-sm font-medium group-hover:text-white transition-colors">Navegação protegida</span></div><div className="flex items-center gap-2.5 group"><img src="https://img.icons8.com/color/48/shield.png" className="h-7 group-hover:scale-110 transition-transform" alt="Shield" /><span className="text-sm font-medium group-hover:text-white transition-colors">Ambiente monitorado</span></div></div></div></div><div className="max-w-[1200px] mx-auto mt-12 mb-6 border-t border-white/10 pt-6 flex flex-wrap gap-6 justify-center text-[13px] font-medium tracking-wide"><a href="#inicio" className="text-gray-400 hover:text-white hover:underline decoration-red-500/50 underline-offset-4 transition-all">Início</a><a href="#diferenciais" className="text-gray-400 hover:text-white hover:underline decoration-red-500/50 underline-offset-4 transition-all">Vantagens</a><a href="#planos" className="text-gray-400 hover:text-white hover:underline decoration-red-500/50 underline-offset-4 transition-all">Planos</a><a href="#faq" className="text-gray-400 hover:text-white hover:underline decoration-red-500/50 underline-offset-4 transition-all">FAQ</a><a href="#" className="text-gray-400 hover:text-white hover:underline decoration-red-500/50 underline-offset-4 transition-all">Termos de Uso</a><a href="#" className="text-gray-400 hover:text-white hover:underline decoration-red-500/50 underline-offset-4 transition-all">Política de Privacidade</a></div><div className="text-center text-[11px] text-gray-500 mt-2.5 font-medium uppercase tracking-widest">© 2026 GrowthUP+. Todos os direitos reservados.</div></footer>
+                    <a href={getWhatsAppLink()} target="_blank" rel="noopener noreferrer" onClick={trackLead} className="fixed bottom-6 right-6 z-50 group" aria-label="WhatsApp"><div className="absolute inset-0 bg-green-500 blur-lg opacity-40 group-hover:opacity-60 transition-opacity animate-pulse"></div><div className="relative bg-black border border-green-500/50 text-green-400 p-4 rounded-full shadow-2xl hover:scale-110 hover:text-white hover:bg-green-600 transition-all duration-300"><Icons.WhatsApp width={32} height={32} fill="currentColor" /></div></a>
+                </div>
+            );
+        };
+
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
     </script>
-
 </body>
 </html>

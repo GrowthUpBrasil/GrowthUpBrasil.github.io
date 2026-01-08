@@ -31,19 +31,29 @@
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Great+Vibes&family=Oswald:wght@500;700&family=Poppins:wght@700;800;900&family=Pacifico&display=swap" rel="stylesheet">
     
-    <!-- React -->
+    <!-- React & ReactDOM -->
     <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
     <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
     
     <!-- Babel -->
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
+    <!-- Lenis (Smooth Scroll) - Versão Otimizada -->
+    <script src="https://unpkg.com/lenis@1.0.42/dist/lenis.min.js"></script>
+
     <style>
         :root { --ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1); }
-        html { scroll-behavior: smooth; }
+        
+        /* Otimização Scroll Lenis */
+        html.lenis, html.lenis body { height: auto; } 
+        .lenis.lenis-smooth { scroll-behavior: auto !important; } 
+        .lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; } 
+        .lenis.lenis-stopped { overflow: hidden; } 
+        .lenis.lenis-scrolling iframe { pointer-events: none; }
+
         body { background-color: #000; color: white; overflow-x: hidden; font-family: 'Inter', system-ui, -apple-system, sans-serif; }
         
-        .hardware-accelerated { will-change: transform, opacity; transform: translateZ(0); }
+        .hardware-accelerated { will-change: transform, opacity; transform: translateZ(0); backface-visibility: hidden; }
 
         /* HERO & BUTTONS */
         .btn-gradient {
@@ -63,10 +73,12 @@
 
         .bg-hero {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
-            background-image: url('https://images.unsplash.com/photo-1518066000714-58c45f1a2c0a?q=80&w=2070&auto=format&fit=crop'); 
+            /* Imagem Otimizada */
+            background-image: url('https://images.unsplash.com/photo-1518066000714-58c45f1a2c0a?q=60&w=1920&auto=format&fit=crop'); 
             background-size: cover; background-position: center; opacity: 0.6;
             filter: contrast(1.3) brightness(0.7) sepia(0.3) hue-rotate(-30deg) saturate(1.5);
             animation: strangerPan 60s ease-in-out infinite alternate;
+            will-change: transform;
         }
         
         .bg-overlay {
@@ -92,7 +104,7 @@
         .perspective-1000 { perspective: 1000px; }
         .transform-style-3d { transform-style: preserve-3d; }
 
-        .reveal-element { opacity: 0; transform: translateY(30px); transition: opacity 1s var(--ease-out-expo), transform 1s var(--ease-out-expo); }
+        .reveal-element { opacity: 0; transform: translateY(30px); transition: opacity 1s var(--ease-out-expo), transform 1s var(--ease-out-expo); will-change: opacity, transform; }
         .reveal-element.visible { opacity: 1; transform: translateY(0); }
         
         .accordion-content { transition: max-height 0.3s ease-out, opacity 0.3s ease-out; max-height: 0; overflow: hidden; opacity: 0; }
@@ -116,6 +128,7 @@
         .expand-card {
             flex: 1; transition: flex 0.6s cubic-bezier(0.25, 1, 0.5, 1), filter 0.4s ease;
             position: relative; overflow: hidden; filter: brightness(0.6) grayscale(20%);
+            will-change: flex;
         }
         .expand-card:hover { flex: 5; filter: brightness(1.1) grayscale(0%); z-index: 10; }
         .posters-container:hover .expand-card:not(:hover) { filter: brightness(0.3) grayscale(100%); }
@@ -232,512 +245,73 @@
             .store-btn { width: 100%; max-width: 280px; }
         }
 
-        /* --- FOOTER CSS ADAPTADO --- */
-        .growth-footer {
-            background: #000000;
-            color: #e5e5e5;
-            border-top: 1px solid #222;
-            font-size: 15px;
-            width: 100%;
-            position: relative;
-            z-index: 20;
-        }
-
-        .footer-container {
-            max-width: 1200px;
-            margin: auto;
-            padding: 60px 20px;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 50px;
-        }
-
-        .icon-footer {
-            width: 18px;
-            height: 18px;
-            vertical-align: middle;
-            margin-right: 10px;
-            color: #ef4444;
-            flex-shrink: 0;
-            transition: filter 0.3s ease;
-        }
-
-        .footer-logo {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 25px;
-        }
-
-        .footer-logo-box {
-            width: 40px;
-            height: 40px;
-            background: linear-gradient(135deg, #ef4444, #7f1d1d);
-            color: #fff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 800;
-            font-size: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
-        }
-
-        .logo-text {
-            font-size: 22px;
-            font-weight: 700;
-            letter-spacing: -0.5px;
-            color: #fff;
-        }
-
-        .logo-text .plus {
-            color: #ef4444;
-        }
-
-        .footer-contact {
-            list-style: none;
-            padding: 0;
-        }
-
-        .footer-contact li {
-            margin-bottom: 14px;
-            display: flex;
-            align-items: center;
-            color: #ccc;
-            font-size: 14px;
-            transition: all 0.3s ease;
-            cursor: default;
-        }
-
-        .footer-contact li:hover {
-            color: #ef4444;
-            text-shadow: 0 0 8px rgba(239, 68, 68, 0.6);
-        }
-        
-        .footer-contact li:hover .icon-footer {
-            filter: drop-shadow(0 0 5px rgba(239, 68, 68, 0.8));
-        }
-
-        .footer-col h4 {
-            font-size: 13px;
-            text-transform: uppercase;
-            letter-spacing: 1.2px;
-            margin-bottom: 20px;
-            color: #888;
-            font-weight: 700;
-            border-bottom: 2px solid #222;
-            padding-bottom: 10px;
-            display: inline-block;
-        }
-
-        .payment-grid {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin-bottom: 20px;
-        }
-
-        .payment-card {
-            border: 1px solid #333;
-            background-color: #ffffff;
-            width: 45px;
-            height: 30px;
-            padding: 2px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 4px;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            user-select: none;
-            overflow: hidden;
-        }
-
-        .payment-card img {
-            max-width: 100%;
-            max-height: 100%;
-            object-fit: contain;
-            display: block;
-        }
-
-        .payment-card:hover {
-            border-color: #ef4444;
-            box-shadow: 0 0 12px rgba(239, 68, 68, 0.6);
-            transform: translateY(-2px);
-        }
-
-        .footer-warning {
-            display: flex;
-            align-items: flex-start;
-            gap: 12px;
-            font-size: 13px;
-            color: #bbb;
-            background: #111;
-            border: 1px solid #222;
-            border-left: 3px solid #ef4444;
-            padding: 15px;
-            border-radius: 0 6px 6px 0;
-            line-height: 1.5;
-        }
-
-        .icon-warning {
-            width: 20px;
-            height: 20px;
-            color: #ef4444;
-            flex-shrink: 0;
-            margin-top: 2px;
-        }
-
-        .footer-nav-bar {
-            background-color: #080808;
-            border-top: 1px solid #1a1a1a;
-            padding: 25px 0;
-            width: 100%;
-        }
-
-        .nav-bar-container {
-            max-width: 1200px;
-            margin: auto;
-            padding: 0 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 40px;
-            flex-wrap: wrap;
-        }
-
-        .footer-nav-links {
-            display: flex;
-            gap: 25px;
-            align-items: center;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-
-        .footer-nav-links a, .footer-nav-links button {
-            color: #888;
-            text-decoration: none;
-            font-size: 13px;
-            font-weight: 500;
-            transition: color 0.2s;
-            cursor: pointer;
-            background: none;
-            border: none;
-            padding: 0;
-            font-family: inherit;
-        }
-
-        .footer-nav-links a:hover, .footer-nav-links button:hover {
-            color: #ef4444;
-        }
-
-        .social-icons {
-            display: flex;
-            gap: 15px;
-            align-items: center;
-        }
-
-        .social-link {
-            width: 20px;
-            height: 20px;
-            color: #666;
-            transition: all 0.3s ease;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .social-link svg {
-            width: 100%;
-            height: 100%;
-            fill: none;
-            stroke: currentColor;
-            stroke-width: 2;
-            stroke-linecap: round;
-            stroke-linejoin: round;
-        }
-
-        .social-link.fill-icon svg {
-            fill: currentColor;
-            stroke: none;
-        }
-
-        .social-link.whatsapp:hover {
-            color: #25D366;
-            filter: drop-shadow(0 0 6px rgba(37, 211, 102, 0.7));
-            transform: scale(1.1);
-        }
-        
-        .social-link.facebook:hover {
-            color: #1877F2;
-            filter: drop-shadow(0 0 5px rgba(24, 119, 242, 0.6));
-            transform: scale(1.1);
-        }
-        
-        .social-link.youtube:hover {
-            color: #FF0000;
-            filter: drop-shadow(0 0 5px rgba(255, 0, 0, 0.6));
-            transform: scale(1.1);
-        }
-        
-        .social-link.threads:hover {
-            color: #ffffff;
-            filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.8));
-            transform: scale(1.1);
-        }
-        
-        .social-link.instagram:hover {
-            color: #E1306C; 
-            filter: drop-shadow(0 0 5px rgba(225, 48, 108, 0.6));
-            transform: scale(1.1);
-        }
-
-        #social-tooltip {
-            position: fixed;
-            pointer-events: none;
-            padding: 8px 14px;
-            border-radius: 8px;
-            font-size: 12px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            color: #fff;
-            opacity: 0;
-            transform: translate(-50%, -15px) scale(0.9);
-            transition: opacity 0.2s ease, transform 0.2s ease;
-            z-index: 9999;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
-            white-space: nowrap;
-        }
-
-        #social-tooltip.visible {
-            opacity: 1;
-            transform: translate(-50%, -45px) scale(1);
-        }
-
-        .security-list {
-            list-style: none;
-            padding: 0;
-            font-size: 14px;
-            color: #ccc;
-        }
-
-        .security-list li {
-            margin-bottom: 12px;
-            display: flex;
-            align-items: center;
-        }
-
-        .icon-sec {
-            width: 16px;
-            height: 16px;
-            margin-right: 12px;
-            color: #10b981;
-        }
-
-        .reclame-box {
-            margin-top: 25px;
-            background: linear-gradient(145deg, #064e3b, #065f46);
-            color: #d1fae5;
-            padding: 12px 16px;
-            border-radius: 6px;
-            font-size: 13px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            border: 1px solid #047857;
-            width: fit-content;
-            transition: transform 0.2s;
-        }
-        
-        .reclame-box:hover {
-            transform: scale(1.02);
-        }
-
-        .icon-check {
-            width: 22px;
-            height: 22px;
-            color: #34d399;
-        }
-
-        .footer-bottom {
-            background-color: #050505;
-            border-top: 1px solid #222;
-            padding: 20px;
-            font-size: 13px;
-            color: #666;
-        }
-        
-        .bottom-container {
-            max-width: 1200px;
-            margin: auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .footer-bottom a {
-            color: #888;
-            text-decoration: none;
-            transition: color 0.2s;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .footer-bottom a:hover {
-            color: #ef4444;
-        }
-
-        .policy-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: #0a0a0a;
-            z-index: 10000;
-            transform: translateY(100%);
-            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            overflow-y: auto;
-            padding: 40px 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .policy-overlay.active {
-            transform: translateY(0);
-        }
-
-        .policy-container {
-            max-width: 800px;
-            width: 100%;
-            color: #ccc;
-            line-height: 1.6;
-            margin-bottom: 50px;
-        }
-
-        .back-btn {
-            position: sticky;
-            top: 10px;
-            align-self: flex-start;
-            background: rgba(239, 68, 68, 0.1);
-            color: #ef4444;
-            border: 1px solid #ef4444;
-            padding: 10px 24px;
-            border-radius: 50px;
-            cursor: pointer;
-            font-weight: 600;
-            font-size: 14px;
-            margin-bottom: 40px;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            backdrop-filter: blur(5px);
-            z-index: 10;
-        }
-
-        .back-btn:hover {
-            background: #ef4444;
-            color: #fff;
-            box-shadow: 0 0 15px rgba(239, 68, 68, 0.4);
-        }
-
-        .policy-header {
-            text-align: center;
-            margin-bottom: 40px;
-            border-bottom: 1px solid #333;
-            padding-bottom: 20px;
-        }
-
-        .policy-header h1 {
-            color: #fff;
-            font-size: 28px;
-            font-weight: 800;
-            margin-bottom: 10px;
-            letter-spacing: -0.5px;
-        }
-
-        .policy-header .highlight {
-            color: #ef4444;
-        }
-
-        .policy-content h2 {
-            color: #fff;
-            font-size: 18px;
-            margin-top: 30px;
-            margin-bottom: 15px;
-            border-left: 3px solid #ef4444;
-            padding-left: 15px;
-        }
-
-        .policy-content h3 {
-            color: #eee;
-            font-size: 16px;
-            margin-top: 20px;
-            margin-bottom: 10px;
-        }
-
-        .policy-content p {
-            margin-bottom: 15px;
-            text-align: justify;
-        }
-
-        .policy-content ul {
-            list-style: none;
-            padding-left: 20px;
-            margin-bottom: 15px;
-        }
-
-        .policy-content ul li {
-            position: relative;
-            padding-left: 20px;
-            margin-bottom: 8px;
-        }
-
-        .policy-content ul li::before {
-            content: "•";
-            color: #ef4444;
-            position: absolute;
-            left: 0;
-            font-weight: bold;
-        }
-
-        .policy-overlay::-webkit-scrollbar {
-            width: 8px;
-        }
-        .policy-overlay::-webkit-scrollbar-track {
-            background: #0a0a0a;
-        }
-        .policy-overlay::-webkit-scrollbar-thumb {
-            background: #333;
-            border-radius: 4px;
-        }
-        .policy-overlay::-webkit-scrollbar-thumb:hover {
-            background: #555;
-        }
-
-        @media (max-width: 768px) {
-            .bottom-container {
-                flex-direction: column;
-                gap: 15px;
-                text-align: center;
-            }
-            .footer-container {
-                padding: 40px 20px;
-                gap: 40px;
-            }
-            .footer-col h4 {
-                margin-bottom: 15px;
-            }
-            .nav-bar-container {
-                flex-direction: column;
-                gap: 20px;
-            }
-        }
+        /* --- FOOTER CSS --- */
+        .growth-footer { background: #000000; color: #e5e5e5; border-top: 1px solid #222; font-size: 15px; width: 100%; position: relative; z-index: 20; }
+        .footer-container { max-width: 1200px; margin: auto; padding: 60px 20px; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 50px; }
+        .icon-footer { width: 18px; height: 18px; vertical-align: middle; margin-right: 10px; color: #ef4444; flex-shrink: 0; transition: filter 0.3s ease; }
+        .footer-logo { display: flex; align-items: center; gap: 12px; margin-bottom: 25px; }
+        .footer-logo-box { width: 40px; height: 40px; background: linear-gradient(135deg, #ef4444, #7f1d1d); color: #fff; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 20px; border-radius: 8px; box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3); }
+        .logo-text { font-size: 22px; font-weight: 700; letter-spacing: -0.5px; color: #fff; }
+        .logo-text .plus { color: #ef4444; }
+        .footer-contact { list-style: none; padding: 0; }
+        .footer-contact li { margin-bottom: 14px; display: flex; align-items: center; color: #ccc; font-size: 14px; transition: all 0.3s ease; cursor: default; }
+        .footer-contact li:hover { color: #ef4444; text-shadow: 0 0 8px rgba(239, 68, 68, 0.6); }
+        .footer-contact li:hover .icon-footer { filter: drop-shadow(0 0 5px rgba(239, 68, 68, 0.8)); }
+        .footer-col h4 { font-size: 13px; text-transform: uppercase; letter-spacing: 1.2px; margin-bottom: 20px; color: #888; font-weight: 700; border-bottom: 2px solid #222; padding-bottom: 10px; display: inline-block; }
+        .payment-grid { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
+        .payment-card { border: 1px solid #333; background-color: #ffffff; width: 45px; height: 30px; padding: 2px; display: flex; align-items: center; justify-content: center; border-radius: 4px; transition: all 0.3s ease; cursor: pointer; user-select: none; overflow: hidden; }
+        .payment-card img { max-width: 100%; max-height: 100%; object-fit: contain; display: block; }
+        .payment-card:hover { border-color: #ef4444; box-shadow: 0 0 12px rgba(239, 68, 68, 0.6); transform: translateY(-2px); }
+        .footer-warning { display: flex; align-items: flex-start; gap: 12px; font-size: 13px; color: #bbb; background: #111; border: 1px solid #222; border-left: 3px solid #ef4444; padding: 15px; border-radius: 0 6px 6px 0; line-height: 1.5; }
+        .icon-warning { width: 20px; height: 20px; color: #ef4444; flex-shrink: 0; margin-top: 2px; }
+        .footer-nav-bar { background-color: #080808; border-top: 1px solid #1a1a1a; padding: 25px 0; width: 100%; }
+        .nav-bar-container { max-width: 1200px; margin: auto; padding: 0 20px; display: flex; justify-content: center; align-items: center; gap: 40px; flex-wrap: wrap; }
+        .footer-nav-links { display: flex; gap: 25px; align-items: center; flex-wrap: wrap; justify-content: center; }
+        .footer-nav-links a, .footer-nav-links button { color: #888; text-decoration: none; font-size: 13px; font-weight: 500; transition: color 0.2s; cursor: pointer; background: none; border: none; padding: 0; font-family: inherit; }
+        .footer-nav-links a:hover, .footer-nav-links button:hover { color: #ef4444; }
+        .social-icons { display: flex; gap: 15px; align-items: center; }
+        .social-link { width: 20px; height: 20px; color: #666; transition: all 0.3s ease; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+        .social-link svg { width: 100%; height: 100%; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+        .social-link.fill-icon svg { fill: currentColor; stroke: none; }
+        .social-link img { width: 100%; height: 100%; object-fit: contain; }
+        .social-link.threads img { filter: invert(0.4); transition: filter 0.3s; }
+        .social-link.threads:hover img { filter: invert(1); }
+        .social-link.whatsapp:hover { color: #25D366; filter: drop-shadow(0 0 6px rgba(37, 211, 102, 0.7)); transform: scale(1.1); }
+        .social-link.facebook:hover { color: #1877F2; filter: drop-shadow(0 0 5px rgba(24, 119, 242, 0.6)); transform: scale(1.1); }
+        .social-link.youtube:hover { color: #FF0000; filter: drop-shadow(0 0 5px rgba(255, 0, 0, 0.6)); transform: scale(1.1); }
+        .social-link.threads:hover { color: #ffffff; filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.8)); transform: scale(1.1); }
+        .social-link.instagram:hover { color: #E1306C; filter: drop-shadow(0 0 5px rgba(225, 48, 108, 0.6)); transform: scale(1.1); }
+        #social-tooltip { position: fixed; pointer-events: none; padding: 8px 14px; border-radius: 8px; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; color: #fff; opacity: 0; transform: translate(-50%, -15px) scale(0.9); transition: opacity 0.2s ease, transform 0.2s ease; z-index: 9999; box-shadow: 0 4px 15px rgba(0,0,0,0.5); white-space: nowrap; }
+        #social-tooltip.visible { opacity: 1; transform: translate(-50%, -45px) scale(1); }
+        .security-list { list-style: none; padding: 0; font-size: 14px; color: #ccc; }
+        .security-list li { margin-bottom: 12px; display: flex; align-items: center; }
+        .icon-sec { width: 16px; height: 16px; margin-right: 12px; color: #10b981; }
+        .reclame-box { margin-top: 25px; background: linear-gradient(145deg, #064e3b, #065f46); color: #d1fae5; padding: 12px 16px; border-radius: 6px; font-size: 13px; display: flex; align-items: center; gap: 12px; border: 1px solid #047857; width: fit-content; transition: transform 0.2s; }
+        .reclame-box:hover { transform: scale(1.02); }
+        .icon-check { width: 22px; height: 22px; color: #34d399; }
+        .footer-bottom { background-color: #050505; border-top: 1px solid #222; padding: 20px; font-size: 13px; color: #666; }
+        .bottom-container { max-width: 1200px; margin: auto; display: flex; justify-content: space-between; align-items: center; }
+        .footer-bottom a { color: #888; text-decoration: none; transition: color 0.2s; display: flex; align-items: center; gap: 5px; }
+        .footer-bottom a:hover { color: #ef4444; }
+        .policy-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: #0a0a0a; z-index: 10000; transform: translateY(100%); transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); overflow-y: auto; padding: 40px 20px; display: flex; flex-direction: column; align-items: center; }
+        .policy-overlay.active { transform: translateY(0); }
+        .policy-container { max-width: 800px; width: 100%; color: #ccc; line-height: 1.6; margin-bottom: 50px; }
+        .back-btn { position: sticky; top: 10px; align-self: flex-start; background: rgba(239, 68, 68, 0.1); color: #ef4444; border: 1px solid #ef4444; padding: 10px 24px; border-radius: 50px; cursor: pointer; font-weight: 600; font-size: 14px; margin-bottom: 40px; transition: all 0.3s ease; display: flex; align-items: center; gap: 8px; backdrop-filter: blur(5px); z-index: 10; }
+        .back-btn:hover { background: #ef4444; color: #fff; box-shadow: 0 0 15px rgba(239, 68, 68, 0.4); }
+        .policy-header { text-align: center; margin-bottom: 40px; border-bottom: 1px solid #333; padding-bottom: 20px; }
+        .policy-header h1 { color: #fff; font-size: 28px; font-weight: 800; margin-bottom: 10px; letter-spacing: -0.5px; }
+        .policy-header .highlight { color: #ef4444; }
+        .policy-content h2 { color: #fff; font-size: 18px; margin-top: 30px; margin-bottom: 15px; border-left: 3px solid #ef4444; padding-left: 15px; }
+        .policy-content h3 { color: #eee; font-size: 16px; margin-top: 20px; margin-bottom: 10px; }
+        .policy-content p { margin-bottom: 15px; text-align: justify; }
+        .policy-content ul { list-style: none; padding-left: 20px; margin-bottom: 15px; }
+        .policy-content ul li { position: relative; padding-left: 20px; margin-bottom: 8px; }
+        .policy-content ul li::before { content: "•"; color: #ef4444; position: absolute; left: 0; font-weight: bold; }
+        .policy-overlay::-webkit-scrollbar { width: 8px; }
+        .policy-overlay::-webkit-scrollbar-track { background: #0a0a0a; }
+        .policy-overlay::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
+        .policy-overlay::-webkit-scrollbar-thumb:hover { background: #555; }
+        @media (max-width: 768px) { .bottom-container { flex-direction: column; gap: 15px; text-align: center; } .footer-container { padding: 40px 20px; gap: 40px; } .footer-col h4 { margin-bottom: 15px; } .nav-bar-container { flex-direction: column; gap: 20px; } }
     </style>
 </head>
 <body>
@@ -746,43 +320,77 @@
     <script type="text/babel">
         const { useState, useEffect, useRef, useMemo } = React;
 
-        // --- ICONS (Definido primeiro para evitar erros de referência) ---
+        // --- LENIS SCROLL SETUP (Otimizado) ---
+        // Implementa a rolagem suave "pesada" para evitar que o usuário role rápido demais
+        const useLenis = () => {
+            useEffect(() => {
+                if (typeof Lenis !== 'undefined') { // Garante que o Lenis carregou
+                    const lenis = new Lenis({
+                        duration: 1.8, // Aumentei a duração para deixar ainda mais "pesado/suave"
+                        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+                        direction: 'vertical',
+                        gestureDirection: 'vertical',
+                        smooth: true,
+                        mouseMultiplier: 0.8, // Diminui a velocidade do mouse
+                        smoothTouch: false, // Desativa no touch para performance mobile nativa
+                        touchMultiplier: 1.5,
+                    });
+
+                    function raf(time) {
+                        lenis.raf(time);
+                        requestAnimationFrame(raf);
+                    }
+
+                    requestAnimationFrame(raf);
+
+                    return () => lenis.destroy();
+                }
+            }, []);
+        };
+
         const Icons = {
             Play: (props) => <svg {...props} width="24" height="24" viewBox="0 0 24 24" fill={props.fill || "none"} stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>,
             Monitor: (props) => <svg {...props} width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>,
             Zap: (props) => <svg {...props} width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>,
             Tv: (props) => <svg {...props} width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="7" width="20" height="15" rx="2" ry="2"></rect><polyline points="17 2 12 7 7 2"></polyline></svg>,
             Layers: (props) => <svg {...props} width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>,
-            WhatsApp: (props) => <svg {...props} viewBox="0 0 24 24" fill={props.fill || "currentColor"} xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" /></svg>
+            WhatsApp: (props) => <svg {...props} viewBox="0 0 24 24" fill={props.fill || "currentColor"} xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z" /></svg>
         };
 
-        // --- HELPERS ---
         const trackLead = () => { if (typeof fbq === 'function') { fbq('track', 'Lead', { content_name: 'WhatsApp Click', content_category: 'Contato', value: 1, currency: 'BRL' }); } };
         const trackInitiateCheckout = (planName, value) => { if (typeof fbq === 'function') { fbq('track', 'InitiateCheckout', { content_name: `Plano ${planName}`, value: value, currency: 'BRL' }); } };
 
-        // --- COMPONENTES UI BÁSICOS ---
         const CustomCheck = ({ color = "green" }) => {
             const strokeColor = color === "green" ? "#22c55e" : "#ef4444"; 
             return (<svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="mt-0.5 flex-shrink-0"><path d="M5 13L9 17L19 7" stroke={strokeColor} strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"/></svg>);
         };
 
+        // Otimização: Observer único para reduzir listeners
         const RevealOnScroll = ({ children, delay = 0, className = "" }) => {
             const [isVisible, setIsVisible] = useState(false);
             const ref = useRef(null);
+            
             useEffect(() => {
-                const observer = new IntersectionObserver(([entry]) => { if (entry.isIntersecting) { setIsVisible(true); observer.unobserve(entry.target); } }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
+                const observer = new IntersectionObserver(([entry]) => { 
+                    if (entry.isIntersecting) { 
+                        setIsVisible(true); 
+                        observer.unobserve(entry.target); 
+                    } 
+                }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
+                
                 if (ref.current) observer.observe(ref.current);
-                return () => { if (ref.current) observer.unobserve(ref.current); };
+                return () => observer.disconnect();
             }, []);
+
             return (<div ref={ref} className={`reveal-element ${isVisible ? 'visible' : ''} ${className}`} style={{ transitionDelay: `${delay}ms` }}>{children}</div>);
         };
 
         const UpsideDownSpores = () => {
+            // Otimização: Memoização para não recalcular em re-renders
             const spores = useMemo(() => Array.from({ length: 30 }).map((_, i) => ({ id: i, left: Math.random() * 100, size: Math.random() * 3 + 1, duration: Math.random() * 10 + 10, delay: Math.random() * 5 })), []);
             return (<div className="spores-container">{spores.map((s) => (<div key={s.id} className="spore" style={{ left: `${s.left}%`, width: `${s.size}px`, height: `${s.size}px`, animationDuration: `${s.duration}s`, animationDelay: `-${s.delay}s` }}></div>))}</div>);
         };
 
-        // --- COMPONENTES DE SEÇÃO ---
         const InstallAppSection = () => {
             return (
                 <div className="w-full bg-black py-20 border-t border-white/5 relative z-20">
@@ -806,7 +414,6 @@
             );
         };
 
-        // --- APP SHOWCASE ---
         const AppShowcaseSection = () => {
             const [gifActive, setGifActive] = useState(false);
             const [videoUrl, setVideoUrl] = useState(null);
@@ -830,6 +437,7 @@
                 setVideoUrl(null);
             };
 
+            // Otimização: Touch/Mouse handlers fora do render para evitar recriação
             useEffect(() => {
                 const mainScroller = mainScrollRef.current;
                 const sliders = [horizontalScrollRef1.current, horizontalScrollRef2.current];
@@ -884,61 +492,26 @@
                     }
                 };
 
-                const handleMouseDown = (e) => {
-                    e.stopPropagation();
-                    initDrag(e.pageX, e.pageY, e.currentTarget);
-                };
+                const handleMouseDown = (e) => { e.stopPropagation(); initDrag(e.pageX, e.pageY, e.currentTarget); };
+                const handleTouchStart = (e) => { e.stopPropagation(); const touch = e.touches[0]; initDrag(touch.pageX, touch.pageY, e.currentTarget); };
+                const handleMouseMove = (e) => { if (!isDown) return; e.preventDefault(); performMove(e.pageX, e.pageY, e); };
+                const handleTouchMove = (e) => { if (!isDown) return; if (e.cancelable) e.preventDefault(); const touch = e.touches[0]; performMove(touch.pageX, touch.pageY, e); };
 
-                const handleTouchStart = (e) => {
-                    e.stopPropagation();
-                    const touch = e.touches[0];
-                    initDrag(touch.pageX, touch.pageY, e.currentTarget);
-                };
-
-                allDraggables.forEach(el => {
-                    el.addEventListener('mousedown', handleMouseDown);
-                    el.addEventListener('touchstart', handleTouchStart, { passive: false });
-                });
-
-                const handleMouseMove = (e) => {
-                    if (!isDown) return;
-                    e.preventDefault();
-                    performMove(e.pageX, e.pageY, e);
-                };
-
-                const handleTouchMove = (e) => {
-                    if (!isDown) return;
-                    if (e.cancelable) e.preventDefault();
-                    const touch = e.touches[0];
-                    performMove(touch.pageX, touch.pageY, e);
-                };
-
-                document.addEventListener('mousemove', handleMouseMove);
-                document.addEventListener('touchmove', handleTouchMove, { passive: false });
-                document.addEventListener('mouseup', endDrag);
-                document.addEventListener('mouseleave', endDrag);
-                document.addEventListener('touchend', endDrag);
+                allDraggables.forEach(el => { el.addEventListener('mousedown', handleMouseDown); el.addEventListener('touchstart', handleTouchStart, { passive: false }); });
+                document.addEventListener('mousemove', handleMouseMove); document.addEventListener('touchmove', handleTouchMove, { passive: false });
+                document.addEventListener('mouseup', endDrag); document.addEventListener('mouseleave', endDrag); document.addEventListener('touchend', endDrag);
 
                 return () => {
-                    allDraggables.forEach(el => {
-                        el.removeEventListener('mousedown', handleMouseDown);
-                        el.removeEventListener('touchstart', handleTouchStart);
-                    });
-                    document.removeEventListener('mousemove', handleMouseMove);
-                    document.removeEventListener('touchmove', handleTouchMove);
-                    document.removeEventListener('mouseup', endDrag);
-                    document.removeEventListener('mouseleave', endDrag);
-                    document.removeEventListener('touchend', endDrag);
+                    allDraggables.forEach(el => { el.removeEventListener('mousedown', handleMouseDown); el.removeEventListener('touchstart', handleTouchStart); });
+                    document.removeEventListener('mousemove', handleMouseMove); document.removeEventListener('touchmove', handleTouchMove);
+                    document.removeEventListener('mouseup', endDrag); document.removeEventListener('mouseleave', endDrag); document.removeEventListener('touchend', endDrag);
                 };
             }, []);
 
             return (
                 <section className="app-section">
                     <div className="app-phone">
-                        <h3 className="app-phone-title">
-                            <i className="fa-solid fa-play-circle"></i>
-                            Experimente.
-                        </h3>
+                        <h3 className="app-phone-title"><i className="fa-solid fa-play-circle"></i>Experimente.</h3>
                         <div className="app-phone-container">
                             <div className="phone-mockup">
                                 <div className="phone-notch"></div>
@@ -964,7 +537,8 @@
                                     </div>
                                     <div className="app-ui-scroll-content" ref={mainScrollRef}>
                                         <div className="app-hero-banner">
-                                            <div className={`hero-gif-container ${gifActive ? 'active' : ''}`}><img src="https://i.pinimg.com/originals/a1/5a/b9/a15ab9f44fb47ab505b5a92ab5f98ed8.gif" alt="Futebol GIF" /></div>
+                                            {/* Otimização: Carregamento Lazy para o GIF */}
+                                            <div className={`hero-gif-container ${gifActive ? 'active' : ''}`}><img src="https://i.pinimg.com/originals/a1/5a/b9/a15ab9f44fb47ab505b5a92ab5f98ed8.gif" alt="Futebol GIF" loading="lazy" /></div>
                                             <div className="app-hero-overlay"></div>
                                             <div className={`play-btn-app ${gifActive ? 'hidden' : ''}`} onClick={() => setGifActive(true)}><i className="fa-solid fa-play"></i></div>
                                             <div className="hero-info">
@@ -975,16 +549,16 @@
                                         </div>
                                         <div className="app-section-title">Destaques da Semana</div>
                                         <div className="movies-row horizontal-scroll" ref={horizontalScrollRef1}>
-                                            <div className="movie-card-app" onClick={() => openVideo('qnR0s1QVknI')}><div className="movie-poster-app"><img src="https://jardimdasamericas.com.br/uploads/2025/12/capa-filme-avatar-fogo-e-cinzas-966f9-large.png" alt="Avatar"/></div><span className="movie-title-text">Avatar: Fogo e Cinzas</span></div>
-                                            <div className="movie-card-app" onClick={() => openVideo('g0GB20yE9JY')}><div className="movie-poster-app"><img src="https://upload.wikimedia.org/wikipedia/pt/6/60/O_Agente_Secreto_%28Cartaz_brasileiro%29.jpg" alt="O Agente Secreto"/></div><span className="movie-title-text">O Agente Secreto</span></div>
-                                            <div className="movie-card-app" onClick={() => openVideo('T7_zMl_ZhdQ')}><div className="movie-poster-app"><img src="https://s2-g1.glbimg.com/JlPpzZaM6BQeHE8519IeNARgIJg=/0x0:1382x2048/984x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2021/k/m/sUy6NaRMiAMJOllVxvOQ/fb2miibwyairfgo.jpg" alt="Batman"/></div><span className="movie-title-text">The Batman II</span></div>
-                                            <div className="movie-card-app" onClick={() => openVideo('ZiDphkXCZsQ')}><div className="movie-poster-app"><img src="https://ingresso-a.akamaihd.net/prd/img/movie/f1-o-filme/3a0a118e-8bf3-4e10-b45d-f028cd49b001.webp" alt="F1"/></div><span className="movie-title-text">F1: O Filme</span></div>
+                                            <div className="movie-card-app" onClick={() => openVideo('qnR0s1QVknI')}><div className="movie-poster-app"><img src="https://jardimdasamericas.com.br/uploads/2025/12/capa-filme-avatar-fogo-e-cinzas-966f9-large.png" alt="Avatar" loading="lazy"/></div><span className="movie-title-text">Avatar: Fogo e Cinzas</span></div>
+                                            <div className="movie-card-app" onClick={() => openVideo('g0GB20yE9JY')}><div className="movie-poster-app"><img src="https://upload.wikimedia.org/wikipedia/pt/6/60/O_Agente_Secreto_%28Cartaz_brasileiro%29.jpg" alt="O Agente Secreto" loading="lazy"/></div><span className="movie-title-text">O Agente Secreto</span></div>
+                                            <div className="movie-card-app" onClick={() => openVideo('T7_zMl_ZhdQ')}><div className="movie-poster-app"><img src="https://s2-g1.glbimg.com/JlPpzZaM6BQeHE8519IeNARgIJg=/0x0:1382x2048/984x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2021/k/m/sUy6NaRMiAMJOllVxvOQ/fb2miibwyairfgo.jpg" alt="Batman" loading="lazy"/></div><span className="movie-title-text">The Batman II</span></div>
+                                            <div className="movie-card-app" onClick={() => openVideo('ZiDphkXCZsQ')}><div className="movie-poster-app"><img src="https://ingresso-a.akamaihd.net/prd/img/movie/f1-o-filme/3a0a118e-8bf3-4e10-b45d-f028cd49b001.webp" alt="F1" loading="lazy"/></div><span className="movie-title-text">F1: O Filme</span></div>
                                         </div>
                                         <div className="app-section-title">Séries Populares</div>
                                         <div className="movies-row horizontal-scroll" ref={horizontalScrollRef2}>
-                                            <div className="movie-card-app" onClick={() => openVideo('IcR-6y3Q9XI')}><div className="movie-poster-app"><img src="https://i.imgur.com/ONufJIn.png" alt="TLOU"/></div><span className="movie-title-text">The Last of Us</span></div>
-                                            <div className="movie-card-app" onClick={() => openVideo('Wb3kaP580kA')}><div className="movie-poster-app"><img src="https://i.imgur.com/30zW0QK.png" alt="Stranger Things"/></div><span className="movie-title-text">Stranger Things 5</span></div>
-                                            <div className="movie-card-app" onClick={() => openVideo('IgyahanUcOk')}><div className="movie-poster-app"><img src="https://preview.redd.it/tvn-spring-fever-teaser-poster-premieres-january-5-v0-kgb43b5drv4g1.jpg?width=640&crop=smart&auto=webp&s=4d0318de16fd82a564657498104302df46ef8b16" alt="Spring Fever"/></div><span className="movie-title-text">Spring Fever</span></div>
+                                            <div className="movie-card-app" onClick={() => openVideo('IcR-6y3Q9XI')}><div className="movie-poster-app"><img src="https://i.imgur.com/ONufJIn.png" alt="TLOU" loading="lazy"/></div><span className="movie-title-text">The Last of Us</span></div>
+                                            <div className="movie-card-app" onClick={() => openVideo('Wb3kaP580kA')}><div className="movie-poster-app"><img src="https://i.imgur.com/30zW0QK.png" alt="Stranger Things" loading="lazy"/></div><span className="movie-title-text">Stranger Things 5</span></div>
+                                            <div className="movie-card-app" onClick={() => openVideo('IgyahanUcOk')}><div className="movie-poster-app"><img src="https://preview.redd.it/tvn-spring-fever-teaser-poster-premieres-january-5-v0-kgb43b5drv4g1.jpg?width=640&crop=smart&auto=webp&s=4d0318de16fd82a564657498104302df46ef8b16" alt="Spring Fever" loading="lazy"/></div><span className="movie-title-text">Spring Fever</span></div>
                                         </div>
                                     </div>
                                 </div>
@@ -1039,7 +613,7 @@
                                     <div className={`brand-card-item h-24 rounded-lg flex items-center justify-center p-4 w-full ${item.className || ''}`}>
                                         {item.type === 'text-script' && <div className="text-center"><span className="font-script text-3xl transition-colors">{item.main}</span><span className={item.subStyle}>{item.sub}</span></div>}
                                         {item.type === 'text-geo' && <span className="font-geometric text-4xl tracking-tighter font-black lowercase transition-colors">{item.text}</span>}
-                                        {item.type === 'img' && <img src={item.src} alt={item.alt} className="h-10 w-auto object-contain" />}
+                                        {item.type === 'img' && <img src={item.src} alt={item.alt} className="h-10 w-auto object-contain" loading="lazy" decoding="async" />}
                                         {item.type === 'prime' && <div className="flex flex-col items-center justify-center w-full"><div className="flex items-center gap-1"><span className="font-bold text-xl tracking-tight transition-colors">prime video</span></div><svg className="w-16 h-4 mt-1 transition-colors" viewBox="0 0 100 20" fill="none" stroke="currentColor" strokeWidth="3"><path d="M10,5 Q50,20 90,5" strokeLinecap="round" /><path d="M90,5 L85,8 M90,5 L88,1" strokeWidth="0" fill="currentColor"/> <polygon points="88,0 95,5 86,10" fill="currentColor" /></svg></div>}
                                         {item.type === 'text-condensed' && <span className={`font-condensed tracking-widest font-bold transition-colors ${item.style || 'text-3xl'}`}>{item.text}</span>}
                                         {item.type === 'text-looke' && <span className="font-looke text-3xl tracking-wide transition-colors">{item.text}</span>}
@@ -1086,7 +660,7 @@
                             <div className="card-bg rounded-3xl p-6 flex flex-col relative card-border h-full hover:border-zinc-700 transition-colors group">
                                 <div className="mb-6"><div className="h-6 mb-1"></div><h3 className="text-xl font-bold text-zinc-200 mb-1">Plano Basic</h3><p className="text-zinc-400 text-sm font-medium mb-5">Mensal</p><div className="flex items-end gap-1 mb-6"><span className="text-4xl font-extrabold text-white tracking-tight">R$ 18,90</span><span className="text-zinc-500 text-sm font-medium mb-1.5 ml-1">/mês</span></div><p className="text-zinc-400 text-xs leading-relaxed min-h-[40px]">Tenha acesso completo a todos os recursos. O plano perfeito para você e sua família.</p></div>
                                 <a href="https://pay.cakto.com.br/7kjywct_686205" target="_blank" className="w-full bg-white hover:bg-zinc-200 text-black font-extrabold text-sm py-3.5 rounded-lg transition-colors mb-8 uppercase tracking-wide text-center block" onClick={() => trackInitiateCheckout('Basic', 18.90)}>Assinar Agora</a>
-                                <div className="mb-8"><div className="flex justify-between items-center text-[10px] font-semibold text-zinc-400 uppercase tracking-wider mb-3"><span>Inclui:</span><span>+12 plataformas</span></div><div className="grid grid-cols-5 gap-2"><div className="logo-box group-hover:ring-2 group-hover:ring-red-500"><span className="font-geometric text-[13px] tracking-tighter font-black lowercase text-black">max</span></div><div className="logo-box group-hover:ring-2 group-hover:ring-red-500 transition-all delay-75"><img src="https://upload.wikimedia.org/wikipedia/commons/3/3e/Disney%2B_logo.svg" alt="Disney+" className="w-10 h-auto filter brightness-0"/></div><div className="logo-box flex-col pt-1 group-hover:ring-2 group-hover:ring-red-500 transition-all delay-100"><span className="font-bold text-[8px] tracking-tight text-black leading-none">prime video</span><svg className="w-8 h-2 mt-0.5 text-black" viewBox="0 0 100 20" fill="none" stroke="currentColor" strokeWidth="8"><path d="M10,5 Q50,25 90,5" strokeLinecap="round" /><path d="M90,5 L80,10" strokeWidth="0" fill="currentColor"/></svg></div><div className="logo-box group-hover:ring-2 group-hover:ring-red-500 transition-all delay-150"><span className="font-condensed text-black text-[11px] tracking-tighter font-bold transform scale-y-110">NETFLIX</span></div><div className="logo-box group-hover:ring-2 group-hover:ring-red-500 transition-all delay-200"><span className="font-condensed text-black text-[7px] tracking-widest font-bold uppercase">Telecine</span></div></div></div>
+                                <div className="mb-8"><div className="flex justify-between items-center text-[10px] font-semibold text-zinc-400 uppercase tracking-wider mb-3"><span>Inclui:</span><span>+12 plataformas</span></div><div className="grid grid-cols-5 gap-2"><div className="logo-box group-hover:ring-2 group-hover:ring-red-500"><span className="font-geometric text-[13px] tracking-tighter font-black lowercase text-black">max</span></div><div className="logo-box group-hover:ring-2 group-hover:ring-red-500 transition-all delay-75"><img src="https://upload.wikimedia.org/wikipedia/commons/3/3e/Disney%2B_logo.svg" alt="Disney+" className="w-10 h-auto filter brightness-0" loading="lazy" decoding="async"/></div><div className="logo-box flex-col pt-1 group-hover:ring-2 group-hover:ring-red-500 transition-all delay-100"><span className="font-bold text-[8px] tracking-tight text-black leading-none">prime video</span><svg className="w-8 h-2 mt-0.5 text-black" viewBox="0 0 100 20" fill="none" stroke="currentColor" strokeWidth="8"><path d="M10,5 Q50,25 90,5" strokeLinecap="round" /><path d="M90,5 L80,10" strokeWidth="0" fill="currentColor"/></svg></div><div className="logo-box group-hover:ring-2 group-hover:ring-red-500 transition-all delay-150"><span className="font-condensed text-black text-[11px] tracking-tighter font-bold transform scale-y-110">NETFLIX</span></div><div className="logo-box group-hover:ring-2 group-hover:ring-red-500 transition-all delay-200"><span className="font-condensed text-black text-[7px] tracking-widest font-bold uppercase">Telecine</span></div></div></div>
                                 <ul className="space-y-3.5 text-xs text-zinc-300 mt-auto font-medium"><li className="flex items-start gap-3"><CustomCheck color="green" /><span className="font-bold text-white">Acesso em 2 telas <span className="text-[9px] bg-green-500/20 text-green-400 px-1.5 py-0.5 rounded ml-1 uppercase border border-green-500/30">Bônus +1 Tela</span></span></li><li className="flex items-start gap-3"><CustomCheck color="red" /><span>Mais de 10.000 Canais, Filmes e Séries.</span></li><li className="flex items-start gap-3"><CustomCheck color="red" /><span>Tudo em SD/HD/FHD/4K</span></li><li className="flex items-start gap-3"><CustomCheck color="red" /><span>Multiplataforma</span></li><li className="flex items-start gap-3"><CustomCheck color="green" /><span className="font-bold text-white">Acesso por 45 dias <span className="text-[9px] bg-green-500/20 text-green-400 px-1.5 py-0.5 rounded ml-1 uppercase border border-green-500/30">Bônus +15 Dias</span></span></li></ul>
                             </div>
                         </RevealOnScroll>
@@ -1095,7 +669,7 @@
                                 <div className="absolute top-6 right-6 bg-red-200 text-red-900 text-[10px] font-black px-3 py-1.5 rounded-full leading-tight text-center shadow-lg z-20">17% de<br/>desconto</div>
                                 <div className="mb-6"><div className="h-6 mb-1"></div><h3 className="text-xl font-bold text-zinc-200 mb-1">Plano Plus</h3><p className="text-zinc-400 text-sm font-medium mb-5">Trimestral</p><div className="flex items-end mb-5"><span className="text-zinc-400 text-lg font-bold mb-1 mr-1">3x</span><span className="text-5xl font-extrabold text-white tracking-tighter">18,18</span><span className="text-zinc-500 text-[9px] font-bold uppercase tracking-wide mb-2 ml-2 leading-none whitespace-nowrap">OU R$48,90</span></div><p className="text-zinc-400 text-xs leading-relaxed min-h-[40px]">Economize assinando por 3 meses. Ótima opção de médio prazo.</p></div>
                                 <a href="https://pay.cakto.com.br/jpjps2w" target="_blank" className="w-full bg-white hover:bg-zinc-200 text-black font-extrabold text-sm py-3.5 rounded-lg transition-colors mb-8 uppercase tracking-wide text-center block" onClick={() => trackInitiateCheckout('Plus', 48.90)}>Assinar Agora</a>
-                                <div className="mb-8"><div className="flex justify-between items-center text-[10px] font-semibold text-zinc-400 uppercase tracking-wider mb-3"><span>Inclui:</span><span>+12 plataformas</span></div><div className="grid grid-cols-5 gap-2"><div className="logo-box group-hover:ring-2 group-hover:ring-red-500"><span className="font-geometric text-[13px] tracking-tighter font-black lowercase text-black">max</span></div><div className="logo-box group-hover:ring-2 group-hover:ring-red-500 transition-all delay-75"><img src="https://upload.wikimedia.org/wikipedia/commons/3/3e/Disney%2B_logo.svg" alt="Disney+" className="w-10 h-auto filter brightness-0"/></div><div className="logo-box flex-col pt-1 group-hover:ring-2 group-hover:ring-red-500 transition-all delay-100"><span className="font-bold text-[8px] tracking-tight text-black leading-none">prime video</span><svg className="w-8 h-2 mt-0.5 text-black" viewBox="0 0 100 20" fill="none" stroke="currentColor" strokeWidth="8"><path d="M10,5 Q50,25 90,5" strokeLinecap="round" /><path d="M90,5 L80,10" strokeWidth="0" fill="currentColor"/></svg></div><div className="logo-box group-hover:ring-2 group-hover:ring-red-500 transition-all delay-150"><span className="font-condensed text-black text-[11px] tracking-tighter font-bold transform scale-y-110">NETFLIX</span></div><div className="logo-box group-hover:ring-2 group-hover:ring-red-500 transition-all delay-200"><span className="font-condensed text-black text-[7px] tracking-widest font-bold uppercase">Telecine</span></div></div></div>
+                                <div className="mb-8"><div className="flex justify-between items-center text-[10px] font-semibold text-zinc-400 uppercase tracking-wider mb-3"><span>Inclui:</span><span>+12 plataformas</span></div><div className="grid grid-cols-5 gap-2"><div className="logo-box group-hover:ring-2 group-hover:ring-red-500"><span className="font-geometric text-[13px] tracking-tighter font-black lowercase text-black">max</span></div><div className="logo-box group-hover:ring-2 group-hover:ring-red-500 transition-all delay-75"><img src="https://upload.wikimedia.org/wikipedia/commons/3/3e/Disney%2B_logo.svg" alt="Disney+" className="w-10 h-auto filter brightness-0" loading="lazy" decoding="async"/></div><div className="logo-box flex-col pt-1 group-hover:ring-2 group-hover:ring-red-500 transition-all delay-100"><span className="font-bold text-[8px] tracking-tight text-black leading-none">prime video</span><svg className="w-8 h-2 mt-0.5 text-black" viewBox="0 0 100 20" fill="none" stroke="currentColor" strokeWidth="8"><path d="M10,5 Q50,25 90,5" strokeLinecap="round" /><path d="M90,5 L80,10" strokeWidth="0" fill="currentColor"/></svg></div><div className="logo-box group-hover:ring-2 group-hover:ring-red-500 transition-all delay-150"><span className="font-condensed text-black text-[11px] tracking-tighter font-bold transform scale-y-110">NETFLIX</span></div><div className="logo-box group-hover:ring-2 group-hover:ring-red-500 transition-all delay-200"><span className="font-condensed text-black text-[7px] tracking-widest font-bold uppercase">Telecine</span></div></div></div>
                                 <ul className="space-y-3.5 text-xs text-zinc-300 mt-auto font-medium"><li className="flex items-start gap-3"><CustomCheck color="green" /><span className="font-bold text-white">Acesso em 2 telas <span className="text-[9px] bg-green-500/20 text-green-400 px-1.5 py-0.5 rounded ml-1 uppercase border border-green-500/30">Bônus +1 Tela</span></span></li><li className="flex items-start gap-3"><CustomCheck color="red" /><span>Mais de 10.000 Canais, Filmes e Séries.</span></li><li className="flex items-start gap-3"><CustomCheck color="red" /><span>Tudo em FHD/4K</span></li><li className="flex items-start gap-3"><CustomCheck color="red" /><span>Multiplataforma</span></li><li className="flex items-start gap-3"><CustomCheck color="green" /><span className="font-bold text-white">Acesso por 4 meses <span className="text-[9px] bg-green-500/20 text-green-400 px-1.5 py-0.5 rounded ml-1 uppercase border border-green-500/30">Bônus +1 Mês</span></span></li></ul>
                             </div>
                         </RevealOnScroll>
@@ -1104,7 +678,7 @@
                                 <div className="absolute top-6 right-6 bg-red-600 text-white text-[10px] font-black px-3 py-1.5 rounded-full leading-tight text-center shadow-lg z-20">20% de<br/>desconto</div>
                                 <div className="mb-6"><div className="mb-1"><span className="text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-red-600 animate-pulse text-sm font-black italic tracking-widest uppercase drop-shadow-[0_2px_4px_rgba(220,38,38,0.4)]">MAIS ESCOLHIDO</span></div><h3 className="text-xl font-bold text-white mb-1">Plano Pro</h3><p className="text-zinc-400 text-sm font-medium mb-5">Semestral</p><div className="flex items-end mb-5"><span className="text-zinc-400 text-lg font-bold mb-1 mr-1">6x</span><span className="text-5xl font-extrabold text-white tracking-tighter">17,52</span><span className="text-zinc-500 text-[9px] font-bold uppercase tracking-wide mb-2 ml-2 leading-none whitespace-nowrap">OU R$89,90</span></div><p className="text-zinc-400 text-xs leading-relaxed min-h-[40px]">O plano ideal para quem quer garantir entretenimento por mais tempo.</p></div>
                                 <a href="https://pay.cakto.com.br/mq6kaat" target="_blank" className="w-full bg-gradient-to-r from-red-600 to-red-900 text-white font-extrabold text-sm py-3.5 rounded-lg hover:opacity-90 transition-opacity mb-8 shadow-lg shadow-red-900/50 uppercase tracking-wide text-center block" onClick={() => trackInitiateCheckout('Pro', 89.90)}>Assinar Agora</a>
-                                <div className="mb-8"><div className="flex justify-between items-center text-[10px] font-semibold text-zinc-400 uppercase tracking-wider mb-3"><span>Inclui:</span><span>+12 plataformas</span></div><div className="grid grid-cols-5 gap-2"><div className="logo-box group-hover:ring-2 group-hover:ring-red-500"><span className="font-geometric text-[13px] tracking-tighter font-black lowercase text-black">max</span></div><div className="logo-box group-hover:ring-2 group-hover:ring-red-500 transition-all delay-75"><img src="https://upload.wikimedia.org/wikipedia/commons/3/3e/Disney%2B_logo.svg" alt="Disney+" className="w-10 h-auto filter brightness-0"/></div><div className="logo-box flex-col pt-1 group-hover:ring-2 group-hover:ring-red-500 transition-all delay-100"><span className="font-bold text-[8px] tracking-tight text-black leading-none">prime video</span><svg className="w-8 h-2 mt-0.5 text-black" viewBox="0 0 100 20" fill="none" stroke="currentColor" strokeWidth="8"><path d="M10,5 Q50,25 90,5" strokeLinecap="round" /><path d="M90,5 L80,10" strokeWidth="0" fill="currentColor"/></svg></div><div className="logo-box group-hover:ring-2 group-hover:ring-red-500 transition-all delay-150"><span className="font-condensed text-black text-[11px] tracking-tighter font-bold transform scale-y-110">NETFLIX</span></div><div className="logo-box group-hover:ring-2 group-hover:ring-red-500 transition-all delay-200"><span className="font-condensed text-black text-[7px] tracking-widest font-bold uppercase">Telecine</span></div></div></div>
+                                <div className="mb-8"><div className="flex justify-between items-center text-[10px] font-semibold text-zinc-400 uppercase tracking-wider mb-3"><span>Inclui:</span><span>+12 plataformas</span></div><div className="grid grid-cols-5 gap-2"><div className="logo-box group-hover:ring-2 group-hover:ring-red-500"><span className="font-geometric text-[13px] tracking-tighter font-black lowercase text-black">max</span></div><div className="logo-box group-hover:ring-2 group-hover:ring-red-500 transition-all delay-75"><img src="https://upload.wikimedia.org/wikipedia/commons/3/3e/Disney%2B_logo.svg" alt="Disney+" className="w-10 h-auto filter brightness-0" loading="lazy" decoding="async"/></div><div className="logo-box flex-col pt-1 group-hover:ring-2 group-hover:ring-red-500 transition-all delay-100"><span className="font-bold text-[8px] tracking-tight text-black leading-none">prime video</span><svg className="w-8 h-2 mt-0.5 text-black" viewBox="0 0 100 20" fill="none" stroke="currentColor" strokeWidth="8"><path d="M10,5 Q50,25 90,5" strokeLinecap="round" /><path d="M90,5 L80,10" strokeWidth="0" fill="currentColor"/></svg></div><div className="logo-box group-hover:ring-2 group-hover:ring-red-500 transition-all delay-150"><span className="font-condensed text-black text-[11px] tracking-tighter font-bold transform scale-y-110">NETFLIX</span></div><div className="logo-box group-hover:ring-2 group-hover:ring-red-500 transition-all delay-200"><span className="font-condensed text-black text-[7px] tracking-widest font-bold uppercase">Telecine</span></div></div></div>
                                 <ul className="space-y-3.5 text-xs text-zinc-300 mt-auto font-medium"><li className="flex items-start gap-3"><CustomCheck color="green" /><span className="font-bold text-white">Acesso em 3 telas <span className="text-[9px] bg-green-500/20 text-green-400 px-1.5 py-0.5 rounded ml-1 uppercase border border-green-500/30">Bônus +1 Tela</span></span></li><li className="flex items-start gap-3"><CustomCheck color="red" /><span>Mais de 10.000 Canais, Filmes e Séries.</span></li><li className="flex items-start gap-3"><CustomCheck color="red" /><span>Tudo em FHD/4K</span></li><li className="flex items-start gap-3"><CustomCheck color="red" /><span>Multiplataforma</span></li><li className="flex items-start gap-3"><CustomCheck color="green" /><span className="font-bold text-white">Acesso por 9 meses <span className="text-[9px] bg-green-500/20 text-green-400 px-1.5 py-0.5 rounded ml-1 uppercase border border-green-500/30">Bônus +3 Meses</span></span></li></ul>
                             </div>
                         </RevealOnScroll>
@@ -1113,7 +687,7 @@
                                 <div className="absolute top-6 right-6 bg-red-800 text-white text-[10px] font-black px-3 py-1.5 rounded-full leading-tight text-center shadow-lg z-20">26% de<br/>desconto</div>
                                 <div className="mb-6"><div className="mb-1"><span className="text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-red-600 animate-pulse text-sm font-black italic tracking-widest uppercase">MAIOR ECONOMIA</span></div><h3 className="text-xl font-bold text-white mb-1">Plano Premium</h3><p className="text-zinc-400 text-sm font-medium mb-5">Anual</p><div className="flex items-end mb-5"><span className="text-zinc-400 text-lg font-bold mb-1 mr-1">12x</span><span className="text-5xl font-extrabold text-white tracking-tighter">17,08</span><span className="text-zinc-500 text-[9px] font-bold uppercase tracking-wide mb-2 ml-2 leading-none whitespace-nowrap">OU R$147,90</span></div><p className="text-zinc-400 text-xs leading-relaxed min-h-[40px]">O maior desconto e acesso anual. Perfeito para você e sua família.</p></div>
                                 <a href="https://pay.cakto.com.br/367ifhv" target="_blank" className="w-full bg-gradient-to-r from-red-700 to-red-950 text-white font-extrabold text-sm py-3.5 rounded-lg hover:opacity-90 transition-opacity mb-8 shadow-lg shadow-red-900/40 uppercase tracking-wide text-center block" onClick={() => trackInitiateCheckout('Premium', 147.90)}>Assinar Agora</a>
-                                <div className="mb-8"><div className="flex justify-between items-center text-[10px] font-semibold text-zinc-400 uppercase tracking-wider mb-3"><span>Inclui:</span><span>+12 plataformas</span></div><div className="grid grid-cols-5 gap-2"><div className="logo-box group-hover:ring-2 group-hover:ring-red-500"><span className="font-geometric text-[13px] tracking-tighter font-black lowercase text-black">max</span></div><div className="logo-box group-hover:ring-2 group-hover:ring-red-500 transition-all delay-75"><img src="https://upload.wikimedia.org/wikipedia/commons/3/3e/Disney%2B_logo.svg" alt="Disney+" className="w-10 h-auto filter brightness-0"/></div><div className="logo-box flex-col pt-1 group-hover:ring-2 group-hover:ring-red-500 transition-all delay-100"><span className="font-bold text-[8px] tracking-tight text-black leading-none">prime video</span><svg className="w-8 h-2 mt-0.5 text-black" viewBox="0 0 100 20" fill="none" stroke="currentColor" strokeWidth="8"><path d="M10,5 Q50,25 90,5" strokeLinecap="round" /><path d="M90,5 L80,10" strokeWidth="0" fill="currentColor"/></svg></div><div className="logo-box group-hover:ring-2 group-hover:ring-red-500 transition-all delay-150"><span className="font-condensed text-black text-[11px] tracking-tighter font-bold transform scale-y-110">NETFLIX</span></div><div className="logo-box group-hover:ring-2 group-hover:ring-red-500 transition-all delay-200"><span className="font-condensed text-black text-[7px] tracking-widest font-bold uppercase">Telecine</span></div></div></div>
+                                <div className="mb-8"><div className="flex justify-between items-center text-[10px] font-semibold text-zinc-400 uppercase tracking-wider mb-3"><span>Inclui:</span><span>+12 plataformas</span></div><div className="grid grid-cols-5 gap-2"><div className="logo-box group-hover:ring-2 group-hover:ring-red-500"><span className="font-geometric text-[13px] tracking-tighter font-black lowercase text-black">max</span></div><div className="logo-box group-hover:ring-2 group-hover:ring-red-500 transition-all delay-75"><img src="https://upload.wikimedia.org/wikipedia/commons/3/3e/Disney%2B_logo.svg" alt="Disney+" className="w-10 h-auto filter brightness-0" loading="lazy" decoding="async"/></div><div className="logo-box flex-col pt-1 group-hover:ring-2 group-hover:ring-red-500 transition-all delay-100"><span className="font-bold text-[8px] tracking-tight text-black leading-none">prime video</span><svg className="w-8 h-2 mt-0.5 text-black" viewBox="0 0 100 20" fill="none" stroke="currentColor" strokeWidth="8"><path d="M10,5 Q50,25 90,5" strokeLinecap="round" /><path d="M90,5 L80,10" strokeWidth="0" fill="currentColor"/></svg></div><div className="logo-box group-hover:ring-2 group-hover:ring-red-500 transition-all delay-150"><span className="font-condensed text-black text-[11px] tracking-tighter font-bold transform scale-y-110">NETFLIX</span></div><div className="logo-box group-hover:ring-2 group-hover:ring-red-500 transition-all delay-200"><span className="font-condensed text-black text-[7px] tracking-widest font-bold uppercase">Telecine</span></div></div></div>
                                 <ul className="space-y-3.5 text-xs text-zinc-300 mt-auto font-medium"><li className="flex items-start gap-3"><CustomCheck color="green" /><span className="font-bold text-white">Acesso em 4 telas <span className="text-[9px] bg-green-500/20 text-green-400 px-1.5 py-0.5 rounded ml-1 uppercase border border-green-500/30">Bônus +2 Telas</span></span></li><li className="flex items-start gap-3"><CustomCheck color="red" /><span>Mais de 10.000 Canais, Filmes e Séries.</span></li><li className="flex items-start gap-3"><CustomCheck color="red" /><span>Tudo em FHD/4K</span></li><li className="flex items-start gap-3"><CustomCheck color="red" /><span>Multiplataforma</span></li><li className="flex items-start gap-3"><CustomCheck color="green" /><span className="font-bold text-white">Acesso por 18 meses <span className="text-[9px] bg-green-500/20 text-green-400 px-1.5 py-0.5 rounded ml-1 uppercase border border-green-500/30">Bônus +6 Meses</span></span></li></ul>
                             </div>
                         </RevealOnScroll>
@@ -1195,19 +769,19 @@
 
         const ExpandingPosters = () => {
             const posters = [
-                { id: 1, title: "Lançamentos", img: "https://images.unsplash.com/photo-1626814026160-2237a95fc5a0?q=80&w=1740&auto=format&fit=crop", color: "from-blue-600" },
-                { id: 2, title: "Ação", img: "https://images.unsplash.com/photo-1536440136628-849c177e76a1?q=80&w=1625&auto=format&fit=crop", color: "from-red-600" },
-                { id: 3, title: "Animes", img: "https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?q=80&w=1974&auto=format&fit=crop", color: "from-pink-600" },
-                { id: 4, title: "Futebol", img: "https://images.unsplash.com/photo-1579952363873-27f3bade9f55?q=80&w=2070&auto=format&fit=crop", color: "from-green-600" },
-                { id: 5, title: "Marvel", img: "https://images.unsplash.com/photo-1635805737707-575885ab0820?q=80&w=1587&auto=format&fit=crop", color: "from-red-800" },
-                { id: 6, title: "Terror", img: "https://images.unsplash.com/photo-1505635552518-3448ff116af3?q=80&w=1664&auto=format&fit=crop", color: "from-purple-900" }
+                { id: 1, title: "Lançamentos", img: "https://images.unsplash.com/photo-1626814026160-2237a95fc5a0?q=60&w=800&auto=format&fit=crop", color: "from-blue-600" },
+                { id: 2, title: "Ação", img: "https://images.unsplash.com/photo-1536440136628-849c177e76a1?q=60&w=800&auto=format&fit=crop", color: "from-red-600" },
+                { id: 3, title: "Animes", img: "https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?q=60&w=800&auto=format&fit=crop", color: "from-pink-600" },
+                { id: 4, title: "Futebol", img: "https://images.unsplash.com/photo-1579952363873-27f3bade9f55?q=60&w=800&auto=format&fit=crop", color: "from-green-600" },
+                { id: 5, title: "Marvel", img: "https://images.unsplash.com/photo-1635805737707-575885ab0820?q=60&w=800&auto=format&fit=crop", color: "from-red-800" },
+                { id: 6, title: "Terror", img: "https://images.unsplash.com/photo-1505635552518-3448ff116af3?q=60&w=800&auto=format&fit=crop", color: "from-purple-900" }
             ];
 
             return (
                 <div className="w-full h-[60vh] md:h-[70vh] flex bg-black posters-container overflow-hidden mt-8 mb-12 border-y border-white/10">
                     {posters.map((poster) => (
                         <div key={poster.id} className="expand-card group cursor-pointer relative">
-                            <img src={poster.img} alt={poster.title} className="absolute inset-0 w-full h-full object-cover object-center transition-transform duration-1000 ease-out group-hover:scale-105" />
+                            <img src={poster.img} alt={poster.title} className="absolute inset-0 w-full h-full object-cover object-center transition-transform duration-1000 ease-out group-hover:scale-105" loading="lazy" decoding="async"/>
                             <div className={`absolute inset-0 bg-gradient-to-t ${poster.color} to-transparent opacity-0 group-hover:opacity-70 transition-opacity duration-500`}></div>
                             <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-black/90 opacity-60 group-hover:opacity-0 transition-opacity duration-500"></div>
                             <div className="absolute inset-0 flex items-center justify-center opacity-100 group-hover:opacity-0 transition-all duration-300 pointer-events-none">
@@ -1216,7 +790,7 @@
                             <div className="absolute bottom-0 left-0 w-full p-6 md:p-10 translate-y-10 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 delay-75 flex flex-col justify-end h-full bg-gradient-to-t from-black via-transparent to-transparent">
                                 <span className="text-white/80 text-xs font-bold uppercase tracking-widest mb-2 bg-white/10 w-fit px-2 py-1 rounded backdrop-blur-sm">Exclusivo</span>
                                 <h3 className="text-3xl md:text-6xl font-black text-white uppercase leading-none mb-4 drop-shadow-2xl">{poster.title}</h3>
-                                <p className="text-gray-200 text-sm md:text-lg font-medium max-w-lg leading-relaxed drop-shadow-lg hidden md:block">Aproveite a melhor seleção de {poster.title.toLowerCase()} em ultra definição. Disponível agora no GrowthUP+.</p>
+                                {/* TEXTO REMOVIDO CONFORME SOLICITADO */}
                                 <div className="mt-6 flex items-center gap-4">
                                     <button className="bg-white text-black font-bold text-xs md:text-sm px-6 py-3 rounded-full hover:bg-gray-200 transition-colors uppercase tracking-wide">Assistir Agora</button>
                                     <div className="w-10 h-10 rounded-full border border-white/30 flex items-center justify-center text-white hover:bg-white/10 transition-colors"><i className="fas fa-plus"></i></div>
@@ -1464,7 +1038,7 @@
                                             name === 'Itaú' ? 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSEC3xi3ITmg6ExgDPUiR_5dvX90EuMAnK8eg&s' :
                                             name === 'Bradesco' ? 'https://assets.b9.com.br/wp-content/uploads/2018/11/Bradesco-novo-logo1.jpg' :
                                             'https://static.wixstatic.com/media/b4cdae_f5df6aa4b17a432192637c7c4c353c3b~mv2.png/v1/fill/w_360,h_237,al_c,q_85,enc_avif,quality_auto/b4cdae_f5df6aa4b17a432192637c7c4c353c3b~mv2.png'
-                                        } alt={name} />
+                                        } alt={name} loading="lazy" decoding="async"/>
                                     </div>
                                 ))}
                             </div>
@@ -1538,7 +1112,7 @@
                                    onMouseEnter={(e) => handleSocialEnter(e, 'Threads', socialThemes['Threads'])} 
                                    onMouseMove={handleSocialMove} 
                                    onMouseLeave={handleSocialLeave}>
-                                    <svg viewBox="0 0 24 24"><path d="M19 12a7 7 0 1 1-7-7c1.57 0 3 .5 4.1 1.4"></path><path d="M12 9a3 3 0 1 0 3 3v2.8a1.2 1.2 0 0 1-2.4 0v-1.1"></path></svg>
+                                    <img src="https://images.seeklogo.com/logo-png/48/2/threads-logo-png_seeklogo-489791.png" alt="Threads" />
                                 </a>
                             </div>
                         </div>
@@ -1566,6 +1140,9 @@
             const [isLoading, setIsLoading] = useState(true);
             const [isPrivacyOpen, setPrivacyOpen] = useState(false);
             const [isTermsOpen, setTermsOpen] = useState(false);
+
+            // ATIVA O SMOOTH SCROLL (Lenis)
+            useLenis();
 
             const whatsappNumber = "5511991396481"; 
             const getWhatsAppLink = (planName) => { const text = "Olá! Quero testar minha TV/Celular SEM LIMITES com a GrowthUP+"; return `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(text)}`; };

@@ -231,6 +231,513 @@
             .store-buttons { justify-content: center; width: 100%; }
             .store-btn { width: 100%; max-width: 280px; }
         }
+
+        /* --- FOOTER CSS ADAPTADO --- */
+        .growth-footer {
+            background: #000000;
+            color: #e5e5e5;
+            border-top: 1px solid #222;
+            font-size: 15px;
+            width: 100%;
+            position: relative;
+            z-index: 20;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: auto;
+            padding: 60px 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 50px;
+        }
+
+        .icon-footer {
+            width: 18px;
+            height: 18px;
+            vertical-align: middle;
+            margin-right: 10px;
+            color: #ef4444;
+            flex-shrink: 0;
+            transition: filter 0.3s ease;
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+
+        .footer-logo-box {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #ef4444, #7f1d1d);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
+        }
+
+        .logo-text {
+            font-size: 22px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            color: #fff;
+        }
+
+        .logo-text .plus {
+            color: #ef4444;
+        }
+
+        .footer-contact {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-contact li {
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            color: #ccc;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            cursor: default;
+        }
+
+        .footer-contact li:hover {
+            color: #ef4444;
+            text-shadow: 0 0 8px rgba(239, 68, 68, 0.6);
+        }
+        
+        .footer-contact li:hover .icon-footer {
+            filter: drop-shadow(0 0 5px rgba(239, 68, 68, 0.8));
+        }
+
+        .footer-col h4 {
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            margin-bottom: 20px;
+            color: #888;
+            font-weight: 700;
+            border-bottom: 2px solid #222;
+            padding-bottom: 10px;
+            display: inline-block;
+        }
+
+        .payment-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+
+        .payment-card {
+            border: 1px solid #333;
+            background-color: #ffffff;
+            width: 45px;
+            height: 30px;
+            padding: 2px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            user-select: none;
+            overflow: hidden;
+        }
+
+        .payment-card img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            display: block;
+        }
+
+        .payment-card:hover {
+            border-color: #ef4444;
+            box-shadow: 0 0 12px rgba(239, 68, 68, 0.6);
+            transform: translateY(-2px);
+        }
+
+        .footer-warning {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            font-size: 13px;
+            color: #bbb;
+            background: #111;
+            border: 1px solid #222;
+            border-left: 3px solid #ef4444;
+            padding: 15px;
+            border-radius: 0 6px 6px 0;
+            line-height: 1.5;
+        }
+
+        .icon-warning {
+            width: 20px;
+            height: 20px;
+            color: #ef4444;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .footer-nav-bar {
+            background-color: #080808;
+            border-top: 1px solid #1a1a1a;
+            padding: 25px 0;
+            width: 100%;
+        }
+
+        .nav-bar-container {
+            max-width: 1200px;
+            margin: auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+
+        .footer-nav-links {
+            display: flex;
+            gap: 25px;
+            align-items: center;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .footer-nav-links a, .footer-nav-links button {
+            color: #888;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 500;
+            transition: color 0.2s;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 0;
+            font-family: inherit;
+        }
+
+        .footer-nav-links a:hover, .footer-nav-links button:hover {
+            color: #ef4444;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .social-link {
+            width: 20px;
+            height: 20px;
+            color: #666;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .social-link svg {
+            width: 100%;
+            height: 100%;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .social-link.fill-icon svg {
+            fill: currentColor;
+            stroke: none;
+        }
+
+        .social-link.whatsapp:hover {
+            color: #25D366;
+            filter: drop-shadow(0 0 6px rgba(37, 211, 102, 0.7));
+            transform: scale(1.1);
+        }
+        
+        .social-link.facebook:hover {
+            color: #1877F2;
+            filter: drop-shadow(0 0 5px rgba(24, 119, 242, 0.6));
+            transform: scale(1.1);
+        }
+        
+        .social-link.youtube:hover {
+            color: #FF0000;
+            filter: drop-shadow(0 0 5px rgba(255, 0, 0, 0.6));
+            transform: scale(1.1);
+        }
+        
+        .social-link.threads:hover {
+            color: #ffffff;
+            filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.8));
+            transform: scale(1.1);
+        }
+        
+        .social-link.instagram:hover {
+            color: #E1306C; 
+            filter: drop-shadow(0 0 5px rgba(225, 48, 108, 0.6));
+            transform: scale(1.1);
+        }
+
+        #social-tooltip {
+            position: fixed;
+            pointer-events: none;
+            padding: 8px 14px;
+            border-radius: 8px;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #fff;
+            opacity: 0;
+            transform: translate(-50%, -15px) scale(0.9);
+            transition: opacity 0.2s ease, transform 0.2s ease;
+            z-index: 9999;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            white-space: nowrap;
+        }
+
+        #social-tooltip.visible {
+            opacity: 1;
+            transform: translate(-50%, -45px) scale(1);
+        }
+
+        .security-list {
+            list-style: none;
+            padding: 0;
+            font-size: 14px;
+            color: #ccc;
+        }
+
+        .security-list li {
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+        }
+
+        .icon-sec {
+            width: 16px;
+            height: 16px;
+            margin-right: 12px;
+            color: #10b981;
+        }
+
+        .reclame-box {
+            margin-top: 25px;
+            background: linear-gradient(145deg, #064e3b, #065f46);
+            color: #d1fae5;
+            padding: 12px 16px;
+            border-radius: 6px;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border: 1px solid #047857;
+            width: fit-content;
+            transition: transform 0.2s;
+        }
+        
+        .reclame-box:hover {
+            transform: scale(1.02);
+        }
+
+        .icon-check {
+            width: 22px;
+            height: 22px;
+            color: #34d399;
+        }
+
+        .footer-bottom {
+            background-color: #050505;
+            border-top: 1px solid #222;
+            padding: 20px;
+            font-size: 13px;
+            color: #666;
+        }
+        
+        .bottom-container {
+            max-width: 1200px;
+            margin: auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-bottom a {
+            color: #888;
+            text-decoration: none;
+            transition: color 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .footer-bottom a:hover {
+            color: #ef4444;
+        }
+
+        .policy-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #0a0a0a;
+            z-index: 10000;
+            transform: translateY(100%);
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            overflow-y: auto;
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .policy-overlay.active {
+            transform: translateY(0);
+        }
+
+        .policy-container {
+            max-width: 800px;
+            width: 100%;
+            color: #ccc;
+            line-height: 1.6;
+            margin-bottom: 50px;
+        }
+
+        .back-btn {
+            position: sticky;
+            top: 10px;
+            align-self: flex-start;
+            background: rgba(239, 68, 68, 0.1);
+            color: #ef4444;
+            border: 1px solid #ef4444;
+            padding: 10px 24px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 14px;
+            margin-bottom: 40px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            backdrop-filter: blur(5px);
+            z-index: 10;
+        }
+
+        .back-btn:hover {
+            background: #ef4444;
+            color: #fff;
+            box-shadow: 0 0 15px rgba(239, 68, 68, 0.4);
+        }
+
+        .policy-header {
+            text-align: center;
+            margin-bottom: 40px;
+            border-bottom: 1px solid #333;
+            padding-bottom: 20px;
+        }
+
+        .policy-header h1 {
+            color: #fff;
+            font-size: 28px;
+            font-weight: 800;
+            margin-bottom: 10px;
+            letter-spacing: -0.5px;
+        }
+
+        .policy-header .highlight {
+            color: #ef4444;
+        }
+
+        .policy-content h2 {
+            color: #fff;
+            font-size: 18px;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            border-left: 3px solid #ef4444;
+            padding-left: 15px;
+        }
+
+        .policy-content h3 {
+            color: #eee;
+            font-size: 16px;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+
+        .policy-content p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+
+        .policy-content ul {
+            list-style: none;
+            padding-left: 20px;
+            margin-bottom: 15px;
+        }
+
+        .policy-content ul li {
+            position: relative;
+            padding-left: 20px;
+            margin-bottom: 8px;
+        }
+
+        .policy-content ul li::before {
+            content: "•";
+            color: #ef4444;
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+
+        .policy-overlay::-webkit-scrollbar {
+            width: 8px;
+        }
+        .policy-overlay::-webkit-scrollbar-track {
+            background: #0a0a0a;
+        }
+        .policy-overlay::-webkit-scrollbar-thumb {
+            background: #333;
+            border-radius: 4px;
+        }
+        .policy-overlay::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+
+        @media (max-width: 768px) {
+            .bottom-container {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+            .footer-container {
+                padding: 40px 20px;
+                gap: 40px;
+            }
+            .footer-col h4 {
+                margin-bottom: 15px;
+            }
+            .nav-bar-container {
+                flex-direction: column;
+                gap: 20px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -721,6 +1228,334 @@
             );
         };
 
+        const PrivacyOverlay = ({ isActive, onClose }) => (
+            <div className={`policy-overlay ${isActive ? 'active' : ''}`}>
+                <div className="policy-container">
+                    <button onClick={onClose} className="back-btn">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                        Voltar
+                    </button>
+                    <div className="policy-header">
+                        <h1>POLÍTICA DE PRIVACIDADE <span className="highlight">GrowthUP+</span></h1>
+                        <p>Última atualização: Janeiro de 2026</p>
+                    </div>
+                    <div className="policy-content">
+                        <p>A <strong>GrowthUP+</strong> respeita a privacidade e a proteção dos dados pessoais de seus usuários, clientes e visitantes. Esta Política de Privacidade descreve como coletamos, utilizamos, armazenamos e protegemos informações ao acessar ou utilizar nosso site, serviços, plataformas e canais de atendimento.</p>
+                        <p>Ao utilizar qualquer serviço da GrowthUP+, o usuário declara estar ciente e de acordo com esta Política.</p>
+                        <h2>1. Identificação do Controlador</h2>
+                        <p><strong>GrowthUP+</strong><br/>
+                        E-mail: <span style={{color: '#ef4444'}}>growthupbrasil@gmail.com</span><br/>
+                        Contato: (11) 99139-6481</p>
+                        <h2>2. Dados coletados</h2>
+                        <p>Podemos coletar as seguintes informações:</p>
+                        <h3>2.1 Dados fornecidos pelo usuário</h3>
+                        <ul>
+                            <li>Nome</li>
+                            <li>Endereço de e-mail</li>
+                            <li>Número de telefone</li>
+                            <li>Informações enviadas via formulários, WhatsApp ou atendimento</li>
+                        </ul>
+                        <h3>2.2 Dados coletados automaticamente</h3>
+                        <ul>
+                            <li>Endereço IP</li>
+                            <li>Tipo de navegador e dispositivo</li>
+                            <li>Páginas acessadas</li>
+                            <li>Data e horário de acesso</li>
+                            <li>Cookies e tecnologias semelhantes</li>
+                        </ul>
+                        <h2>3. Finalidade do tratamento dos dados</h2>
+                        <p>Os dados coletados são utilizados para:</p>
+                        <ul>
+                            <li>Processamento de assinaturas e pagamentos</li>
+                            <li>Liberação e gestão de acesso aos serviços contratados</li>
+                            <li>Comunicação operacional e suporte técnico</li>
+                            <li>Atendimento ao cliente</li>
+                            <li>Envio de informações relevantes sobre o serviço</li>
+                            <li>Melhoria da experiência do usuário</li>
+                            <li>Prevenção a fraudes e abusos</li>
+                            <li>Cumprimento de obrigações legais</li>
+                        </ul>
+                        <p><em>A GrowthUP+ não comercializa, vende ou aluga dados pessoais.</em></p>
+                        <h2>4. Compartilhamento de dados</h2>
+                        <p>Os dados poderão ser compartilhados apenas quando necessário com:</p>
+                        <ul>
+                            <li>Plataformas de pagamento</li>
+                            <li>Serviços de hospedagem e infraestrutura tecnológica</li>
+                            <li>Ferramentas de análise e marketing</li>
+                            <li>Autoridades públicas, mediante obrigação legal ou judicial</li>
+                        </ul>
+                        <h2>5. Cookies</h2>
+                        <p>Utilizamos cookies para garantir o funcionamento adequado do site, analisar desempenho e otimizar a experiência do usuário. O usuário pode desativar os cookies nas configurações do navegador, ciente de que isso pode impactar funcionalidades.</p>
+                        <h2>6. Segurança das informações</h2>
+                        <p>A GrowthUP+ adota medidas técnicas e organizacionais adequadas para proteger os dados pessoais contra acesso não autorizado, perda, alteração ou divulgação indevida. Ainda assim, nenhum sistema é totalmente imune a falhas.</p>
+                        <h2>7. Direitos do titular dos dados</h2>
+                        <p>Nos termos da Lei Geral de Proteção de Dados (Lei nº 13.709/2018), o usuário pode solicitar:</p>
+                        <ul>
+                            <li>Confirmação da existência de tratamento</li>
+                            <li>Acesso aos dados</li>
+                            <li>Correção de informações incompletas ou incorretas</li>
+                            <li>Exclusão de dados, quando aplicável</li>
+                            <li>Revogação de consentimento</li>
+                        </ul>
+                        <p>Solicitações devem ser enviadas para <strong>growthupbrasil@gmail.com</strong>.</p>
+                        <h2>8. Alterações desta Política</h2>
+                        <p>Esta Política poderá ser atualizada a qualquer momento. A versão vigente estará sempre disponível no site.</p>
+                        <h2>9. Contato</h2>
+                        <p>Para dúvidas ou solicitações relacionadas a esta Política:</p>
+                        <p><strong>E-mail:</strong> growthupbrasil@gmail.com<br/>
+                        <strong>Telefone:</strong> (11) 99139-6481</p>
+                    </div>
+                </div>
+            </div>
+        );
+
+        const TermsOverlay = ({ isActive, onClose }) => (
+            <div className={`policy-overlay ${isActive ? 'active' : ''}`}>
+                <div className="policy-container">
+                    <button onClick={onClose} className="back-btn">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                        Voltar
+                    </button>
+                    <div className="policy-header">
+                        <h1>TERMOS E CONDIÇÕES DE USO <span className="highlight">GrowthUP+</span></h1>
+                        <p>Última atualização: Janeiro de 2026</p>
+                    </div>
+                    <div className="policy-content">
+                        <p>Ao acessar ou utilizar os serviços da <strong>GrowthUP+</strong>, o usuário declara que leu, compreendeu e concorda integralmente com estes Termos e Condições.</p>
+                        <p><em>Caso não concorde, não utilize os serviços.</em></p>
+                        <h2>1. Descrição do serviço</h2>
+                        <p>A GrowthUP+ oferece acesso a uma plataforma de entretenimento mediante planos de assinatura com prazo determinado, conforme condições vigentes no momento da contratação.</p>
+                        <p>Não oferecemos serviços vitalícios ou acesso permanente.</p>
+                        <h2>2. Elegibilidade</h2>
+                        <p>Para utilizar os serviços, o usuário deve:</p>
+                        <ul>
+                            <li>Ter no mínimo 18 anos ou autorização legal</li>
+                            <li>Fornecer informações verdadeiras e atualizadas</li>
+                            <li>Utilizar o serviço exclusivamente para fins pessoais</li>
+                        </ul>
+                        <h2>3. Planos, pagamentos e acesso</h2>
+                        <ul>
+                            <li>Os planos possuem duração definida</li>
+                            <li>O acesso é liberado após confirmação do pagamento</li>
+                            <li>Valores, bônus e condições promocionais podem variar</li>
+                            <li>Os pagamentos são processados por plataformas terceiras</li>
+                        </ul>
+                        <p>A GrowthUP+ não se responsabiliza por falhas ou indisponibilidades das plataformas de pagamento.</p>
+                        <h2>4. Uso permitido e restrições</h2>
+                        <p>É proibido:</p>
+                        <ul>
+                            <li>Compartilhar acessos de forma abusiva</li>
+                            <li>Revender ou redistribuir o serviço</li>
+                            <li>Utilizar o serviço para fins comerciais</li>
+                            <li>Tentar burlar sistemas de segurança</li>
+                            <li>Utilizar o serviço de maneira ilegal ou não autorizada</li>
+                        </ul>
+                        <p>O descumprimento poderá resultar em suspensão ou cancelamento imediato, sem direito a reembolso.</p>
+                        <h2>5. Suspensão e cancelamento</h2>
+                        <p>A GrowthUP+ poderá suspender ou cancelar o acesso em casos de:</p>
+                        <ul>
+                            <li>Violação destes Termos</li>
+                            <li>Uso indevido ou suspeita de fraude</li>
+                            <li>Determinação legal ou técnica</li>
+                        </ul>
+                        <p>O usuário poderá cancelar sua assinatura conforme as condições do plano contratado.</p>
+                        <h2>6. Reembolsos</h2>
+                        <ul>
+                            <li>Reembolsos seguem as regras informadas no momento da contratação</li>
+                            <li>Testes gratuitos, quando oferecidos, não geram direito a reembolso</li>
+                            <li>Após o uso do serviço, o valor pode não ser reembolsável</li>
+                        </ul>
+                        <h2>7. Disponibilidade do serviço</h2>
+                        <p>O serviço pode sofrer interrupções temporárias devido a manutenções, atualizações ou falhas técnicas. A GrowthUP+ não garante disponibilidade contínua e ininterrupta.</p>
+                        <h2>8. Limitação de responsabilidade</h2>
+                        <p>A GrowthUP+ não se responsabiliza por:</p>
+                        <ul>
+                            <li>Problemas de conexão do usuário</li>
+                            <li>Dispositivos incompatíveis</li>
+                            <li>Falhas de terceiros ou provedores externos</li>
+                            <li>Uso inadequado da plataforma</li>
+                        </ul>
+                        <h2>9. Alterações dos Termos</h2>
+                        <p>Os Termos poderão ser alterados a qualquer momento. O uso contínuo dos serviços implica aceitação da versão vigente.</p>
+                        <h2>10. Legislação aplicável</h2>
+                        <p>Estes Termos são regidos pelas leis da República Federativa do Brasil.</p>
+                        <h2>11. Contato</h2>
+                        <p><strong>E-mail:</strong> growthupbrasil@gmail.com<br/>
+                        <strong>Telefone:</strong> (11) 99139-6481</p>
+                    </div>
+                </div>
+            </div>
+        );
+
+        const Footer = ({ openPrivacy, openTerms }) => {
+            const tooltipRef = useRef(null);
+            
+            const handleSocialEnter = (e, name, theme) => {
+                const tooltip = tooltipRef.current;
+                if(tooltip) {
+                    tooltip.textContent = name;
+                    tooltip.style.background = theme.bg;
+                    tooltip.style.color = theme.color;
+                    tooltip.style.boxShadow = theme.shadow;
+                    tooltip.classList.add('visible');
+                }
+            };
+
+            const handleSocialMove = (e) => {
+                const tooltip = tooltipRef.current;
+                if(tooltip) {
+                    tooltip.style.left = e.clientX + 'px';
+                    tooltip.style.top = e.clientY + 'px';
+                }
+            };
+
+            const handleSocialLeave = () => {
+                const tooltip = tooltipRef.current;
+                if(tooltip) {
+                    tooltip.classList.remove('visible');
+                }
+            };
+
+            const socialThemes = {
+                'WhatsApp': { bg: '#25D366', color: '#fff', shadow: '0 0 15px rgba(37, 211, 102, 0.6)' },
+                'Facebook': { bg: '#1877F2', color: '#fff', shadow: '0 0 15px rgba(24, 119, 242, 0.6)' },
+                'Instagram': { bg: 'linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%)', color: '#fff', shadow: '0 0 15px rgba(220, 39, 67, 0.6)' },
+                'YouTube': { bg: '#FF0000', color: '#fff', shadow: '0 0 15px rgba(255, 0, 0, 0.6)' },
+                'Threads': { bg: '#ffffff', color: '#000000', shadow: '0 0 15px rgba(255, 255, 255, 0.5)' }
+            };
+
+            return (
+                <footer className="growth-footer">
+                    <div id="social-tooltip" ref={tooltipRef}></div>
+                    <div className="footer-container">
+                        <div className="footer-col">
+                            <div className="footer-logo">
+                                <span className="footer-logo-box">G</span>
+                                <span className="logo-text">GrowthUP<span className="plus">+</span></span>
+                            </div>
+                            <ul className="footer-contact">
+                                <li>
+                                    <svg className="icon-footer" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg>
+                                    Growthupbrasil@gmail.com
+                                </li>
+                                <li>
+                                    <svg className="icon-footer" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                                    (11) 99139-6481
+                                </li>
+                                <li>
+                                    <svg className="icon-footer" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                                    Das 06:00 às 23:59 de Seg a Sábado
+                                </li>
+                            </ul>
+                        </div>
+                        <div className="footer-col">
+                            <h4>Formas de pagamento</h4>
+                            <div className="payment-grid">
+                                {['Visa', 'Mastercard', 'Elo', 'Hipercard', 'American Express', 'Pix', 'Boleto', 'Itaú', 'Bradesco', 'Banco do Brasil'].map((name, i) => (
+                                    <div className="payment-card" title={name} key={i}>
+                                        <img src={
+                                            name === 'Visa' ? 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRVdmb2REwkq88jlbdX8N_7I4UYbo-wGMLAgg&s' :
+                                            name === 'Mastercard' ? 'https://newchoice.com.br/wp-content/uploads/2019/02/master-card.png' :
+                                            name === 'Elo' ? 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSwJg69eORTNYDiJiRvzDpXy84woEHhdrxAHg&s' :
+                                            name === 'Hipercard' ? 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Hipercard_logo.svg/1200px-Hipercard_logo.svg.png' :
+                                            name === 'American Express' ? 'https://1000logos.net/wp-content/uploads/2016/10/American-Express-Color.png' :
+                                            name === 'Pix' ? 'https://images.seeklogo.com/logo-png/39/2/pix-logo-png_seeklogo-392002.png' :
+                                            name === 'Boleto' ? 'https://vectorseek.com/wp-content/uploads/2023/09/Boleto-Logo-Vector.svg-.png' :
+                                            name === 'Itaú' ? 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSEC3xi3ITmg6ExgDPUiR_5dvX90EuMAnK8eg&s' :
+                                            name === 'Bradesco' ? 'https://assets.b9.com.br/wp-content/uploads/2018/11/Bradesco-novo-logo1.jpg' :
+                                            'https://static.wixstatic.com/media/b4cdae_f5df6aa4b17a432192637c7c4c353c3b~mv2.png/v1/fill/w_360,h_237,al_c,q_85,enc_avif,quality_auto/b4cdae_f5df6aa4b17a432192637c7c4c353c3b~mv2.png'
+                                        } alt={name} />
+                                    </div>
+                                ))}
+                            </div>
+                            <div className="footer-warning">
+                                <svg className="icon-warning" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                                <span>A venda dos serviços GrowthUP+ é permitida <strong>somente</strong> através do nosso site e WhatsApp oficial. Desconfie de ofertas externas.</span>
+                            </div>
+                        </div>
+                        <div className="footer-col">
+                            <h4>Segurança</h4>
+                            <ul className="security-list">
+                                <li>
+                                    <svg className="icon-sec" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                                    Conexão segura (SSL)
+                                </li>
+                                <li>
+                                    <svg className="icon-sec" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                                    Navegação protegida
+                                </li>
+                                <li>
+                                    <svg className="icon-sec" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"></rect><line x1="2" y1="10" x2="22" y2="10"></line></svg>
+                                    Pagamento processado com segurança
+                                </li>
+                                <li>
+                                    <svg className="icon-sec" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><line x1="10" y1="9" x2="8" y2="9"></line></svg>
+                                    Política de privacidade ativa
+                                </li>
+                            </ul>
+                            <div className="reclame-box">
+                                <svg className="icon-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+                                <span>Empresa verificada<br/><strong>Reclame Aqui</strong></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="footer-nav-bar">
+                        <div className="nav-bar-container">
+                            <nav className="footer-nav-links">
+                                <a href="#inicio">Início</a>
+                                <a href="#diferenciais">Plataformas</a>
+                                <a href="#planos">Catálogo</a>
+                                <a href="#planos">Planos</a>
+                                <button onClick={openTerms}>Termos e Condições de Uso</button>
+                                <button onClick={openPrivacy}>Política de Privacidade</button>
+                            </nav>
+                            <div className="social-icons">
+                                <a href="#" className="social-link whatsapp fill-icon" title="WhatsApp" 
+                                   onMouseEnter={(e) => handleSocialEnter(e, 'WhatsApp', socialThemes['WhatsApp'])} 
+                                   onMouseMove={handleSocialMove} 
+                                   onMouseLeave={handleSocialLeave}>
+                                    <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+                                </a>
+                                <a href="#" className="social-link facebook" title="Facebook"
+                                   onMouseEnter={(e) => handleSocialEnter(e, 'Facebook', socialThemes['Facebook'])} 
+                                   onMouseMove={handleSocialMove} 
+                                   onMouseLeave={handleSocialLeave}>
+                                    <svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+                                </a>
+                                <a href="#" className="social-link instagram" title="Instagram"
+                                   onMouseEnter={(e) => handleSocialEnter(e, 'Instagram', socialThemes['Instagram'])} 
+                                   onMouseMove={handleSocialMove} 
+                                   onMouseLeave={handleSocialLeave}>
+                                    <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+                                </a>
+                                <a href="#" className="social-link youtube" title="YouTube"
+                                   onMouseEnter={(e) => handleSocialEnter(e, 'YouTube', socialThemes['YouTube'])} 
+                                   onMouseMove={handleSocialMove} 
+                                   onMouseLeave={handleSocialLeave}>
+                                    <svg viewBox="0 0 24 24"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.33 29 29 0 0 0-.46-5.33z"></path><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02" fill="currentColor"></polygon></svg>
+                                </a>
+                                <a href="#" className="social-link threads" title="Threads"
+                                   onMouseEnter={(e) => handleSocialEnter(e, 'Threads', socialThemes['Threads'])} 
+                                   onMouseMove={handleSocialMove} 
+                                   onMouseLeave={handleSocialLeave}>
+                                    <svg viewBox="0 0 24 24"><path d="M19 12a7 7 0 1 1-7-7c1.57 0 3 .5 4.1 1.4"></path><path d="M12 9a3 3 0 1 0 3 3v2.8a1.2 1.2 0 0 1-2.4 0v-1.1"></path></svg>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="footer-bottom">
+                        <div className="bottom-container">
+                            <span>© 2026 GrowthUP+. Todos os direitos reservados.</span>
+                            <a href="#topo">
+                                Voltar ao topo 
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
+                            </a>
+                        </div>
+                    </div>
+                </footer>
+            );
+        };
+
         const App = () => {
             const [isScrolled, setIsScrolled] = useState(false);
             const [showVideoSection, setShowVideoSection] = useState(false);
@@ -729,6 +1564,9 @@
             const [mobileVideoStage, setMobileVideoStage] = useState('idle');
             const [mobileVideoId, setMobileVideoId] = useState(null);
             const [isLoading, setIsLoading] = useState(true);
+            const [isPrivacyOpen, setPrivacyOpen] = useState(false);
+            const [isTermsOpen, setTermsOpen] = useState(false);
+
             const whatsappNumber = "5511991396481"; 
             const getWhatsAppLink = (planName) => { const text = "Olá! Quero testar minha TV/Celular SEM LIMITES com a GrowthUP+"; return `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(text)}`; };
             const handleOpenTutorial = () => { setShowVideoSection(true); setTimeout(() => { const section = document.getElementById('video-tutorial-section'); if (section) { section.scrollIntoView({ behavior: 'smooth', block: 'center' }); } }, 100); };
@@ -739,8 +1577,21 @@
             const handleMobileDeviceSelect = (device) => { setMobileVideoId(device.videoId); setMobileVideoStage('playing'); };
             const benefits = [{ icon: <Icons.Monitor className="w-8 h-8" />, title: "Sua Smart TV Potencializada", desc: "Transforme sua Roku, Samsung ou LG em uma central de cinema completa." }, { icon: <Icons.Zap className="w-8 h-8" />, title: "Streaming de Alta Performance", desc: "Infraestrutura dedicada para garantir fluidez total, sem travamentos irritantes." }, { icon: <Icons.Tv className="w-8 h-8" />, title: "Resolução Ultra 4K + 60 Fps", desc: "Veja cada detalhe. Qualidade de imagem cristalina que valoriza sua TV." }, { icon: <Icons.Layers className="w-8 h-8" />, title: "Biblioteca Universal", desc: "Todos os canais, lançamentos de cinema e séries em um só lugar." }];
 
+            const togglePrivacy = () => {
+                setPrivacyOpen(!isPrivacyOpen);
+                document.body.style.overflow = !isPrivacyOpen ? 'hidden' : '';
+            };
+
+            const toggleTerms = () => {
+                setTermsOpen(!isTermsOpen);
+                document.body.style.overflow = !isTermsOpen ? 'hidden' : '';
+            };
+
             return (
-                <div className="min-h-screen relative bg-black">
+                <div className="min-h-screen relative bg-black" id="topo">
+                    <PrivacyOverlay isActive={isPrivacyOpen} onClose={togglePrivacy} />
+                    <TermsOverlay isActive={isTermsOpen} onClose={toggleTerms} />
+                    
                     <div className="fixed inset-0 w-full h-full overflow-hidden pointer-events-none"><div className="bg-hero"></div><div className="bg-overlay"></div><UpsideDownSpores /></div>
                     <div className="fixed w-full flex justify-center px-4 z-50 transition-all duration-500 ease-in-out top-6"><nav className="bg-black/40 backdrop-blur-sm border border-white/10 rounded-full px-6 py-3 flex items-center justify-between w-full max-w-5xl shadow-2xl transition-all duration-300 hover:bg-black/60 pointer-events-auto"><div className="flex items-center gap-2"><div className="w-8 h-8 rounded-md flex items-center justify-center text-white font-bold text-lg btn-gradient">G</div><span className="text-xl font-semibold tracking-wide">GrowthUP<span className="text-red-500">+</span></span></div><div className="hidden md:flex items-center gap-8 text-sm font-medium text-gray-300">{['Início', 'Diferenciais', 'Planos'].map((item) => (<a key={item} href={`#${item.split(' ')[0].toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")}`} className="hover:text-white transition-colors">{item}</a>))}</div><a href="https://pay.cakto.com.br/367ifhv" target="_blank" className="btn-gradient text-white font-bold text-xs md:text-sm px-6 py-2 rounded-full uppercase tracking-wider">Assinar Agora</a></nav></div>
                     <section id="inicio" className="relative z-10 min-h-screen flex flex-col justify-center items-center text-center px-6 md:px-12 lg:px-24 pb-12 w-full max-w-7xl mx-auto transition-all duration-500 pt-32">
@@ -760,7 +1611,7 @@
                     <ScamAlertSection />
                     <FAQSection onOpenTutorial={handleOpenTutorial} />
                     {showVideoSection && (<div id="video-tutorial-section" className="animate-reveal"><section className="relative z-10 py-16 md:hidden border-t border-white/5 bg-black"><div className="container mx-auto px-6"><RevealOnScroll className="text-center mb-10"><h2 className="text-3xl font-black text-white uppercase tracking-tighter mb-4 drop-shadow-xl">Experiência <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-red-800">Reels</span></h2><p className="text-gray-400 tracking-widest text-sm uppercase max-w-2xl mx-auto">Veja como funciona na prática.</p></RevealOnScroll><RevealOnScroll delay={200}><div className="relative mx-auto w-full max-w-[280px] h-[580px] bg-black rounded-[20px] shadow-xl overflow-hidden border-2 border-gray-800/50"><div className="w-full h-full relative cursor-pointer" onClick={handleMobileClick}>{mobileVideoStage === 'selecting' && (<DeviceSelector onSelect={handleMobileDeviceSelect} />)}{mobileVideoStage !== 'playing' ? (<><div className="absolute inset-0 bg-gradient-to-b from-slate-900 to-black flex items-center justify-center overflow-hidden"><div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1611162616475-46b635cb6868?auto=format&fit=crop&w=600&q=80')] bg-cover bg-center opacity-50 mix-blend-overlay"></div><div className="text-center relative z-10 p-6"><div className="inline-block p-4 rounded-full bg-white/10 backdrop-blur-md mb-4 border border-white/20 shadow-red-900/30"><Icons.Play size={48} className="text-white fill-white ml-2" /></div><h3 className="text-2xl font-bold tracking-widest text-white uppercase">Assista o Reels</h3><p className="text-red-500 text-sm mt-2 tracking-widest">Clique para Tocar</p></div></div><div className="absolute bottom-0 left-0 w-full h-1/3 bg-gradient-to-t from-black to-transparent"></div></>) : (<iframe width="100%" height="100%" src={`https://www.youtube.com/embed/${mobileVideoId}?autoplay=1`} title="Growth Up Brasil Shorts" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen className="w-full h-full object-cover"></iframe>)}</div></div></RevealOnScroll></div></section><section className="relative z-10 py-20 bg-black hidden md:block border-t border-white/5"><div className="container mx-auto max-w-5xl px-6"><RevealOnScroll className="text-center mb-12"><h2 className="text-xl font-black text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-red-800 tracking-[0.2em] uppercase drop-shadow-[0_0_10px_rgba(220,38,38,0.5)]">EXPERIÊNCIA VÍDEO</h2><p className="text-xs text-gray-400 font-bold tracking-widest mt-1">VEJA COMO FUNCIONA NA PRÁTICA.</p></RevealOnScroll><RevealOnScroll delay={200} className="relative perspective-1000"><div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-red-900/10 blur-[100px] rounded-full"></div><div className="relative z-10 transform hover:scale-[1.01] transition-transform duration-700"><div className="bg-black border-[6px] border-[#222] rounded-xl shadow-2xl relative overflow-hidden aspect-video cursor-pointer" onClick={handleDesktopClick}>{desktopVideoStage === 'selecting' && (<DeviceSelector onSelect={handleDesktopDeviceSelect} />)}{desktopVideoStage !== 'playing' ? (<><div className="absolute inset-0 bg-gradient-to-br from-slate-900 to-black flex items-center justify-center overflow-hidden"><div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1593784991095-a20506948430?auto=format&fit=crop&w=800&q=80')] bg-cover opacity-40 mix-blend-overlay"></div><div className="text-center relative z-10"><div className="inline-block p-4 rounded-full bg-white/10 backdrop-blur-md mb-4 border border-white/20 shadow-red-900/30"><Icons.Play size={48} className="text-white fill-white ml-2" /></div><h3 className="text-2xl font-bold tracking-widest text-white uppercase">Assista o video</h3><p className="text-red-500 text-sm mt-2 tracking-widest">Clique para tocar</p></div></div><div className="absolute top-0 right-0 w-2/3 h-full bg-gradient-to-l from-white/5 to-transparent skew-x-[-20deg]"></div></>) : (<iframe width="100%" height="100%" src={`https://www.youtube.com/embed/${desktopVideoId}?autoplay=1`} title="Growth Up Brasil Shorts" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen className="w-full h-full"></iframe>)}</div><div className="h-4 w-1/3 bg-[#333] mx-auto rounded-b-xl mt-1 shadow-lg"></div></div></RevealOnScroll></div></section></div>)}
-                    <footer className="bg-black text-gray-300 py-12 px-5 font-sans border-t border-white/10 relative z-20"><div className="max-w-[1200px] mx-auto grid grid-cols-1 md:grid-cols-3 gap-10"><div><div className="flex items-center gap-2.5 mb-4"><div className="w-9 h-9 bg-red-600 text-white font-extrabold flex items-center justify-center rounded-md shadow-[0_0_15px_rgba(220,38,38,0.5)]">G</div><span className="text-xl font-bold text-white tracking-tight">GrowthUP<span className="text-red-500">+</span></span></div><a href={getWhatsAppLink()} target="_blank" rel="noopener noreferrer" onClick={trackLead} className="block text-sm mb-2.5 font-medium hover:text-white transition-colors cursor-pointer">📧 contato@growthupbrasil.com</a><a href={getWhatsAppLink()} target="_blank" rel="noopener noreferrer" onClick={trackLead} className="block text-sm mb-2.5 font-medium hover:text-white transition-colors cursor-pointer">📱 (11) 99139-6481</a><a href={getWhatsAppLink()} target="_blank" rel="noopener noreferrer" onClick={trackLead} className="block text-sm font-medium hover:text-white transition-colors cursor-pointer">📞 Suporte via WhatsApp</a></div><div><h4 className="text-white text-sm mb-4 tracking-widest font-bold uppercase border-b border-red-900/30 pb-2 inline-block">FORMAS DE PAGAMENTO</h4><div className="flex flex-wrap gap-2.5 mb-5"><img src="https://img.icons8.com/color/48/visa.png" className="h-8 brightness-90 hover:brightness-110 transition-all" alt="Visa" /><img src="https://img.icons8.com/color/48/mastercard.png" className="h-8 brightness-90 hover:brightness-110 transition-all" alt="Mastercard" /><img src="https://img.icons8.com/color/48/amex.png" className="h-8 brightness-90 hover:brightness-110 transition-all" alt="Amex" /><img src="https://img.icons8.com/color/48/boleto-bankario.png" className="h-8 brightness-90 hover:brightness-110 transition-all" alt="Boleto" /><img src="https://img.icons8.com/color/48/pix.png" className="h-8 brightness-90 hover:brightness-110 transition-all" alt="Pix" /></div></div><div><h4 className="text-white text-sm mb-4 tracking-widest font-bold uppercase border-b border-red-900/30 pb-2 inline-block">SEGURANÇA</h4><div className="flex flex-col gap-3"><div className="flex items-center gap-2.5 group"><img src="https://img.icons8.com/color/48/lock--v1.png" className="h-7 group-hover:scale-110 transition-transform" alt="SSL" /><span className="text-sm font-medium group-hover:text-white transition-colors">Conexão segura (SSL)</span></div><div className="flex items-center gap-2.5 group"><img src="https://img.icons8.com/color/48/google-safe-browsing.png" className="h-7 group-hover:scale-110 transition-transform" alt="Safe Browsing" /><span className="text-sm font-medium group-hover:text-white transition-colors">Navegação protegida</span></div><div className="flex items-center gap-2.5 group"><img src="https://img.icons8.com/color/48/shield.png" className="h-7 group-hover:scale-110 transition-transform" alt="Shield" /><span className="text-sm font-medium group-hover:text-white transition-colors">Ambiente monitorado</span></div></div></div></div><div className="max-w-[1200px] mx-auto mt-12 mb-6 border-t border-white/10 pt-6 flex flex-wrap gap-6 justify-center text-[13px] font-medium tracking-wide"><a href="#inicio" className="text-gray-400 hover:text-white hover:underline decoration-red-500/50 underline-offset-4 transition-all">Início</a><a href="#diferenciais" className="text-gray-400 hover:text-white hover:underline decoration-red-500/50 underline-offset-4 transition-all">Vantagens</a><a href="#planos" className="text-gray-400 hover:text-white hover:underline decoration-red-500/50 underline-offset-4 transition-all">Planos</a><a href="#faq" className="text-gray-400 hover:text-white hover:underline decoration-red-500/50 underline-offset-4 transition-all">FAQ</a><a href="#" className="text-gray-400 hover:text-white hover:underline decoration-red-500/50 underline-offset-4 transition-all">Termos de Uso</a><a href="#" className="text-gray-400 hover:text-white hover:underline decoration-red-500/50 underline-offset-4 transition-all">Política de Privacidade</a></div><div className="text-center text-[11px] text-gray-500 mt-2.5 font-medium uppercase tracking-widest">© 2026 GrowthUP+. Todos os direitos reservados.</div></footer>
+                    <Footer openPrivacy={togglePrivacy} openTerms={toggleTerms} />
                     <a href={getWhatsAppLink()} target="_blank" rel="noopener noreferrer" onClick={trackLead} className="fixed bottom-6 right-6 z-50 group" aria-label="WhatsApp"><div className="absolute inset-0 bg-green-500 blur-lg opacity-40 group-hover:opacity-60 transition-opacity animate-pulse"></div><div className="relative bg-black border border-green-500/50 text-green-400 p-4 rounded-full shadow-2xl hover:scale-110 hover:text-white hover:bg-green-600 transition-all duration-300"><Icons.WhatsApp width={32} height={32} fill="currentColor" /></div></a>
                 </div>
             );

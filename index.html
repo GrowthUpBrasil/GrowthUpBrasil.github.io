@@ -17,8 +17,8 @@
     'https://connect.facebook.net/en_US/fbevents.js');
     
     // ⚠️ IMPORTANTE: SUBSTITUA 'SEU_PIXEL_ID_AQUI' PELO SEU ID REAL DO META PIXEL
-    fbq('init', 'SEU_PIXEL_ID_AQUI'); 
-    fbq('track', 'PageView');
+    // fbq('init', 'SEU_PIXEL_ID_AQUI'); 
+    // fbq('track', 'PageView');
     </script>
     <noscript><img height="1" width="1" style="display:none"
     src="https://www.facebook.com/tr?id=SEU_PIXEL_ID_AQUI&ev=PageView&noscript=1"
@@ -47,23 +47,10 @@
         body { background-color: #000; color: white; overflow-x: hidden; font-family: 'Inter', system-ui, -apple-system, sans-serif; -webkit-font-smoothing: antialiased; }
         .hardware-accelerated { transform: translateZ(0); backface-visibility: hidden; will-change: transform, opacity; }
 
-        @keyframes appearSmooth {
-            from { opacity: 0; transform: translate(-50%, 20px) scale(0.9); }
-            to { opacity: 1; transform: translate(-50%, 0) scale(1); }
-        }
-        @keyframes blinkGreenPulse {
-            0%, 100% { transform: translateX(-50%) scale(1); color: #4ade80; text-shadow: 0 0 5px rgba(34, 197, 94, 0.5); }
-            50% { transform: translateX(-50%) scale(1.1); color: #ffffff; text-shadow: 0 0 15px #4ade80, 0 0 5px #ffffff; }
-        }
-        @keyframes particleExplosion {
-            0% { transform: translate(-50%, -50%) scale(1); opacity: 1; box-shadow: 0 0 5px #4ade80; }
-            100% { transform: translate(var(--tx), var(--ty)) scale(0); opacity: 0; box-shadow: 0 0 0 transparent; }
-        }
-        @keyframes mainExplosionFade {
-            0% { transform: translateX(-50%) scale(1.05); opacity: 1; }
-            50% { transform: translateX(-50%) scale(1.2); opacity: 0.8; }
-            100% { transform: translateX(-50%) scale(1.5); opacity: 0; }
-        }
+        @keyframes appearSmooth { from { opacity: 0; transform: translate(-50%, 20px) scale(0.9); } to { opacity: 1; transform: translate(-50%, 0) scale(1); } }
+        @keyframes blinkGreenPulse { 0%, 100% { transform: translateX(-50%) scale(1); color: #4ade80; text-shadow: 0 0 5px rgba(34, 197, 94, 0.5); } 50% { transform: translateX(-50%) scale(1.1); color: #ffffff; text-shadow: 0 0 15px #4ade80, 0 0 5px #ffffff; } }
+        @keyframes particleExplosion { 0% { transform: translate(-50%, -50%) scale(1); opacity: 1; box-shadow: 0 0 5px #4ade80; } 100% { transform: translate(var(--tx), var(--ty)) scale(0); opacity: 0; box-shadow: 0 0 0 transparent; } }
+        @keyframes mainExplosionFade { 0% { transform: translateX(-50%) scale(1.05); opacity: 1; } 50% { transform: translateX(-50%) scale(1.2); opacity: 0.8; } 100% { transform: translateX(-50%) scale(1.5); opacity: 0; } }
         .anim-appear { animation: appearSmooth 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
         .anim-blink { animation: blinkGreenPulse 1s ease-in-out infinite; } 
         .anim-explode-main { animation: mainExplosionFade 0.5s ease-out forwards; }
@@ -125,13 +112,11 @@
         .app-phone { display: flex; justify-content: center; flex-direction: column; align-items: center; position: relative; z-index: 40; }
         .app-phone-title { font-size: 14px; font-weight: 600; color: #ef4444; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 25px; text-shadow: 0 2px 10px rgba(239, 68, 68, 0.3); display: flex; align-items: center; gap: 8px; animation: fadeIn 1s ease-out; pointer-events: none; }
         
-        /* Nova animação apenas vertical para preservar o clique */
         @keyframes floatVertical { 
             0%, 100% { transform: translateY(0); } 
             50% { transform: translateY(-15px); } 
         }
 
-        /* CORREÇÃO: Readicionado a animação 'floatVertical' */
         .app-phone-container { 
             position: relative; 
             transform: none; 
@@ -189,7 +174,7 @@
         .app-title span { background: linear-gradient(90deg, #ef4444, #b91c1c); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         .app-text { font-size: 16px; color: #b3b3b3; max-width: 460px; margin-bottom: 32px; line-height: 1.6; }
         .store-buttons { display: flex; gap: 16px; flex-wrap: wrap; }
-        .store-btn { display: flex; align-items: center; justify-content: center; gap: 12px; background: #111; border: 1px solid #333; padding: 14px 24px; border-radius: 12px; color: #fff; text-decoration: none; font-size: 14px; font-weight: 600; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); position: relative; overflow: hidden; }
+        .store-btn { display: flex; align-items: center; justify-content: center; gap: 12px; background: #111; border: 1px solid #333; padding: 14px 24px; border-radius: 12px; color: #fff; text-decoration: none; font-size: 14px; font-weight: 600; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); position: relative; overflow: hidden; cursor: pointer; }
         .store-btn::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(45deg, transparent, rgba(255,255,255,0.05), transparent); transform: translateX(-100%); transition: 0.5s; }
         .store-btn:hover::before { transform: translateX(100%); }
         .store-btn:hover { transform: translateY(-4px); border-color: #ef4444; background: #1a1a1a; box-shadow: 0 10px 20px -5px rgba(239, 68, 68, 0.3); }
@@ -199,17 +184,12 @@
         .btn-text strong { font-size: 14px; }
         .extra-text { font-size: 13px; color: #666; margin-top: 24px; max-width: 380px; line-height: 1.5; font-weight: 500; }
         
-        /* @keyframes floatPhone antigo removido pois usava rotação 3D */
-        
         @media (max-width: 900px) {
             .app-section { grid-template-columns: 1fr; text-align: center; padding: 40px 20px; gap: 40px; }
             .app-content { order: 2; display: flex; flex-direction: column; align-items: center; }
             .app-phone { order: 1; }
             .phone-mockup { width: 250px; height: 500px; }
-            
-            /* Mantém a animação no mobile também */
             .app-phone-container { transform: none; animation: floatVertical 6s ease-in-out infinite; }
-            
             .app-title { font-size: 32px; }
             .app-text { margin-left: auto; margin-right: auto; font-size: 14px; }
             .store-buttons { justify-content: center; width: 100%; }
@@ -241,7 +221,6 @@
         .footer-nav-links a, .footer-nav-links button { color: #888; text-decoration: none; font-size: 13px; font-weight: 500; transition: color 0.2s; cursor: pointer; background: none; border: none; padding: 0; font-family: inherit; }
         .footer-nav-links a:hover, .footer-nav-links button:hover { color: #ef4444; }
         .social-icons { display: flex; gap: 15px; align-items: center; }
-        /* Alterado de color: #666 para color: #ffffff para igualar a intensidade */
         .social-link { width: 20px; height: 20px; color: #ffffff; transition: all 0.3s ease; cursor: pointer; display: flex; align-items: center; justify-content: center; }
         .social-link svg { width: 100%; height: 100%; fill: none; stroke: currentColor; strokeWidth: 2; strokeLinecap: round; strokeLinejoin: round; }
         .social-link.fill-icon svg { fill: currentColor; stroke: none; }
@@ -300,12 +279,11 @@
 
         const trackLead = () => { if (typeof fbq === 'function') { fbq('track', 'Lead', { content_name: 'WhatsApp Click', content_category: 'Contato', value: 1, currency: 'BRL' }); } };
         
-        // ATUALIZADO: InitiateCheckout com content_ids e num_items para melhor leitura do funil
         const trackInitiateCheckout = (planName, value) => { 
             if (typeof fbq === 'function') { 
                 fbq('track', 'InitiateCheckout', { 
                     content_name: `Plano ${planName}`,
-                    content_ids: [planName.toLowerCase()], // ID único do produto
+                    content_ids: [planName.toLowerCase()],
                     num_items: 1,
                     value: value, 
                     currency: 'BRL' 
@@ -343,6 +321,164 @@
             return (<div className="spores-container">{spores.map((s) => (<div key={s.id} className="spore" style={{ left: `${s.left}%`, width: `${s.size}px`, height: `${s.size}px`, animationDuration: `${s.duration}s`, animationDelay: `-${s.delay}s` }}></div>))}</div>);
         };
 
+        // --- DEFINIÇÃO PRÉVIA DOS COMPONENTES PARA EVITAR ERROS DE REFERÊNCIA ---
+
+        const InstallHelpModal = ({ isOpen, onClose }) => {
+            if (!isOpen) return null;
+            const messageText = "Vim do site da GrowthUP+\n\nQuero testar o acesso SEM LIMITES na minha TV ou celular.\n\nPode me explicar como funciona o teste e a ativação imediata?";
+            const whatsappLink = `https://wa.me/5511991396481?text=${encodeURIComponent(messageText)}`;
+            
+            return (
+                <div className="fixed inset-0 z-[100] bg-black/90 backdrop-blur-md flex items-center justify-center p-4 animate-fade-in">
+                    <div className="bg-[#111] border border-white/10 rounded-2xl p-8 max-w-md w-full text-center relative shadow-2xl shadow-green-900/10 transform transition-all scale-100">
+                        <button onClick={onClose} className="absolute top-4 right-4 text-zinc-500 hover:text-white transition-colors">
+                            <i className="fas fa-times text-xl"></i>
+                        </button>
+                        <div className="w-20 h-20 bg-gradient-to-br from-green-500 to-emerald-800 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg shadow-green-500/20 animate-pulse">
+                            <i className="fab fa-whatsapp text-4xl text-white"></i>
+                        </div>
+                        <h3 className="text-2xl font-bold text-white mb-3">Instalação Assistida</h3>
+                        <p className="text-zinc-400 text-sm mb-8 leading-relaxed">
+                            Para sua segurança e para garantir a <strong>melhor versão</strong> para o seu dispositivo, a instalação é feita com auxílio do nosso suporte técnico.
+                        </p>
+                        <a href={whatsappLink} target="_blank" rel="noopener noreferrer" className="block w-full bg-[#25D366] hover:bg-[#128C7E] text-white font-bold py-4 rounded-xl transition-all transform hover:scale-[1.02] shadow-lg mb-4 flex items-center justify-center gap-3 group">
+                            <i className="fab fa-whatsapp text-2xl"></i>
+                            <span className="uppercase tracking-wide text-sm">Baixar com Suporte</span>
+                        </a>
+                        <div className="flex items-center justify-center gap-2 text-[10px] text-zinc-600 uppercase tracking-widest font-semibold">
+                            <i className="fas fa-shield-alt"></i> Processo verificado
+                        </div>
+                    </div>
+                </div>
+            );
+        };
+
+        const DeviceSelector = ({ onSelect }) => {
+            const devices = [{ name: 'Samsung TV', videoId: 'M-JHOJ9VTss', active: true }, { name: 'LG TV', videoId: 'i1I1sUQ8wOs', active: true }, { name: 'RokuTV', videoId: 'mM1wTGzZCLs', active: true }, { name: 'TV Android', videoId: 'oiKr--jnBh4', active: true }, { name: 'Fire Stick Amazon', videoId: 'RiB_zqlHwdU', active: true }];
+            return (<div className="absolute inset-0 bg-black/95 flex flex-col items-center justify-center p-4 z-50 animate-fade-in backdrop-blur-sm"><h3 className="text-base md:text-lg font-black text-white mb-2 uppercase tracking-wider text-center leading-tight">Escolha seu dispositivo</h3><div className="flex flex-col gap-1.5 w-full max-w-[200px] md:max-w-[240px]">{devices.map((device) => (<button key={device.name} disabled={!device.active} onClick={() => device.active && onSelect(device)} className={`py-1.5 px-3 rounded border font-bold text-[10px] md:text-xs transition-all duration-300 ${device.active ? 'bg-gradient-to-r from-red-600 to-red-900 border-red-500/50 text-white shadow-[0_0_15px_rgba(220,38,38,0.3)] hover:scale-105 hover:shadow-[0_0_25px_rgba(220,38,38,0.5)] cursor-pointer' : 'bg-white/5 border-white/10 text-gray-500 cursor-not-allowed opacity-60'}`}>{device.name}</button>))}</div><p className="mt-3 text-[9px] text-gray-500 uppercase tracking-widest">Selecione para reproduzir</p></div>);
+        };
+
+        const CatalogModal = ({ isOpen, onClose }) => {
+            const [gifActive, setGifActive] = useState(false);
+            const [videoUrl, setVideoUrl] = useState(null);
+            const [activeTooltip, setActiveTooltip] = useState(null);
+            const mainScrollRef = useRef(null);
+            const horizontalScrollRef1 = useRef(null);
+            const horizontalScrollRef2 = useRef(null);
+
+            useEffect(() => {
+                if (!isOpen) return;
+                const mainScroller = mainScrollRef.current;
+                const sliders = [horizontalScrollRef1.current, horizontalScrollRef2.current];
+                const allDraggables = [mainScroller, ...sliders].filter(Boolean);
+                let isDown = false, startX, startY, mainScrollStart, horizontalScrollStart = new Map(), targetSlider = null, hasDragged = false;
+                const initDrag = (x, y, target) => { isDown = true; hasDragged = false; startX = x; startY = y; mainScrollStart = mainScroller ? mainScroller.scrollTop : 0; if (target.classList.contains('horizontal-scroll')) { targetSlider = target; horizontalScrollStart.set(target, target.scrollLeft); } else { targetSlider = null; } };
+                const endDrag = () => { isDown = false; if (mainScroller) mainScroller.classList.remove('scroll-active'); targetSlider = null; };
+                const performMove = (x, y, e) => { if (!isDown) return; const walkY = (y - startY) * 1.5; const walkX = (x - startX) * 1.5; if (Math.abs(x - startX) > 5 || Math.abs(y - startY) > 5) { hasDragged = true; if (mainScroller) mainScroller.classList.add('scroll-active'); } if (Math.abs(walkY) > Math.abs(walkX)) { if (mainScroller) mainScroller.scrollTop = mainScrollStart - walkY; } else { if (targetSlider) { const startLeft = horizontalScrollStart.get(targetSlider); targetSlider.scrollLeft = startLeft - walkX; } } };
+                const handleMouseDown = (e) => { e.stopPropagation(); initDrag(e.pageX, e.pageY, e.currentTarget); };
+                const handleTouchStart = (e) => { e.stopPropagation(); const touch = e.touches[0]; initDrag(touch.pageX, touch.pageY, e.currentTarget); };
+                const handleMouseMove = (e) => { if (!isDown) return; e.preventDefault(); performMove(e.pageX, e.pageY, e); };
+                const handleTouchMove = (e) => { if (!isDown) return; if (e.cancelable) e.preventDefault(); const touch = e.touches[0]; performMove(touch.pageX, touch.pageY, e); };
+                allDraggables.forEach(el => { el.addEventListener('mousedown', handleMouseDown); el.addEventListener('touchstart', handleTouchStart, { passive: false }); });
+                document.addEventListener('mousemove', handleMouseMove); document.addEventListener('touchmove', handleTouchMove, { passive: false });
+                document.addEventListener('mouseup', endDrag); document.addEventListener('mouseleave', endDrag); document.addEventListener('touchend', endDrag);
+                return () => { allDraggables.forEach(el => { el.removeEventListener('mousedown', handleMouseDown); el.removeEventListener('touchstart', handleTouchStart); }); document.removeEventListener('mousemove', handleMouseMove); document.removeEventListener('touchmove', handleTouchMove); document.removeEventListener('mouseup', endDrag); document.removeEventListener('mouseleave', endDrag); document.removeEventListener('touchend', endDrag); };
+            }, [isOpen]);
+
+            if (!isOpen) return null;
+            const toggleTooltip = (id) => { setActiveTooltip(activeTooltip === id ? null : id); if (activeTooltip !== id) setTimeout(() => setActiveTooltip(null), 3000); };
+            const openVideo = (videoId) => setVideoUrl(`https://www.youtube.com/embed/${videoId}?autoplay=1`);
+            const closeVideo = () => setVideoUrl(null);
+
+            return (
+                <div className="fixed inset-0 z-[100] bg-black/90 backdrop-blur-md flex items-center justify-center p-4 animate-fade-in">
+                    <button onClick={onClose} className="absolute top-6 right-6 text-white/50 hover:text-red-500 transition-colors z-[110]"><i className="fa-solid fa-xmark text-4xl"></i></button>
+                    <div className="relative" style={{ transform: 'none' }}>
+                        <div className="phone-mockup" style={{boxShadow: '0 0 50px rgba(220, 38, 38, 0.2)', transform: 'none', margin: '0 auto'}}>
+                            <div className="phone-notch"></div>
+                            <div className="phone-screen">
+                                <div className="app-ui-header">
+                                    <div className="app-ui-logo"></div>
+                                    <div className="app-ui-icons">
+                                        <div className={`search-icon-wrapper ${activeTooltip === 'search' ? 'active' : ''}`} onClick={() => toggleTooltip('search')}><i className="fa-solid fa-search"></i><div className="search-tooltip">São mais de 80 mil conteúdos!</div></div>
+                                        <div className={`user-icon-wrapper ${activeTooltip === 'user' ? 'active' : ''}`} onClick={() => toggleTooltip('user')}><i className="fa-solid fa-user-circle"></i><div className="user-tooltip">Logo logo você terá seu acesso! 😄</div></div>
+                                    </div>
+                                </div>
+                                <div className={`video-overlay ${videoUrl ? 'active' : ''}`}><button className="close-video-btn" onClick={closeVideo}><i className="fa-solid fa-xmark"></i></button><div className="video-container">{videoUrl && <iframe src={videoUrl} frameBorder="0" allow="autoplay; encrypted-media" allowFullScreen></iframe>}</div></div>
+                                <div className="app-ui-scroll-content" ref={mainScrollRef}>
+                                    <div className="app-hero-banner">
+                                        <div className={`hero-gif-container ${gifActive ? 'active' : ''}`}><img src="https://i.pinimg.com/originals/a1/5a/b9/a15ab9f44fb47ab505b5a92ab5f98ed8.gif" alt="Futebol GIF" /></div>
+                                        <div className="app-hero-overlay"></div>
+                                        <div className={`play-btn-app ${gifActive ? 'hidden' : ''}`} onClick={() => setGifActive(true)}><i className="fa-solid fa-play"></i></div>
+                                        <div className="hero-info"><span className="hero-tag">Ao Vivo Agora</span><h3 className="hero-title">Champions League</h3><div className="hero-meta"><span><i className="fa-regular fa-clock"></i> 2º Tempo</span><span>• Final</span><span>• 4K HDR</span></div></div>
+                                    </div>
+                                    <div className="app-section-title">Destaques da Semana</div>
+                                    <div className="movies-row horizontal-scroll" ref={horizontalScrollRef1}>
+                                        <div className="movie-card-app" onClick={() => openVideo('qnR0s1QVknI')}><div className="movie-poster-app"><img src="https://jardimdasamericas.com.br/uploads/2025/12/capa-filme-avatar-fogo-e-cinzas-966f9-large.png" alt="Avatar"/></div><span className="movie-title-text">Avatar: Fogo e Cinzas</span></div>
+                                        <div className="movie-card-app" onClick={() => openVideo('g0GB20yE9JY')}><div className="movie-poster-app"><img src="https://upload.wikimedia.org/wikipedia/pt/6/60/O_Agente_Secreto_%28Cartaz_brasileiro%29.jpg" alt="O Agente Secreto"/></div><span className="movie-title-text">O Agente Secreto</span></div>
+                                        <div className="movie-card-app" onClick={() => openVideo('T7_zMl_ZhdQ')}><div className="movie-poster-app"><img src="https://s2-g1.glbimg.com/JlPpzZaM6BQeHE8519IeNARgIJg=/0x0:1382x2048/984x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2021/k/m/sUy6NaRMiAMJOllVxvOQ/fb2miibwyairfgo.jpg" alt="Batman"/></div><span className="movie-title-text">The Batman II</span></div>
+                                        <div className="movie-card-app" onClick={() => openVideo('ZiDphkXCZsQ')}><div className="movie-poster-app"><img src="https://ingresso-a.akamaihd.net/prd/img/movie/f1-o-filme/3a0a118e-8bf3-4e10-b45d-f028cd49b001.webp" alt="F1"/></div><span className="movie-title-text">F1: O Filme</span></div>
+                                    </div>
+                                    <div className="app-section-title">Séries Populares</div>
+                                    <div className="movies-row horizontal-scroll" ref={horizontalScrollRef2}>
+                                        <div className="movie-card-app" onClick={() => openVideo('IcR-6y3Q9XI')}><div className="movie-poster-app"><img src="https://i.imgur.com/ONufJIn.png" alt="TLOU"/></div><span className="movie-title-text">The Last of Us</span></div>
+                                        <div className="movie-card-app" onClick={() => openVideo('Wb3kaP580kA')}><div className="movie-poster-app"><img src="https://i.imgur.com/30zW0QK.png" alt="Stranger Things"/></div><span className="movie-title-text">Stranger Things 5</span></div>
+                                        <div className="movie-card-app" onClick={() => openVideo('IgyahanUcOk')}><div className="movie-poster-app"><img src="https://preview.redd.it/tvn-spring-fever-teaser-poster-premieres-january-5-v0-kgb43b5drv4g1.jpg?width=640&crop=smart&auto=webp&s=4d0318de16fd82a564657498104302df46ef8b16" alt="Spring Fever"/></div><span className="movie-title-text">Spring Fever</span></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <p className="text-white/60 text-xs text-center mt-6 uppercase tracking-widest font-medium">Navegue como se estivesse no app</p>
+                    </div>
+                </div>
+            );
+        };
+
+        const PrivacyOverlay = ({ isActive, onClose }) => (
+            <div className={`policy-overlay ${isActive ? 'active' : ''}`}>
+                <div className="policy-container">
+                    <button onClick={onClose} className="back-btn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>Voltar</button>
+                    <div className="policy-header"><h1>POLÍTICA DE PRIVACIDADE <span className="highlight">GrowthUP+</span></h1><p>Última atualização: Janeiro de 2026</p></div>
+                    <div className="policy-content">
+                        <p>A <strong>GrowthUP+</strong> respeita a privacidade e a proteção dos dados pessoais de seus usuários, clientes e visitantes. Esta Política de Privacidade descreve como coletamos, utilizamos, armazenamos e protegemos informações ao acessar ou utilizar nosso site, serviços, plataformas e canais de atendimento.</p>
+                        <p>Ao utilizar qualquer serviço da GrowthUP+, o usuário declara estar ciente e de acordo com esta Política.</p>
+                        <h2>1. Identificação do Controlador</h2><p><strong>GrowthUP+</strong><br/>E-mail: <span style={{color: '#ef4444'}}>growthupbrasil@gmail.com</span><br/>Contato: (11) 99139-6481</p>
+                        <h2>2. Dados coletados</h2><p>Podemos coletar as seguintes informações:</p><h3>2.1 Dados fornecidos pelo usuário</h3><ul><li>Nome</li><li>Endereço de e-mail</li><li>Número de telefone</li><li>Informações enviadas via formulários, WhatsApp ou atendimento</li></ul><h3>2.2 Dados coletados automaticamente</h3><ul><li>Endereço IP</li><li>Tipo de navegador e dispositivo</li><li>Páginas acessadas</li><li>Data e horário de acesso</li><li>Cookies e tecnologias semelhantes</li></ul>
+                        <h2>3. Finalidade do tratamento dos dados</h2><p>Os dados coletados são utilizados para:</p><ul><li>Processamento de assinaturas e pagamentos</li><li>Liberação e gestão de acesso aos serviços contratados</li><li>Comunicação operacional e suporte técnico</li><li>Atendimento ao cliente</li><li>Envio de informações relevantes sobre o serviço</li><li>Melhoria da experiência do usuário</li><li>Prevenção a fraudes e abusos</li><li>Cumprimento de obrigações legais</li></ul><p><em>A GrowthUP+ não comercializa, vende ou aluga dados pessoais.</em></p>
+                        <h2>4. Compartilhamento de dados</h2><p>Os dados poderão ser compartilhados apenas quando necessário com:</p><ul><li>Plataformas de pagamento</li><li>Serviços de hospedagem e infraestrutura tecnológica</li><li>Ferramentas de análise e marketing</li><li>Autoridades públicas, mediante obrigação legal ou judicial</li></ul>
+                        <h2>5. Cookies</h2><p>Utilizamos cookies para garantir o funcionamento adequado do site, analisar desempenho e otimizar a experiência do usuário. O usuário pode desativar os cookies nas configurações do navegador, ciente de que isso pode impactar funcionalidades.</p>
+                        <h2>6. Segurança das informações</h2><p>A GrowthUP+ adota medidas técnicas e organizacionais adequadas para proteger os dados pessoais contra acesso não autorizado, perda, alteração ou divulgação indevida. Ainda assim, nenhum sistema é totalmente imune a falhas.</p>
+                        <h2>7. Direitos do titular dos dados</h2><p>Nos termos da Lei Geral de Proteção de Dados (Lei nº 13.709/2018), o usuário pode solicitar:</p><ul><li>Confirmação da existência de tratamento</li><li>Acesso aos dados</li><li>Correção de informações incompletas ou incorretas</li><li>Exclusão de dados, quando aplicável</li><li>Revogação de consentimento</li></ul><p>Solicitações devem ser enviadas para <strong>growthupbrasil@gmail.com</strong>.</p>
+                        <h2>8. Alterações desta Política</h2><p>Esta Política poderá ser atualizada a qualquer momento. A versão vigente estará sempre disponível no site.</p>
+                        <h2>9. Contato</h2><p>Para dúvidas ou solicitações relacionadas a esta Política:</p><p><strong>E-mail:</strong> growthupbrasil@gmail.com<br/><strong>Telefone:</strong> (11) 99139-6481</p>
+                    </div>
+                </div>
+            </div>
+        );
+
+        const TermsOverlay = ({ isActive, onClose }) => (
+            <div className={`policy-overlay ${isActive ? 'active' : ''}`}>
+                <div className="policy-container">
+                    <button onClick={onClose} className="back-btn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>Voltar</button>
+                    <div className="policy-header"><h1>TERMOS E CONDIÇÕES DE USO <span className="highlight">GrowthUP+</span></h1><p>Última atualização: Janeiro de 2026</p></div>
+                    <div className="policy-content">
+                        <p>Ao acessar ou utilizar os serviços da <strong>GrowthUP+</strong>, o usuário declara que leu, compreendeu e concorda integralmente com estes Termos e Condições.</p><p><em>Caso não concorde, não utilize os serviços.</em></p>
+                        <h2>1. Descrição do serviço</h2><p>A GrowthUP+ oferece acesso a uma plataforma de entretenimento mediante planos de assinatura com prazo determinado, conforme condições vigentes no momento da contratação.</p><p>Não oferecemos serviços vitalícios ou acesso permanente.</p>
+                        <h2>2. Elegibilidade</h2><p>Para utilizar os serviços, o usuário deve:</p><ul><li>Ter no mínimo 18 anos ou autorização legal</li><li>Fornecer informações verdadeiras e atualizadas</li><li>Utilizar o serviço exclusivamente para fins pessoais</li></ul>
+                        <h2>3. Planos, pagamentos e acesso</h2><ul><li>Os planos possuem duração definida</li><li>O acesso é liberado após confirmação do pagamento</li><li>Valores, bônus e condições promocionais podem variar</li><li>Os pagamentos são processados por plataformas terceiras</li></ul><p>A GrowthUP+ não se responsabiliza por falhas ou indisponibilidades das plataformas de pagamento.</p>
+                        <h2>4. Uso permitido e restrições</h2><p>É proibido:</p><ul><li>Compartilhar acessos de forma abusiva</li><li>Revender ou redistribuir o serviço</li><li>Utilizar o serviço para fins comerciais</li><li>Tentar burlar sistemas de segurança</li><li>Utilizar o serviço de maneira ilegal ou não autorizada</li></ul><p>O descumprimento poderá resultar em suspensão ou cancelamento imediato, sem direito a reembolso.</p>
+                        <h2>5. Suspensão e cancelamento</h2><p>A GrowthUP+ poderá suspender ou cancelar o acesso em casos de:</p><ul><li>Violação destes Termos</li><li>Uso indevido ou suspeita de fraude</li><li>Determinação legal ou técnica</li></ul><p>O usuário poderá cancelar sua assinatura conforme as condições do plano contratado.</p>
+                        <h2>6. Reembolsos</h2><ul><li>Reembolsos seguem as regras informadas no momento da contratação</li><li>Testes gratuitos, quando oferecidos, não geram direito a reembolso</li><li>Após o uso do serviço, o valor pode não ser reembolsável</li></ul>
+                        <h2>7. Disponibilidade do serviço</h2><p>O serviço pode sofrer interrupções temporárias devido a manutenções, atualizações ou falhas técnicas. A GrowthUP+ não garante disponibilidade contínua e ininterrupta.</p>
+                        <h2>8. Limitação de responsabilidade</h2><p>A GrowthUP+ não se responsabiliza por:</p><ul><li>Problemas de conexão do usuário</li><li>Dispositivos incompatíveis</li><li>Falhas de terceiros ou provedores externos</li><li>Uso inadequado da plataforma</li></ul>
+                        <h2>9. Alterações dos Termos</h2><p>Os Termos poderão ser alterados a qualquer momento. O uso contínuo dos serviços implica aceitação da versão vigente.</p>
+                        <h2>10. Legislação aplicável</h2><p>Estes Termos são regidos pelas leis da República Federativa do Brasil.</p>
+                        <h2>11. Contato</h2><p><strong>E-mail:</strong> growthupbrasil@gmail.com<br/><strong>Telefone:</strong> (11) 99139-6481</p>
+                    </div>
+                </div>
+            </div>
+        );
+
         const InstallAppSection = () => {
             return (
                 <div className="w-full bg-black py-20 border-t border-white/5 relative z-20">
@@ -366,97 +502,44 @@
             );
         };
 
-        const AppShowcaseSection = () => {
+        const AppShowcaseSection = ({ onOpenInstallHelp }) => {
             const [gifActive, setGifActive] = useState(false);
             const [videoUrl, setVideoUrl] = useState(null);
             const [activeTooltip, setActiveTooltip] = useState(null);
+            const [mobileVideoStage, setMobileVideoStage] = useState('idle');
+            const [mobileVideoId, setMobileVideoId] = useState(null);
+            const [desktopVideoStage, setDesktopVideoStage] = useState('idle');
+            const [desktopVideoId, setDesktopVideoId] = useState(null);
 
             const mainScrollRef = useRef(null);
             const horizontalScrollRef1 = useRef(null);
             const horizontalScrollRef2 = useRef(null);
 
-            const toggleTooltip = (id) => {
-                setActiveTooltip(activeTooltip === id ? null : id);
-                if (activeTooltip !== id) {
-                    setTimeout(() => setActiveTooltip(null), 3000);
-                }
-            };
+            const toggleTooltip = (id) => { setActiveTooltip(activeTooltip === id ? null : id); if (activeTooltip !== id) setTimeout(() => setActiveTooltip(null), 3000); };
+            const openVideo = (videoId) => setVideoUrl(`https://www.youtube.com/embed/${videoId}?autoplay=1`);
+            const closeVideo = () => setVideoUrl(null);
 
-            const openVideo = (videoId) => {
-                setVideoUrl(`https://www.youtube.com/embed/${videoId}?autoplay=1`);
-            };
-            const closeVideo = () => {
-                setVideoUrl(null);
-            };
+            const handleMobileClick = () => { if (mobileVideoStage === 'idle') setMobileVideoStage('selecting'); };
+            const handleMobileDeviceSelect = (device) => { setMobileVideoId(device.videoId); setMobileVideoStage('playing'); };
+            const handleDesktopClick = () => { if (desktopVideoStage === 'idle') setDesktopVideoStage('selecting'); };
+            const handleDesktopDeviceSelect = (device) => { setDesktopVideoId(device.videoId); setDesktopVideoStage('playing'); };
 
             useEffect(() => {
                 const mainScroller = mainScrollRef.current;
                 const sliders = [horizontalScrollRef1.current, horizontalScrollRef2.current];
                 const allDraggables = [mainScroller, ...sliders].filter(Boolean);
-
-                let isDown = false;
-                let startX, startY;
-                let mainScrollStart;
-                let horizontalScrollStart = new Map();
-                let targetSlider = null;
-                let hasDragged = false;
-
-                const initDrag = (x, y, target) => {
-                    isDown = true;
-                    hasDragged = false;
-                    startX = x;
-                    startY = y;
-                    mainScrollStart = mainScroller.scrollTop;
-
-                    if (target.classList.contains('horizontal-scroll')) {
-                        targetSlider = target;
-                        horizontalScrollStart.set(target, target.scrollLeft);
-                    } else {
-                        targetSlider = null;
-                    }
-                };
-
-                const endDrag = () => {
-                    isDown = false;
-                    if (mainScroller) mainScroller.classList.remove('scroll-active');
-                    targetSlider = null;
-                };
-
-                const performMove = (x, y, e) => {
-                    if (!isDown) return;
-                    
-                    const walkY = (y - startY) * 1.5; 
-                    const walkX = (x - startX) * 1.5; 
-
-                    if (Math.abs(x - startX) > 5 || Math.abs(y - startY) > 5) {
-                        hasDragged = true;
-                        if (mainScroller) mainScroller.classList.add('scroll-active');
-                    }
-
-                    if (Math.abs(walkY) > Math.abs(walkX)) {
-                        if (mainScroller) mainScroller.scrollTop = mainScrollStart - walkY;
-                    } else {
-                        if (targetSlider) {
-                            const startLeft = horizontalScrollStart.get(targetSlider);
-                            targetSlider.scrollLeft = startLeft - walkX;
-                        }
-                    }
-                };
-
+                let isDown = false, startX, startY, mainScrollStart, horizontalScrollStart = new Map(), targetSlider = null, hasDragged = false;
+                const initDrag = (x, y, target) => { isDown = true; hasDragged = false; startX = x; startY = y; mainScrollStart = mainScroller ? mainScroller.scrollTop : 0; if (target.classList.contains('horizontal-scroll')) { targetSlider = target; horizontalScrollStart.set(target, target.scrollLeft); } else { targetSlider = null; } };
+                const endDrag = () => { isDown = false; if (mainScroller) mainScroller.classList.remove('scroll-active'); targetSlider = null; };
+                const performMove = (x, y, e) => { if (!isDown) return; const walkY = (y - startY) * 1.5; const walkX = (x - startX) * 1.5; if (Math.abs(x - startX) > 5 || Math.abs(y - startY) > 5) { hasDragged = true; if (mainScroller) mainScroller.classList.add('scroll-active'); } if (Math.abs(walkY) > Math.abs(walkX)) { if (mainScroller) mainScroller.scrollTop = mainScrollStart - walkY; } else { if (targetSlider) { const startLeft = horizontalScrollStart.get(targetSlider); targetSlider.scrollLeft = startLeft - walkX; } } };
                 const handleMouseDown = (e) => { e.stopPropagation(); initDrag(e.pageX, e.pageY, e.currentTarget); };
                 const handleTouchStart = (e) => { e.stopPropagation(); const touch = e.touches[0]; initDrag(touch.pageX, touch.pageY, e.currentTarget); };
                 const handleMouseMove = (e) => { if (!isDown) return; e.preventDefault(); performMove(e.pageX, e.pageY, e); };
                 const handleTouchMove = (e) => { if (!isDown) return; if (e.cancelable) e.preventDefault(); const touch = e.touches[0]; performMove(touch.pageX, touch.pageY, e); };
-
                 allDraggables.forEach(el => { el.addEventListener('mousedown', handleMouseDown); el.addEventListener('touchstart', handleTouchStart, { passive: false }); });
                 document.addEventListener('mousemove', handleMouseMove); document.addEventListener('touchmove', handleTouchMove, { passive: false });
                 document.addEventListener('mouseup', endDrag); document.addEventListener('mouseleave', endDrag); document.addEventListener('touchend', endDrag);
-
-                return () => {
-                    allDraggables.forEach(el => { el.removeEventListener('mousedown', handleMouseDown); el.removeEventListener('touchstart', handleTouchStart); });
-                    document.removeEventListener('mousemove', handleMouseMove); document.removeEventListener('touchmove', handleTouchMove);
-                    document.removeEventListener('mouseup', endDrag); document.removeEventListener('mouseleave', endDrag); document.removeEventListener('touchend', endDrag);
-                };
+                return () => { allDraggables.forEach(el => { el.removeEventListener('mousedown', handleMouseDown); el.removeEventListener('touchstart', handleTouchStart); }); document.removeEventListener('mousemove', handleMouseMove); document.removeEventListener('touchmove', handleTouchMove); document.removeEventListener('mouseup', endDrag); document.removeEventListener('mouseleave', endDrag); document.removeEventListener('touchend', endDrag); };
             }, []);
 
             return (
@@ -470,32 +553,17 @@
                                     <div className="app-ui-header">
                                         <div className="app-ui-logo"></div>
                                         <div className="app-ui-icons">
-                                            <div className={`search-icon-wrapper ${activeTooltip === 'search' ? 'active' : ''}`} onClick={() => toggleTooltip('search')}>
-                                                <i className="fa-solid fa-search"></i>
-                                                <div className="search-tooltip">São mais de 80 mil conteúdos!</div>
-                                            </div>
-                                            <div className={`user-icon-wrapper ${activeTooltip === 'user' ? 'active' : ''}`} onClick={() => toggleTooltip('user')}>
-                                                <i className="fa-solid fa-user-circle"></i>
-                                                <div className="user-tooltip">Logo logo você terá seu acesso! 😄</div>
-                                            </div>
+                                            <div className={`search-icon-wrapper ${activeTooltip === 'search' ? 'active' : ''}`} onClick={() => toggleTooltip('search')}><i className="fa-solid fa-search"></i><div className="search-tooltip">São mais de 80 mil conteúdos!</div></div>
+                                            <div className={`user-icon-wrapper ${activeTooltip === 'user' ? 'active' : ''}`} onClick={() => toggleTooltip('user')}><i className="fa-solid fa-user-circle"></i><div className="user-tooltip">Logo logo você terá seu acesso! 😄</div></div>
                                         </div>
                                     </div>
-                                    <div className={`video-overlay ${videoUrl ? 'active' : ''}`}>
-                                        <button className="close-video-btn" onClick={closeVideo}><i className="fa-solid fa-xmark"></i></button>
-                                        <div className="video-container">
-                                            {videoUrl && <iframe src={videoUrl} frameBorder="0" allow="autoplay; encrypted-media" allowFullScreen></iframe>}
-                                        </div>
-                                    </div>
+                                    <div className={`video-overlay ${videoUrl ? 'active' : ''}`}><button className="close-video-btn" onClick={closeVideo}><i className="fa-solid fa-xmark"></i></button><div className="video-container">{videoUrl && <iframe src={videoUrl} frameBorder="0" allow="autoplay; encrypted-media" allowFullScreen></iframe>}</div></div>
                                     <div className="app-ui-scroll-content" ref={mainScrollRef}>
                                         <div className="app-hero-banner">
                                             <div className={`hero-gif-container ${gifActive ? 'active' : ''}`}><img src="https://i.pinimg.com/originals/a1/5a/b9/a15ab9f44fb47ab505b5a92ab5f98ed8.gif" alt="Futebol GIF" loading="lazy" decoding="async" /></div>
                                             <div className="app-hero-overlay"></div>
                                             <div className={`play-btn-app ${gifActive ? 'hidden' : ''}`} onClick={() => setGifActive(true)}><i className="fa-solid fa-play"></i></div>
-                                            <div className="hero-info">
-                                                <span className="hero-tag">Ao Vivo Agora</span>
-                                                <h3 className="hero-title">Champions League</h3>
-                                                <div className="hero-meta"><span><i className="fa-regular fa-clock"></i> 2º Tempo</span><span>• Final</span><span>• 4K HDR</span></div>
-                                            </div>
+                                            <div className="hero-info"><span className="hero-tag">Ao Vivo Agora</span><h3 className="hero-title">Champions League</h3><div className="hero-meta"><span><i className="fa-regular fa-clock"></i> 2º Tempo</span><span>• Final</span><span>• 4K HDR</span></div></div>
                                         </div>
                                         <div className="app-section-title">Destaques da Semana</div>
                                         <div className="movies-row horizontal-scroll" ref={horizontalScrollRef1}>
@@ -520,8 +588,8 @@
                         <h2 className="app-title">Para curtir <span>onde</span><br/>e <span>quando</span> quiser</h2>
                         <p className="app-text">Tenha acesso completo direto no seu celular. Assista filmes, séries, canais e esportes ao vivo com total liberdade. Disponível para Android e iOS.</p>
                         <div className="store-buttons">
-                            <a href="#" className="store-btn"><i className="fa-brands fa-apple"></i><div className="btn-text"><small>Disponível na</small><strong>Apple Store</strong></div></a>
-                            <a href="#" className="store-btn"><i className="fa-brands fa-google-play"></i><div className="btn-text"><small>Baixe no</small><strong>Google Play</strong></div></a>
+                            <button onClick={onOpenInstallHelp} className="store-btn cursor-pointer"><i className="fa-brands fa-apple"></i><div className="btn-text"><small>Disponível na</small><strong>Apple Store</strong></div></button>
+                            <button onClick={onOpenInstallHelp} className="store-btn cursor-pointer"><i className="fa-brands fa-google-play"></i><div className="btn-text"><small>Baixe no</small><strong>Google Play</strong></div></button>
                         </div>
                         <p className="extra-text">Todos os seus lançamentos, filmes, séries, doramas, documentários e animes favoritos, com a experiência e qualidade que você merece.<br/><br/>No GrowthUP+ você terá acesso a mais de 80.000 conteúdos, tudo em uma única plataforma.</p>
                     </div>
@@ -529,24 +597,36 @@
             );
         };
 
-        const EconomySection = () => {
-            const brands = [
-                { type: 'text-script', main: 'Paramount', sub: '+', subStyle: 'text-2xl font-sans italic', className: 'brand-paramount' },
-                { type: 'text-geo', text: 'max', className: 'brand-max' },
-                { type: 'img', src: 'https://upload.wikimedia.org/wikipedia/commons/3/3e/Disney%2B_logo.svg', alt: 'Disney+', className: 'brand-disney' },
-                { type: 'prime', className: 'brand-prime' },
-                { type: 'text-condensed', text: 'NETFLIX', className: 'brand-netflix' },
-                { type: 'img', src: 'https://upload.wikimedia.org/wikipedia/commons/d/de/HBO_logo.svg', alt: 'HBO', className: 'brand-hbo' },
-                { type: 'text-custom', className: 'brand-globoplay', content: <span className="font-geometric text-2xl font-bold tracking-tight lowercase">globoplay</span> },
-                { type: 'text-condensed', text: 'Telecine', style: 'text-2xl uppercase', className: 'brand-telecine' },
-                { type: 'img', src: 'https://upload.wikimedia.org/wikipedia/commons/2/2f/ESPN_wordmark.svg', alt: 'ESPN', className: 'brand-espn' },
-                { type: 'text-looke', text: 'Looke', className: 'brand-looke' },
-                { type: 'text-custom', className: 'brand-crunchyroll', content: <span className="font-bold text-lg tracking-tight lowercase">crunchyroll</span> },
-                { type: 'text-custom', className: 'brand-viki', content: <span className="font-bold text-lg">Rakuten <span className="font-black">Viki</span></span> },
-                { type: 'apple', className: 'brand-apple' },
-                { type: 'text-condensed', text: 'PREMIERE', style: 'text-2xl font-bold uppercase tracking-[0.2em]', className: 'brand-premiere' },
-                { type: '18+', className: 'brand-18' }
+        const ExpandingPosters = () => {
+            const posters = [
+                { id: 1, title: "Lançamentos", img: "https://images.unsplash.com/photo-1626814026160-2237a95fc5a0?q=60&w=800&auto=format&fit=crop", color: "from-blue-600" },
+                { id: 2, title: "Ação", img: "https://images.unsplash.com/photo-1536440136628-849c177e76a1?q=60&w=800&auto=format&fit=crop", color: "from-red-600" },
+                { id: 3, title: "Animes", img: "https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?q=60&w=800&auto=format&fit=crop", color: "from-pink-600" },
+                { id: 4, title: "Futebol", img: "https://images.unsplash.com/photo-1579952363873-27f3bade9f55?q=60&w=800&auto=format&fit=crop", color: "from-green-600" },
+                { id: 5, title: "Marvel", img: "https://images.unsplash.com/photo-1635805737707-575885ab0820?q=60&w=800&auto=format&fit=crop", color: "from-red-800" },
+                { id: 6, title: "Terror", img: "https://images.unsplash.com/photo-1505635552518-3448ff116af3?q=60&w=800&auto=format&fit=crop", color: "from-purple-900" }
             ];
+            return (
+                <div className="w-full h-[60vh] md:h-[70vh] flex bg-black posters-container overflow-hidden mt-8 mb-12 border-y border-white/10">
+                    {posters.map((poster) => (
+                        <div key={poster.id} className="expand-card group cursor-pointer relative">
+                            <img src={poster.img} alt={poster.title} className="absolute inset-0 w-full h-full object-cover object-center transition-transform duration-1000 ease-out group-hover:scale-105" loading="lazy" decoding="async"/>
+                            <div className={`absolute inset-0 bg-gradient-to-t ${poster.color} to-transparent opacity-0 group-hover:opacity-70 transition-opacity duration-500`}></div>
+                            <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-black/90 opacity-60 group-hover:opacity-0 transition-opacity duration-500"></div>
+                            <div className="absolute inset-0 flex items-center justify-center opacity-100 group-hover:opacity-0 transition-all duration-300 pointer-events-none"><h3 className="text-white/80 font-black text-xl md:text-3xl uppercase tracking-[0.2em] -rotate-90 whitespace-nowrap drop-shadow-md border-b-2 border-white/20 pb-2">{poster.title}</h3></div>
+                            <div className="absolute bottom-0 left-0 w-full p-6 md:p-10 translate-y-10 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 delay-75 flex flex-col justify-end h-full bg-gradient-to-t from-black via-transparent to-transparent">
+                                <span className="text-white/80 text-xs font-bold uppercase tracking-widest mb-2 bg-white/10 w-fit px-2 py-1 rounded backdrop-blur-sm">Exclusivo</span>
+                                <h3 className="text-3xl md:text-6xl font-black text-white uppercase leading-none mb-4 drop-shadow-2xl">{poster.title}</h3>
+                                <div className="mt-6 flex items-center gap-4"><button className="bg-white text-black font-bold text-xs md:text-sm px-6 py-3 rounded-full hover:bg-gray-200 transition-colors uppercase tracking-wide">Assistir Agora</button><div className="w-10 h-10 rounded-full border border-white/30 flex items-center justify-center text-white hover:bg-white/10 transition-colors"><i className="fas fa-plus"></i></div></div>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            );
+        };
+
+        const EconomySection = () => {
+            const brands = [{ type: 'text-script', main: 'Paramount', sub: '+', subStyle: 'text-2xl font-sans italic', className: 'brand-paramount' }, { type: 'text-geo', text: 'max', className: 'brand-max' }, { type: 'img', src: 'https://upload.wikimedia.org/wikipedia/commons/3/3e/Disney%2B_logo.svg', alt: 'Disney+', className: 'brand-disney' }, { type: 'prime', className: 'brand-prime' }, { type: 'text-condensed', text: 'NETFLIX', className: 'brand-netflix' }, { type: 'img', src: 'https://upload.wikimedia.org/wikipedia/commons/d/de/HBO_logo.svg', alt: 'HBO', className: 'brand-hbo' }, { type: 'text-custom', className: 'brand-globoplay', content: <span className="font-geometric text-2xl font-bold tracking-tight lowercase">globoplay</span> }, { type: 'text-condensed', text: 'Telecine', style: 'text-2xl uppercase', className: 'brand-telecine' }, { type: 'img', src: 'https://upload.wikimedia.org/wikipedia/commons/2/2f/ESPN_wordmark.svg', alt: 'ESPN', className: 'brand-espn' }, { type: 'text-looke', text: 'Looke', className: 'brand-looke' }, { type: 'text-custom', className: 'brand-crunchyroll', content: <span className="font-bold text-lg tracking-tight lowercase">crunchyroll</span> }, { type: 'text-custom', className: 'brand-viki', content: <span className="font-bold text-lg">Rakuten <span className="font-black">Viki</span></span> }, { type: 'apple', className: 'brand-apple' }, { type: 'text-condensed', text: 'PREMIERE', style: 'text-2xl font-bold uppercase tracking-[0.2em]', className: 'brand-premiere' }, { type: '18+', className: 'brand-18' }];
             return (
                 <section className="relative z-10 py-16 md:py-24 bg-[#050505] text-white border-t border-white/5">
                     <div className="max-w-7xl w-full mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center px-6">
@@ -581,45 +661,16 @@
 
         const PricingSection = ({ getWhatsAppLink }) => {
             const [showCampaignInfo, setShowCampaignInfo] = useState(false);
-
-            // NOVO: Rastreamento de ViewContent quando a seção de planos aparece na tela
-            // Dispara APENAS UMA VEZ após carregamento, conforme boas práticas para LP
-            useEffect(() => {
-                const el = document.getElementById('planos');
-                if (!el) return;
-
-                const observer = new IntersectionObserver(([entry]) => {
-                    if (entry.isIntersecting && typeof fbq === 'function') {
-                        fbq('track', 'ViewContent', {
-                            content_name: 'GrowthUP LP',
-                            content_type: 'subscription'
-                        });
-                        // Desconecta para não disparar múltiplas vezes na mesma sessão
-                        observer.disconnect();
-                    }
-                }, { threshold: 0.1 }); 
-
-                observer.observe(el);
-                return () => observer.disconnect();
-            }, []);
-
+            useEffect(() => { const el = document.getElementById('planos'); if (!el) return; const observer = new IntersectionObserver(([entry]) => { if (entry.isIntersecting && typeof fbq === 'function') { fbq('track', 'ViewContent', { content_name: 'GrowthUP LP', content_type: 'subscription' }); observer.disconnect(); } }, { threshold: 0.1 }); observer.observe(el); return () => observer.disconnect(); }, []);
             return (
                 <section className="relative z-30 py-16 px-4 bg-[#050505] text-white flex flex-col items-center border-t border-white/5" id="planos">
                     <RevealOnScroll className="text-center max-w-4xl mx-auto mb-16 relative">
                         <div className="relative inline-block z-30 cursor-pointer" onMouseEnter={() => setShowCampaignInfo(true)} onMouseLeave={() => setShowCampaignInfo(false)} onClick={() => setShowCampaignInfo(!showCampaignInfo)}>
-                            <div className="bg-[#1c0505] border border-red-500 rounded-full px-4 py-1.5 mb-4 hover:bg-[#2b0808] transition-all duration-300">
-                                <span className="text-red-400 text-xs font-bold tracking-widest uppercase flex items-center gap-2"><span className="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>Campanha de Janeiro <i className={`fas fa-chevron-down ml-1 text-[10px] transition-transform duration-300 ${showCampaignInfo ? 'rotate-180' : ''}`}></i></span>
-                            </div>
+                            <div className="bg-[#1c0505] border border-red-500 rounded-full px-4 py-1.5 mb-4 hover:bg-[#2b0808] transition-all duration-300"><span className="text-red-400 text-xs font-bold tracking-widest uppercase flex items-center gap-2"><span className="w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>Campanha de Janeiro <i className={`fas fa-chevron-down ml-1 text-[10px] transition-transform duration-300 ${showCampaignInfo ? 'rotate-180' : ''}`}></i></span></div>
                             <div className={`absolute left-1/2 -translate-x-1/2 top-full mt-1 w-[290px] bg-[#0a0a0a] border border-red-900/40 rounded-xl shadow-2xl shadow-red-900/10 p-5 transition-all duration-300 origin-top z-50 ${showCampaignInfo ? 'opacity-100 scale-100 translate-y-0 visible' : 'opacity-0 scale-95 -translate-y-2 invisible pointer-events-none'}`}>
                                 <div className="absolute -top-1.5 left-1/2 -translate-x-1/2 w-3 h-3 bg-[#0a0a0a] border-t border-l border-red-900/40 transform rotate-45"></div>
                                 <h4 className="text-white font-bold text-xs uppercase tracking-wider mb-4 text-center border-b border-white/5 pb-2">Resumo de Benefícios</h4>
-                                <div className="space-y-3">
-                                    <div className="flex justify-between items-center"><span className="text-zinc-400 text-xs font-medium">Mensal</span><span className="text-[10px] font-bold text-green-400 bg-green-500/10 px-2 py-0.5 rounded border border-green-500/20">+15 Dias & +1 Tela</span></div>
-                                    <div className="flex justify-between items-center"><span className="text-zinc-400 text-xs font-medium">Trimestral</span><span className="text-[10px] font-bold text-green-400 bg-green-500/10 px-2 py-0.5 rounded border border-green-500/20">+1 Mês & +1 Tela</span></div>
-                                    <div className="flex justify-between items-center"><span className="text-zinc-400 text-xs font-medium">Semestral</span><span className="text-[10px] font-bold text-green-400 bg-green-500/10 px-2 py-0.5 rounded border border-green-500/20">+3 Meses & +1 Tela</span></div>
-                                    <div className="flex justify-between items-center"><span className="text-zinc-400 text-xs font-medium">Anual</span><span className="text-[10px] font-bold text-green-400 bg-green-500/10 px-2 py-0.5 rounded border border-green-500/20">+6 Meses & +2 Telas</span></div>
-                                </div>
-                                <div className="mt-4 pt-3 border-t border-white/5 text-center"><p className="text-[9px] text-zinc-500">Oferta válida por tempo limitado.</p></div>
+                                <div className="space-y-3"><div className="flex justify-between items-center"><span className="text-zinc-400 text-xs font-medium">Mensal</span><span className="text-[10px] font-bold text-green-400 bg-green-500/10 px-2 py-0.5 rounded border border-green-500/20">+15 Dias & +1 Tela</span></div><div className="flex justify-between items-center"><span className="text-zinc-400 text-xs font-medium">Trimestral</span><span className="text-[10px] font-bold text-green-400 bg-green-500/10 px-2 py-0.5 rounded border border-green-500/20">+1 Mês & +1 Tela</span></div><div className="flex justify-between items-center"><span className="text-zinc-400 text-xs font-medium">Semestral</span><span className="text-[10px] font-bold text-green-400 bg-green-500/10 px-2 py-0.5 rounded border border-green-500/20">+3 Meses & +1 Tela</span></div><div className="flex justify-between items-center"><span className="text-zinc-400 text-xs font-medium">Anual</span><span className="text-[10px] font-bold text-green-400 bg-green-500/10 px-2 py-0.5 rounded border border-green-500/20">+6 Meses & +2 Telas</span></div></div><div className="mt-4 pt-3 border-t border-white/5 text-center"><p className="text-[9px] text-zinc-500">Oferta válida por tempo limitado.</p></div>
                             </div>
                         </div>
                         <h2 className="text-zinc-500 text-xs md:text-sm font-semibold tracking-[0.2em] uppercase mb-3">PLANOS</h2>
@@ -627,42 +678,10 @@
                         <p className="text-zinc-400 text-sm md:text-base max-w-2xl mx-auto leading-relaxed font-light">Com o GrowthUP+, você tem acesso a todos os canais abertos, pagos e streamings que ama. Você aproveita muito mais, por muito menos. Confira os planos abaixo:</p>
                     </RevealOnScroll>
                     <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4 max-w-7xl w-full items-start">
-                        {/* PLANOS */}
-                        <RevealOnScroll delay={0} className="h-full">
-                            <div className="card-bg rounded-3xl p-6 flex flex-col relative card-border h-full hover:border-zinc-700 transition-colors group">
-                                <div className="mb-6"><div className="h-6 mb-1"></div><h3 className="text-xl font-bold text-zinc-200 mb-1">Plano Basic</h3><p className="text-zinc-400 text-sm font-medium mb-5">Mensal</p><div className="flex items-end gap-1 mb-6"><span className="text-4xl font-extrabold text-white tracking-tight">R$ 18,90</span><span className="text-zinc-500 text-sm font-medium mb-1.5 ml-1">/mês</span></div><p className="text-zinc-400 text-xs leading-relaxed min-h-[40px]">Tenha acesso completo a todos os recursos. O plano perfeito para você e sua família.</p></div>
-                                <a href="https://pay.cakto.com.br/7kjywct_686205" target="_blank" className="w-full bg-white hover:bg-zinc-200 text-black font-extrabold text-sm py-3.5 rounded-lg transition-colors mb-8 uppercase tracking-wide text-center block" onClick={() => trackInitiateCheckout('Basic', 18.90)}>Assinar Agora</a>
-                                <div className="mb-8"><div className="flex justify-between items-center text-[10px] font-semibold text-zinc-400 uppercase tracking-wider mb-3"><span>Inclui:</span><span>+12 plataformas</span></div><div className="grid grid-cols-5 gap-2"><div className="logo-box group-hover:ring-2 group-hover:ring-red-500"><span className="font-geometric text-[13px] tracking-tighter font-black lowercase text-black">max</span></div><div className="logo-box group-hover:ring-2 group-hover:ring-red-500 transition-all delay-75"><img src="https://upload.wikimedia.org/wikipedia/commons/3/3e/Disney%2B_logo.svg" alt="Logo parceiro" className="w-10 h-auto filter brightness-0" loading="lazy" decoding="async"/></div><div className="logo-box flex-col pt-1 group-hover:ring-2 group-hover:ring-red-500 transition-all delay-100"><span className="font-bold text-[8px] tracking-tight text-black leading-none">prime video</span><svg className="w-8 h-2 mt-0.5 text-black" viewBox="0 0 100 20" fill="none" stroke="currentColor" strokeWidth="8"><path d="M10,5 Q50,25 90,5" strokeLinecap="round" /><path d="M90,5 L80,10" strokeWidth="0" fill="currentColor"/></svg></div><div className="logo-box group-hover:ring-2 group-hover:ring-red-500 transition-all delay-150"><span className="font-condensed text-black text-[11px] tracking-tighter font-bold transform scale-y-110">NETFLIX</span></div><div className="logo-box group-hover:ring-2 group-hover:ring-red-500 transition-all delay-200"><span className="font-condensed text-black text-[7px] tracking-widest font-bold uppercase">Telecine</span></div></div></div>
-                                <ul className="space-y-3.5 text-xs text-zinc-300 mt-auto font-medium"><li className="flex items-start gap-3"><CustomCheck color="green" /><span className="font-bold text-white">Acesso em 2 telas <span className="text-[9px] bg-green-500/20 text-green-400 px-1.5 py-0.5 rounded ml-1 uppercase border border-green-500/30">Bônus +1 Tela</span></span></li><li className="flex items-start gap-3"><CustomCheck color="red" /><span>Mais de 10.000 Canais, Filmes e Séries.</span></li><li className="flex items-start gap-3"><CustomCheck color="red" /><span>Tudo em SD/HD/FHD/4K</span></li><li className="flex items-start gap-3"><CustomCheck color="red" /><span>Multiplataforma</span></li><li className="flex items-start gap-3"><CustomCheck color="green" /><span className="font-bold text-white">Acesso por 45 dias <span className="text-[9px] bg-green-500/20 text-green-400 px-1.5 py-0.5 rounded ml-1 uppercase border border-green-500/30">Bônus +15 Dias</span></span></li></ul>
-                            </div>
-                        </RevealOnScroll>
-                        <RevealOnScroll delay={100} className="h-full">
-                            <div className="card-bg rounded-3xl p-6 flex flex-col relative card-border h-full hover:border-zinc-700 transition-colors group">
-                                <div className="absolute top-6 right-6 bg-red-200 text-red-900 text-[10px] font-black px-3 py-1.5 rounded-full leading-tight text-center shadow-lg z-20">17% de<br/>desconto</div>
-                                <div className="mb-6"><div className="h-6 mb-1"></div><h3 className="text-xl font-bold text-zinc-200 mb-1">Plano Plus</h3><p className="text-zinc-400 text-sm font-medium mb-5">Trimestral</p><div className="flex items-end mb-5"><span className="text-zinc-400 text-lg font-bold mb-1 mr-1">3x</span><span className="text-5xl font-extrabold text-white tracking-tighter">18,18</span><span className="text-zinc-500 text-[9px] font-bold uppercase tracking-wide mb-2 ml-2 leading-none whitespace-nowrap">OU R$48,90</span></div><p className="text-zinc-400 text-xs leading-relaxed min-h-[40px]">Economize assinando por 3 meses. Ótima opção de médio prazo.</p></div>
-                                <a href="https://pay.cakto.com.br/jpjps2w" target="_blank" className="w-full bg-white hover:bg-zinc-200 text-black font-extrabold text-sm py-3.5 rounded-lg transition-colors mb-8 uppercase tracking-wide text-center block" onClick={() => trackInitiateCheckout('Plus', 48.90)}>Assinar Agora</a>
-                                <div className="mb-8"><div className="flex justify-between items-center text-[10px] font-semibold text-zinc-400 uppercase tracking-wider mb-3"><span>Inclui:</span><span>+12 plataformas</span></div><div className="grid grid-cols-5 gap-2"><div className="logo-box group-hover:ring-2 group-hover:ring-red-500"><span className="font-geometric text-[13px] tracking-tighter font-black lowercase text-black">max</span></div><div className="logo-box group-hover:ring-2 group-hover:ring-red-500 transition-all delay-75"><img src="https://upload.wikimedia.org/wikipedia/commons/3/3e/Disney%2B_logo.svg" alt="Logo parceiro" className="w-10 h-auto filter brightness-0" loading="lazy" decoding="async"/></div><div className="logo-box flex-col pt-1 group-hover:ring-2 group-hover:ring-red-500 transition-all delay-100"><span className="font-bold text-[8px] tracking-tight text-black leading-none">prime video</span><svg className="w-8 h-2 mt-0.5 text-black" viewBox="0 0 100 20" fill="none" stroke="currentColor" strokeWidth="8"><path d="M10,5 Q50,25 90,5" strokeLinecap="round" /><path d="M90,5 L80,10" strokeWidth="0" fill="currentColor"/></svg></div><div className="logo-box group-hover:ring-2 group-hover:ring-red-500 transition-all delay-150"><span className="font-condensed text-black text-[11px] tracking-tighter font-bold transform scale-y-110">NETFLIX</span></div><div className="logo-box group-hover:ring-2 group-hover:ring-red-500 transition-all delay-200"><span className="font-condensed text-black text-[7px] tracking-widest font-bold uppercase">Telecine</span></div></div></div>
-                                <ul className="space-y-3.5 text-xs text-zinc-300 mt-auto font-medium"><li className="flex items-start gap-3"><CustomCheck color="green" /><span className="font-bold text-white">Acesso em 2 telas <span className="text-[9px] bg-green-500/20 text-green-400 px-1.5 py-0.5 rounded ml-1 uppercase border border-green-500/30">Bônus +1 Tela</span></span></li><li className="flex items-start gap-3"><CustomCheck color="red" /><span>Mais de 10.000 Canais, Filmes e Séries.</span></li><li className="flex items-start gap-3"><CustomCheck color="red" /><span>Tudo em FHD/4K</span></li><li className="flex items-start gap-3"><CustomCheck color="red" /><span>Multiplataforma</span></li><li className="flex items-start gap-3"><CustomCheck color="green" /><span className="font-bold text-white">Acesso por 4 meses <span className="text-[9px] bg-green-500/20 text-green-400 px-1.5 py-0.5 rounded ml-1 uppercase border border-green-500/30">Bônus +1 Mês</span></span></li></ul>
-                            </div>
-                        </RevealOnScroll>
-                        <RevealOnScroll delay={200} className="h-full z-10">
-                            <div className="card-bg rounded-3xl p-6 flex flex-col relative border-2 border-red-900/60 shadow-[0_0_40px_rgba(220,38,38,0.15)] h-full transform xl:-translate-y-4 hover:border-red-600 hover:shadow-[0_0_50px_rgba(220,38,38,0.25)] transition-all duration-300 group">
-                                <div className="absolute top-6 right-6 bg-red-600 text-white text-[10px] font-black px-3 py-1.5 rounded-full leading-tight text-center shadow-lg z-20">20% de<br/>desconto</div>
-                                <div className="mb-6"><div className="mb-1"><span className="text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-red-600 animate-pulse text-sm font-black italic tracking-widest uppercase drop-shadow-[0_2px_4px_rgba(220,38,38,0.4)]">MAIS ESCOLHIDO</span></div><h3 className="text-xl font-bold text-white mb-1">Plano Pro</h3><p className="text-zinc-400 text-sm font-medium mb-5">Semestral</p><div className="flex items-end mb-5"><span className="text-zinc-400 text-lg font-bold mb-1 mr-1">6x</span><span className="text-5xl font-extrabold text-white tracking-tighter">17,52</span><span className="text-zinc-500 text-[9px] font-bold uppercase tracking-wide mb-2 ml-2 leading-none whitespace-nowrap">OU R$89,90</span></div><p className="text-zinc-400 text-xs leading-relaxed min-h-[40px]">O plano ideal para quem quer garantir entretenimento por mais tempo.</p></div>
-                                <a href="https://pay.cakto.com.br/mq6kaat" target="_blank" className="w-full bg-gradient-to-r from-red-600 to-red-900 text-white font-extrabold text-sm py-3.5 rounded-lg hover:opacity-90 transition-opacity mb-8 shadow-lg shadow-red-900/50 uppercase tracking-wide text-center block" onClick={() => trackInitiateCheckout('Pro', 89.90)}>Assinar Agora</a>
-                                <div className="mb-8"><div className="flex justify-between items-center text-[10px] font-semibold text-zinc-400 uppercase tracking-wider mb-3"><span>Inclui:</span><span>+12 plataformas</span></div><div className="grid grid-cols-5 gap-2"><div className="logo-box group-hover:ring-2 group-hover:ring-red-500"><span className="font-geometric text-[13px] tracking-tighter font-black lowercase text-black">max</span></div><div className="logo-box group-hover:ring-2 group-hover:ring-red-500 transition-all delay-75"><img src="https://upload.wikimedia.org/wikipedia/commons/3/3e/Disney%2B_logo.svg" alt="Logo parceiro" className="w-10 h-auto filter brightness-0" loading="lazy" decoding="async"/></div><div className="logo-box flex-col pt-1 group-hover:ring-2 group-hover:ring-red-500 transition-all delay-100"><span className="font-bold text-[8px] tracking-tight text-black leading-none">prime video</span><svg className="w-8 h-2 mt-0.5 text-black" viewBox="0 0 100 20" fill="none" stroke="currentColor" strokeWidth="8"><path d="M10,5 Q50,25 90,5" strokeLinecap="round" /><path d="M90,5 L80,10" strokeWidth="0" fill="currentColor"/></svg></div><div className="logo-box group-hover:ring-2 group-hover:ring-red-500 transition-all delay-150"><span className="font-condensed text-black text-[11px] tracking-tighter font-bold transform scale-y-110">NETFLIX</span></div><div className="logo-box group-hover:ring-2 group-hover:ring-red-500 transition-all delay-200"><span className="font-condensed text-black text-[7px] tracking-widest font-bold uppercase">Telecine</span></div></div></div>
-                                <ul className="space-y-3.5 text-xs text-zinc-300 mt-auto font-medium"><li className="flex items-start gap-3"><CustomCheck color="green" /><span className="font-bold text-white">Acesso em 3 telas <span className="text-[9px] bg-green-500/20 text-green-400 px-1.5 py-0.5 rounded ml-1 uppercase border border-green-500/30">Bônus +1 Tela</span></span></li><li className="flex items-start gap-3"><CustomCheck color="red" /><span>Mais de 10.000 Canais, Filmes e Séries.</span></li><li className="flex items-start gap-3"><CustomCheck color="red" /><span>Tudo em FHD/4K</span></li><li className="flex items-start gap-3"><CustomCheck color="red" /><span>Multiplataforma</span></li><li className="flex items-start gap-3"><CustomCheck color="green" /><span className="font-bold text-white">Acesso por 9 meses <span className="text-[9px] bg-green-500/20 text-green-400 px-1.5 py-0.5 rounded ml-1 uppercase border border-green-500/30">Bônus +3 Meses</span></span></li></ul>
-                            </div>
-                        </RevealOnScroll>
-                        <RevealOnScroll delay={300} className="h-full z-10">
-                            <div className="card-bg rounded-3xl p-6 flex flex-col relative border-2 border-red-900/40 shadow-[0_0_40px_rgba(185,28,28,0.1)] h-full transform xl:-translate-y-4 hover:border-red-700 hover:shadow-[0_0_50px_rgba(185,28,28,0.2)] transition-all duration-300 group">
-                                <div className="absolute top-6 right-6 bg-red-800 text-white text-[10px] font-black px-3 py-1.5 rounded-full leading-tight text-center shadow-lg z-20">26% de<br/>desconto</div>
-                                <div className="mb-6"><div className="mb-1"><span className="text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-red-600 animate-pulse text-sm font-black italic tracking-widest uppercase">MAIOR ECONOMIA</span></div><h3 className="text-xl font-bold text-white mb-1">Plano Premium</h3><p className="text-zinc-400 text-sm font-medium mb-5">Anual</p><div className="flex items-end mb-5"><span className="text-zinc-400 text-lg font-bold mb-1 mr-1">12x</span><span className="text-5xl font-extrabold text-white tracking-tighter">17,08</span><span className="text-zinc-500 text-[9px] font-bold uppercase tracking-wide mb-2 ml-2 leading-none whitespace-nowrap">OU R$147,90</span></div><p className="text-zinc-400 text-xs leading-relaxed min-h-[40px]">O maior desconto e acesso anual. Perfeito para você e sua família.</p></div>
-                                <a href="https://pay.cakto.com.br/367ifhv" target="_blank" className="w-full bg-gradient-to-r from-red-700 to-red-950 text-white font-extrabold text-sm py-3.5 rounded-lg hover:opacity-90 transition-opacity mb-8 shadow-lg shadow-red-900/40 uppercase tracking-wide text-center block" onClick={() => trackInitiateCheckout('Premium', 147.90)}>Assinar Agora</a>
-                                <div className="mb-8"><div className="flex justify-between items-center text-[10px] font-semibold text-zinc-400 uppercase tracking-wider mb-3"><span>Inclui:</span><span>+12 plataformas</span></div><div className="grid grid-cols-5 gap-2"><div className="logo-box group-hover:ring-2 group-hover:ring-red-500"><span className="font-geometric text-[13px] tracking-tighter font-black lowercase text-black">max</span></div><div className="logo-box group-hover:ring-2 group-hover:ring-red-500 transition-all delay-75"><img src="https://upload.wikimedia.org/wikipedia/commons/3/3e/Disney%2B_logo.svg" alt="Logo parceiro" className="w-10 h-auto filter brightness-0" loading="lazy" decoding="async"/></div><div className="logo-box flex-col pt-1 group-hover:ring-2 group-hover:ring-red-500 transition-all delay-100"><span className="font-bold text-[8px] tracking-tight text-black leading-none">prime video</span><svg className="w-8 h-2 mt-0.5 text-black" viewBox="0 0 100 20" fill="none" stroke="currentColor" strokeWidth="8"><path d="M10,5 Q50,25 90,5" strokeLinecap="round" /><path d="M90,5 L80,10" strokeWidth="0" fill="currentColor"/></svg></div><div className="logo-box group-hover:ring-2 group-hover:ring-red-500 transition-all delay-150"><span className="font-condensed text-black text-[11px] tracking-tighter font-bold transform scale-y-110">NETFLIX</span></div><div className="logo-box group-hover:ring-2 group-hover:ring-red-500 transition-all delay-200"><span className="font-condensed text-black text-[7px] tracking-widest font-bold uppercase">Telecine</span></div></div></div>
-                                <ul className="space-y-3.5 text-xs text-zinc-300 mt-auto font-medium"><li className="flex items-start gap-3"><CustomCheck color="green" /><span className="font-bold text-white">Acesso em 4 telas <span className="text-[9px] bg-green-500/20 text-green-400 px-1.5 py-0.5 rounded ml-1 uppercase border border-green-500/30">Bônus +2 Telas</span></span></li><li className="flex items-start gap-3"><CustomCheck color="red" /><span>Mais de 10.000 Canais, Filmes e Séries.</span></li><li className="flex items-start gap-3"><CustomCheck color="red" /><span>Tudo em FHD/4K</span></li><li className="flex items-start gap-3"><CustomCheck color="red" /><span>Multiplataforma</span></li><li className="flex items-start gap-3"><CustomCheck color="green" /><span className="font-bold text-white">Acesso por 18 meses <span className="text-[9px] bg-green-500/20 text-green-400 px-1.5 py-0.5 rounded ml-1 uppercase border border-green-500/30">Bônus +6 Meses</span></span></li></ul>
-                            </div>
-                        </RevealOnScroll>
+                        <RevealOnScroll delay={0} className="h-full"><div className="card-bg rounded-3xl p-6 flex flex-col relative card-border h-full hover:border-zinc-700 transition-colors group"><div className="mb-6"><div className="h-6 mb-1"></div><h3 className="text-xl font-bold text-zinc-200 mb-1">Plano Basic</h3><p className="text-zinc-400 text-sm font-medium mb-5">Mensal</p><div className="flex items-end gap-1 mb-6"><span className="text-4xl font-extrabold text-white tracking-tight">R$ 18,90</span><span className="text-zinc-500 text-sm font-medium mb-1.5 ml-1">/mês</span></div><p className="text-zinc-400 text-xs leading-relaxed min-h-[40px]">Tenha acesso completo a todos os recursos. O plano perfeito para você e sua família.</p></div><a href="https://pay.cakto.com.br/7kjywct_686205" target="_blank" className="w-full bg-white hover:bg-zinc-200 text-black font-extrabold text-sm py-3.5 rounded-lg transition-colors mb-8 uppercase tracking-wide text-center block" onClick={() => trackInitiateCheckout('Basic', 18.90)}>Assinar Agora</a><div className="mb-8"><div className="flex justify-between items-center text-[10px] font-semibold text-zinc-400 uppercase tracking-wider mb-3"><span>Inclui:</span><span>+12 plataformas</span></div><div className="grid grid-cols-5 gap-2"><div className="logo-box group-hover:ring-2 group-hover:ring-red-500"><span className="font-geometric text-[13px] tracking-tighter font-black lowercase text-black">max</span></div><div className="logo-box group-hover:ring-2 group-hover:ring-red-500 transition-all delay-75"><img src="https://upload.wikimedia.org/wikipedia/commons/3/3e/Disney%2B_logo.svg" alt="Logo parceiro" className="w-10 h-auto filter brightness-0" loading="lazy" decoding="async"/></div><div className="logo-box flex-col pt-1 group-hover:ring-2 group-hover:ring-red-500 transition-all delay-100"><span className="font-bold text-[8px] tracking-tight text-black leading-none">prime video</span><svg className="w-8 h-2 mt-0.5 text-black" viewBox="0 0 100 20" fill="none" stroke="currentColor" strokeWidth="8"><path d="M10,5 Q50,25 90,5" strokeLinecap="round" /><path d="M90,5 L80,10" strokeWidth="0" fill="currentColor"/></svg></div><div className="logo-box group-hover:ring-2 group-hover:ring-red-500 transition-all delay-150"><span className="font-condensed text-black text-[11px] tracking-tighter font-bold transform scale-y-110">NETFLIX</span></div><div className="logo-box group-hover:ring-2 group-hover:ring-red-500 transition-all delay-200"><span className="font-condensed text-black text-[7px] tracking-widest font-bold uppercase">Telecine</span></div></div></div><ul className="space-y-3.5 text-xs text-zinc-300 mt-auto font-medium"><li className="flex items-start gap-3"><CustomCheck color="green" /><span className="font-bold text-white">Acesso em 2 telas <span className="text-[9px] bg-green-500/20 text-green-400 px-1.5 py-0.5 rounded ml-1 uppercase border border-green-500/30">Bônus +1 Tela</span></span></li><li className="flex items-start gap-3"><CustomCheck color="red" /><span>Mais de 10.000 Canais, Filmes e Séries.</span></li><li className="flex items-start gap-3"><CustomCheck color="red" /><span>Tudo em SD/HD/FHD/4K</span></li><li className="flex items-start gap-3"><CustomCheck color="red" /><span>Multiplataforma</span></li><li className="flex items-start gap-3"><CustomCheck color="green" /><span className="font-bold text-white">Acesso por 45 dias <span className="text-[9px] bg-green-500/20 text-green-400 px-1.5 py-0.5 rounded ml-1 uppercase border border-green-500/30">Bônus +15 Dias</span></span></li></ul></div></RevealOnScroll>
+                        <RevealOnScroll delay={100} className="h-full"><div className="card-bg rounded-3xl p-6 flex flex-col relative card-border h-full hover:border-zinc-700 transition-colors group"><div className="absolute top-6 right-6 bg-red-200 text-red-900 text-[10px] font-black px-3 py-1.5 rounded-full leading-tight text-center shadow-lg z-20">17% de<br/>desconto</div><div className="mb-6"><div className="h-6 mb-1"></div><h3 className="text-xl font-bold text-zinc-200 mb-1">Plano Plus</h3><p className="text-zinc-400 text-sm font-medium mb-5">Trimestral</p><div className="flex items-end mb-5"><span className="text-zinc-400 text-lg font-bold mb-1 mr-1">3x</span><span className="text-5xl font-extrabold text-white tracking-tighter">18,18</span><span className="text-zinc-500 text-[9px] font-bold uppercase tracking-wide mb-2 ml-2 leading-none whitespace-nowrap">OU R$48,90</span></div><p className="text-zinc-400 text-xs leading-relaxed min-h-[40px]">Economize assinando por 3 meses. Ótima opção de médio prazo.</p></div><a href="https://pay.cakto.com.br/jpjps2w" target="_blank" className="w-full bg-white hover:bg-zinc-200 text-black font-extrabold text-sm py-3.5 rounded-lg transition-colors mb-8 uppercase tracking-wide text-center block" onClick={() => trackInitiateCheckout('Plus', 48.90)}>Assinar Agora</a><div className="mb-8"><div className="flex justify-between items-center text-[10px] font-semibold text-zinc-400 uppercase tracking-wider mb-3"><span>Inclui:</span><span>+12 plataformas</span></div><div className="grid grid-cols-5 gap-2"><div className="logo-box group-hover:ring-2 group-hover:ring-red-500"><span className="font-geometric text-[13px] tracking-tighter font-black lowercase text-black">max</span></div><div className="logo-box group-hover:ring-2 group-hover:ring-red-500 transition-all delay-75"><img src="https://upload.wikimedia.org/wikipedia/commons/3/3e/Disney%2B_logo.svg" alt="Logo parceiro" className="w-10 h-auto filter brightness-0" loading="lazy" decoding="async"/></div><div className="logo-box flex-col pt-1 group-hover:ring-2 group-hover:ring-red-500 transition-all delay-100"><span className="font-bold text-[8px] tracking-tight text-black leading-none">prime video</span><svg className="w-8 h-2 mt-0.5 text-black" viewBox="0 0 100 20" fill="none" stroke="currentColor" strokeWidth="8"><path d="M10,5 Q50,25 90,5" strokeLinecap="round" /><path d="M90,5 L80,10" strokeWidth="0" fill="currentColor"/></svg></div><div className="logo-box group-hover:ring-2 group-hover:ring-red-500 transition-all delay-150"><span className="font-condensed text-black text-[11px] tracking-tighter font-bold transform scale-y-110">NETFLIX</span></div><div className="logo-box group-hover:ring-2 group-hover:ring-red-500 transition-all delay-200"><span className="font-condensed text-black text-[7px] tracking-widest font-bold uppercase">Telecine</span></div></div></div><ul className="space-y-3.5 text-xs text-zinc-300 mt-auto font-medium"><li className="flex items-start gap-3"><CustomCheck color="green" /><span className="font-bold text-white">Acesso em 2 telas <span className="text-[9px] bg-green-500/20 text-green-400 px-1.5 py-0.5 rounded ml-1 uppercase border border-green-500/30">Bônus +1 Tela</span></span></li><li className="flex items-start gap-3"><CustomCheck color="red" /><span>Mais de 10.000 Canais, Filmes e Séries.</span></li><li className="flex items-start gap-3"><CustomCheck color="red" /><span>Tudo em FHD/4K</span></li><li className="flex items-start gap-3"><CustomCheck color="red" /><span>Multiplataforma</span></li><li className="flex items-start gap-3"><CustomCheck color="green" /><span className="font-bold text-white">Acesso por 4 meses <span className="text-[9px] bg-green-500/20 text-green-400 px-1.5 py-0.5 rounded ml-1 uppercase border border-green-500/30">Bônus +1 Mês</span></span></li></ul></div></RevealOnScroll>
+                        <RevealOnScroll delay={200} className="h-full z-10"><div className="card-bg rounded-3xl p-6 flex flex-col relative border-2 border-red-900/60 shadow-[0_0_40px_rgba(220,38,38,0.15)] h-full transform xl:-translate-y-4 hover:border-red-600 hover:shadow-[0_0_50px_rgba(220,38,38,0.25)] transition-all duration-300 group"><div className="absolute top-6 right-6 bg-red-600 text-white text-[10px] font-black px-3 py-1.5 rounded-full leading-tight text-center shadow-lg z-20">20% de<br/>desconto</div><div className="mb-6"><div className="mb-1"><span className="text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-red-600 animate-pulse text-sm font-black italic tracking-widest uppercase drop-shadow-[0_2px_4px_rgba(220,38,38,0.4)]">MAIS ESCOLHIDO</span></div><h3 className="text-xl font-bold text-white mb-1">Plano Pro</h3><p className="text-zinc-400 text-sm font-medium mb-5">Semestral</p><div className="flex items-end mb-5"><span className="text-zinc-400 text-lg font-bold mb-1 mr-1">6x</span><span className="text-5xl font-extrabold text-white tracking-tighter">17,52</span><span className="text-zinc-500 text-[9px] font-bold uppercase tracking-wide mb-2 ml-2 leading-none whitespace-nowrap">OU R$89,90</span></div><p className="text-zinc-400 text-xs leading-relaxed min-h-[40px]">O plano ideal para quem quer garantir entretenimento por mais tempo.</p></div><a href="https://pay.cakto.com.br/mq6kaat" target="_blank" className="w-full bg-gradient-to-r from-red-600 to-red-900 text-white font-extrabold text-sm py-3.5 rounded-lg hover:opacity-90 transition-opacity mb-8 shadow-lg shadow-red-900/50 uppercase tracking-wide text-center block" onClick={() => trackInitiateCheckout('Pro', 89.90)}>Assinar Agora</a><div className="mb-8"><div className="flex justify-between items-center text-[10px] font-semibold text-zinc-400 uppercase tracking-wider mb-3"><span>Inclui:</span><span>+12 plataformas</span></div><div className="grid grid-cols-5 gap-2"><div className="logo-box group-hover:ring-2 group-hover:ring-red-500"><span className="font-geometric text-[13px] tracking-tighter font-black lowercase text-black">max</span></div><div className="logo-box group-hover:ring-2 group-hover:ring-red-500 transition-all delay-75"><img src="https://upload.wikimedia.org/wikipedia/commons/3/3e/Disney%2B_logo.svg" alt="Logo parceiro" className="w-10 h-auto filter brightness-0" loading="lazy" decoding="async"/></div><div className="logo-box flex-col pt-1 group-hover:ring-2 group-hover:ring-red-500 transition-all delay-100"><span className="font-bold text-[8px] tracking-tight text-black leading-none">prime video</span><svg className="w-8 h-2 mt-0.5 text-black" viewBox="0 0 100 20" fill="none" stroke="currentColor" strokeWidth="8"><path d="M10,5 Q50,25 90,5" strokeLinecap="round" /><path d="M90,5 L80,10" strokeWidth="0" fill="currentColor"/></svg></div><div className="logo-box group-hover:ring-2 group-hover:ring-red-500 transition-all delay-150"><span className="font-condensed text-black text-[11px] tracking-tighter font-bold transform scale-y-110">NETFLIX</span></div><div className="logo-box group-hover:ring-2 group-hover:ring-red-500 transition-all delay-200"><span className="font-condensed text-black text-[7px] tracking-widest font-bold uppercase">Telecine</span></div></div></div><ul className="space-y-3.5 text-xs text-zinc-300 mt-auto font-medium"><li className="flex items-start gap-3"><CustomCheck color="green" /><span className="font-bold text-white">Acesso em 3 telas <span className="text-[9px] bg-green-500/20 text-green-400 px-1.5 py-0.5 rounded ml-1 uppercase border border-green-500/30">Bônus +1 Tela</span></span></li><li className="flex items-start gap-3"><CustomCheck color="red" /><span>Mais de 10.000 Canais, Filmes e Séries.</span></li><li className="flex items-start gap-3"><CustomCheck color="red" /><span>Tudo em FHD/4K</span></li><li className="flex items-start gap-3"><CustomCheck color="red" /><span>Multiplataforma</span></li><li className="flex items-start gap-3"><CustomCheck color="green" /><span className="font-bold text-white">Acesso por 9 meses <span className="text-[9px] bg-green-500/20 text-green-400 px-1.5 py-0.5 rounded ml-1 uppercase border border-green-500/30">Bônus +3 Meses</span></span></li></ul></div></RevealOnScroll>
+                        <RevealOnScroll delay={300} className="h-full z-10"><div className="card-bg rounded-3xl p-6 flex flex-col relative border-2 border-red-900/40 shadow-[0_0_40px_rgba(185,28,28,0.1)] h-full transform xl:-translate-y-4 hover:border-red-700 hover:shadow-[0_0_50px_rgba(185,28,28,0.2)] transition-all duration-300 group"><div className="absolute top-6 right-6 bg-red-800 text-white text-[10px] font-black px-3 py-1.5 rounded-full leading-tight text-center shadow-lg z-20">26% de<br/>desconto</div><div className="mb-6"><div className="mb-1"><span className="text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-red-600 animate-pulse text-sm font-black italic tracking-widest uppercase">MAIOR ECONOMIA</span></div><h3 className="text-xl font-bold text-white mb-1">Plano Premium</h3><p className="text-zinc-400 text-sm font-medium mb-5">Anual</p><div className="flex items-end mb-5"><span className="text-zinc-400 text-lg font-bold mb-1 mr-1">12x</span><span className="text-5xl font-extrabold text-white tracking-tighter">17,08</span><span className="text-zinc-500 text-[9px] font-bold uppercase tracking-wide mb-2 ml-2 leading-none whitespace-nowrap">OU R$147,90</span></div><p className="text-zinc-400 text-xs leading-relaxed min-h-[40px]">O maior desconto e acesso anual. Perfeito para você e sua família.</p></div><a href="https://pay.cakto.com.br/367ifhv" target="_blank" className="w-full bg-gradient-to-r from-red-700 to-red-950 text-white font-extrabold text-sm py-3.5 rounded-lg hover:opacity-90 transition-opacity mb-8 shadow-lg shadow-red-900/40 uppercase tracking-wide text-center block" onClick={() => trackInitiateCheckout('Premium', 147.90)}>Assinar Agora</a><div className="mb-8"><div className="flex justify-between items-center text-[10px] font-semibold text-zinc-400 uppercase tracking-wider mb-3"><span>Inclui:</span><span>+12 plataformas</span></div><div className="grid grid-cols-5 gap-2"><div className="logo-box group-hover:ring-2 group-hover:ring-red-500"><span className="font-geometric text-[13px] tracking-tighter font-black lowercase text-black">max</span></div><div className="logo-box group-hover:ring-2 group-hover:ring-red-500 transition-all delay-75"><img src="https://upload.wikimedia.org/wikipedia/commons/3/3e/Disney%2B_logo.svg" alt="Logo parceiro" className="w-10 h-auto filter brightness-0" loading="lazy" decoding="async"/></div><div className="logo-box flex-col pt-1 group-hover:ring-2 group-hover:ring-red-500 transition-all delay-100"><span className="font-bold text-[8px] tracking-tight text-black leading-none">prime video</span><svg className="w-8 h-2 mt-0.5 text-black" viewBox="0 0 100 20" fill="none" stroke="currentColor" strokeWidth="8"><path d="M10,5 Q50,25 90,5" strokeLinecap="round" /><path d="M90,5 L80,10" strokeWidth="0" fill="currentColor"/></svg></div><div className="logo-box group-hover:ring-2 group-hover:ring-red-500 transition-all delay-150"><span className="font-condensed text-black text-[11px] tracking-tighter font-bold transform scale-y-110">NETFLIX</span></div><div className="logo-box group-hover:ring-2 group-hover:ring-red-500 transition-all delay-200"><span className="font-condensed text-black text-[7px] tracking-widest font-bold uppercase">Telecine</span></div></div></div><ul className="space-y-3.5 text-xs text-zinc-300 mt-auto font-medium"><li className="flex items-start gap-3"><CustomCheck color="green" /><span className="font-bold text-white">Acesso em 4 telas <span className="text-[9px] bg-green-500/20 text-green-400 px-1.5 py-0.5 rounded ml-1 uppercase border border-green-500/30">Bônus +2 Telas</span></span></li><li className="flex items-start gap-3"><CustomCheck color="red" /><span>Mais de 10.000 Canais, Filmes e Séries.</span></li><li className="flex items-start gap-3"><CustomCheck color="red" /><span>Tudo em FHD/4K</span></li><li className="flex items-start gap-3"><CustomCheck color="red" /><span>Multiplataforma</span></li><li className="flex items-start gap-3"><CustomCheck color="green" /><span className="font-bold text-white">Acesso por 18 meses <span className="text-[9px] bg-green-500/20 text-green-400 px-1.5 py-0.5 rounded ml-1 uppercase border border-green-500/30">Bônus +6 Meses</span></span></li></ul></div></RevealOnScroll>
                     </div>
                 </section>
             );
@@ -686,12 +705,7 @@
                                     {!isExpanded ? (
                                         <div className="flex justify-center mt-2"><button onClick={() => setIsExpanded(true)} className="group inline-flex h-7 items-center justify-center rounded-full bg-red-600 px-4 font-bold text-[10px] text-white transition-colors duration-300 hover:bg-red-700"><span className="mr-1.5 uppercase tracking-wider">Veja mais</span><i className="fas fa-chevron-down text-[9px] group-hover:translate-y-0.5 transition-transform"></i></button></div>
                                     ) : (
-                                        <div className="animate-fade-in-down">
-                                            <div className="bg-[#0a0a0a] rounded-lg p-4 border border-white/5 mt-3"><p className="text-white text-xs font-semibold mb-3 text-center">É importante deixar algo bem claro: <span className="text-red-500 underline decoration-red-500/50">Esse tipo de serviço NÃO EXISTE.</span></p><p className="mb-2 font-medium text-gray-400 text-[10px] uppercase tracking-wider">Plataformas que prometem acesso vitalício:</p><ul className="space-y-1.5 mb-4 text-[11px]"><li className="flex items-start gap-2"><i className="fas fa-times text-red-500 mt-0.5 text-[10px]"></i><span>Não são sustentáveis.</span></li><li className="flex items-start gap-2"><i className="fas fa-times text-red-500 mt-0.5 text-[10px]"></i><span>Não conseguem manter servidores ativos indefinidamente.</span></li><li className="flex items-start gap-2"><i className="fas fa-times text-red-500 mt-0.5 text-[10px]"></i><span>Costumam sair do ar sem aviso.</span></li><li className="flex items-start gap-2"><i className="fas fa-times text-red-500 mt-0.5 text-[10px]"></i><span>Geralmente caracterizam fraude ou golpe.</span></li></ul><p className="mb-2 font-medium text-gray-400 text-[10px] uppercase tracking-wider">Serviços de streaming sérios dependem de:</p><ul className="grid grid-cols-1 md:grid-cols-2 gap-1.5 text-[10px]"><li className="flex items-center gap-2 bg-white/5 px-2 py-1.5 rounded"><div className="w-1 h-1 bg-green-500 rounded-full animate-pulse shadow-[0_0_8px_rgba(34,197,94,0.6)]"></div>Infraestrutura de servidores</li><li className="flex items-center gap-2 bg-white/5 px-2 py-1.5 rounded"><div className="w-1 h-1 bg-green-500 rounded-full animate-pulse shadow-[0_0_8px_rgba(34,197,94,0.6)]"></div>Custos contínuos de manutenção</li><li className="flex items-center gap-2 bg-white/5 px-2 py-1.5 rounded"><div className="w-1 h-1 bg-green-500 rounded-full animate-pulse shadow-[0_0_8px_rgba(34,197,94,0.6)]"></div>Atualizações constantes</li><li className="flex items-center gap-2 bg-white/5 px-2 py-1.5 rounded"><div className="w-1 h-1 bg-green-500 rounded-full animate-pulse shadow-[0_0_8px_rgba(34,197,94,0.6)]"></div>Operação recorrente</li></ul></div>
-                                            <p className="text-center italic text-gray-400 text-[10px] mt-4">Por esse motivo, nenhum serviço sério consegue oferecer acesso “para a vida toda”.</p>
-                                            <div className="border-l-2 border-red-500 pl-3 py-1 mt-3"><p className="text-xs">A <span className="text-white font-bold">GrowthUP+</span> trabalha de forma transparente, com planos claros, prazos definidos e foco em continuidade, estabilidade e suporte real ao cliente.</p></div>
-                                            <div className="flex flex-col items-center justify-center pt-3 gap-1 mt-1"><span className="flex items-center gap-1.5 text-yellow-400 font-bold uppercase text-[9px] tracking-wider"><i className="fas fa-exclamation-circle"></i> Desconfie de promessas irreais</span><p className="text-white font-bold tracking-tight text-sm">Transparência sempre será a melhor escolha.</p><button onClick={() => setIsExpanded(false)} className="text-zinc-500 hover:text-white text-[10px] mt-2 underline decoration-zinc-500/50 hover:decoration-white cursor-pointer transition-colors">Recolher</button></div>
-                                        </div>
+                                        <div className="animate-fade-in-down"><div className="bg-[#0a0a0a] rounded-lg p-4 border border-white/5 mt-3"><p className="text-white text-xs font-semibold mb-3 text-center">É importante deixar algo bem claro: <span className="text-red-500 underline decoration-red-500/50">Esse tipo de serviço NÃO EXISTE.</span></p><p className="mb-2 font-medium text-gray-400 text-[10px] uppercase tracking-wider">Plataformas que prometem acesso vitalício:</p><ul className="space-y-1.5 mb-4 text-[11px]"><li className="flex items-start gap-2"><i className="fas fa-times text-red-500 mt-0.5 text-[10px]"></i><span>Não são sustentáveis.</span></li><li className="flex items-start gap-2"><i className="fas fa-times text-red-500 mt-0.5 text-[10px]"></i><span>Não conseguem manter servidores ativos indefinidamente.</span></li><li className="flex items-start gap-2"><i className="fas fa-times text-red-500 mt-0.5 text-[10px]"></i><span>Costumam sair do ar sem aviso.</span></li><li className="flex items-start gap-2"><i className="fas fa-times text-red-500 mt-0.5 text-[10px]"></i><span>Geralmente caracterizam fraude ou golpe.</span></li></ul><p className="mb-2 font-medium text-gray-400 text-[10px] uppercase tracking-wider">Serviços de streaming sérios dependem de:</p><ul className="grid grid-cols-1 md:grid-cols-2 gap-1.5 text-[10px]"><li className="flex items-center gap-2 bg-white/5 px-2 py-1.5 rounded"><div className="w-1 h-1 bg-green-500 rounded-full animate-pulse shadow-[0_0_8px_rgba(34,197,94,0.6)]"></div>Infraestrutura de servidores</li><li className="flex items-center gap-2 bg-white/5 px-2 py-1.5 rounded"><div className="w-1 h-1 bg-green-500 rounded-full animate-pulse shadow-[0_0_8px_rgba(34,197,94,0.6)]"></div>Custos contínuos de manutenção</li><li className="flex items-center gap-2 bg-white/5 px-2 py-1.5 rounded"><div className="w-1 h-1 bg-green-500 rounded-full animate-pulse shadow-[0_0_8px_rgba(34,197,94,0.6)]"></div>Atualizações constantes</li><li className="flex items-center gap-2 bg-white/5 px-2 py-1.5 rounded"><div className="w-1 h-1 bg-green-500 rounded-full animate-pulse shadow-[0_0_8px_rgba(34,197,94,0.6)]"></div>Operação recorrente</li></ul></div><p className="text-center italic text-gray-400 text-[10px] mt-4">Por esse motivo, nenhum serviço sério consegue oferecer acesso “para a vida toda”.</p><div className="border-l-2 border-red-500 pl-3 py-1 mt-3"><p className="text-xs">A <span className="text-white font-bold">GrowthUP+</span> trabalha de forma transparente, com planos claros, prazos definidos e foco em continuidade, estabilidade e suporte real ao cliente.</p></div><div className="flex flex-col items-center justify-center pt-3 gap-1 mt-1"><span className="flex items-center gap-1.5 text-yellow-400 font-bold uppercase text-[9px] tracking-wider"><i className="fas fa-exclamation-circle"></i> Desconfie de promessas irreais</span><p className="text-white font-bold tracking-tight text-sm">Transparência sempre será a melhor escolha.</p><button onClick={() => setIsExpanded(false)} className="text-zinc-500 hover:text-white text-[10px] mt-2 underline decoration-zinc-500/50 hover:decoration-white cursor-pointer transition-colors">Recolher</button></div></div>
                                     )}
                                 </div>
                             </div>
@@ -734,469 +748,29 @@
             );
         };
 
-        const DeviceSelector = ({ onSelect }) => {
-            const devices = [{ name: 'Samsung TV', videoId: 'M-JHOJ9VTss', active: true }, { name: 'LG TV', videoId: 'i1I1sUQ8wOs', active: true }, { name: 'RokuTV', videoId: 'mM1wTGzZCLs', active: true }, { name: 'TV Android', videoId: 'oiKr--jnBh4', active: true }, { name: 'Fire Stick Amazon', videoId: 'RiB_zqlHwdU', active: true }];
-            return (<div className="absolute inset-0 bg-black/95 flex flex-col items-center justify-center p-4 z-50 animate-fade-in backdrop-blur-sm"><h3 className="text-base md:text-lg font-black text-white mb-2 uppercase tracking-wider text-center leading-tight">Escolha seu dispositivo</h3><div className="flex flex-col gap-1.5 w-full max-w-[200px] md:max-w-[240px]">{devices.map((device) => (<button key={device.name} disabled={!device.active} onClick={() => device.active && onSelect(device)} className={`py-1.5 px-3 rounded border font-bold text-[10px] md:text-xs transition-all duration-300 ${device.active ? 'bg-gradient-to-r from-red-600 to-red-900 border-red-500/50 text-white shadow-[0_0_15px_rgba(220,38,38,0.3)] hover:scale-105 hover:shadow-[0_0_25px_rgba(220,38,38,0.5)] cursor-pointer' : 'bg-white/5 border-white/10 text-gray-500 cursor-not-allowed opacity-60'}`}>{device.name}</button>))}</div><p className="mt-3 text-[9px] text-gray-500 uppercase tracking-widest">Selecione para reproduzir</p></div>);
-        };
-
-        // --- NOVO COMPONENTE: MODAL DO CATÁLOGO (Celular Flutuante) ---
-        const CatalogModal = ({ isOpen, onClose }) => {
-            const [gifActive, setGifActive] = useState(false);
-            const [videoUrl, setVideoUrl] = useState(null);
-            const [activeTooltip, setActiveTooltip] = useState(null);
-
-            const mainScrollRef = useRef(null);
-            const horizontalScrollRef1 = useRef(null);
-            const horizontalScrollRef2 = useRef(null);
-
-            // Reutilizando a lógica de scroll e interação do AppShowcaseSection
-            useEffect(() => {
-                if (!isOpen) return; // Só ativa a lógica se o modal estiver aberto
-
-                const mainScroller = mainScrollRef.current;
-                const sliders = [horizontalScrollRef1.current, horizontalScrollRef2.current];
-                const allDraggables = [mainScroller, ...sliders].filter(Boolean);
-
-                let isDown = false;
-                let startX, startY;
-                let mainScrollStart;
-                let horizontalScrollStart = new Map();
-                let targetSlider = null;
-                let hasDragged = false;
-
-                const initDrag = (x, y, target) => {
-                    isDown = true;
-                    hasDragged = false;
-                    startX = x;
-                    startY = y;
-                    mainScrollStart = mainScroller ? mainScroller.scrollTop : 0;
-
-                    if (target.classList.contains('horizontal-scroll')) {
-                        targetSlider = target;
-                        horizontalScrollStart.set(target, target.scrollLeft);
-                    } else {
-                        targetSlider = null;
-                    }
-                };
-
-                const endDrag = () => {
-                    isDown = false;
-                    if (mainScroller) mainScroller.classList.remove('scroll-active');
-                    targetSlider = null;
-                };
-
-                const performMove = (x, y, e) => {
-                    if (!isDown) return;
-                    
-                    const walkY = (y - startY) * 1.5; 
-                    const walkX = (x - startX) * 1.5; 
-
-                    if (Math.abs(x - startX) > 5 || Math.abs(y - startY) > 5) {
-                        hasDragged = true;
-                        if (mainScroller) mainScroller.classList.add('scroll-active');
-                    }
-
-                    if (Math.abs(walkY) > Math.abs(walkX)) {
-                        if (mainScroller) mainScroller.scrollTop = mainScrollStart - walkY;
-                    } else {
-                        if (targetSlider) {
-                            const startLeft = horizontalScrollStart.get(targetSlider);
-                            targetSlider.scrollLeft = startLeft - walkX;
-                        }
-                    }
-                };
-
-                const handleMouseDown = (e) => { e.stopPropagation(); initDrag(e.pageX, e.pageY, e.currentTarget); };
-                const handleTouchStart = (e) => { e.stopPropagation(); const touch = e.touches[0]; initDrag(touch.pageX, touch.pageY, e.currentTarget); };
-                const handleMouseMove = (e) => { if (!isDown) return; e.preventDefault(); performMove(e.pageX, e.pageY, e); };
-                const handleTouchMove = (e) => { if (!isDown) return; if (e.cancelable) e.preventDefault(); const touch = e.touches[0]; performMove(touch.pageX, touch.pageY, e); };
-
-                allDraggables.forEach(el => { el.addEventListener('mousedown', handleMouseDown); el.addEventListener('touchstart', handleTouchStart, { passive: false }); });
-                document.addEventListener('mousemove', handleMouseMove); document.addEventListener('touchmove', handleTouchMove, { passive: false });
-                document.addEventListener('mouseup', endDrag); document.addEventListener('mouseleave', endDrag); document.addEventListener('touchend', endDrag);
-
-                return () => {
-                    allDraggables.forEach(el => { el.removeEventListener('mousedown', handleMouseDown); el.removeEventListener('touchstart', handleTouchStart); });
-                    document.removeEventListener('mousemove', handleMouseMove); document.removeEventListener('touchmove', handleTouchMove);
-                    document.removeEventListener('mouseup', endDrag); document.removeEventListener('mouseleave', endDrag); document.removeEventListener('touchend', endDrag);
-                };
-            }, [isOpen]);
-
-            if (!isOpen) return null;
-
-            const toggleTooltip = (id) => {
-                setActiveTooltip(activeTooltip === id ? null : id);
-                if (activeTooltip !== id) setTimeout(() => setActiveTooltip(null), 3000);
-            };
-            const openVideo = (videoId) => setVideoUrl(`https://www.youtube.com/embed/${videoId}?autoplay=1`);
-            const closeVideo = () => setVideoUrl(null);
-
-            return (
-                <div className="fixed inset-0 z-[100] bg-black/90 backdrop-blur-md flex items-center justify-center p-4 animate-fade-in">
-                    <button onClick={onClose} className="absolute top-6 right-6 text-white/50 hover:text-red-500 transition-colors z-[110]">
-                        <i className="fa-solid fa-xmark text-4xl"></i>
-                    </button>
-                    
-                    {/* CORREÇÃO: Celular totalmente estático, sem transformações 3D ou escalas que afetem o hit-box */}
-                    <div className="relative" style={{ transform: 'none' }}>
-                        <div className="phone-mockup" style={{boxShadow: '0 0 50px rgba(220, 38, 38, 0.2)', transform: 'none', margin: '0 auto'}}>
-                            <div className="phone-notch"></div>
-                            <div className="phone-screen">
-                                <div className="app-ui-header">
-                                    <div className="app-ui-logo"></div>
-                                    <div className="app-ui-icons">
-                                        <div className={`search-icon-wrapper ${activeTooltip === 'search' ? 'active' : ''}`} onClick={() => toggleTooltip('search')}>
-                                            <i className="fa-solid fa-search"></i>
-                                            <div className="search-tooltip">São mais de 80 mil conteúdos!</div>
-                                        </div>
-                                        <div className={`user-icon-wrapper ${activeTooltip === 'user' ? 'active' : ''}`} onClick={() => toggleTooltip('user')}>
-                                            <i className="fa-solid fa-user-circle"></i>
-                                            <div className="user-tooltip">Logo logo você terá seu acesso! 😄</div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className={`video-overlay ${videoUrl ? 'active' : ''}`}>
-                                    <button className="close-video-btn" onClick={closeVideo}><i className="fa-solid fa-xmark"></i></button>
-                                    <div className="video-container">
-                                        {videoUrl && <iframe src={videoUrl} frameBorder="0" allow="autoplay; encrypted-media" allowFullScreen></iframe>}
-                                    </div>
-                                </div>
-                                <div className="app-ui-scroll-content" ref={mainScrollRef}>
-                                    <div className="app-hero-banner">
-                                        <div className={`hero-gif-container ${gifActive ? 'active' : ''}`}><img src="https://i.pinimg.com/originals/a1/5a/b9/a15ab9f44fb47ab505b5a92ab5f98ed8.gif" alt="Futebol GIF" /></div>
-                                        <div className="app-hero-overlay"></div>
-                                        <div className={`play-btn-app ${gifActive ? 'hidden' : ''}`} onClick={() => setGifActive(true)}><i className="fa-solid fa-play"></i></div>
-                                        <div className="hero-info">
-                                            <span className="hero-tag">Ao Vivo Agora</span>
-                                            <h3 className="hero-title">Champions League</h3>
-                                            <div className="hero-meta"><span><i className="fa-regular fa-clock"></i> 2º Tempo</span><span>• Final</span><span>• 4K HDR</span></div>
-                                        </div>
-                                    </div>
-                                    <div className="app-section-title">Destaques da Semana</div>
-                                    <div className="movies-row horizontal-scroll" ref={horizontalScrollRef1}>
-                                        <div className="movie-card-app" onClick={() => openVideo('qnR0s1QVknI')}><div className="movie-poster-app"><img src="https://jardimdasamericas.com.br/uploads/2025/12/capa-filme-avatar-fogo-e-cinzas-966f9-large.png" alt="Avatar"/></div><span className="movie-title-text">Avatar: Fogo e Cinzas</span></div>
-                                        <div className="movie-card-app" onClick={() => openVideo('g0GB20yE9JY')}><div className="movie-poster-app"><img src="https://upload.wikimedia.org/wikipedia/pt/6/60/O_Agente_Secreto_%28Cartaz_brasileiro%29.jpg" alt="O Agente Secreto"/></div><span className="movie-title-text">O Agente Secreto</span></div>
-                                        <div className="movie-card-app" onClick={() => openVideo('T7_zMl_ZhdQ')}><div className="movie-poster-app"><img src="https://s2-g1.glbimg.com/JlPpzZaM6BQeHE8519IeNARgIJg=/0x0:1382x2048/984x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2021/k/m/sUy6NaRMiAMJOllVxvOQ/fb2miibwyairfgo.jpg" alt="Batman"/></div><span className="movie-title-text">The Batman II</span></div>
-                                        <div className="movie-card-app" onClick={() => openVideo('ZiDphkXCZsQ')}><div className="movie-poster-app"><img src="https://ingresso-a.akamaihd.net/prd/img/movie/f1-o-filme/3a0a118e-8bf3-4e10-b45d-f028cd49b001.webp" alt="F1"/></div><span className="movie-title-text">F1: O Filme</span></div>
-                                    </div>
-                                    <div className="app-section-title">Séries Populares</div>
-                                    <div className="movies-row horizontal-scroll" ref={horizontalScrollRef2}>
-                                        <div className="movie-card-app" onClick={() => openVideo('IcR-6y3Q9XI')}><div className="movie-poster-app"><img src="https://i.imgur.com/ONufJIn.png" alt="TLOU"/></div><span className="movie-title-text">The Last of Us</span></div>
-                                        <div className="movie-card-app" onClick={() => openVideo('Wb3kaP580kA')}><div className="movie-poster-app"><img src="https://i.imgur.com/30zW0QK.png" alt="Stranger Things"/></div><span className="movie-title-text">Stranger Things 5</span></div>
-                                        <div className="movie-card-app" onClick={() => openVideo('IgyahanUcOk')}><div className="movie-poster-app"><img src="https://preview.redd.it/tvn-spring-fever-teaser-poster-premieres-january-5-v0-kgb43b5drv4g1.jpg?width=640&crop=smart&auto=webp&s=4d0318de16fd82a564657498104302df46ef8b16" alt="Spring Fever"/></div><span className="movie-title-text">Spring Fever</span></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <p className="text-white/60 text-xs text-center mt-6 uppercase tracking-widest font-medium">Navegue como se estivesse no app</p>
-                    </div>
-                </div>
-            );
-        };
-
-        const ExpandingPosters = () => {
-            const posters = [
-                { id: 1, title: "Lançamentos", img: "https://images.unsplash.com/photo-1626814026160-2237a95fc5a0?q=60&w=800&auto=format&fit=crop", color: "from-blue-600" },
-                { id: 2, title: "Ação", img: "https://images.unsplash.com/photo-1536440136628-849c177e76a1?q=60&w=800&auto=format&fit=crop", color: "from-red-600" },
-                { id: 3, title: "Animes", img: "https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?q=60&w=800&auto=format&fit=crop", color: "from-pink-600" },
-                { id: 4, title: "Futebol", img: "https://images.unsplash.com/photo-1579952363873-27f3bade9f55?q=60&w=800&auto=format&fit=crop", color: "from-green-600" },
-                { id: 5, title: "Marvel", img: "https://images.unsplash.com/photo-1635805737707-575885ab0820?q=60&w=800&auto=format&fit=crop", color: "from-red-800" },
-                { id: 6, title: "Terror", img: "https://images.unsplash.com/photo-1505635552518-3448ff116af3?q=60&w=800&auto=format&fit=crop", color: "from-purple-900" }
-            ];
-
-            return (
-                <div className="w-full h-[60vh] md:h-[70vh] flex bg-black posters-container overflow-hidden mt-8 mb-12 border-y border-white/10">
-                    {posters.map((poster) => (
-                        <div key={poster.id} className="expand-card group cursor-pointer relative">
-                            <img src={poster.img} alt={poster.title} className="absolute inset-0 w-full h-full object-cover object-center transition-transform duration-1000 ease-out group-hover:scale-105" loading="lazy" decoding="async"/>
-                            <div className={`absolute inset-0 bg-gradient-to-t ${poster.color} to-transparent opacity-0 group-hover:opacity-70 transition-opacity duration-500`}></div>
-                            <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-transparent to-black/90 opacity-60 group-hover:opacity-0 transition-opacity duration-500"></div>
-                            <div className="absolute inset-0 flex items-center justify-center opacity-100 group-hover:opacity-0 transition-all duration-300 pointer-events-none">
-                                <h3 className="text-white/80 font-black text-xl md:text-3xl uppercase tracking-[0.2em] -rotate-90 whitespace-nowrap drop-shadow-md border-b-2 border-white/20 pb-2">{poster.title}</h3>
-                            </div>
-                            <div className="absolute bottom-0 left-0 w-full p-6 md:p-10 translate-y-10 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500 delay-75 flex flex-col justify-end h-full bg-gradient-to-t from-black via-transparent to-transparent">
-                                <span className="text-white/80 text-xs font-bold uppercase tracking-widest mb-2 bg-white/10 w-fit px-2 py-1 rounded backdrop-blur-sm">Exclusivo</span>
-                                <h3 className="text-3xl md:text-6xl font-black text-white uppercase leading-none mb-4 drop-shadow-2xl">{poster.title}</h3>
-                                <div className="mt-6 flex items-center gap-4">
-                                    <button className="bg-white text-black font-bold text-xs md:text-sm px-6 py-3 rounded-full hover:bg-gray-200 transition-colors uppercase tracking-wide">Assistir Agora</button>
-                                    <div className="w-10 h-10 rounded-full border border-white/30 flex items-center justify-center text-white hover:bg-white/10 transition-colors"><i className="fas fa-plus"></i></div>
-                                </div>
-                            </div>
-                        </div>
-                    ))}
-                </div>
-            );
-        };
-
-        const PrivacyOverlay = ({ isActive, onClose }) => (
-            <div className={`policy-overlay ${isActive ? 'active' : ''}`}>
-                <div className="policy-container">
-                    <button onClick={onClose} className="back-btn">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
-                        Voltar
-                    </button>
-                    <div className="policy-header">
-                        <h1>POLÍTICA DE PRIVACIDADE <span className="highlight">GrowthUP+</span></h1>
-                        <p>Última atualização: Janeiro de 2026</p>
-                    </div>
-                    <div className="policy-content">
-                        <p>A <strong>GrowthUP+</strong> respeita a privacidade e a proteção dos dados pessoais de seus usuários, clientes e visitantes. Esta Política de Privacidade descreve como coletamos, utilizamos, armazenamos e protegemos informações ao acessar ou utilizar nosso site, serviços, plataformas e canais de atendimento.</p>
-                        <p>Ao utilizar qualquer serviço da GrowthUP+, o usuário declara estar ciente e de acordo com esta Política.</p>
-                        <h2>1. Identificação do Controlador</h2>
-                        <p><strong>GrowthUP+</strong><br/>
-                        E-mail: <span style={{color: '#ef4444'}}>growthupbrasil@gmail.com</span><br/>
-                        Contato: (11) 99139-6481</p>
-                        <h2>2. Dados coletados</h2>
-                        <p>Podemos coletar as seguintes informações:</p>
-                        <h3>2.1 Dados fornecidos pelo usuário</h3>
-                        <ul>
-                            <li>Nome</li>
-                            <li>Endereço de e-mail</li>
-                            <li>Número de telefone</li>
-                            <li>Informações enviadas via formulários, WhatsApp ou atendimento</li>
-                        </ul>
-                        <h3>2.2 Dados coletados automaticamente</h3>
-                        <ul>
-                            <li>Endereço IP</li>
-                            <li>Tipo de navegador e dispositivo</li>
-                            <li>Páginas acessadas</li>
-                            <li>Data e horário de acesso</li>
-                            <li>Cookies e tecnologias semelhantes</li>
-                        </ul>
-                        <h2>3. Finalidade do tratamento dos dados</h2>
-                        <p>Os dados coletados são utilizados para:</p>
-                        <ul>
-                            <li>Processamento de assinaturas e pagamentos</li>
-                            <li>Liberação e gestão de acesso aos serviços contratados</li>
-                            <li>Comunicação operacional e suporte técnico</li>
-                            <li>Atendimento ao cliente</li>
-                            <li>Envio de informações relevantes sobre o serviço</li>
-                            <li>Melhoria da experiência do usuário</li>
-                            <li>Prevenção a fraudes e abusos</li>
-                            <li>Cumprimento de obrigações legais</li>
-                        </ul>
-                        <p><em>A GrowthUP+ não comercializa, vende ou aluga dados pessoais.</em></p>
-                        <h2>4. Compartilhamento de dados</h2>
-                        <p>Os dados poderão ser compartilhados apenas quando necessário com:</p>
-                        <ul>
-                            <li>Plataformas de pagamento</li>
-                            <li>Serviços de hospedagem e infraestrutura tecnológica</li>
-                            <li>Ferramentas de análise e marketing</li>
-                            <li>Autoridades públicas, mediante obrigação legal ou judicial</li>
-                        </ul>
-                        <h2>5. Cookies</h2>
-                        <p>Utilizamos cookies para garantir o funcionamento adequado do site, analisar desempenho e otimizar a experiência do usuário. O usuário pode desativar os cookies nas configurações do navegador, ciente de que isso pode impactar funcionalidades.</p>
-                        <h2>6. Segurança das informações</h2>
-                        <p>A GrowthUP+ adota medidas técnicas e organizacionais adequadas para proteger os dados pessoais contra acesso não autorizado, perda, alteração ou divulgação indevida. Ainda assim, nenhum sistema é totalmente imune a falhas.</p>
-                        <h2>7. Direitos do titular dos dados</h2>
-                        <p>Nos termos da Lei Geral de Proteção de Dados (Lei nº 13.709/2018), o usuário pode solicitar:</p>
-                        <ul>
-                            <li>Confirmação da existência de tratamento</li>
-                            <li>Acesso aos dados</li>
-                            <li>Correção de informações incompletas ou incorretas</li>
-                            <li>Exclusão de dados, quando aplicável</li>
-                            <li>Revogação de consentimento</li>
-                        </ul>
-                        <p>Solicitações devem ser enviadas para <strong>growthupbrasil@gmail.com</strong>.</p>
-                        <h2>8. Alterações desta Política</h2>
-                        <p>Esta Política poderá ser atualizada a qualquer momento. A versão vigente estará sempre disponível no site.</p>
-                        <h2>9. Contato</h2>
-                        <p>Para dúvidas ou solicitações relacionadas a esta Política:</p>
-                        <p><strong>E-mail:</strong> growthupbrasil@gmail.com<br/>
-                        <strong>Telefone:</strong> (11) 99139-6481</p>
-                    </div>
-                </div>
-            </div>
-        );
-
-        const TermsOverlay = ({ isActive, onClose }) => (
-            <div className={`policy-overlay ${isActive ? 'active' : ''}`}>
-                <div className="policy-container">
-                    <button onClick={onClose} className="back-btn">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
-                        Voltar
-                    </button>
-                    <div className="policy-header">
-                        <h1>TERMOS E CONDIÇÕES DE USO <span className="highlight">GrowthUP+</span></h1>
-                        <p>Última atualização: Janeiro de 2026</p>
-                    </div>
-                    <div className="policy-content">
-                        <p>Ao acessar ou utilizar os serviços da <strong>GrowthUP+</strong>, o usuário declara que leu, compreendeu e concorda integralmente com estes Termos e Condições.</p>
-                        <p><em>Caso não concorde, não utilize os serviços.</em></p>
-                        <h2>1. Descrição do serviço</h2>
-                        <p>A GrowthUP+ oferece acesso a uma plataforma de entretenimento mediante planos de assinatura com prazo determinado, conforme condições vigentes no momento da contratação.</p>
-                        <p>Não oferecemos serviços vitalícios ou acesso permanente.</p>
-                        <h2>2. Elegibilidade</h2>
-                        <p>Para utilizar os serviços, o usuário deve:</p>
-                        <ul>
-                            <li>Ter no mínimo 18 anos ou autorização legal</li>
-                            <li>Fornecer informações verdadeiras e atualizadas</li>
-                            <li>Utilizar o serviço exclusivamente para fins pessoais</li>
-                        </ul>
-                        <h2>3. Planos, pagamentos e acesso</h2>
-                        <ul>
-                            <li>Os planos possuem duração definida</li>
-                            <li>O acesso é liberado após confirmação do pagamento</li>
-                            <li>Valores, bônus e condições promocionais podem variar</li>
-                            <li>Os pagamentos são processados por plataformas terceiras</li>
-                        </ul>
-                        <p>A GrowthUP+ não se responsabiliza por falhas ou indisponibilidades das plataformas de pagamento.</p>
-                        <h2>4. Uso permitido e restrições</h2>
-                        <p>É proibido:</p>
-                        <ul>
-                            <li>Compartilhar acessos de forma abusiva</li>
-                            <li>Revender ou redistribuir o serviço</li>
-                            <li>Utilizar o serviço para fins comerciais</li>
-                            <li>Tentar burlar sistemas de segurança</li>
-                            <li>Utilizar o serviço de maneira ilegal ou não autorizada</li>
-                        </ul>
-                        <p>O descumprimento poderá resultar em suspensão ou cancelamento imediato, sem direito a reembolso.</p>
-                        <h2>5. Suspensão e cancelamento</h2>
-                        <p>A GrowthUP+ poderá suspender ou cancelar o acesso em casos de:</p>
-                        <ul>
-                            <li>Violação destes Termos</li>
-                            <li>Uso indevido ou suspeita de fraude</li>
-                            <li>Determinação legal ou técnica</li>
-                        </ul>
-                        <p>O usuário poderá cancelar sua assinatura conforme as condições do plano contratado.</p>
-                        <h2>6. Reembolsos</h2>
-                        <ul>
-                            <li>Reembolsos seguem as regras informadas no momento da contratação</li>
-                            <li>Testes gratuitos, quando oferecidos, não geram direito a reembolso</li>
-                            <li>Após o uso do serviço, o valor pode não ser reembolsável</li>
-                        </ul>
-                        <h2>7. Disponibilidade do serviço</h2>
-                        <p>O serviço pode sofrer interrupções temporárias devido a manutenções, atualizações ou falhas técnicas. A GrowthUP+ não garante disponibilidade contínua e ininterrupta.</p>
-                        <h2>8. Limitação de responsabilidade</h2>
-                        <p>A GrowthUP+ não se responsabiliza por:</p>
-                        <ul>
-                            <li>Problemas de conexão do usuário</li>
-                            <li>Dispositivos incompatíveis</li>
-                            <li>Falhas de terceiros ou provedores externos</li>
-                            <li>Uso inadequado da plataforma</li>
-                        </ul>
-                        <h2>9. Alterações dos Termos</h2>
-                        <p>Os Termos poderão ser alterados a qualquer momento. O uso contínuo dos serviços implica aceitação da versão vigente.</p>
-                        <h2>10. Legislação aplicável</h2>
-                        <p>Estes Termos são regidos pelas leis da República Federativa do Brasil.</p>
-                        <h2>11. Contato</h2>
-                        <p><strong>E-mail:</strong> growthupbrasil@gmail.com<br/>
-                        <strong>Telefone:</strong> (11) 99139-6481</p>
-                    </div>
-                </div>
-            </div>
-        );
-
         const Footer = ({ openPrivacy, openTerms, openCatalog }) => {
             const tooltipRef = useRef(null);
-            
-            const handleSocialEnter = (e, name, theme) => {
-                const tooltip = tooltipRef.current;
-                if(tooltip) {
-                    tooltip.textContent = name;
-                    tooltip.style.background = theme.bg;
-                    tooltip.style.color = theme.color;
-                    tooltip.style.boxShadow = theme.shadow;
-                    tooltip.classList.add('visible');
-                }
-            };
-
-            const handleSocialMove = (e) => {
-                const tooltip = tooltipRef.current;
-                if(tooltip) {
-                    tooltip.style.left = e.clientX + 'px';
-                    tooltip.style.top = e.clientY + 'px';
-                }
-            };
-
-            const handleSocialLeave = () => {
-                const tooltip = tooltipRef.current;
-                if(tooltip) {
-                    tooltip.classList.remove('visible');
-                }
-            };
-
-            const socialThemes = {
-                'WhatsApp': { bg: '#25D366', color: '#fff', shadow: '0 0 15px rgba(37, 211, 102, 0.6)' },
-                'Facebook': { bg: '#1877F2', color: '#fff', shadow: '0 0 15px rgba(24, 119, 242, 0.6)' },
-                'Instagram': { bg: 'linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%)', color: '#fff', shadow: '0 0 15px rgba(220, 39, 67, 0.6)' },
-                'YouTube': { bg: '#FF0000', color: '#fff', shadow: '0 0 15px rgba(255, 0, 0, 0.6)' },
-                'Threads': { bg: '#ffffff', color: '#000000', shadow: '0 0 15px rgba(255, 255, 255, 0.5)' }
-            };
-
+            const handleSocialEnter = (e, name, theme) => { const tooltip = tooltipRef.current; if(tooltip) { tooltip.textContent = name; tooltip.style.background = theme.bg; tooltip.style.color = theme.color; tooltip.style.boxShadow = theme.shadow; tooltip.classList.add('visible'); } };
+            const handleSocialMove = (e) => { const tooltip = tooltipRef.current; if(tooltip) { tooltip.style.left = e.clientX + 'px'; tooltip.style.top = e.clientY + 'px'; } };
+            const handleSocialLeave = () => { const tooltip = tooltipRef.current; if(tooltip) { tooltip.classList.remove('visible'); } };
+            const socialThemes = { 'WhatsApp': { bg: '#25D366', color: '#fff', shadow: '0 0 15px rgba(37, 211, 102, 0.6)' }, 'Facebook': { bg: '#1877F2', color: '#fff', shadow: '0 0 15px rgba(24, 119, 242, 0.6)' }, 'Instagram': { bg: 'linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%)', color: '#fff', shadow: '0 0 15px rgba(220, 39, 67, 0.6)' }, 'YouTube': { bg: '#FF0000', color: '#fff', shadow: '0 0 15px rgba(255, 0, 0, 0.6)' }, 'Threads': { bg: '#ffffff', color: '#000000', shadow: '0 0 15px rgba(255, 255, 255, 0.5)' } };
             return (
                 <footer className="growth-footer">
                     <div id="social-tooltip" ref={tooltipRef}></div>
                     <div className="footer-container">
                         <div className="footer-col">
-                            <div className="footer-logo">
-                                <span className="footer-logo-box">G</span>
-                                <span className="logo-text">GrowthUP<span className="plus">+</span></span>
-                            </div>
-                            <ul className="footer-contact">
-                                <li>
-                                    <svg className="icon-footer" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg>
-                                    Growthupbrasil@gmail.com
-                                </li>
-                                <li>
-                                    <svg className="icon-footer" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
-                                    (11) 99139-6481
-                                </li>
-                                <li>
-                                    <svg className="icon-footer" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-                                    Das 06:00 às 23:59 de Seg a Sábado
-                                </li>
-                            </ul>
+                            <div className="footer-logo"><span className="footer-logo-box">G</span><span className="logo-text">GrowthUP<span className="plus">+</span></span></div>
+                            <ul className="footer-contact"><li><svg className="icon-footer" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg>Growthupbrasil@gmail.com</li><li><svg className="icon-footer" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>(11) 99139-6481</li><li><svg className="icon-footer" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>Das 06:00 às 23:59 de Seg a Sábado</li></ul>
                         </div>
                         <div className="footer-col">
                             <h4>Formas de pagamento</h4>
-                            <div className="payment-grid">
-                                {['Visa', 'Mastercard', 'Elo', 'Hipercard', 'American Express', 'Pix', 'Boleto', 'Itaú', 'Bradesco', 'Banco do Brasil'].map((name, i) => (
-                                    <div className="payment-card" title={name} key={i}>
-                                        <img src={
-                                            name === 'Visa' ? 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRVdmb2REwkq88jlbdX8N_7I4UYbo-wGMLAgg&s' :
-                                            name === 'Mastercard' ? 'https://newchoice.com.br/wp-content/uploads/2019/02/master-card.png' :
-                                            name === 'Elo' ? 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSwJg69eORTNYDiJiRvzDpXy84woEHhdrxAHg&s' :
-                                            name === 'Hipercard' ? 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Hipercard_logo.svg/1200px-Hipercard_logo.svg.png' :
-                                            name === 'American Express' ? 'https://1000logos.net/wp-content/uploads/2016/10/American-Express-Color.png' :
-                                            name === 'Pix' ? 'https://images.seeklogo.com/logo-png/39/2/pix-logo-png_seeklogo-392002.png' :
-                                            name === 'Boleto' ? 'https://vectorseek.com/wp-content/uploads/2023/09/Boleto-Logo-Vector.svg-.png' :
-                                            name === 'Itaú' ? 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSEC3xi3ITmg6ExgDPUiR_5dvX90EuMAnK8eg&s' :
-                                            name === 'Bradesco' ? 'https://assets.b9.com.br/wp-content/uploads/2018/11/Bradesco-novo-logo1.jpg' :
-                                            'https://static.wixstatic.com/media/b4cdae_f5df6aa4b17a432192637c7c4c353c3b~mv2.png/v1/fill/w_360,h_237,al_c,q_85,enc_avif,quality_auto/b4cdae_f5df6aa4b17a432192637c7c4c353c3b~mv2.png'
-                                        } alt={name} loading="lazy" decoding="async"/>
-                                    </div>
-                                ))}
-                            </div>
-                            <div className="footer-warning">
-                                <svg className="icon-warning" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
-                                <span>A venda dos serviços GrowthUP+ é permitida <strong>somente</strong> através do nosso site e WhatsApp oficial. Desconfie de ofertas externas.</span>
-                            </div>
+                            <div className="payment-grid">{['Visa', 'Mastercard', 'Elo', 'Hipercard', 'American Express', 'Pix', 'Boleto', 'Itaú', 'Bradesco', 'Banco do Brasil'].map((name, i) => (<div className="payment-card" title={name} key={i}><img src={name === 'Visa' ? 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRVdmb2REwkq88jlbdX8N_7I4UYbo-wGMLAgg&s' : name === 'Mastercard' ? 'https://newchoice.com.br/wp-content/uploads/2019/02/master-card.png' : name === 'Elo' ? 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSwJg69eORTNYDiJiRvzDpXy84woEHhdrxAHg&s' : name === 'Hipercard' ? 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/89/Hipercard_logo.svg/1200px-Hipercard_logo.svg.png' : name === 'American Express' ? 'https://1000logos.net/wp-content/uploads/2016/10/American-Express-Color.png' : name === 'Pix' ? 'https://images.seeklogo.com/logo-png/39/2/pix-logo-png_seeklogo-392002.png' : name === 'Boleto' ? 'https://vectorseek.com/wp-content/uploads/2023/09/Boleto-Logo-Vector.svg-.png' : name === 'Itaú' ? 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSEC3xi3ITmg6ExgDPUiR_5dvX90EuMAnK8eg&s' : name === 'Bradesco' ? 'https://assets.b9.com.br/wp-content/uploads/2018/11/Bradesco-novo-logo1.jpg' : 'https://static.wixstatic.com/media/b4cdae_f5df6aa4b17a432192637c7c4c353c3b~mv2.png/v1/fill/w_360,h_237,al_c,q_85,enc_avif,quality_auto/b4cdae_f5df6aa4b17a432192637c7c4c353c3b~mv2.png'} alt={name} loading="lazy" decoding="async"/></div>))}</div>
+                            <div className="footer-warning"><svg className="icon-warning" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg><span>A venda dos serviços GrowthUP+ é permitida <strong>somente</strong> através do nosso site e WhatsApp oficial. Desconfie de ofertas externas.</span></div>
                         </div>
                         <div className="footer-col">
                             <h4>Segurança</h4>
-                            <ul className="security-list">
-                                <li>
-                                    <svg className="icon-sec" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-                                    Conexão segura (SSL)
-                                </li>
-                                <li>
-                                    <svg className="icon-sec" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
-                                    Navegação protegida
-                                </li>
-                                <li>
-                                    <svg className="icon-sec" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"></rect><line x1="2" y1="10" x2="22" y2="10"></line></svg>
-                                    Pagamento processado com segurança
-                                </li>
-                                <li>
-                                    <svg className="icon-sec" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><line x1="10" y1="9" x2="8" y2="9"></line></svg>
-                                    Política de privacidade ativa
-                                </li>
-                            </ul>
-                            <div className="reclame-box">
-                                <svg className="icon-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
-                                <span>Empresa verificada<br/><strong>Reclame Aqui</strong></span>
-                            </div>
+                            <ul className="security-list"><li><svg className="icon-sec" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>Conexão segura (SSL)</li><li><svg className="icon-sec" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>Navegação protegida</li><li><svg className="icon-sec" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"></rect><line x1="2" y1="10" x2="22" y2="10"></line></svg>Pagamento processado com segurança</li><li><svg className="icon-sec" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><line x1="10" y1="9" x2="8" y2="9"></line></svg>Política de privacidade ativa</li></ul>
+                            <div className="reclame-box"><svg className="icon-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg><span>Empresa verificada<br/><strong>Reclame Aqui</strong></span></div>
                         </div>
                     </div>
                     <div className="footer-nav-bar">
@@ -1210,209 +784,65 @@
                                 <button onClick={openPrivacy}>Política de Privacidade</button>
                             </nav>
                             <div className="social-icons">
-                                <a href="#" className="social-link whatsapp fill-icon" title="WhatsApp" 
-                                   onMouseEnter={(e) => handleSocialEnter(e, 'WhatsApp', socialThemes['WhatsApp'])} 
-                                   onMouseMove={handleSocialMove} 
-                                   onMouseLeave={handleSocialLeave}>
-                                    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z" /></svg>
-                                </a>
-                                <a href="#" className="social-link facebook" title="Facebook"
-                                   onMouseEnter={(e) => handleSocialEnter(e, 'Facebook', socialThemes['Facebook'])} 
-                                   onMouseMove={handleSocialMove} 
-                                   onMouseLeave={handleSocialLeave}>
-                                    <img src="https://img.icons8.com/ios_filled/1200/facebook-new.jpg" alt="Facebook" className="w-full h-full object-cover rounded-full" />
-                                </a>
-                                <a href="#" className="social-link instagram" title="Instagram"
-                                   onMouseEnter={(e) => handleSocialEnter(e, 'Instagram', socialThemes['Instagram'])} 
-                                   onMouseMove={handleSocialMove} 
-                                   onMouseLeave={handleSocialLeave}>
-                                    <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
-                                </a>
-                                <a href="#" className="social-link youtube" title="YouTube"
-                                   onMouseEnter={(e) => handleSocialEnter(e, 'YouTube', socialThemes['YouTube'])} 
-                                   onMouseMove={handleSocialMove} 
-                                   onMouseLeave={handleSocialLeave}>
-                                    <svg viewBox="0 0 24 24"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.33 29 29 0 0 0-.46-5.33z"></path><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02" fill="currentColor"></polygon></svg>
-                                </a>
-                                <a href="#" className="social-link threads" title="Threads"
-                                   onMouseEnter={(e) => handleSocialEnter(e, 'Threads', socialThemes['Threads'])} 
-                                   onMouseMove={handleSocialMove} 
-                                   onMouseLeave={handleSocialLeave}>
-                                    <img src="https://www.citypng.com/public/uploads/preview/threads-social-media-round-app-logo-icon-hd-png-735811696672514l42mg6ysna.png" alt="Threads" style={{width: '100%', height: '100%', objectFit: 'contain', borderRadius: '50%'}} />
-                                </a>
+                                <a href="#" className="social-link whatsapp fill-icon" title="WhatsApp" onMouseEnter={(e) => handleSocialEnter(e, 'WhatsApp', socialThemes['WhatsApp'])} onMouseMove={handleSocialMove} onMouseLeave={handleSocialLeave}><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z" /></svg></a>
+                                <a href="#" className="social-link facebook" title="Facebook" onMouseEnter={(e) => handleSocialEnter(e, 'Facebook', socialThemes['Facebook'])} onMouseMove={handleSocialMove} onMouseLeave={handleSocialLeave}><img src="https://img.icons8.com/ios_filled/1200/facebook-new.jpg" alt="Facebook" className="w-full h-full object-cover rounded-full" /></a>
+                                <a href="#" className="social-link instagram" title="Instagram" onMouseEnter={(e) => handleSocialEnter(e, 'Instagram', socialThemes['Instagram'])} onMouseMove={handleSocialMove} onMouseLeave={handleSocialLeave}><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg></a>
+                                <a href="#" className="social-link youtube" title="YouTube" onMouseEnter={(e) => handleSocialEnter(e, 'YouTube', socialThemes['YouTube'])} onMouseMove={handleSocialMove} onMouseLeave={handleSocialLeave}><svg viewBox="0 0 24 24"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.33 29 29 0 0 0-.46-5.33z"></path><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02" fill="currentColor"></polygon></svg></a>
+                                <a href="#" className="social-link threads" title="Threads" onMouseEnter={(e) => handleSocialEnter(e, 'Threads', socialThemes['Threads'])} onMouseMove={handleSocialMove} onMouseLeave={handleSocialLeave}><img src="https://www.citypng.com/public/uploads/preview/threads-social-media-round-app-logo-icon-hd-png-735811696672514l42mg6ysna.png" alt="Threads" style={{width: '100%', height: '100%', objectFit: 'contain', borderRadius: '50%'}} /></a>
                             </div>
                         </div>
                     </div>
-                    <div className="footer-bottom">
-                        <div className="bottom-container">
-                            <span>© 2026 GrowthUP+. Todos os direitos reservados.</span>
-                            <a href="#topo">
-                                Voltar ao topo 
-                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
-                            </a>
-                        </div>
-                    </div>
+                    <div className="footer-bottom"><div className="bottom-container"><span>© 2026 GrowthUP+. Todos os direitos reservados.</span><a href="#topo">Voltar ao topo <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 15l-6-6-6 6"/></svg></a></div></div>
                 </footer>
             );
         };
 
         const App = () => {
             const [isScrolled, setIsScrolled] = useState(false);
-            const [activationAnim, setActivationAnim] = useState('idle'); // idle, blinking, exploding, gone
-            
+            const [activationAnim, setActivationAnim] = useState('idle');
             const [showVideoSection, setShowVideoSection] = useState(false);
-            const [desktopVideoStage, setDesktopVideoStage] = useState('idle');
-            const [desktopVideoId, setDesktopVideoId] = useState(null);
             const [mobileVideoStage, setMobileVideoStage] = useState('idle');
             const [mobileVideoId, setMobileVideoId] = useState(null);
-            const [isLoading, setIsLoading] = useState(true);
+            const [desktopVideoStage, setDesktopVideoStage] = useState('idle');
+            const [desktopVideoId, setDesktopVideoId] = useState(null);
             const [isPrivacyOpen, setPrivacyOpen] = useState(false);
             const [isTermsOpen, setTermsOpen] = useState(false);
-            
-            // NOVO ESTADO: Controle da modal de catálogo
             const [isCatalogOpen, setCatalogOpen] = useState(false);
+            const [isInstallHelpOpen, setInstallHelpOpen] = useState(false);
 
             const whatsappNumber = "5511991396481"; 
-            const getWhatsAppLink = (planName) => { const text = "Olá! Quero testar minha TV/Celular SEM LIMITES com a GrowthUP+"; return `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(text)}`; };
-            
-            // Link específico para o botão do topo
-            const getHeaderWhatsAppLink = () => {
-                const text = "Vim do site da GrowthUP+\n\nQuero testar o acesso SEM LIMITES na minha TV ou celular.\n\nPode me explicar como funciona o teste e a ativação imediata?";
-                return `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(text)}`;
-            };
+            const messageText = "Vim do site da GrowthUP+\n\nQuero testar o acesso SEM LIMITES na minha TV ou celular.\n\nPode me explicar como funciona o teste e a ativação imediata?";
+
+            const getWhatsAppLink = () => `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(messageText)}`;
+            const getHeaderWhatsAppLink = () => `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(messageText)}`;
 
             const handleOpenTutorial = () => { setShowVideoSection(true); setTimeout(() => { const section = document.getElementById('video-tutorial-section'); if (section) { section.scrollIntoView({ behavior: 'smooth', block: 'center' }); } }, 100); };
-            
-            const togglePrivacy = () => {
-                setPrivacyOpen(!isPrivacyOpen);
-                document.body.style.overflow = !isPrivacyOpen ? 'hidden' : '';
-            };
+            const togglePrivacy = () => { setPrivacyOpen(!isPrivacyOpen); document.body.style.overflow = !isPrivacyOpen ? 'hidden' : ''; };
+            const toggleTerms = () => { setTermsOpen(!isTermsOpen); document.body.style.overflow = !isTermsOpen ? 'hidden' : ''; };
+            const toggleCatalog = () => { setCatalogOpen(!isCatalogOpen); document.body.style.overflow = !isCatalogOpen ? 'hidden' : ''; };
+            const toggleInstallHelp = () => { setInstallHelpOpen(!isInstallHelpOpen); document.body.style.overflow = !isInstallHelpOpen ? 'hidden' : ''; };
 
-            const toggleTerms = () => {
-                setTermsOpen(!isTermsOpen);
-                document.body.style.overflow = !isTermsOpen ? 'hidden' : '';
-            };
-
-            const toggleCatalog = () => {
-                setCatalogOpen(!isCatalogOpen);
-                document.body.style.overflow = !isCatalogOpen ? 'hidden' : '';
-            };
-
-            // Scroll Listener unificado
-            useEffect(() => { 
-                const handleScroll = () => { 
-                    const scrollTop = window.scrollY;
-                    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-                    const scrollPercent = (scrollTop / docHeight) * 100;
-
-                    setIsScrolled(scrollTop > 50); 
-
-                    // Lógica da animação do texto (50% da página)
-                    if (scrollPercent > 50 && activationAnim === 'idle') {
-                        setActivationAnim('blinking');
-                    }
-
-                    // Lógica de RESET: Se voltar ao topo (< 15%), o texto reaparece
-                    if (scrollPercent < 15 && activationAnim === 'gone') {
-                        setActivationAnim('idle');
-                    }
-                }; 
-                window.addEventListener('scroll', handleScroll); 
-                return () => window.removeEventListener('scroll', handleScroll); 
-            }, [activationAnim]);
-
-            // Gerenciador de estágios da animação
-            useEffect(() => {
-                if (activationAnim === 'blinking') {
-                    // Tempo aumentado para 10 segundos piscando antes de explodir
-                    const timer = setTimeout(() => setActivationAnim('exploding'), 10000);
-                    return () => clearTimeout(timer);
-                }
-                if (activationAnim === 'exploding') {
-                    // Tempo da explosão (0.8s)
-                    const timer = setTimeout(() => {
-                        setActivationAnim('gone');
-                        // Removido o setHasExplodedOnce, apenas some.
-                    }, 800);
-                    return () => clearTimeout(timer);
-                }
-            }, [activationAnim]);
-
-            const handleDesktopClick = () => { if (desktopVideoStage === 'idle') setDesktopVideoStage('selecting'); };
-            const handleDesktopDeviceSelect = (device) => { setDesktopVideoId(device.videoId); setDesktopVideoStage('playing'); };
             const handleMobileClick = () => { if (mobileVideoStage === 'idle') setMobileVideoStage('selecting'); };
             const handleMobileDeviceSelect = (device) => { setMobileVideoId(device.videoId); setMobileVideoStage('playing'); };
-            const benefits = [
-                { icon: <Icons.Monitor className="w-8 h-8" />, title: "Sua Smart TV Potencializada", desc: "Transforme sua Roku, Samsung ou LG em uma central de cinema completa." }, 
-                { icon: <Icons.Zap className="w-8 h-8" />, title: "Streaming de Alta Performance", desc: "Infraestrutura dedicada para garantir fluidez total, sem travamentos irritantes." }, 
-                { icon: <Icons.Tv className="w-8 h-8" />, title: "Resolução Ultra 4K + 60 Fps", desc: "Veja cada detalhe. Qualidade de imagem cristalina que valoriza sua TV." }, 
-                { icon: <Icons.Layers className="w-8 h-8" />, title: <>Biblioteca<br/>Universal</>, desc: "Todos os canais, lançamentos de cinema, filmes e séries em um só lugar para melhor entreterimento" }
-            ];
+            const handleDesktopClick = () => { if (desktopVideoStage === 'idle') setDesktopVideoStage('selecting'); };
+            const handleDesktopDeviceSelect = (device) => { setDesktopVideoId(device.videoId); setDesktopVideoStage('playing'); };
+
+            useEffect(() => { const handleScroll = () => { const scrollTop = window.scrollY; const docHeight = document.documentElement.scrollHeight - window.innerHeight; const scrollPercent = (scrollTop / docHeight) * 100; setIsScrolled(scrollTop > 50); if (scrollPercent > 50 && activationAnim === 'idle') { setActivationAnim('blinking'); } if (scrollPercent < 15 && activationAnim === 'gone') { setActivationAnim('idle'); } }; window.addEventListener('scroll', handleScroll); return () => window.removeEventListener('scroll', handleScroll); }, [activationAnim]);
+            useEffect(() => { if (activationAnim === 'blinking') { const timer = setTimeout(() => setActivationAnim('exploding'), 10000); return () => clearTimeout(timer); } if (activationAnim === 'exploding') { const timer = setTimeout(() => { setActivationAnim('gone'); }, 800); return () => clearTimeout(timer); } }, [activationAnim]);
+
+            const benefits = [{ icon: <Icons.Monitor className="w-8 h-8" />, title: "Sua Smart TV Potencializada", desc: "Transforme sua Roku, Samsung ou LG em uma central de cinema completa." }, { icon: <Icons.Zap className="w-8 h-8" />, title: "Streaming de Alta Performance", desc: "Infraestrutura dedicada para garantir fluidez total, sem travamentos irritantes." }, { icon: <Icons.Tv className="w-8 h-8" />, title: "Resolução Ultra 4K + 60 Fps", desc: "Veja cada detalhe. Qualidade de imagem cristalina que valoriza sua TV." }, { icon: <Icons.Layers className="w-8 h-8" />, title: <>Biblioteca<br/>Universal</>, desc: "Todos os canais, lançamentos de cinema, filmes e séries em um só lugar para melhor entreterimento" }];
 
             return (
                 <div className="min-h-screen relative bg-black" id="topo">
                     <PrivacyOverlay isActive={isPrivacyOpen} onClose={togglePrivacy} />
                     <TermsOverlay isActive={isTermsOpen} onClose={toggleTerms} />
                     <CatalogModal isOpen={isCatalogOpen} onClose={toggleCatalog} />
-                    
+                    <InstallHelpModal isOpen={isInstallHelpOpen} onClose={toggleInstallHelp} />
                     <div className="fixed inset-0 w-full h-full overflow-hidden pointer-events-none"><div className="bg-hero"></div><div className="bg-overlay"></div><UpsideDownSpores /></div>
-                    
-                    <div className="fixed w-full flex justify-center px-4 z-50 transition-all duration-500 ease-in-out top-6">
-                        <nav className="bg-black/40 backdrop-blur-sm border border-white/10 rounded-full px-6 py-3 flex items-center justify-between w-full max-w-5xl shadow-2xl transition-all duration-300 hover:bg-black/60 pointer-events-auto relative">
-                            <div className="flex items-center gap-2"><div className="w-8 h-8 rounded-md flex items-center justify-center text-white font-bold text-lg btn-gradient">G</div><span className="text-xl font-semibold tracking-wide">GrowthUP<span className="text-red-500">+</span></span></div>
-                            <div className="hidden md:flex items-center gap-8 text-sm font-medium text-gray-300">{['Início', 'Diferenciais', 'Planos'].map((item) => (<a key={item} href={`#${item.split(' ')[0].toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")}`} className="hover:text-white transition-colors">{item}</a>))}</div>
-                            
-                            <div className="relative group flex flex-col items-center justify-center">
-                                <a href={getHeaderWhatsAppLink()} target="_blank" className="btn-gradient text-white font-bold text-xs md:text-sm px-6 py-2 rounded-full uppercase tracking-wider relative z-20">Testar agora mesmo</a>
-                                
-                                {activationAnim !== 'gone' && (
-                                    <div className={`absolute top-full left-1/2 -translate-x-1/2 mt-4 flex items-center justify-center gap-1.5 whitespace-nowrap text-[10px] font-bold tracking-wide uppercase transition-all z-10 
-                                        ${activationAnim === 'idle' ? 'anim-appear text-green-400 drop-shadow-[0_0_8px_rgba(74,222,128,0.5)]' : ''}
-                                        ${activationAnim === 'blinking' ? 'anim-blink' : ''}
-                                        ${activationAnim === 'exploding' ? 'anim-explode-main exploding text-green-400' : ''}
-                                    `}>
-                                        
-                                        {/* Partículas da Explosão */}
-                                        {activationAnim === 'exploding' && (
-                                            <>
-                                                <span className="particle" style={{'--tx': '-60px', '--ty': '-60px'}}></span>
-                                                <span className="particle" style={{'--tx': '60px', '--ty': '-60px'}}></span>
-                                                <span className="particle" style={{'--tx': '-60px', '--ty': '60px'}}></span>
-                                                <span className="particle" style={{'--tx': '60px', '--ty': '60px'}}></span>
-                                                
-                                                <span className="particle" style={{'--tx': '0px', '--ty': '-90px'}}></span>
-                                                <span className="particle" style={{'--tx': '0px', '--ty': '90px'}}></span>
-                                                <span className="particle" style={{'--tx': '-90px', '--ty': '0px'}}></span>
-                                                <span className="particle" style={{'--tx': '90px', '--ty': '0px'}}></span>
-                                                
-                                                <span className="particle" style={{'--tx': '-45px', '--ty': '-85px'}}></span>
-                                                <span className="particle" style={{'--tx': '45px', '--ty': '-85px'}}></span>
-                                                <span className="particle" style={{'--tx': '-85px', '--ty': '25px'}}></span>
-                                                <span className="particle" style={{'--tx': '85px', '--ty': '25px'}}></span>
-                                                
-                                                <span className="particle" style={{'--tx': '-20px', '--ty': '-100px'}}></span>
-                                                <span className="particle" style={{'--tx': '20px', '--ty': '-100px'}}></span>
-                                            </>
-                                        )}
-
-                                        <i className="fa-brands fa-whatsapp text-sm"></i> Ativação imediata
-                                    </div>
-                                )}
-                            </div>
-                        </nav>
-                    </div>
-
-                    <section id="inicio" className="relative z-10 min-h-screen flex flex-col justify-center items-center text-center px-6 md:px-12 lg:px-24 pb-12 w-full max-w-7xl mx-auto transition-all duration-500 pt-32">
-                        <RevealOnScroll className="max-w-3xl mb-12 mx-auto"><h1 className="text-4xl md:text-6xl font-semibold leading-tight mb-4 drop-shadow-2xl">SUA TV.<br/>SEM LIMITES.</h1><p className="text-gray-300 text-lg md:text-xl font-light leading-relaxed max-w-2xl mx-auto">Desbloqueie o potencial máximo do seu entretenimento.<br />Milhares de conteúdos em 4K.</p></RevealOnScroll>
-                        <RevealOnScroll delay={200} className="w-full mb-8"><h2 className="text-white text-lg font-semibold mb-6 pl-1 text-center md:text-left">Filmes, Séries, Canais e muito mais</h2><ExpandingPosters /></RevealOnScroll>
-                        <RevealOnScroll delay={300}><div className="flex flex-col md:flex-row justify-center items-center gap-6 mb-12 w-full"><p className="text-gray-400 text-sm max-w-2xl leading-relaxed text-center md:text-left mx-auto md:mx-0">Com o GrowthUP+ você vai ter acesso +2 mil canais ao vivo na sua Smart TV, tablet ou celular, incluindo Netflix, Amazon Prime, Viki, HBO Max, Disney+ Paramount.</p></div></RevealOnScroll>
-                    </section>
-                    
+                    <div className="fixed w-full flex justify-center px-4 z-50 transition-all duration-500 ease-in-out top-6"><nav className="bg-black/40 backdrop-blur-sm border border-white/10 rounded-full px-6 py-3 flex items-center justify-between w-full max-w-5xl shadow-2xl transition-all duration-300 hover:bg-black/60 pointer-events-auto relative"><div className="flex items-center gap-2"><div className="w-8 h-8 rounded-md flex items-center justify-center text-white font-bold text-lg btn-gradient">G</div><span className="text-xl font-semibold tracking-wide">GrowthUP<span className="text-red-500">+</span></span></div><div className="hidden md:flex items-center gap-8 text-sm font-medium text-gray-300">{['Início', 'Diferenciais', 'Planos'].map((item) => (<a key={item} href={`#${item.split(' ')[0].toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")}`} className="hover:text-white transition-colors">{item}</a>))}</div><div className="relative group flex flex-col items-center justify-center"><a href={getHeaderWhatsAppLink()} target="_blank" className="btn-gradient text-white font-bold text-xs md:text-sm px-6 py-2 rounded-full uppercase tracking-wider relative z-20">Testar agora</a>{activationAnim !== 'gone' && (<div className={`absolute top-full left-1/2 -translate-x-1/2 mt-4 flex items-center justify-center gap-1.5 whitespace-nowrap text-[10px] font-bold tracking-wide uppercase transition-all z-10 ${activationAnim === 'idle' ? 'anim-appear text-green-400 drop-shadow-[0_0_8px_rgba(74,222,128,0.5)]' : ''} ${activationAnim === 'blinking' ? 'anim-blink' : ''} ${activationAnim === 'exploding' ? 'anim-explode-main exploding text-green-400' : ''}`}>{activationAnim === 'exploding' && (<><span className="particle" style={{'--tx': '-60px', '--ty': '-60px'}}></span><span className="particle" style={{'--tx': '60px', '--ty': '-60px'}}></span><span className="particle" style={{'--tx': '-60px', '--ty': '60px'}}></span><span className="particle" style={{'--tx': '60px', '--ty': '60px'}}></span><span className="particle" style={{'--tx': '0px', '--ty': '-90px'}}></span><span className="particle" style={{'--tx': '0px', '--ty': '90px'}}></span><span className="particle" style={{'--tx': '-90px', '--ty': '0px'}}></span><span className="particle" style={{'--tx': '90px', '--ty': '0px'}}></span><span className="particle" style={{'--tx': '-45px', '--ty': '-85px'}}></span><span className="particle" style={{'--tx': '45px', '--ty': '-85px'}}></span><span className="particle" style={{'--tx': '-85px', '--ty': '25px'}}></span><span className="particle" style={{'--tx': '85px', '--ty': '25px'}}></span><span className="particle" style={{'--tx': '-20px', '--ty': '-100px'}}></span><span className="particle" style={{'--tx': '20px', '--ty': '-100px'}}></span></>)}<i className="fa-brands fa-whatsapp text-sm"></i> Ativação imediata</div>)}</div></nav></div>
+                    <section id="inicio" className="relative z-10 min-h-screen flex flex-col justify-center items-center text-center px-6 md:px-12 lg:px-24 pb-12 w-full max-w-7xl mx-auto transition-all duration-500 pt-32"><RevealOnScroll className="max-w-3xl mb-12 mx-auto"><h1 className="text-4xl md:text-6xl font-semibold leading-tight mb-4 drop-shadow-2xl">SUA TV.<br/>SEM LIMITES.</h1><p className="text-gray-300 text-lg md:text-xl font-light leading-relaxed max-w-2xl mx-auto">Desbloqueie o potencial máximo do seu entretenimento.<br />Milhares de conteúdos em 4K.</p></RevealOnScroll><RevealOnScroll delay={200} className="w-full mb-8"><h2 className="text-white text-lg font-semibold mb-6 pl-1 text-center md:text-left">Filmes, Séries, Canais e muito mais</h2><ExpandingPosters /></RevealOnScroll><RevealOnScroll delay={300}><div className="flex flex-col md:flex-row justify-center items-center gap-6 mb-12 w-full"><p className="text-gray-400 text-sm max-w-2xl leading-relaxed text-center md:text-left mx-auto md:mx-0">Com o GrowthUP+ você vai ter acesso +2 mil canais ao vivo na sua Smart TV, tablet ou celular, incluindo Netflix, Amazon Prime, Viki, HBO Max, Disney+ Paramount.</p></div></RevealOnScroll></section>
                     <InstallAppSection />
-
-                    {/* NOVA SEÇÃO APP SHOWCASE */}
-                    <AppShowcaseSection />
-
+                    <AppShowcaseSection onOpenInstallHelp={toggleInstallHelp} />
                     <section id="diferenciais" className="relative z-10 py-12 md:py-20 bg-gradient-to-b from-[#0a0a0a] to-[#050505] scroll-mt-32"><div className="container mx-auto px-6"><div className="grid md:grid-cols-4 gap-8">{benefits.map((item, idx) => (<RevealOnScroll key={idx} delay={idx * 100}><div className="p-6 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-red-900/30 hover:bg-white/[0.05] transition-all group"><div className="mb-4 text-red-600 group-hover:text-white transition-colors group-hover:scale-110 transform duration-300 origin-left">{item.icon}</div><h3 className="text-lg font-bold text-white mb-3">{item.title}</h3><p className="text-sm text-gray-500 leading-relaxed group-hover:text-gray-400">{item.desc}</p></div></RevealOnScroll>))}</div></div></section>
                     <EconomySection />
                     <PricingSection getWhatsAppLink={getWhatsAppLink} />

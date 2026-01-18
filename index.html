@@ -53,6 +53,7 @@
         @keyframes mainExplosionFade { 0% { transform: translateX(-50%) scale(1.05); opacity: 1; } 50% { transform: translateX(-50%) scale(1.2); opacity: 0.8; } 100% { transform: translateX(-50%) scale(1.5); opacity: 0; } }
         /* Nova animação suave para o Modal */
         @keyframes softFadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+        @keyframes shake { 0%, 100% { transform: translateX(0); } 10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); } 20%, 40%, 60%, 80% { transform: translateX(5px); } }
         
         /* Adicionado para garantir funcionamento dos componentes que usam fade-in */
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
@@ -66,6 +67,7 @@
         .animate-fade-in { animation: fadeIn 0.5s ease-out; }
         .animate-fade-in-down { animation: fadeInDown 0.3s ease-out; }
         .animate-reveal { animation: reveal 0.5s ease-out; }
+        .animate-shake { animation: shake 0.5s ease-in-out; }
         
         .particle { position: absolute; top: 50%; left: 50%; width: 8px; height: 8px; background-color: #4ade80; border-radius: 50%; pointer-events: none; opacity: 0; z-index: 20; box-shadow: 0 0 10px #22c55e; }
         .particle:nth-child(even) { background-color: #bbf7d0; width: 5px; height: 5px; } 
@@ -338,6 +340,116 @@
         };
 
         // --- COMPONENTES SECUNDÁRIOS ---
+
+        // NOVO: Popup de Intenção de Saída (Exit Intent Popup)
+        const ExitIntentPopup = () => {
+            const [isVisible, setIsVisible] = useState(false);
+
+            useEffect(() => {
+                // Se já foi exibido nesta sessão, não faz nada
+                if (sessionStorage.getItem('exit_popup_shown')) return;
+
+                const showPopup = () => {
+                    if (sessionStorage.getItem('exit_popup_shown')) return;
+                    setIsVisible(true);
+                    sessionStorage.setItem('exit_popup_shown', 'true');
+                    document.body.style.overflow = 'hidden'; // Bloqueia scroll
+                };
+
+                // 1. Mouse Exit Intent (Topo da página)
+                const handleMouseLeave = (e) => {
+                    if (e.clientY <= 0) showPopup();
+                };
+
+                // 2. Troca de Foco (Blur/Visibility)
+                const handleVisibilityChange = () => {
+                    if (document.hidden) showPopup();
+                };
+
+                // 3. Botão Voltar (History Hack)
+                // Inicializa o estado para que o 'back' dispare um evento popstate
+                const initHistory = () => {
+                    window.history.pushState({ page: 1 }, "", window.location.href);
+                };
+
+                const handlePopState = (e) => {
+                    // Impede navegação imediata se possível e mostra o popup
+                    e.preventDefault();
+                    showPopup();
+                    // Empurra o estado de volta para manter o usuário na página
+                    window.history.pushState({ page: 1 }, "", window.location.href);
+                };
+
+                // Listeners
+                document.addEventListener('mouseleave', handleMouseLeave);
+                document.addEventListener('visibilitychange', handleVisibilityChange);
+                window.addEventListener('popstate', handlePopState);
+                
+                // Inicia histórico (pode precisar de interação do usuário em alguns browsers, 
+                // mas executamos no mount para garantir melhor chance)
+                initHistory();
+
+                return () => {
+                    document.removeEventListener('mouseleave', handleMouseLeave);
+                    document.removeEventListener('visibilitychange', handleVisibilityChange);
+                    window.removeEventListener('popstate', handlePopState);
+                };
+            }, []);
+
+            const handleClose = () => {
+                setIsVisible(false);
+                document.body.style.overflow = 'auto'; // Restaura scroll
+            };
+
+            if (!isVisible) return null;
+
+            return (
+                <div className="fixed inset-0 z-[9999] bg-black/95 backdrop-blur-md flex items-center justify-center p-4">
+                    {/* Overlay bloqueante: Impede interação com o fundo */}
+                    <div className="absolute inset-0 bg-transparent" onClick={(e) => e.stopPropagation()}></div>
+                    
+                    <div className="bg-[#111] border border-red-600 rounded-2xl p-6 max-w-lg w-full relative text-center shadow-[0_0_50px_rgba(220,38,38,0.5)] animate-modal-soft z-50">
+                        <button onClick={handleClose} className="absolute top-4 right-4 text-zinc-500 hover:text-white transition-colors z-50">
+                            <i className="fa-solid fa-xmark text-2xl"></i>
+                        </button>
+                        
+                        <div className="mb-2 animate-shake">
+                            <h2 className="text-3xl md:text-4xl font-black text-white uppercase italic tracking-tighter leading-none">
+                                ESPERE! <span className="text-red-600 block md:inline">NÃO VÁ EMBORA!</span>
+                            </h2>
+                        </div>
+                        <p className="text-zinc-400 text-sm mb-6 font-medium leading-relaxed">
+                            Antes de sair, que tal testar nossa plataforma sem compromisso? Temos uma oferta especial para você.
+                        </p>
+
+                        <div className="relative mb-8 group cursor-pointer overflow-hidden rounded-xl border-2 border-white/10 shadow-2xl" onClick={() => window.open('https://wa.me/5511991396481?text=Vi%20o%20popup%20e%20quero%20meu%20teste%20gr%C3%A1tis%20de%204%20horas!', '_blank')}>
+                            <div className="absolute inset-0 bg-gradient-to-t from-red-900/80 via-transparent to-transparent z-10"></div>
+                            <img 
+                                src="https://i.imgur.com/W49BBW8.jpeg" 
+                                alt="Teste Grátis 4 Horas" 
+                                className="w-full object-cover transform group-hover:scale-105 transition-transform duration-500"
+                            />
+                            <div className="absolute bottom-4 left-0 w-full text-center z-20">
+                                <span className="bg-red-600 text-white font-bold text-xs px-3 py-1 rounded-full uppercase tracking-wider shadow-lg animate-pulse">Oferta Relâmpago</span>
+                            </div>
+                        </div>
+
+                        <a 
+                            href="https://wa.me/5511991396481?text=Vi%20o%20popup%20e%20quero%20meu%20teste%20gr%C3%A1tis%20de%204%20horas!" 
+                            target="_blank" 
+                            className="btn-gradient w-full py-4 rounded-xl text-white font-black text-lg md:text-xl uppercase tracking-widest shadow-lg hover:scale-[1.02] transition-transform flex items-center justify-center gap-3 group relative overflow-hidden"
+                        >
+                            <span className="relative z-10 flex items-center gap-2"><i className="fa-brands fa-whatsapp text-2xl"></i> Quero Teste Grátis</span>
+                            <div className="absolute inset-0 bg-white/20 transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-700"></div>
+                        </a>
+                        
+                        <button onClick={handleClose} className="mt-5 text-[10px] md:text-xs text-zinc-600 hover:text-zinc-400 underline decoration-zinc-700 hover:decoration-zinc-400 transition-colors">
+                            Não, obrigado. Prefiro continuar pagando caro em streamings.
+                        </button>
+                    </div>
+                </div>
+            );
+        };
 
         const InstallHelpModal = ({ isOpen, onClose }) => {
             if (!isOpen) return null;
@@ -949,6 +1061,7 @@
 
             return (
                 <div className="min-h-screen relative bg-black" id="topo">
+                    <ExitIntentPopup />
                     <PrivacyOverlay isActive={isPrivacyOpen} onClose={togglePrivacy} />
                     <TermsOverlay isActive={isTermsOpen} onClose={toggleTerms} />
                     <CatalogModal isOpen={isCatalogOpen} onClose={toggleCatalog} />

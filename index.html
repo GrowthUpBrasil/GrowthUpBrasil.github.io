@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GrowthUP+ | Streaming Ilimitado</title>
     
-    <!-- Meta Pixel Code (Placeholder - Descomente para usar) -->
+    <!-- Meta Pixel Code -->
     <script>
     !function(f,b,e,v,n,t,s)
     {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
@@ -14,12 +14,15 @@
     t.src=v;s=b.getElementsByTagName(e)[0];
     s.parentNode.insertBefore(t,s)}(window, document,'script',
     'https://connect.facebook.net/en_US/fbevents.js');
-    // fbq('init', 'SEU_PIXEL_ID_AQUI'); 
-    // fbq('track', 'PageView');
+    
+    // ⚠️ IMPORTANTE: SUBSTITUA 'SEU_PIXEL_ID_AQUI' PELO SEU ID REAL DO META PIXEL
+    fbq('init', 'SEU_PIXEL_ID_AQUI'); 
+    fbq('track', 'PageView');
     </script>
     <noscript><img height="1" width="1" style="display:none"
     src="https://www.facebook.com/tr?id=SEU_PIXEL_ID_AQUI&ev=PageView&noscript=1"
     /></noscript>
+    <!-- End Meta Pixel Code -->
     
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -39,101 +42,67 @@
 
     <style>
         :root { --ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1); }
-        
-        /* Otimizações Globais */
         html { scroll-behavior: smooth; }
         body { background-color: #000; color: white; overflow-x: hidden; font-family: 'Inter', system-ui, -apple-system, sans-serif; -webkit-font-smoothing: antialiased; }
-        
-        /* Aceleração de Hardware para animações */
         .hardware-accelerated { transform: translateZ(0); backface-visibility: hidden; will-change: transform, opacity; }
 
-        /* HERO & BUTTONS */
-        .btn-gradient {
-            background: linear-gradient(90deg, #ef4444 0%, #b91c1c 50%, #7f1d1d 100%);
-            background-size: 200% 200%;
-            animation: gradient-x 3s ease infinite;
-            transition: transform 0.2s, opacity 0.2s;
-            box-shadow: 0 0 15px rgba(239, 68, 68, 0.5);
+        @keyframes appearSmooth {
+            from { opacity: 0; transform: translate(-50%, 20px) scale(0.9); }
+            to { opacity: 1; transform: translate(-50%, 0) scale(1); }
         }
+        @keyframes blinkGreenPulse {
+            0%, 100% { transform: translateX(-50%) scale(1); color: #4ade80; text-shadow: 0 0 5px rgba(34, 197, 94, 0.5); }
+            50% { transform: translateX(-50%) scale(1.1); color: #ffffff; text-shadow: 0 0 15px #4ade80, 0 0 5px #ffffff; }
+        }
+        @keyframes particleExplosion {
+            0% { transform: translate(-50%, -50%) scale(1); opacity: 1; box-shadow: 0 0 5px #4ade80; }
+            100% { transform: translate(var(--tx), var(--ty)) scale(0); opacity: 0; box-shadow: 0 0 0 transparent; }
+        }
+        @keyframes mainExplosionFade {
+            0% { transform: translateX(-50%) scale(1.05); opacity: 1; }
+            50% { transform: translateX(-50%) scale(1.2); opacity: 0.8; }
+            100% { transform: translateX(-50%) scale(1.5); opacity: 0; }
+        }
+        .anim-appear { animation: appearSmooth 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+        .anim-blink { animation: blinkGreenPulse 1s ease-in-out infinite; } 
+        .anim-explode-main { animation: mainExplosionFade 0.5s ease-out forwards; }
+        
+        .particle { position: absolute; top: 50%; left: 50%; width: 8px; height: 8px; background-color: #4ade80; border-radius: 50%; pointer-events: none; opacity: 0; z-index: 20; box-shadow: 0 0 10px #22c55e; }
+        .particle:nth-child(even) { background-color: #bbf7d0; width: 5px; height: 5px; } 
+        .particle:nth-child(3n) { background-color: #ffffff; width: 4px; height: 4px; }
+        .exploding .particle { animation: particleExplosion 0.8s cubic-bezier(0.19, 1, 0.22, 1) forwards; }
+
+        .btn-gradient { background: linear-gradient(90deg, #ef4444 0%, #b91c1c 50%, #7f1d1d 100%); background-size: 200% 200%; animation: gradient-x 3s ease infinite; transition: transform 0.2s, opacity 0.2s; box-shadow: 0 0 15px rgba(239, 68, 68, 0.5); }
         .btn-gradient:hover { opacity: 0.9; transform: scale(1.02); box-shadow: 0 0 25px rgba(239, 68, 68, 0.8); }
-
-        @keyframes strangerPan {
-            0% { transform: scale(1.1) translate(0, 0); }
-            50% { transform: scale(1.2) translate(-2%, 2%); }
-            100% { transform: scale(1.1) translate(0, 0); }
-        }
-
-        .bg-hero {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
-            background-image: url('https://images.unsplash.com/photo-1518066000714-58c45f1a2c0a?q=60&w=1920&auto=format&fit=crop'); 
-            background-size: cover; background-position: center; opacity: 0.6;
-            filter: contrast(1.3) brightness(0.7) sepia(0.3) hue-rotate(-30deg) saturate(1.5);
-            animation: strangerPan 60s ease-in-out infinite alternate;
-        }
-        
-        .bg-overlay {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle at 50% 40%, transparent 0%, rgba(0,0,0,0.4) 40%, #000 90%);
-            z-index: -1;
-        }
-
+        @keyframes strangerPan { 0% { transform: scale(1.1) translate(0, 0); } 50% { transform: scale(1.2) translate(-2%, 2%); } 100% { transform: scale(1.1) translate(0, 0); } }
+        .bg-hero { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; background-image: url('https://images.unsplash.com/photo-1518066000714-58c45f1a2c0a?q=60&w=1920&auto=format&fit=crop'); background-size: cover; background-position: center; opacity: 0.6; filter: contrast(1.3) brightness(0.7) sepia(0.3) hue-rotate(-30deg) saturate(1.5); animation: strangerPan 60s ease-in-out infinite alternate; }
+        .bg-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at 50% 40%, transparent 0%, rgba(0,0,0,0.4) 40%, #000 90%); z-index: -1; }
         .spores-container { position: absolute; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
-        .spore {
-            position: absolute; background: rgba(255, 255, 255, 0.7); border-radius: 50%;
-            box-shadow: 0 0 4px rgba(255, 255, 255, 0.8); animation: floatUp linear infinite;
-        }
-        @keyframes floatUp {
-            0% { transform: translateY(100vh) scale(0); opacity: 0; }
-            20% { opacity: 0.8; }
-            80% { opacity: 0.6; }
-            100% { transform: translateY(-20vh) scale(1); opacity: 0; }
-        }
-
+        .spore { position: absolute; background: rgba(255, 255, 255, 0.7); border-radius: 50%; box-shadow: 0 0 4px rgba(255, 255, 255, 0.8); animation: floatUp linear infinite; }
+        @keyframes floatUp { 0% { transform: translateY(100vh) scale(0); opacity: 0; } 20% { opacity: 0.8; } 80% { opacity: 0.6; } 100% { transform: translateY(-20vh) scale(1); opacity: 0; } }
         @keyframes gradient-x { 0% { background-position: 0% 50% } 50% { background-position: 100% 50% } 100% { background-position: 0% 50% } }
-        
         .perspective-1000 { perspective: 1000px; }
         .transform-style-3d { transform-style: preserve-3d; }
-
         .reveal-element { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease-out, transform 0.6s ease-out; }
         .reveal-element.visible { opacity: 1; transform: translateY(0); }
-        
         .accordion-content { transition: max-height 0.3s ease-out, opacity 0.3s ease-out; max-height: 0; overflow: hidden; opacity: 0; }
         .accordion-content.open { max-height: 500px; opacity: 1; }
-
-        /* FONTS */
         .font-script { font-family: 'Great Vibes', cursive; }
         .font-looke { font-family: 'Pacifico', cursive; }
         .font-condensed { font-family: 'Oswald', sans-serif; }
         .font-geometric { font-family: 'Poppins', sans-serif; }
         .samsung-font { font-weight: 700; letter-spacing: 0.1em; }
         .roku-font { font-weight: 800; letter-spacing: -0.05em; }
-        
         .card-bg { background-color: #111111; }
         .card-border { border: 1px solid #333; }
         .logo-box { background-color: white; border-radius: 6px; aspect-ratio: 1/1; display: flex; align-items: center; justify-content: center; overflow: hidden; padding: 2px; transition: all 0.3s ease; }
-
         .scroll-mt-32 { scroll-margin-top: 130px; }
-
-        /* --- CARTAZES EXPANSÍVEIS --- */
-        .expand-card {
-            flex: 1; transition: flex 0.5s ease, filter 0.3s ease;
-            position: relative; overflow: hidden; filter: brightness(0.6) grayscale(20%);
-        }
+        .expand-card { flex: 1; transition: flex 0.5s ease, filter 0.3s ease; position: relative; overflow: hidden; filter: brightness(0.6) grayscale(20%); }
         .expand-card:hover { flex: 5; filter: brightness(1.1) grayscale(0%); z-index: 10; }
         .posters-container:hover .expand-card:not(:hover) { filter: brightness(0.3) grayscale(100%); }
-
-        /* --- LOGOS INTERATIVAS --- */
-        .brand-card-item {
-            transition: transform 0.3s ease, opacity 0.3s ease, filter 0.3s ease;
-            opacity: 0.5; filter: grayscale(100%) brightness(150%); transform: scale(1); cursor: pointer;
-        }
+        .brand-card-item { transition: transform 0.3s ease, opacity 0.3s ease, filter 0.3s ease; opacity: 0.5; filter: grayscale(100%) brightness(150%); transform: scale(1); cursor: pointer; }
         .brand-card-item img { transition: all 0.3s ease; filter: brightness(0) invert(1); }
-        .brand-card-item:hover {
-            opacity: 1 !important; filter: grayscale(0%) brightness(100%) !important;
-            transform: scale(1.15); z-index: 10;
-        }
-        
-        /* Cores Específicas */
+        .brand-card-item:hover { opacity: 1 !important; filter: grayscale(0%) brightness(100%) !important; transform: scale(1.15); z-index: 10; }
         .brand-card-item.brand-paramount:hover { color: #0064FF; }
         .brand-card-item.brand-max:hover { color: #002BE7; }
         .brand-card-item.brand-prime:hover { color: #00A8E1; }
@@ -151,13 +120,7 @@
         .brand-card-item.brand-espn:hover img { filter: none !important; }
         .brand-card-item.brand-disney:hover img { filter: brightness(0) invert(1) drop-shadow(0 0 5px rgba(17, 60, 207, 0.8)) !important; }
         .brand-card-item.brand-hbo:hover img { filter: brightness(0) invert(1) drop-shadow(0 0 5px rgba(255, 255, 255, 0.6)) !important; }
-
-        /* --- APP SHOWCASE STYLES --- */
-        .app-section {
-            background: transparent; padding: 0; display: grid; grid-template-columns: 1fr 1fr;
-            align-items: center; gap: 40px; max-width: 1000px; width: 100%; margin: 0 auto;
-            color: #fff; position: relative;
-        }
+        .app-section { background: transparent; padding: 0; display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: 40px; max-width: 1000px; width: 100%; margin: 0 auto; color: #fff; position: relative; }
         .app-phone { display: flex; justify-content: center; flex-direction: column; align-items: center; position: relative; z-index: 40; }
         .app-phone-title { font-size: 14px; font-weight: 600; color: #ef4444; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 25px; text-shadow: 0 2px 10px rgba(239, 68, 68, 0.3); display: flex; align-items: center; gap: 8px; animation: fadeIn 1s ease-out; pointer-events: none; }
         .app-phone-container { position: relative; animation: floatPhone 6s ease-in-out infinite; transform: perspective(1000px) rotateY(-5deg) rotateZ(2deg); transform-style: preserve-3d; transition: transform 0.3s ease; }
@@ -316,7 +279,19 @@
         };
 
         const trackLead = () => { if (typeof fbq === 'function') { fbq('track', 'Lead', { content_name: 'WhatsApp Click', content_category: 'Contato', value: 1, currency: 'BRL' }); } };
-        const trackInitiateCheckout = (planName, value) => { if (typeof fbq === 'function') { fbq('track', 'InitiateCheckout', { content_name: `Plano ${planName}`, value: value, currency: 'BRL' }); } };
+        
+        // ATUALIZADO: InitiateCheckout com content_ids e num_items para melhor leitura do funil
+        const trackInitiateCheckout = (planName, value) => { 
+            if (typeof fbq === 'function') { 
+                fbq('track', 'InitiateCheckout', { 
+                    content_name: `Plano ${planName}`,
+                    content_ids: [planName.toLowerCase()], // ID único do produto
+                    num_items: 1,
+                    value: value, 
+                    currency: 'BRL' 
+                }); 
+            } 
+        };
 
         const CustomCheck = ({ color = "green" }) => {
             const strokeColor = color === "green" ? "#22c55e" : "#ef4444"; 
@@ -586,6 +561,28 @@
 
         const PricingSection = ({ getWhatsAppLink }) => {
             const [showCampaignInfo, setShowCampaignInfo] = useState(false);
+
+            // NOVO: Rastreamento de ViewContent quando a seção de planos aparece na tela
+            // Dispara APENAS UMA VEZ após carregamento, conforme boas práticas para LP
+            useEffect(() => {
+                const el = document.getElementById('planos');
+                if (!el) return;
+
+                const observer = new IntersectionObserver(([entry]) => {
+                    if (entry.isIntersecting && typeof fbq === 'function') {
+                        fbq('track', 'ViewContent', {
+                            content_name: 'GrowthUP LP',
+                            content_type: 'subscription'
+                        });
+                        // Desconecta para não disparar múltiplas vezes na mesma sessão
+                        observer.disconnect();
+                    }
+                }, { threshold: 0.1 }); 
+
+                observer.observe(el);
+                return () => observer.disconnect();
+            }, []);
+
             return (
                 <section className="relative z-10 py-16 px-4 bg-[#050505] text-white flex flex-col items-center border-t border-white/5" id="planos">
                     <RevealOnScroll className="text-center max-w-4xl mx-auto mb-16 relative">
@@ -615,7 +612,7 @@
                             <div className="card-bg rounded-3xl p-6 flex flex-col relative card-border h-full hover:border-zinc-700 transition-colors group">
                                 <div className="mb-6"><div className="h-6 mb-1"></div><h3 className="text-xl font-bold text-zinc-200 mb-1">Plano Basic</h3><p className="text-zinc-400 text-sm font-medium mb-5">Mensal</p><div className="flex items-end gap-1 mb-6"><span className="text-4xl font-extrabold text-white tracking-tight">R$ 18,90</span><span className="text-zinc-500 text-sm font-medium mb-1.5 ml-1">/mês</span></div><p className="text-zinc-400 text-xs leading-relaxed min-h-[40px]">Tenha acesso completo a todos os recursos. O plano perfeito para você e sua família.</p></div>
                                 <a href="https://pay.cakto.com.br/7kjywct_686205" target="_blank" className="w-full bg-white hover:bg-zinc-200 text-black font-extrabold text-sm py-3.5 rounded-lg transition-colors mb-8 uppercase tracking-wide text-center block" onClick={() => trackInitiateCheckout('Basic', 18.90)}>Assinar Agora</a>
-                                <div className="mb-8"><div className="flex justify-between items-center text-[10px] font-semibold text-zinc-400 uppercase tracking-wider mb-3"><span>Inclui:</span><span>+12 plataformas</span></div><div className="grid grid-cols-5 gap-2"><div className="logo-box group-hover:ring-2 group-hover:ring-red-500"><span className="font-geometric text-[13px] tracking-tighter font-black lowercase text-black">max</span></div><div className="logo-box group-hover:ring-2 group-hover:ring-red-500 transition-all delay-75"><img src="https://upload.wikimedia.org/wikipedia/commons/3/3e/Disney%2B_logo.svg" alt="Disney+" className="w-10 h-auto filter brightness-0" loading="lazy" decoding="async"/></div><div className="logo-box flex-col pt-1 group-hover:ring-2 group-hover:ring-red-500 transition-all delay-100"><span className="font-bold text-[8px] tracking-tight text-black leading-none">prime video</span><svg className="w-8 h-2 mt-0.5 text-black" viewBox="0 0 100 20" fill="none" stroke="currentColor" strokeWidth="8"><path d="M10,5 Q50,25 90,5" strokeLinecap="round" /><path d="M90,5 L80,10" strokeWidth="0" fill="currentColor"/></svg></div><div className="logo-box group-hover:ring-2 group-hover:ring-red-500 transition-all delay-150"><span className="font-condensed text-black text-[11px] tracking-tighter font-bold transform scale-y-110">NETFLIX</span></div><div className="logo-box group-hover:ring-2 group-hover:ring-red-500 transition-all delay-200"><span className="font-condensed text-black text-[7px] tracking-widest font-bold uppercase">Telecine</span></div></div></div>
+                                <div className="mb-8"><div className="flex justify-between items-center text-[10px] font-semibold text-zinc-400 uppercase tracking-wider mb-3"><span>Inclui:</span><span>+12 plataformas</span></div><div className="grid grid-cols-5 gap-2"><div className="logo-box group-hover:ring-2 group-hover:ring-red-500"><span className="font-geometric text-[13px] tracking-tighter font-black lowercase text-black">max</span></div><div className="logo-box group-hover:ring-2 group-hover:ring-red-500 transition-all delay-75"><img src="https://upload.wikimedia.org/wikipedia/commons/3/3e/Disney%2B_logo.svg" alt="Logo parceiro" className="w-10 h-auto filter brightness-0" loading="lazy" decoding="async"/></div><div className="logo-box flex-col pt-1 group-hover:ring-2 group-hover:ring-red-500 transition-all delay-100"><span className="font-bold text-[8px] tracking-tight text-black leading-none">prime video</span><svg className="w-8 h-2 mt-0.5 text-black" viewBox="0 0 100 20" fill="none" stroke="currentColor" strokeWidth="8"><path d="M10,5 Q50,25 90,5" strokeLinecap="round" /><path d="M90,5 L80,10" strokeWidth="0" fill="currentColor"/></svg></div><div className="logo-box group-hover:ring-2 group-hover:ring-red-500 transition-all delay-150"><span className="font-condensed text-black text-[11px] tracking-tighter font-bold transform scale-y-110">NETFLIX</span></div><div className="logo-box group-hover:ring-2 group-hover:ring-red-500 transition-all delay-200"><span className="font-condensed text-black text-[7px] tracking-widest font-bold uppercase">Telecine</span></div></div></div>
                                 <ul className="space-y-3.5 text-xs text-zinc-300 mt-auto font-medium"><li className="flex items-start gap-3"><CustomCheck color="green" /><span className="font-bold text-white">Acesso em 2 telas <span className="text-[9px] bg-green-500/20 text-green-400 px-1.5 py-0.5 rounded ml-1 uppercase border border-green-500/30">Bônus +1 Tela</span></span></li><li className="flex items-start gap-3"><CustomCheck color="red" /><span>Mais de 10.000 Canais, Filmes e Séries.</span></li><li className="flex items-start gap-3"><CustomCheck color="red" /><span>Tudo em SD/HD/FHD/4K</span></li><li className="flex items-start gap-3"><CustomCheck color="red" /><span>Multiplataforma</span></li><li className="flex items-start gap-3"><CustomCheck color="green" /><span className="font-bold text-white">Acesso por 45 dias <span className="text-[9px] bg-green-500/20 text-green-400 px-1.5 py-0.5 rounded ml-1 uppercase border border-green-500/30">Bônus +15 Dias</span></span></li></ul>
                             </div>
                         </RevealOnScroll>
@@ -624,7 +621,7 @@
                                 <div className="absolute top-6 right-6 bg-red-200 text-red-900 text-[10px] font-black px-3 py-1.5 rounded-full leading-tight text-center shadow-lg z-20">17% de<br/>desconto</div>
                                 <div className="mb-6"><div className="h-6 mb-1"></div><h3 className="text-xl font-bold text-zinc-200 mb-1">Plano Plus</h3><p className="text-zinc-400 text-sm font-medium mb-5">Trimestral</p><div className="flex items-end mb-5"><span className="text-zinc-400 text-lg font-bold mb-1 mr-1">3x</span><span className="text-5xl font-extrabold text-white tracking-tighter">18,18</span><span className="text-zinc-500 text-[9px] font-bold uppercase tracking-wide mb-2 ml-2 leading-none whitespace-nowrap">OU R$48,90</span></div><p className="text-zinc-400 text-xs leading-relaxed min-h-[40px]">Economize assinando por 3 meses. Ótima opção de médio prazo.</p></div>
                                 <a href="https://pay.cakto.com.br/jpjps2w" target="_blank" className="w-full bg-white hover:bg-zinc-200 text-black font-extrabold text-sm py-3.5 rounded-lg transition-colors mb-8 uppercase tracking-wide text-center block" onClick={() => trackInitiateCheckout('Plus', 48.90)}>Assinar Agora</a>
-                                <div className="mb-8"><div className="flex justify-between items-center text-[10px] font-semibold text-zinc-400 uppercase tracking-wider mb-3"><span>Inclui:</span><span>+12 plataformas</span></div><div className="grid grid-cols-5 gap-2"><div className="logo-box group-hover:ring-2 group-hover:ring-red-500"><span className="font-geometric text-[13px] tracking-tighter font-black lowercase text-black">max</span></div><div className="logo-box group-hover:ring-2 group-hover:ring-red-500 transition-all delay-75"><img src="https://upload.wikimedia.org/wikipedia/commons/3/3e/Disney%2B_logo.svg" alt="Disney+" className="w-10 h-auto filter brightness-0" loading="lazy" decoding="async"/></div><div className="logo-box flex-col pt-1 group-hover:ring-2 group-hover:ring-red-500 transition-all delay-100"><span className="font-bold text-[8px] tracking-tight text-black leading-none">prime video</span><svg className="w-8 h-2 mt-0.5 text-black" viewBox="0 0 100 20" fill="none" stroke="currentColor" strokeWidth="8"><path d="M10,5 Q50,25 90,5" strokeLinecap="round" /><path d="M90,5 L80,10" strokeWidth="0" fill="currentColor"/></svg></div><div className="logo-box group-hover:ring-2 group-hover:ring-red-500 transition-all delay-150"><span className="font-condensed text-black text-[11px] tracking-tighter font-bold transform scale-y-110">NETFLIX</span></div><div className="logo-box group-hover:ring-2 group-hover:ring-red-500 transition-all delay-200"><span className="font-condensed text-black text-[7px] tracking-widest font-bold uppercase">Telecine</span></div></div></div>
+                                <div className="mb-8"><div className="flex justify-between items-center text-[10px] font-semibold text-zinc-400 uppercase tracking-wider mb-3"><span>Inclui:</span><span>+12 plataformas</span></div><div className="grid grid-cols-5 gap-2"><div className="logo-box group-hover:ring-2 group-hover:ring-red-500"><span className="font-geometric text-[13px] tracking-tighter font-black lowercase text-black">max</span></div><div className="logo-box group-hover:ring-2 group-hover:ring-red-500 transition-all delay-75"><img src="https://upload.wikimedia.org/wikipedia/commons/3/3e/Disney%2B_logo.svg" alt="Logo parceiro" className="w-10 h-auto filter brightness-0" loading="lazy" decoding="async"/></div><div className="logo-box flex-col pt-1 group-hover:ring-2 group-hover:ring-red-500 transition-all delay-100"><span className="font-bold text-[8px] tracking-tight text-black leading-none">prime video</span><svg className="w-8 h-2 mt-0.5 text-black" viewBox="0 0 100 20" fill="none" stroke="currentColor" strokeWidth="8"><path d="M10,5 Q50,25 90,5" strokeLinecap="round" /><path d="M90,5 L80,10" strokeWidth="0" fill="currentColor"/></svg></div><div className="logo-box group-hover:ring-2 group-hover:ring-red-500 transition-all delay-150"><span className="font-condensed text-black text-[11px] tracking-tighter font-bold transform scale-y-110">NETFLIX</span></div><div className="logo-box group-hover:ring-2 group-hover:ring-red-500 transition-all delay-200"><span className="font-condensed text-black text-[7px] tracking-widest font-bold uppercase">Telecine</span></div></div></div>
                                 <ul className="space-y-3.5 text-xs text-zinc-300 mt-auto font-medium"><li className="flex items-start gap-3"><CustomCheck color="green" /><span className="font-bold text-white">Acesso em 2 telas <span className="text-[9px] bg-green-500/20 text-green-400 px-1.5 py-0.5 rounded ml-1 uppercase border border-green-500/30">Bônus +1 Tela</span></span></li><li className="flex items-start gap-3"><CustomCheck color="red" /><span>Mais de 10.000 Canais, Filmes e Séries.</span></li><li className="flex items-start gap-3"><CustomCheck color="red" /><span>Tudo em FHD/4K</span></li><li className="flex items-start gap-3"><CustomCheck color="red" /><span>Multiplataforma</span></li><li className="flex items-start gap-3"><CustomCheck color="green" /><span className="font-bold text-white">Acesso por 4 meses <span className="text-[9px] bg-green-500/20 text-green-400 px-1.5 py-0.5 rounded ml-1 uppercase border border-green-500/30">Bônus +1 Mês</span></span></li></ul>
                             </div>
                         </RevealOnScroll>
@@ -633,7 +630,7 @@
                                 <div className="absolute top-6 right-6 bg-red-600 text-white text-[10px] font-black px-3 py-1.5 rounded-full leading-tight text-center shadow-lg z-20">20% de<br/>desconto</div>
                                 <div className="mb-6"><div className="mb-1"><span className="text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-red-600 animate-pulse text-sm font-black italic tracking-widest uppercase drop-shadow-[0_2px_4px_rgba(220,38,38,0.4)]">MAIS ESCOLHIDO</span></div><h3 className="text-xl font-bold text-white mb-1">Plano Pro</h3><p className="text-zinc-400 text-sm font-medium mb-5">Semestral</p><div className="flex items-end mb-5"><span className="text-zinc-400 text-lg font-bold mb-1 mr-1">6x</span><span className="text-5xl font-extrabold text-white tracking-tighter">17,52</span><span className="text-zinc-500 text-[9px] font-bold uppercase tracking-wide mb-2 ml-2 leading-none whitespace-nowrap">OU R$89,90</span></div><p className="text-zinc-400 text-xs leading-relaxed min-h-[40px]">O plano ideal para quem quer garantir entretenimento por mais tempo.</p></div>
                                 <a href="https://pay.cakto.com.br/mq6kaat" target="_blank" className="w-full bg-gradient-to-r from-red-600 to-red-900 text-white font-extrabold text-sm py-3.5 rounded-lg hover:opacity-90 transition-opacity mb-8 shadow-lg shadow-red-900/50 uppercase tracking-wide text-center block" onClick={() => trackInitiateCheckout('Pro', 89.90)}>Assinar Agora</a>
-                                <div className="mb-8"><div className="flex justify-between items-center text-[10px] font-semibold text-zinc-400 uppercase tracking-wider mb-3"><span>Inclui:</span><span>+12 plataformas</span></div><div className="grid grid-cols-5 gap-2"><div className="logo-box group-hover:ring-2 group-hover:ring-red-500"><span className="font-geometric text-[13px] tracking-tighter font-black lowercase text-black">max</span></div><div className="logo-box group-hover:ring-2 group-hover:ring-red-500 transition-all delay-75"><img src="https://upload.wikimedia.org/wikipedia/commons/3/3e/Disney%2B_logo.svg" alt="Disney+" className="w-10 h-auto filter brightness-0" loading="lazy" decoding="async"/></div><div className="logo-box flex-col pt-1 group-hover:ring-2 group-hover:ring-red-500 transition-all delay-100"><span className="font-bold text-[8px] tracking-tight text-black leading-none">prime video</span><svg className="w-8 h-2 mt-0.5 text-black" viewBox="0 0 100 20" fill="none" stroke="currentColor" strokeWidth="8"><path d="M10,5 Q50,25 90,5" strokeLinecap="round" /><path d="M90,5 L80,10" strokeWidth="0" fill="currentColor"/></svg></div><div className="logo-box group-hover:ring-2 group-hover:ring-red-500 transition-all delay-150"><span className="font-condensed text-black text-[11px] tracking-tighter font-bold transform scale-y-110">NETFLIX</span></div><div className="logo-box group-hover:ring-2 group-hover:ring-red-500 transition-all delay-200"><span className="font-condensed text-black text-[7px] tracking-widest font-bold uppercase">Telecine</span></div></div></div>
+                                <div className="mb-8"><div className="flex justify-between items-center text-[10px] font-semibold text-zinc-400 uppercase tracking-wider mb-3"><span>Inclui:</span><span>+12 plataformas</span></div><div className="grid grid-cols-5 gap-2"><div className="logo-box group-hover:ring-2 group-hover:ring-red-500"><span className="font-geometric text-[13px] tracking-tighter font-black lowercase text-black">max</span></div><div className="logo-box group-hover:ring-2 group-hover:ring-red-500 transition-all delay-75"><img src="https://upload.wikimedia.org/wikipedia/commons/3/3e/Disney%2B_logo.svg" alt="Logo parceiro" className="w-10 h-auto filter brightness-0" loading="lazy" decoding="async"/></div><div className="logo-box flex-col pt-1 group-hover:ring-2 group-hover:ring-red-500 transition-all delay-100"><span className="font-bold text-[8px] tracking-tight text-black leading-none">prime video</span><svg className="w-8 h-2 mt-0.5 text-black" viewBox="0 0 100 20" fill="none" stroke="currentColor" strokeWidth="8"><path d="M10,5 Q50,25 90,5" strokeLinecap="round" /><path d="M90,5 L80,10" strokeWidth="0" fill="currentColor"/></svg></div><div className="logo-box group-hover:ring-2 group-hover:ring-red-500 transition-all delay-150"><span className="font-condensed text-black text-[11px] tracking-tighter font-bold transform scale-y-110">NETFLIX</span></div><div className="logo-box group-hover:ring-2 group-hover:ring-red-500 transition-all delay-200"><span className="font-condensed text-black text-[7px] tracking-widest font-bold uppercase">Telecine</span></div></div></div>
                                 <ul className="space-y-3.5 text-xs text-zinc-300 mt-auto font-medium"><li className="flex items-start gap-3"><CustomCheck color="green" /><span className="font-bold text-white">Acesso em 3 telas <span className="text-[9px] bg-green-500/20 text-green-400 px-1.5 py-0.5 rounded ml-1 uppercase border border-green-500/30">Bônus +1 Tela</span></span></li><li className="flex items-start gap-3"><CustomCheck color="red" /><span>Mais de 10.000 Canais, Filmes e Séries.</span></li><li className="flex items-start gap-3"><CustomCheck color="red" /><span>Tudo em FHD/4K</span></li><li className="flex items-start gap-3"><CustomCheck color="red" /><span>Multiplataforma</span></li><li className="flex items-start gap-3"><CustomCheck color="green" /><span className="font-bold text-white">Acesso por 9 meses <span className="text-[9px] bg-green-500/20 text-green-400 px-1.5 py-0.5 rounded ml-1 uppercase border border-green-500/30">Bônus +3 Meses</span></span></li></ul>
                             </div>
                         </RevealOnScroll>
@@ -642,7 +639,7 @@
                                 <div className="absolute top-6 right-6 bg-red-800 text-white text-[10px] font-black px-3 py-1.5 rounded-full leading-tight text-center shadow-lg z-20">26% de<br/>desconto</div>
                                 <div className="mb-6"><div className="mb-1"><span className="text-transparent bg-clip-text bg-gradient-to-r from-red-400 to-red-600 animate-pulse text-sm font-black italic tracking-widest uppercase">MAIOR ECONOMIA</span></div><h3 className="text-xl font-bold text-white mb-1">Plano Premium</h3><p className="text-zinc-400 text-sm font-medium mb-5">Anual</p><div className="flex items-end mb-5"><span className="text-zinc-400 text-lg font-bold mb-1 mr-1">12x</span><span className="text-5xl font-extrabold text-white tracking-tighter">17,08</span><span className="text-zinc-500 text-[9px] font-bold uppercase tracking-wide mb-2 ml-2 leading-none whitespace-nowrap">OU R$147,90</span></div><p className="text-zinc-400 text-xs leading-relaxed min-h-[40px]">O maior desconto e acesso anual. Perfeito para você e sua família.</p></div>
                                 <a href="https://pay.cakto.com.br/367ifhv" target="_blank" className="w-full bg-gradient-to-r from-red-700 to-red-950 text-white font-extrabold text-sm py-3.5 rounded-lg hover:opacity-90 transition-opacity mb-8 shadow-lg shadow-red-900/40 uppercase tracking-wide text-center block" onClick={() => trackInitiateCheckout('Premium', 147.90)}>Assinar Agora</a>
-                                <div className="mb-8"><div className="flex justify-between items-center text-[10px] font-semibold text-zinc-400 uppercase tracking-wider mb-3"><span>Inclui:</span><span>+12 plataformas</span></div><div className="grid grid-cols-5 gap-2"><div className="logo-box group-hover:ring-2 group-hover:ring-red-500"><span className="font-geometric text-[13px] tracking-tighter font-black lowercase text-black">max</span></div><div className="logo-box group-hover:ring-2 group-hover:ring-red-500 transition-all delay-75"><img src="https://upload.wikimedia.org/wikipedia/commons/3/3e/Disney%2B_logo.svg" alt="Disney+" className="w-10 h-auto filter brightness-0" loading="lazy" decoding="async"/></div><div className="logo-box flex-col pt-1 group-hover:ring-2 group-hover:ring-red-500 transition-all delay-100"><span className="font-bold text-[8px] tracking-tight text-black leading-none">prime video</span><svg className="w-8 h-2 mt-0.5 text-black" viewBox="0 0 100 20" fill="none" stroke="currentColor" strokeWidth="8"><path d="M10,5 Q50,25 90,5" strokeLinecap="round" /><path d="M90,5 L80,10" strokeWidth="0" fill="currentColor"/></svg></div><div className="logo-box group-hover:ring-2 group-hover:ring-red-500 transition-all delay-150"><span className="font-condensed text-black text-[11px] tracking-tighter font-bold transform scale-y-110">NETFLIX</span></div><div className="logo-box group-hover:ring-2 group-hover:ring-red-500 transition-all delay-200"><span className="font-condensed text-black text-[7px] tracking-widest font-bold uppercase">Telecine</span></div></div></div>
+                                <div className="mb-8"><div className="flex justify-between items-center text-[10px] font-semibold text-zinc-400 uppercase tracking-wider mb-3"><span>Inclui:</span><span>+12 plataformas</span></div><div className="grid grid-cols-5 gap-2"><div className="logo-box group-hover:ring-2 group-hover:ring-red-500"><span className="font-geometric text-[13px] tracking-tighter font-black lowercase text-black">max</span></div><div className="logo-box group-hover:ring-2 group-hover:ring-red-500 transition-all delay-75"><img src="https://upload.wikimedia.org/wikipedia/commons/3/3e/Disney%2B_logo.svg" alt="Logo parceiro" className="w-10 h-auto filter brightness-0" loading="lazy" decoding="async"/></div><div className="logo-box flex-col pt-1 group-hover:ring-2 group-hover:ring-red-500 transition-all delay-100"><span className="font-bold text-[8px] tracking-tight text-black leading-none">prime video</span><svg className="w-8 h-2 mt-0.5 text-black" viewBox="0 0 100 20" fill="none" stroke="currentColor" strokeWidth="8"><path d="M10,5 Q50,25 90,5" strokeLinecap="round" /><path d="M90,5 L80,10" strokeWidth="0" fill="currentColor"/></svg></div><div className="logo-box group-hover:ring-2 group-hover:ring-red-500 transition-all delay-150"><span className="font-condensed text-black text-[11px] tracking-tighter font-bold transform scale-y-110">NETFLIX</span></div><div className="logo-box group-hover:ring-2 group-hover:ring-red-500 transition-all delay-200"><span className="font-condensed text-black text-[7px] tracking-widest font-bold uppercase">Telecine</span></div></div></div>
                                 <ul className="space-y-3.5 text-xs text-zinc-300 mt-auto font-medium"><li className="flex items-start gap-3"><CustomCheck color="green" /><span className="font-bold text-white">Acesso em 4 telas <span className="text-[9px] bg-green-500/20 text-green-400 px-1.5 py-0.5 rounded ml-1 uppercase border border-green-500/30">Bônus +2 Telas</span></span></li><li className="flex items-start gap-3"><CustomCheck color="red" /><span>Mais de 10.000 Canais, Filmes e Séries.</span></li><li className="flex items-start gap-3"><CustomCheck color="red" /><span>Tudo em FHD/4K</span></li><li className="flex items-start gap-3"><CustomCheck color="red" /><span>Multiplataforma</span></li><li className="flex items-start gap-3"><CustomCheck color="green" /><span className="font-bold text-white">Acesso por 18 meses <span className="text-[9px] bg-green-500/20 text-green-400 px-1.5 py-0.5 rounded ml-1 uppercase border border-green-500/30">Bônus +6 Meses</span></span></li></ul>
                             </div>
                         </RevealOnScroll>
@@ -1086,6 +1083,8 @@
 
         const App = () => {
             const [isScrolled, setIsScrolled] = useState(false);
+            const [activationAnim, setActivationAnim] = useState('idle'); // idle, blinking, exploding, gone
+            
             const [showVideoSection, setShowVideoSection] = useState(false);
             const [desktopVideoStage, setDesktopVideoStage] = useState('idle');
             const [desktopVideoId, setDesktopVideoId] = useState(null);
@@ -1098,7 +1097,47 @@
             const whatsappNumber = "5511991396481"; 
             const getWhatsAppLink = (planName) => { const text = "Olá! Quero testar minha TV/Celular SEM LIMITES com a GrowthUP+"; return `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(text)}`; };
             const handleOpenTutorial = () => { setShowVideoSection(true); setTimeout(() => { const section = document.getElementById('video-tutorial-section'); if (section) { section.scrollIntoView({ behavior: 'smooth', block: 'center' }); } }, 100); };
-            useEffect(() => { const handleScroll = () => { setIsScrolled(window.scrollY > 50); }; window.addEventListener('scroll', handleScroll); return () => window.removeEventListener('scroll', handleScroll); }, []);
+            
+            // Scroll Listener unificado
+            useEffect(() => { 
+                const handleScroll = () => { 
+                    const scrollTop = window.scrollY;
+                    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+                    const scrollPercent = (scrollTop / docHeight) * 100;
+
+                    setIsScrolled(scrollTop > 50); 
+
+                    // Lógica da animação do texto (50% da página)
+                    if (scrollPercent > 50 && activationAnim === 'idle') {
+                        setActivationAnim('blinking');
+                    }
+
+                    // Lógica de RESET: Se voltar ao topo (< 15%), o texto reaparece
+                    if (scrollPercent < 15 && activationAnim === 'gone') {
+                        setActivationAnim('idle');
+                    }
+                }; 
+                window.addEventListener('scroll', handleScroll); 
+                return () => window.removeEventListener('scroll', handleScroll); 
+            }, [activationAnim]);
+
+            // Gerenciador de estágios da animação
+            useEffect(() => {
+                if (activationAnim === 'blinking') {
+                    // Tempo para 3 piscadas mais lentas (1s * 3 = 3s)
+                    const timer = setTimeout(() => setActivationAnim('exploding'), 3000);
+                    return () => clearTimeout(timer);
+                }
+                if (activationAnim === 'exploding') {
+                    // Tempo da explosão (0.8s)
+                    const timer = setTimeout(() => {
+                        setActivationAnim('gone');
+                        // Removido o setHasExplodedOnce, apenas some.
+                    }, 800);
+                    return () => clearTimeout(timer);
+                }
+            }, [activationAnim]);
+
             const handleDesktopClick = () => { if (desktopVideoStage === 'idle') setDesktopVideoStage('selecting'); };
             const handleDesktopDeviceSelect = (device) => { setDesktopVideoId(device.videoId); setDesktopVideoStage('playing'); };
             const handleMobileClick = () => { if (mobileVideoStage === 'idle') setMobileVideoStage('selecting'); };
@@ -1121,7 +1160,52 @@
                     <TermsOverlay isActive={isTermsOpen} onClose={toggleTerms} />
                     
                     <div className="fixed inset-0 w-full h-full overflow-hidden pointer-events-none"><div className="bg-hero"></div><div className="bg-overlay"></div><UpsideDownSpores /></div>
-                    <div className="fixed w-full flex justify-center px-4 z-50 transition-all duration-500 ease-in-out top-6"><nav className="bg-black/40 backdrop-blur-sm border border-white/10 rounded-full px-6 py-3 flex items-center justify-between w-full max-w-5xl shadow-2xl transition-all duration-300 hover:bg-black/60 pointer-events-auto"><div className="flex items-center gap-2"><div className="w-8 h-8 rounded-md flex items-center justify-center text-white font-bold text-lg btn-gradient">G</div><span className="text-xl font-semibold tracking-wide">GrowthUP<span className="text-red-500">+</span></span></div><div className="hidden md:flex items-center gap-8 text-sm font-medium text-gray-300">{['Início', 'Diferenciais', 'Planos'].map((item) => (<a key={item} href={`#${item.split(' ')[0].toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")}`} className="hover:text-white transition-colors">{item}</a>))}</div><a href="https://pay.cakto.com.br/367ifhv" target="_blank" className="btn-gradient text-white font-bold text-xs md:text-sm px-6 py-2 rounded-full uppercase tracking-wider">Assinar Agora</a></nav></div>
+                    
+                    <div className="fixed w-full flex justify-center px-4 z-50 transition-all duration-500 ease-in-out top-6">
+                        <nav className="bg-black/40 backdrop-blur-sm border border-white/10 rounded-full px-6 py-3 flex items-center justify-between w-full max-w-5xl shadow-2xl transition-all duration-300 hover:bg-black/60 pointer-events-auto relative">
+                            <div className="flex items-center gap-2"><div className="w-8 h-8 rounded-md flex items-center justify-center text-white font-bold text-lg btn-gradient">G</div><span className="text-xl font-semibold tracking-wide">GrowthUP<span className="text-red-500">+</span></span></div>
+                            <div className="hidden md:flex items-center gap-8 text-sm font-medium text-gray-300">{['Início', 'Diferenciais', 'Planos'].map((item) => (<a key={item} href={`#${item.split(' ')[0].toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")}`} className="hover:text-white transition-colors">{item}</a>))}</div>
+                            
+                            <div className="relative group flex flex-col items-center justify-center">
+                                <a href="https://pay.cakto.com.br/7kjywct_686205" target="_blank" className="btn-gradient text-white font-bold text-xs md:text-sm px-6 py-2 rounded-full uppercase tracking-wider relative z-20">Assinar Agora</a>
+                                
+                                {activationAnim !== 'gone' && (
+                                    <div className={`absolute top-full left-1/2 -translate-x-1/2 mt-4 flex items-center justify-center gap-1.5 whitespace-nowrap text-[10px] font-bold tracking-wide uppercase transition-all z-10 
+                                        ${activationAnim === 'idle' ? 'anim-appear text-green-400 drop-shadow-[0_0_8px_rgba(74,222,128,0.5)]' : ''}
+                                        ${activationAnim === 'blinking' ? 'anim-blink' : ''}
+                                        ${activationAnim === 'exploding' ? 'anim-explode-main exploding text-green-400' : ''}
+                                    `}>
+                                        
+                                        {/* Partículas da Explosão */}
+                                        {activationAnim === 'exploding' && (
+                                            <>
+                                                <span className="particle" style={{'--tx': '-60px', '--ty': '-60px'}}></span>
+                                                <span className="particle" style={{'--tx': '60px', '--ty': '-60px'}}></span>
+                                                <span className="particle" style={{'--tx': '-60px', '--ty': '60px'}}></span>
+                                                <span className="particle" style={{'--tx': '60px', '--ty': '60px'}}></span>
+                                                
+                                                <span className="particle" style={{'--tx': '0px', '--ty': '-90px'}}></span>
+                                                <span className="particle" style={{'--tx': '0px', '--ty': '90px'}}></span>
+                                                <span className="particle" style={{'--tx': '-90px', '--ty': '0px'}}></span>
+                                                <span className="particle" style={{'--tx': '90px', '--ty': '0px'}}></span>
+                                                
+                                                <span className="particle" style={{'--tx': '-45px', '--ty': '-85px'}}></span>
+                                                <span className="particle" style={{'--tx': '45px', '--ty': '-85px'}}></span>
+                                                <span className="particle" style={{'--tx': '-85px', '--ty': '25px'}}></span>
+                                                <span className="particle" style={{'--tx': '85px', '--ty': '25px'}}></span>
+                                                
+                                                <span className="particle" style={{'--tx': '-20px', '--ty': '-100px'}}></span>
+                                                <span className="particle" style={{'--tx': '20px', '--ty': '-100px'}}></span>
+                                            </>
+                                        )}
+
+                                        <i className="fa-brands fa-whatsapp text-sm"></i> Ativação imediata
+                                    </div>
+                                )}
+                            </div>
+                        </nav>
+                    </div>
+
                     <section id="inicio" className="relative z-10 min-h-screen flex flex-col justify-center items-center text-center px-6 md:px-12 lg:px-24 pb-12 w-full max-w-7xl mx-auto transition-all duration-500 pt-32">
                         <RevealOnScroll className="max-w-3xl mb-12 mx-auto"><h1 className="text-4xl md:text-6xl font-semibold leading-tight mb-4 drop-shadow-2xl">SUA TV.<br/>SEM LIMITES.</h1><p className="text-gray-300 text-lg md:text-xl font-light leading-relaxed max-w-2xl mx-auto">Desbloqueie o potencial máximo do seu entretenimento.<br />Milhares de conteúdos em 4K.</p></RevealOnScroll>
                         <RevealOnScroll delay={200} className="w-full mb-8"><h2 className="text-white text-lg font-semibold mb-6 pl-1 text-center md:text-left">Filmes, Séries, Canais e muito mais</h2><ExpandingPosters /></RevealOnScroll>

@@ -337,7 +337,7 @@
             const whatsappLink = `https://wa.me/5511991396481?text=${encodeURIComponent(messageText)}`;
             
             return (
-                <div className="fixed inset-0 z-[100] bg-black/90 backdrop-blur-md flex items-center justify-center p-4 animate-fade-in">
+                <div className="fixed inset-0 z-[100] bg-black/90 backdrop-blur-md flex items-center justify-center p-4 anim-modal-soft">
                     <div className="bg-[#111] border border-white/10 rounded-2xl p-8 max-w-md w-full text-center relative shadow-2xl shadow-green-900/10 transform transition-all scale-100">
                         <button onClick={onClose} className="absolute top-4 right-4 text-zinc-500 hover:text-white transition-colors">
                             <i className="fas fa-times text-xl"></i>
@@ -487,6 +487,8 @@
             </div>
         );
 
+        // --- 3. MAIN SECTIONS ---
+
         const InstallAppSection = () => {
             return (
                 <div className="w-full bg-black py-20 border-t border-white/5 relative z-20">
@@ -568,23 +570,23 @@
                                     <div className={`video-overlay ${videoUrl ? 'active' : ''}`}><button className="close-video-btn" onClick={closeVideo}><i className="fa-solid fa-xmark"></i></button><div className="video-container">{videoUrl && <iframe src={videoUrl} frameBorder="0" allow="autoplay; encrypted-media" allowFullScreen></iframe>}</div></div>
                                     <div className="app-ui-scroll-content" ref={mainScrollRef}>
                                         <div className="app-hero-banner">
-                                            <div className={`hero-gif-container ${gifActive ? 'active' : ''}`}><img src="https://i.pinimg.com/originals/a1/5a/b9/a15ab9f44fb47ab505b5a92ab5f98ed8.gif" alt="Futebol GIF" /></div>
+                                            <div className={`hero-gif-container ${gifActive ? 'active' : ''}`}><img src="https://i.pinimg.com/originals/a1/5a/b9/a15ab9f44fb47ab505b5a92ab5f98ed8.gif" alt="Futebol GIF" loading="lazy" decoding="async" /></div>
                                             <div className="app-hero-overlay"></div>
                                             <div className={`play-btn-app ${gifActive ? 'hidden' : ''}`} onClick={() => setGifActive(true)}><i className="fa-solid fa-play"></i></div>
                                             <div className="hero-info"><span className="hero-tag">Ao Vivo Agora</span><h3 className="hero-title">Champions League</h3><div className="hero-meta"><span><i className="fa-regular fa-clock"></i> 2º Tempo</span><span>• Final</span><span>• 4K HDR</span></div></div>
                                         </div>
                                         <div className="app-section-title">Destaques da Semana</div>
                                         <div className="movies-row horizontal-scroll" ref={horizontalScrollRef1}>
-                                            <div className="movie-card-app" onClick={() => openVideo('qnR0s1QVknI')}><div className="movie-poster-app"><img src="https://jardimdasamericas.com.br/uploads/2025/12/capa-filme-avatar-fogo-e-cinzas-966f9-large.png" alt="Avatar"/></div><span className="movie-title-text">Avatar: Fogo e Cinzas</span></div>
-                                            <div className="movie-card-app" onClick={() => openVideo('g0GB20yE9JY')}><div className="movie-poster-app"><img src="https://upload.wikimedia.org/wikipedia/pt/6/60/O_Agente_Secreto_%28Cartaz_brasileiro%29.jpg" alt="O Agente Secreto"/></div><span className="movie-title-text">O Agente Secreto</span></div>
-                                            <div className="movie-card-app" onClick={() => openVideo('T7_zMl_ZhdQ')}><div className="movie-poster-app"><img src="https://s2-g1.glbimg.com/JlPpzZaM6BQeHE8519IeNARgIJg=/0x0:1382x2048/984x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2021/k/m/sUy6NaRMiAMJOllVxvOQ/fb2miibwyairfgo.jpg" alt="Batman"/></div><span className="movie-title-text">The Batman II</span></div>
-                                            <div className="movie-card-app" onClick={() => openVideo('ZiDphkXCZsQ')}><div className="movie-poster-app"><img src="https://ingresso-a.akamaihd.net/prd/img/movie/f1-o-filme/3a0a118e-8bf3-4e10-b45d-f028cd49b001.webp" alt="F1"/></div><span className="movie-title-text">F1: O Filme</span></div>
+                                            <div className="movie-card-app" onClick={() => openVideo('qnR0s1QVknI')}><div className="movie-poster-app"><img src="https://jardimdasamericas.com.br/uploads/2025/12/capa-filme-avatar-fogo-e-cinzas-966f9-large.png" alt="Avatar" loading="lazy" decoding="async"/></div><span className="movie-title-text">Avatar: Fogo e Cinzas</span></div>
+                                            <div className="movie-card-app" onClick={() => openVideo('g0GB20yE9JY')}><div className="movie-poster-app"><img src="https://upload.wikimedia.org/wikipedia/pt/6/60/O_Agente_Secreto_%28Cartaz_brasileiro%29.jpg" alt="O Agente Secreto" loading="lazy" decoding="async"/></div><span className="movie-title-text">O Agente Secreto</span></div>
+                                            <div className="movie-card-app" onClick={() => openVideo('T7_zMl_ZhdQ')}><div className="movie-poster-app"><img src="https://s2-g1.glbimg.com/JlPpzZaM6BQeHE8519IeNARgIJg=/0x0:1382x2048/984x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2021/k/m/sUy6NaRMiAMJOllVxvOQ/fb2miibwyairfgo.jpg" alt="Batman" loading="lazy" decoding="async"/></div><span className="movie-title-text">The Batman II</span></div>
+                                            <div className="movie-card-app" onClick={() => openVideo('ZiDphkXCZsQ')}><div className="movie-poster-app"><img src="https://ingresso-a.akamaihd.net/prd/img/movie/f1-o-filme/3a0a118e-8bf3-4e10-b45d-f028cd49b001.webp" alt="F1" loading="lazy" decoding="async"/></div><span className="movie-title-text">F1: O Filme</span></div>
                                         </div>
                                         <div className="app-section-title">Séries Populares</div>
                                         <div className="movies-row horizontal-scroll" ref={horizontalScrollRef2}>
-                                            <div className="movie-card-app" onClick={() => openVideo('IcR-6y3Q9XI')}><div className="movie-poster-app"><img src="https://i.imgur.com/ONufJIn.png" alt="TLOU"/></div><span className="movie-title-text">The Last of Us</span></div>
-                                            <div className="movie-card-app" onClick={() => openVideo('Wb3kaP580kA')}><div className="movie-poster-app"><img src="https://i.imgur.com/30zW0QK.png" alt="Stranger Things"/></div><span className="movie-title-text">Stranger Things 5</span></div>
-                                            <div className="movie-card-app" onClick={() => openVideo('IgyahanUcOk')}><div className="movie-poster-app"><img src="https://preview.redd.it/tvn-spring-fever-teaser-poster-premieres-january-5-v0-kgb43b5drv4g1.jpg?width=640&crop=smart&auto=webp&s=4d0318de16fd82a564657498104302df46ef8b16" alt="Spring Fever"/></div><span className="movie-title-text">Spring Fever</span></div>
+                                            <div className="movie-card-app" onClick={() => openVideo('IcR-6y3Q9XI')}><div className="movie-poster-app"><img src="https://i.imgur.com/ONufJIn.png" alt="TLOU" loading="lazy" decoding="async"/></div><span className="movie-title-text">The Last of Us</span></div>
+                                            <div className="movie-card-app" onClick={() => openVideo('Wb3kaP580kA')}><div className="movie-poster-app"><img src="https://i.imgur.com/30zW0QK.png" alt="Stranger Things" loading="lazy" decoding="async"/></div><span className="movie-title-text">Stranger Things 5</span></div>
+                                            <div className="movie-card-app" onClick={() => openVideo('IgyahanUcOk')}><div className="movie-poster-app"><img src="https://preview.redd.it/tvn-spring-fever-teaser-poster-premieres-january-5-v0-kgb43b5drv4g1.jpg?width=640&crop=smart&auto=webp&s=4d0318de16fd82a564657498104302df46ef8b16" alt="Spring Fever" loading="lazy" decoding="async"/></div><span className="movie-title-text">Spring Fever</span></div>
                                         </div>
                                     </div>
                                 </div>
@@ -876,8 +878,59 @@
             const handleDesktopClick = () => { if (desktopVideoStage === 'idle') setDesktopVideoStage('selecting'); };
             const handleDesktopDeviceSelect = (device) => { setDesktopVideoId(device.videoId); setDesktopVideoStage('playing'); };
 
-            useEffect(() => { const handleScroll = () => { const scrollTop = window.scrollY; const docHeight = document.documentElement.scrollHeight - window.innerHeight; const scrollPercent = (scrollTop / docHeight) * 100; setIsScrolled(scrollTop > 50); if (scrollPercent > 50 && activationAnim === 'idle') { setActivationAnim('blinking'); } if (scrollPercent < 15 && activationAnim === 'gone') { setActivationAnim('idle'); } }; window.addEventListener('scroll', handleScroll); return () => window.removeEventListener('scroll', handleScroll); }, [activationAnim]);
-            useEffect(() => { if (activationAnim === 'blinking') { const timer = setTimeout(() => setActivationAnim('exploding'), 10000); return () => clearTimeout(timer); } if (activationAnim === 'exploding') { const timer = setTimeout(() => { setActivationAnim('gone'); }, 800); return () => clearTimeout(timer); } }, [activationAnim]);
+            // Logic for Scroll Animation
+            useEffect(() => { 
+                const handleScroll = () => { 
+                    const scrollTop = window.scrollY; 
+                    const docHeight = document.documentElement.scrollHeight - window.innerHeight; 
+                    const scrollPercent = (scrollTop / docHeight) * 100; 
+                    setIsScrolled(scrollTop > 50); 
+                    if (scrollPercent > 50 && activationAnim === 'idle') { setActivationAnim('blinking'); } 
+                    if (scrollPercent < 15 && activationAnim === 'gone') { setActivationAnim('idle'); } 
+                }; 
+                window.addEventListener('scroll', handleScroll); 
+                return () => window.removeEventListener('scroll', handleScroll); 
+            }, [activationAnim]);
+
+            // Logic for Activation Animation Timeout
+            useEffect(() => { 
+                if (activationAnim === 'blinking') { 
+                    const timer = setTimeout(() => setActivationAnim('exploding'), 10000); 
+                    return () => clearTimeout(timer); 
+                } 
+                if (activationAnim === 'exploding') { 
+                    const timer = setTimeout(() => { setActivationAnim('gone'); }, 800); 
+                    return () => clearTimeout(timer); 
+                } 
+            }, [activationAnim]);
+
+            // Logic for Dynamic Title
+            useEffect(() => {
+                const originalTitle = document.title;
+                let titleInterval;
+
+                const handleVisibilityChange = () => {
+                    if (document.hidden) {
+                        let showMessage1 = true;
+                        document.title = "Volte!";
+                        titleInterval = setInterval(() => {
+                            document.title = showMessage1 ? "Não perca..." : "Volte!";
+                            showMessage1 = !showMessage1;
+                        }, 1000);
+                    } else {
+                        if (titleInterval) clearInterval(titleInterval);
+                        document.title = originalTitle;
+                    }
+                };
+
+                document.addEventListener('visibilitychange', handleVisibilityChange);
+
+                return () => {
+                    if (titleInterval) clearInterval(titleInterval);
+                    document.removeEventListener('visibilitychange', handleVisibilityChange);
+                    document.title = originalTitle;
+                };
+            }, []);
 
             const benefits = [
                 { icon: <Icons.Monitor className="w-8 h-8" />, title: "Sua Smart TV Potencializada", desc: "Transforme sua Roku, Samsung ou LG em uma central de cinema completa." }, 

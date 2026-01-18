@@ -634,7 +634,33 @@
         };
 
         const EconomySection = () => {
-            const brands = [{ type: 'text-script', main: 'Paramount', sub: '+', subStyle: 'text-2xl font-sans italic', className: 'brand-paramount' }, { type: 'text-geo', text: 'max', className: 'brand-max' }, { type: 'img', src: 'https://upload.wikimedia.org/wikipedia/commons/3/3e/Disney%2B_logo.svg', alt: 'Disney+', className: 'brand-disney' }, { type: 'prime', className: 'brand-prime' }, { type: 'text-condensed', text: 'NETFLIX', className: 'brand-netflix' }, { type: 'img', src: 'https://upload.wikimedia.org/wikipedia/commons/d/de/HBO_logo.svg', alt: 'HBO', className: 'brand-hbo' }, { type: 'text-custom', className: 'brand-globoplay', content: <span className="font-geometric text-2xl font-bold tracking-tight lowercase">globoplay</span> }, { type: 'text-condensed', text: 'Telecine', style: 'text-2xl uppercase', className: 'brand-telecine' }, { type: 'img', src: 'https://upload.wikimedia.org/wikipedia/commons/2/2f/ESPN_wordmark.svg', alt: 'ESPN', className: 'brand-espn' }, { type: 'text-looke', text: 'Looke', className: 'brand-looke' }, { type: 'text-custom', className: 'brand-crunchyroll', content: <span className="font-bold text-lg tracking-tight lowercase">crunchyroll</span> }, { type: 'text-custom', className: 'brand-viki', content: <span className="font-bold text-lg">Rakuten <span className="font-black">Viki</span></span> }, { type: 'apple', className: 'brand-apple' }, { type: 'text-condensed', text: 'PREMIERE', style: 'text-2xl font-bold uppercase tracking-[0.2em]', className: 'brand-premiere' }, { type: '18+', className: 'brand-18' }];
+            const brands = [
+                { type: 'text-script', main: 'Paramount', sub: '+', subStyle: 'text-2xl font-sans italic', className: 'brand-paramount' }, 
+                { type: 'text-geo', text: 'max', className: 'brand-max' }, 
+                { type: 'img', src: 'https://upload.wikimedia.org/wikipedia/commons/3/3e/Disney%2B_logo.svg', alt: 'Disney+', className: 'brand-disney' }, 
+                { type: 'prime', className: 'brand-prime' }, 
+                { type: 'text-condensed', text: 'NETFLIX', className: 'brand-netflix' }, 
+                { type: 'img', src: 'https://upload.wikimedia.org/wikipedia/commons/d/de/HBO_logo.svg', alt: 'HBO', className: 'brand-hbo' }, 
+                { type: 'text-custom', className: 'brand-globoplay', content: <span className="font-geometric text-2xl font-bold tracking-tight lowercase">globoplay</span> }, 
+                { type: 'text-condensed', text: 'Telecine', style: 'text-2xl uppercase', className: 'brand-telecine' }, 
+                { type: 'img', src: 'https://upload.wikimedia.org/wikipedia/commons/2/2f/ESPN_wordmark.svg', alt: 'ESPN', className: 'brand-espn' }, 
+                { type: 'text-looke', text: 'Looke', className: 'brand-looke' }, 
+                { type: 'text-custom', className: 'brand-crunchyroll', content: <span className="font-bold text-lg tracking-tight lowercase">crunchyroll</span> }, 
+                // Alterado o layout do Rakuten Viki
+                { 
+                    type: 'text-custom', 
+                    className: 'brand-viki', 
+                    content: (
+                        <div className="flex flex-col items-center justify-center leading-none">
+                            <span className="font-black text-2xl tracking-tighter mb-0.5">VIKI</span>
+                            <span className="font-bold text-[9px] uppercase tracking-wide opacity-80">Rakuten</span>
+                        </div>
+                    ) 
+                }, 
+                { type: 'apple', className: 'brand-apple' }, 
+                { type: 'text-condensed', text: 'PREMIERE', style: 'text-2xl font-bold uppercase tracking-[0.2em]', className: 'brand-premiere' }, 
+                { type: '18+', className: 'brand-18' }
+            ];
             return (
                 <section className="relative z-10 py-16 md:py-24 bg-[#050505] text-white border-t border-white/5">
                     <div className="max-w-7xl w-full mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center px-6">

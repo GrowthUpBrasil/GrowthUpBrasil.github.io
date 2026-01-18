@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GrowthUP+ | Streaming Ilimitado</title>
+    <link rel="icon" type="image/png" href="https://i.imgur.com/sM6f7mI.png">
     
     <!-- Meta Pixel Code -->
     <script>
@@ -1096,6 +1097,13 @@
 
             const whatsappNumber = "5511991396481"; 
             const getWhatsAppLink = (planName) => { const text = "Olá! Quero testar minha TV/Celular SEM LIMITES com a GrowthUP+"; return `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(text)}`; };
+            
+            // Link específico para o botão do topo
+            const getHeaderWhatsAppLink = () => {
+                const text = "Vim do site da GrowthUP+\n\nQuero testar o acesso SEM LIMITES na minha TV ou celular.\n\nPode me explicar como funciona o teste e a ativação imediata?";
+                return `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(text)}`;
+            };
+
             const handleOpenTutorial = () => { setShowVideoSection(true); setTimeout(() => { const section = document.getElementById('video-tutorial-section'); if (section) { section.scrollIntoView({ behavior: 'smooth', block: 'center' }); } }, 100); };
             
             // Scroll Listener unificado
@@ -1124,8 +1132,8 @@
             // Gerenciador de estágios da animação
             useEffect(() => {
                 if (activationAnim === 'blinking') {
-                    // Tempo para 3 piscadas mais lentas (1s * 3 = 3s)
-                    const timer = setTimeout(() => setActivationAnim('exploding'), 3000);
+                    // Tempo aumentado para 10 segundos piscando antes de explodir
+                    const timer = setTimeout(() => setActivationAnim('exploding'), 10000);
                     return () => clearTimeout(timer);
                 }
                 if (activationAnim === 'exploding') {
@@ -1167,7 +1175,7 @@
                             <div className="hidden md:flex items-center gap-8 text-sm font-medium text-gray-300">{['Início', 'Diferenciais', 'Planos'].map((item) => (<a key={item} href={`#${item.split(' ')[0].toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")}`} className="hover:text-white transition-colors">{item}</a>))}</div>
                             
                             <div className="relative group flex flex-col items-center justify-center">
-                                <a href="https://pay.cakto.com.br/7kjywct_686205" target="_blank" className="btn-gradient text-white font-bold text-xs md:text-sm px-6 py-2 rounded-full uppercase tracking-wider relative z-20">Assinar Agora</a>
+                                <a href={getHeaderWhatsAppLink()} target="_blank" className="btn-gradient text-white font-bold text-xs md:text-sm px-6 py-2 rounded-full uppercase tracking-wider relative z-20">Testar agora mesmo</a>
                                 
                                 {activationAnim !== 'gone' && (
                                     <div className={`absolute top-full left-1/2 -translate-x-1/2 mt-4 flex items-center justify-center gap-1.5 whitespace-nowrap text-[10px] font-bold tracking-wide uppercase transition-all z-10 

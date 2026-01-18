@@ -652,7 +652,19 @@
                                         {item.type === 'text-script' && <div className="text-center"><span className="font-script text-3xl transition-colors">{item.main}</span><span className={item.subStyle}>{item.sub}</span></div>}
                                         {item.type === 'text-geo' && <span className="font-geometric text-4xl tracking-tighter font-black lowercase transition-colors">{item.text}</span>}
                                         {item.type === 'img' && <img src={item.src} alt={item.alt} className="h-10 w-auto object-contain" loading="lazy" decoding="async" />}
-                                        {item.type === 'prime' && <div className="flex flex-col items-center justify-center w-full"><div className="flex items-center gap-1"><span className="font-bold text-xl tracking-tight transition-colors">prime video</span></div><svg className="w-16 h-4 mt-1 transition-colors" viewBox="0 0 100 20" fill="none" stroke="currentColor" strokeWidth="3"><path d="M10,5 Q50,20 90,5" strokeLinecap="round" /><path d="M90,5 L85,8 M90,5 L88,1" strokeWidth="0" fill="currentColor"/> <polygon points="88,0 95,5 86,10" fill="currentColor" /></svg></div>}
+                                        {/* CORREÇÃO: Ajuste de tamanho responsivo para o logo Prime Video */}
+                                        {item.type === 'prime' && (
+                                            <div className="flex flex-col items-center justify-center w-full">
+                                                <div className="flex items-center gap-1">
+                                                    <span className="font-bold text-sm md:text-xl tracking-tight transition-colors">prime video</span>
+                                                </div>
+                                                <svg className="w-10 h-2 md:w-16 md:h-4 mt-1 transition-colors" viewBox="0 0 100 20" fill="none" stroke="currentColor" strokeWidth="3">
+                                                    <path d="M10,5 Q50,20 90,5" strokeLinecap="round" />
+                                                    <path d="M90,5 L85,8 M90,5 L88,1" strokeWidth="0" fill="currentColor"/> 
+                                                    <polygon points="88,0 95,5 86,10" fill="currentColor" />
+                                                </svg>
+                                            </div>
+                                        )}
                                         {item.type === 'text-condensed' && <span className={`font-condensed tracking-widest font-bold transition-colors ${item.style || 'text-3xl'}`}>{item.text}</span>}
                                         {item.type === 'text-looke' && <span className="font-looke text-3xl tracking-wide transition-colors">{item.text}</span>}
                                         {item.type === 'text-custom' && item.content}
@@ -838,7 +850,12 @@
             useEffect(() => { const handleScroll = () => { const scrollTop = window.scrollY; const docHeight = document.documentElement.scrollHeight - window.innerHeight; const scrollPercent = (scrollTop / docHeight) * 100; setIsScrolled(scrollTop > 50); if (scrollPercent > 50 && activationAnim === 'idle') { setActivationAnim('blinking'); } if (scrollPercent < 15 && activationAnim === 'gone') { setActivationAnim('idle'); } }; window.addEventListener('scroll', handleScroll); return () => window.removeEventListener('scroll', handleScroll); }, [activationAnim]);
             useEffect(() => { if (activationAnim === 'blinking') { const timer = setTimeout(() => setActivationAnim('exploding'), 10000); return () => clearTimeout(timer); } if (activationAnim === 'exploding') { const timer = setTimeout(() => { setActivationAnim('gone'); }, 800); return () => clearTimeout(timer); } }, [activationAnim]);
 
-            const benefits = [{ icon: <Icons.Monitor className="w-8 h-8" />, title: "Sua Smart TV Potencializada", desc: "Transforme sua Roku, Samsung ou LG em uma central de cinema completa." }, { icon: <Icons.Zap className="w-8 h-8" />, title: "Streaming de Alta Performance", desc: "Infraestrutura dedicada para garantir fluidez total, sem travamentos irritantes." }, { icon: <Icons.Tv className="w-8 h-8" />, title: "Resolução Ultra 4K + 60 Fps", desc: "Veja cada detalhe. Qualidade de imagem cristalina que valoriza sua TV." }, { icon: <Icons.Layers className="w-8 h-8" />, title: <>Biblioteca<span className="md:hidden"> </span><br className="hidden md:block"/>Universal</>, desc: "Todos os canais, lançamentos de cinema, filmes e séries em um só lugar para melhor entreterimento" }];
+            const benefits = [
+                { icon: <Icons.Monitor className="w-8 h-8" />, title: "Sua Smart TV Potencializada", desc: "Transforme sua Roku, Samsung ou LG em uma central de cinema completa." }, 
+                { icon: <Icons.Zap className="w-8 h-8" />, title: "Streaming de Alta Performance", desc: "Infraestrutura dedicada para garantir fluidez total, sem travamentos irritantes." }, 
+                { icon: <Icons.Tv className="w-8 h-8" />, title: "Resolução Ultra 4K + 60 Fps", desc: "Veja cada detalhe. Qualidade de imagem cristalina que valoriza sua TV." }, 
+                { icon: <Icons.Layers className="w-8 h-8" />, title: <>Biblioteca<span className="md:hidden"> </span><br className="hidden md:block"/>Universal</>, desc: "Todos os canais, lançamentos de cinema, filmes e séries em um só lugar para melhor entreterimento." }
+            ];
 
             return (
                 <div className="min-h-screen relative bg-black" id="topo">

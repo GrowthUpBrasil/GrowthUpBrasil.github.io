@@ -51,9 +51,13 @@
         @keyframes blinkGreenPulse { 0%, 100% { transform: translateX(-50%) scale(1); color: #4ade80; text-shadow: 0 0 5px rgba(34, 197, 94, 0.5); } 50% { transform: translateX(-50%) scale(1.1); color: #ffffff; text-shadow: 0 0 15px #4ade80, 0 0 5px #ffffff; } }
         @keyframes particleExplosion { 0% { transform: translate(-50%, -50%) scale(1); opacity: 1; box-shadow: 0 0 5px #4ade80; } 100% { transform: translate(var(--tx), var(--ty)) scale(0); opacity: 0; box-shadow: 0 0 0 transparent; } }
         @keyframes mainExplosionFade { 0% { transform: translateX(-50%) scale(1.05); opacity: 1; } 50% { transform: translateX(-50%) scale(1.2); opacity: 0.8; } 100% { transform: translateX(-50%) scale(1.5); opacity: 0; } }
+        /* Nova animação suave para o Modal */
+        @keyframes softFadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+        
         .anim-appear { animation: appearSmooth 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
         .anim-blink { animation: blinkGreenPulse 1s ease-in-out infinite; } 
         .anim-explode-main { animation: mainExplosionFade 0.5s ease-out forwards; }
+        .anim-modal-soft { animation: softFadeIn 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; }
         
         .particle { position: absolute; top: 50%; left: 50%; width: 8px; height: 8px; background-color: #4ade80; border-radius: 50%; pointer-events: none; opacity: 0; z-index: 20; box-shadow: 0 0 10px #22c55e; }
         .particle:nth-child(even) { background-color: #bbf7d0; width: 5px; height: 5px; } 
@@ -189,7 +193,10 @@
             .app-content { order: 2; display: flex; flex-direction: column; align-items: center; }
             .app-phone { order: 1; }
             .phone-mockup { width: 250px; height: 500px; }
+            
+            /* Mantém a animação no mobile também */
             .app-phone-container { transform: none; animation: floatVertical 6s ease-in-out infinite; }
+            
             .app-title { font-size: 32px; }
             .app-text { margin-left: auto; margin-right: auto; font-size: 14px; }
             .store-buttons { justify-content: center; width: 100%; }
@@ -221,6 +228,7 @@
         .footer-nav-links a, .footer-nav-links button { color: #888; text-decoration: none; font-size: 13px; font-weight: 500; transition: color 0.2s; cursor: pointer; background: none; border: none; padding: 0; font-family: inherit; }
         .footer-nav-links a:hover, .footer-nav-links button:hover { color: #ef4444; }
         .social-icons { display: flex; gap: 15px; align-items: center; }
+        /* Alterado de color: #666 para color: #ffffff para igualar a intensidade */
         .social-link { width: 20px; height: 20px; color: #ffffff; transition: all 0.3s ease; cursor: pointer; display: flex; align-items: center; justify-content: center; }
         .social-link svg { width: 100%; height: 100%; fill: none; stroke: currentColor; strokeWidth: 2; strokeLinecap: round; strokeLinejoin: round; }
         .social-link.fill-icon svg { fill: currentColor; stroke: none; }
@@ -391,7 +399,7 @@
             const closeVideo = () => setVideoUrl(null);
 
             return (
-                <div className="fixed inset-0 z-[100] bg-black/90 backdrop-blur-md flex items-center justify-center p-4 animate-fade-in">
+                <div className="fixed inset-0 z-[100] bg-black/90 backdrop-blur-md flex items-center justify-center p-4 anim-modal-soft">
                     <button onClick={onClose} className="absolute top-6 right-6 text-white/50 hover:text-red-500 transition-colors z-[110]"><i className="fa-solid fa-xmark text-4xl"></i></button>
                     <div className="relative" style={{ transform: 'none' }}>
                         <div className="phone-mockup" style={{boxShadow: '0 0 50px rgba(220, 38, 38, 0.2)', transform: 'none', margin: '0 auto'}}>
@@ -560,23 +568,23 @@
                                     <div className={`video-overlay ${videoUrl ? 'active' : ''}`}><button className="close-video-btn" onClick={closeVideo}><i className="fa-solid fa-xmark"></i></button><div className="video-container">{videoUrl && <iframe src={videoUrl} frameBorder="0" allow="autoplay; encrypted-media" allowFullScreen></iframe>}</div></div>
                                     <div className="app-ui-scroll-content" ref={mainScrollRef}>
                                         <div className="app-hero-banner">
-                                            <div className={`hero-gif-container ${gifActive ? 'active' : ''}`}><img src="https://i.pinimg.com/originals/a1/5a/b9/a15ab9f44fb47ab505b5a92ab5f98ed8.gif" alt="Futebol GIF" loading="lazy" decoding="async" /></div>
+                                            <div className={`hero-gif-container ${gifActive ? 'active' : ''}`}><img src="https://i.pinimg.com/originals/a1/5a/b9/a15ab9f44fb47ab505b5a92ab5f98ed8.gif" alt="Futebol GIF" /></div>
                                             <div className="app-hero-overlay"></div>
                                             <div className={`play-btn-app ${gifActive ? 'hidden' : ''}`} onClick={() => setGifActive(true)}><i className="fa-solid fa-play"></i></div>
                                             <div className="hero-info"><span className="hero-tag">Ao Vivo Agora</span><h3 className="hero-title">Champions League</h3><div className="hero-meta"><span><i className="fa-regular fa-clock"></i> 2º Tempo</span><span>• Final</span><span>• 4K HDR</span></div></div>
                                         </div>
                                         <div className="app-section-title">Destaques da Semana</div>
                                         <div className="movies-row horizontal-scroll" ref={horizontalScrollRef1}>
-                                            <div className="movie-card-app" onClick={() => openVideo('qnR0s1QVknI')}><div className="movie-poster-app"><img src="https://jardimdasamericas.com.br/uploads/2025/12/capa-filme-avatar-fogo-e-cinzas-966f9-large.png" alt="Avatar" loading="lazy" decoding="async"/></div><span className="movie-title-text">Avatar: Fogo e Cinzas</span></div>
-                                            <div className="movie-card-app" onClick={() => openVideo('g0GB20yE9JY')}><div className="movie-poster-app"><img src="https://upload.wikimedia.org/wikipedia/pt/6/60/O_Agente_Secreto_%28Cartaz_brasileiro%29.jpg" alt="O Agente Secreto" loading="lazy" decoding="async"/></div><span className="movie-title-text">O Agente Secreto</span></div>
-                                            <div className="movie-card-app" onClick={() => openVideo('T7_zMl_ZhdQ')}><div className="movie-poster-app"><img src="https://s2-g1.glbimg.com/JlPpzZaM6BQeHE8519IeNARgIJg=/0x0:1382x2048/984x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2021/k/m/sUy6NaRMiAMJOllVxvOQ/fb2miibwyairfgo.jpg" alt="Batman" loading="lazy" decoding="async"/></div><span className="movie-title-text">The Batman II</span></div>
-                                            <div className="movie-card-app" onClick={() => openVideo('ZiDphkXCZsQ')}><div className="movie-poster-app"><img src="https://ingresso-a.akamaihd.net/prd/img/movie/f1-o-filme/3a0a118e-8bf3-4e10-b45d-f028cd49b001.webp" alt="F1" loading="lazy" decoding="async"/></div><span className="movie-title-text">F1: O Filme</span></div>
+                                            <div className="movie-card-app" onClick={() => openVideo('qnR0s1QVknI')}><div className="movie-poster-app"><img src="https://jardimdasamericas.com.br/uploads/2025/12/capa-filme-avatar-fogo-e-cinzas-966f9-large.png" alt="Avatar"/></div><span className="movie-title-text">Avatar: Fogo e Cinzas</span></div>
+                                            <div className="movie-card-app" onClick={() => openVideo('g0GB20yE9JY')}><div className="movie-poster-app"><img src="https://upload.wikimedia.org/wikipedia/pt/6/60/O_Agente_Secreto_%28Cartaz_brasileiro%29.jpg" alt="O Agente Secreto"/></div><span className="movie-title-text">O Agente Secreto</span></div>
+                                            <div className="movie-card-app" onClick={() => openVideo('T7_zMl_ZhdQ')}><div className="movie-poster-app"><img src="https://s2-g1.glbimg.com/JlPpzZaM6BQeHE8519IeNARgIJg=/0x0:1382x2048/984x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2021/k/m/sUy6NaRMiAMJOllVxvOQ/fb2miibwyairfgo.jpg" alt="Batman"/></div><span className="movie-title-text">The Batman II</span></div>
+                                            <div className="movie-card-app" onClick={() => openVideo('ZiDphkXCZsQ')}><div className="movie-poster-app"><img src="https://ingresso-a.akamaihd.net/prd/img/movie/f1-o-filme/3a0a118e-8bf3-4e10-b45d-f028cd49b001.webp" alt="F1"/></div><span className="movie-title-text">F1: O Filme</span></div>
                                         </div>
                                         <div className="app-section-title">Séries Populares</div>
                                         <div className="movies-row horizontal-scroll" ref={horizontalScrollRef2}>
-                                            <div className="movie-card-app" onClick={() => openVideo('IcR-6y3Q9XI')}><div className="movie-poster-app"><img src="https://i.imgur.com/ONufJIn.png" alt="TLOU" loading="lazy" decoding="async"/></div><span className="movie-title-text">The Last of Us</span></div>
-                                            <div className="movie-card-app" onClick={() => openVideo('Wb3kaP580kA')}><div className="movie-poster-app"><img src="https://i.imgur.com/30zW0QK.png" alt="Stranger Things" loading="lazy" decoding="async"/></div><span className="movie-title-text">Stranger Things 5</span></div>
-                                            <div className="movie-card-app" onClick={() => openVideo('IgyahanUcOk')}><div className="movie-poster-app"><img src="https://preview.redd.it/tvn-spring-fever-teaser-poster-premieres-january-5-v0-kgb43b5drv4g1.jpg?width=640&crop=smart&auto=webp&s=4d0318de16fd82a564657498104302df46ef8b16" alt="Spring Fever" loading="lazy" decoding="async"/></div><span className="movie-title-text">Spring Fever</span></div>
+                                            <div className="movie-card-app" onClick={() => openVideo('IcR-6y3Q9XI')}><div className="movie-poster-app"><img src="https://i.imgur.com/ONufJIn.png" alt="TLOU"/></div><span className="movie-title-text">The Last of Us</span></div>
+                                            <div className="movie-card-app" onClick={() => openVideo('Wb3kaP580kA')}><div className="movie-poster-app"><img src="https://i.imgur.com/30zW0QK.png" alt="Stranger Things"/></div><span className="movie-title-text">Stranger Things 5</span></div>
+                                            <div className="movie-card-app" onClick={() => openVideo('IgyahanUcOk')}><div className="movie-poster-app"><img src="https://preview.redd.it/tvn-spring-fever-teaser-poster-premieres-january-5-v0-kgb43b5drv4g1.jpg?width=640&crop=smart&auto=webp&s=4d0318de16fd82a564657498104302df46ef8b16" alt="Spring Fever"/></div><span className="movie-title-text">Spring Fever</span></div>
                                         </div>
                                     </div>
                                 </div>
@@ -830,7 +838,7 @@
             useEffect(() => { const handleScroll = () => { const scrollTop = window.scrollY; const docHeight = document.documentElement.scrollHeight - window.innerHeight; const scrollPercent = (scrollTop / docHeight) * 100; setIsScrolled(scrollTop > 50); if (scrollPercent > 50 && activationAnim === 'idle') { setActivationAnim('blinking'); } if (scrollPercent < 15 && activationAnim === 'gone') { setActivationAnim('idle'); } }; window.addEventListener('scroll', handleScroll); return () => window.removeEventListener('scroll', handleScroll); }, [activationAnim]);
             useEffect(() => { if (activationAnim === 'blinking') { const timer = setTimeout(() => setActivationAnim('exploding'), 10000); return () => clearTimeout(timer); } if (activationAnim === 'exploding') { const timer = setTimeout(() => { setActivationAnim('gone'); }, 800); return () => clearTimeout(timer); } }, [activationAnim]);
 
-            const benefits = [{ icon: <Icons.Monitor className="w-8 h-8" />, title: "Sua Smart TV Potencializada", desc: "Transforme sua Roku, Samsung ou LG em uma central de cinema completa." }, { icon: <Icons.Zap className="w-8 h-8" />, title: "Streaming de Alta Performance", desc: "Infraestrutura dedicada para garantir fluidez total, sem travamentos irritantes." }, { icon: <Icons.Tv className="w-8 h-8" />, title: "Resolução Ultra 4K + 60 Fps", desc: "Veja cada detalhe. Qualidade de imagem cristalina que valoriza sua TV." }, { icon: <Icons.Layers className="w-8 h-8" />, title: <>Biblioteca<br/>Universal</>, desc: "Todos os canais, lançamentos de cinema, filmes e séries em um só lugar para melhor entreterimento" }];
+            const benefits = [{ icon: <Icons.Monitor className="w-8 h-8" />, title: "Sua Smart TV Potencializada", desc: "Transforme sua Roku, Samsung ou LG em uma central de cinema completa." }, { icon: <Icons.Zap className="w-8 h-8" />, title: "Streaming de Alta Performance", desc: "Infraestrutura dedicada para garantir fluidez total, sem travamentos irritantes." }, { icon: <Icons.Tv className="w-8 h-8" />, title: "Resolução Ultra 4K + 60 Fps", desc: "Veja cada detalhe. Qualidade de imagem cristalina que valoriza sua TV." }, { icon: <Icons.Layers className="w-8 h-8" />, title: <>Biblioteca<span className="md:hidden"> </span><br className="hidden md:block"/>Universal</>, desc: "Todos os canais, lançamentos de cinema, filmes e séries em um só lugar para melhor entreterimento" }];
 
             return (
                 <div className="min-h-screen relative bg-black" id="topo">

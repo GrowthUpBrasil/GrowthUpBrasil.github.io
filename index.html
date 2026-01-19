@@ -259,9 +259,9 @@
         .security-list { list-style: none; padding: 0; font-size: 14px; color: #ccc; }
         .security-list li { margin-bottom: 12px; display: flex; align-items: center; }
         .icon-sec { width: 16px; height: 16px; margin-right: 12px; color: #10b981; }
-        /* Atualizado: Altura aumentada de 60px para 85px */
-        .icon-sec-img { width: auto; height: 85px; object-fit: contain; display: block; }
-        .reclame-box { margin-top: 15px; transition: transform 0.2s; display: inline-block; }
+        /* Atualizado: Altura ajustada para alinhamento */
+        .icon-sec-img { width: auto; height: 60px; object-fit: contain; display: block; }
+        .reclame-box { transition: transform 0.2s; display: inline-block; }
         .reclame-box:hover { transform: scale(1.02); }
         .reclame-img { height: 70px; width: auto; object-fit: contain; border-radius: 4px; }
         .footer-bottom { background-color: #050505; border-top: 1px solid #222; padding: 20px; font-size: 13px; color: #666; }
@@ -956,20 +956,29 @@
                         </div>
                         <div className="footer-col">
                             <h4>Segurança</h4>
-                            <ul className="security-list">
-                                <li>
-                                    <img src="https://cdn.prod.website-files.com/684c80e008357813a0015b5c/694ef3f036e0d7a0565bec25_SELO-SITE-SEGURO-p-500.webp" alt="SSL Seguro" className="icon-sec-img" loading="lazy" />
-                                </li>
-                                {/* Item "Navegação protegida" removido por duplicidade */}
-                                <li>
-                                    <img src="https://i.imgur.com/4r8zcdg.png" alt="Pagamento Seguro" className="icon-sec-img" loading="lazy" />
-                                </li>
-                                <li>
-                                    <img src="https://i.imgur.com/8Ex2yjP.png" alt="Privacidade" className="icon-sec-img" loading="lazy" />
-                                </li>
-                            </ul>
-                            <div className="reclame-box">
-                                <img src="https://i.imgur.com/e2pXahE.png" alt="Selo Reclame Aqui" className="reclame-img" loading="lazy" />
+                            {/* Alterado para flex-row para alinhar tudo horizontalmente */}
+                            <div className="flex flex-row items-center gap-4 flex-wrap">
+                                <img 
+                                    src="https://cdn.prod.website-files.com/684c80e008357813a0015b5c/694ef3f036e0d7a0565bec25_SELO-SITE-SEGURO-p-500.webp" 
+                                    alt="SSL Seguro" 
+                                    className="icon-sec-img" 
+                                    loading="lazy" 
+                                />
+                                <img 
+                                    src="https://i.imgur.com/4r8zcdg.png" 
+                                    alt="Pagamento Seguro" 
+                                    className="icon-sec-img" 
+                                    loading="lazy" 
+                                />
+                                {/* Removida imagem de privacidade */}
+                                <div className="reclame-box">
+                                    <img 
+                                        src="https://i.imgur.com/e2pXahE.png" 
+                                        alt="Selo Reclame Aqui" 
+                                        className="reclame-img" 
+                                        loading="lazy" 
+                                    />
+                                </div>
                             </div>
                         </div>
                     </div>

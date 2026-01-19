@@ -259,11 +259,11 @@
         .security-list { list-style: none; padding: 0; font-size: 14px; color: #ccc; }
         .security-list li { margin-bottom: 12px; display: flex; align-items: center; }
         .icon-sec { width: 16px; height: 16px; margin-right: 12px; color: #10b981; }
-        /* Atualizado: Ícones maiores e sem margem direita já que o texto foi removido */
-        .icon-sec-img { width: auto; height: 32px; object-fit: contain; display: block; }
+        /* Atualizado: Altura aumentada de 60px para 85px */
+        .icon-sec-img { width: auto; height: 85px; object-fit: contain; display: block; }
         .reclame-box { margin-top: 15px; transition: transform 0.2s; display: inline-block; }
         .reclame-box:hover { transform: scale(1.02); }
-        .reclame-img { height: 45px; width: auto; object-fit: contain; border-radius: 4px; }
+        .reclame-img { height: 70px; width: auto; object-fit: contain; border-radius: 4px; }
         .footer-bottom { background-color: #050505; border-top: 1px solid #222; padding: 20px; font-size: 13px; color: #666; }
         .bottom-container { max-width: 1200px; margin: auto; display: flex; justify-content: space-between; align-items: center; }
         .footer-bottom a { color: #888; text-decoration: none; transition: color 0.2s; display: flex; align-items: center; gap: 5px; }
@@ -745,11 +745,11 @@
 
         const ExpandingPosters = () => {
             const posters = [
-                { id: 1, title: "Lançamentos", img: "https://images.unsplash.com/photo-1626814026160-2237a95fc5a0?q=60&w=800&auto=format&fit=crop", color: "from-blue-600" },
-                { id: 2, title: "Ação", img: "https://images.unsplash.com/photo-1536440136628-849c177e76a1?q=60&w=800&auto=format&fit=crop", color: "from-red-600" },
-                { id: 3, title: "Animes", img: "https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?q=60&w=800&auto=format&fit=crop", color: "from-pink-600" },
-                { id: 4, title: "Futebol", img: "https://images.unsplash.com/photo-1579952363873-27f3bade9f55?q=60&w=800&auto=format&fit=crop", color: "from-green-600" },
+                { id: 1, title: "Lançamentos", img: "https://images.unsplash.com/photo-1626814026160-2237a95fc5a0?q=60&w=800&auto=format&fit=crop", color: "from-red-900" },
                 { id: 5, title: "Marvel", img: "https://images.unsplash.com/photo-1635805737707-575885ab0820?q=60&w=800&auto=format&fit=crop", color: "from-red-800" },
+                { id: 3, title: "Animes", img: "https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?q=60&w=800&auto=format&fit=crop", color: "from-pink-600" },
+                { id: 2, title: "Ação", img: "https://images.unsplash.com/photo-1536440136628-849c177e76a1?q=60&w=800&auto=format&fit=crop", color: "from-red-600" },
+                { id: 4, title: "Futebol", img: "https://images.unsplash.com/photo-1579952363873-27f3bade9f55?q=60&w=800&auto=format&fit=crop", color: "from-green-600" },
                 { id: 6, title: "Terror", img: "https://images.unsplash.com/photo-1505635552518-3448ff116af3?q=60&w=800&auto=format&fit=crop", color: "from-purple-900" }
             ];
             return (

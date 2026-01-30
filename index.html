@@ -546,9 +546,8 @@
                                         <div className={`play-btn-app ${gifActive ? 'hidden' : ''}`} onClick={() => setGifActive(true)}><i className="fa-solid fa-play"></i></div>
                                         <div className="hero-info"><span className="hero-tag">Ao Vivo Agora</span><h3 className="hero-title">Champions League</h3><div className="hero-meta"><span><i className="fa-regular fa-clock"></i> 2º Tempo</span><span>• Final</span><span>• 4K HDR</span></div></div>
                                     </div>
-                                    <div className="app-section-title">Destaques</div>
+                                    <div className="app-section-title">Destaques da Semana</div>
                                     <div className="movies-row horizontal-scroll" ref={horizontalScrollRef1}>
-                                        <div className="movie-card-app" onClick={() => openVideo('yb-SZ_6aZGk')}><div className="movie-poster-app"><img src="https://i.ytimg.com/vi/yb-SZ_6aZGk/hq720.jpg" alt="A Empregada" loading="lazy" decoding="async" className="object-cover h-full w-full"/></div><span className="movie-title-text">A Empregada</span></div>
                                         <div className="movie-card-app" onClick={() => openVideo('qnR0s1QVknI')}><div className="movie-poster-app"><img src="https://jardimdasamericas.com.br/uploads/2025/12/capa-filme-avatar-fogo-e-cinzas-966f9-large.png" alt="Avatar" loading="lazy" decoding="async"/></div><span className="movie-title-text">Avatar: Fogo e Cinzas</span></div>
                                         <div className="movie-card-app" onClick={() => openVideo('g0GB20yE9JY')}><div className="movie-poster-app"><img src="https://upload.wikimedia.org/wikipedia/pt/6/60/O_Agente_Secreto_%28Cartaz_brasileiro%29.jpg" alt="O Agente Secreto" loading="lazy" decoding="async"/></div><span className="movie-title-text">O Agente Secreto</span></div>
                                         <div className="movie-card-app" onClick={() => openVideo('T7_zMl_ZhdQ')}><div className="movie-poster-app"><img src="https://s2-g1.glbimg.com/JlPpzZaM6BQeHE8519IeNARgIJg=/0x0:1382x2048/984x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2021/k/m/sUy6NaRMiAMJOllVxvOQ/fb2miibwyairfgo.jpg" alt="Batman" loading="lazy" decoding="async"/></div><span className="movie-title-text">The Batman II</span></div>
@@ -566,6 +565,170 @@
                         <p className="text-white/60 text-xs text-center mt-6 uppercase tracking-widest font-medium">Navegue como se estivesse no app</p>
                     </div>
                 </div>
+            );
+        };
+
+        const PrivacyOverlay = ({ isActive, onClose }) => (
+            <div className={`policy-overlay ${isActive ? 'active' : ''}`}>
+                <div className="policy-container">
+                    <button onClick={onClose} className="back-btn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>Voltar</button>
+                    <div className="policy-header"><h1>POLÍTICA DE PRIVACIDADE <span className="highlight">GrowthUP+</span></h1><p>Última atualização: Janeiro de 2026</p></div>
+                    <div className="policy-content">
+                        <p>A <strong>GrowthUP+</strong> respeita a privacidade e a proteção dos dados pessoais de seus usuários, clientes e visitantes. Esta Política de Privacidade descreve como coletamos, utilizamos, armazenamos e protegemos informações ao acessar ou utilizar nosso site, serviços, plataformas e canais de atendimento.</p>
+                        <p>Ao utilizar qualquer serviço da GrowthUP+, o usuário declara estar ciente e de acordo com esta Política.</p>
+                        <h2>1. Identificação do Controlador</h2><p><strong>GrowthUP+</strong><br/>E-mail: <span style={{color: '#ef4444'}}>growthupbrasil@gmail.com</span><br/>Contato: (11) 99139-6481</p>
+                        <h2>2. Dados coletados</h2><p>Podemos coletar as seguintes informações:</p><h3>2.1 Dados fornecidos pelo usuário</h3><ul><li>Nome</li><li>Endereço de e-mail</li><li>Número de telefone</li><li>Informações enviadas via formulários, WhatsApp ou atendimento</li></ul><h3>2.2 Dados coletados automaticamente</h3><ul><li>Endereço IP</li><li>Tipo de navegador e dispositivo</li><li>Páginas acessadas</li><li>Data e horário de acesso</li><li>Cookies e tecnologias semelhantes</li></ul>
+                        <h2>3. Finalidade do tratamento dos dados</h2><p>Os dados coletados são utilizados para:</p><ul><li>Processamento de assinaturas e pagamentos</li><li>Liberação e gestão de acesso aos serviços contratados</li><li>Comunicação operacional e suporte técnico</li><li>Atendimento ao cliente</li><li>Envio de informações relevantes sobre o serviço</li><li>Melhoria da experiência do usuário</li><li>Prevenção a fraudes e abusos</li><li>Cumprimento de obrigações legais</li></ul><p><em>A GrowthUP+ não comercializa, vende ou aluga dados pessoais.</em></p>
+                        <h2>4. Compartilhamento de dados</h2><p>Os dados poderão ser compartilhados apenas quando necessário com:</p><ul><li>Plataformas de pagamento</li><li>Serviços de hospedagem e infraestrutura tecnológica</li><li>Ferramentas de análise e marketing</li><li>Autoridades públicas, mediante obrigação legal ou judicial</li></ul>
+                        <h2>5. Cookies</h2><p>Utilizamos cookies para garantir o funcionamento adequado do site, analisar desempenho e otimizar a experiência do usuário. O usuário pode desativar os cookies nas configurações do navegador, ciente de que isso pode impactar funcionalidades.</p>
+                        <h2>6. Segurança das informações</h2><p>A GrowthUP+ adota medidas técnicas e organizacionais adequadas para proteger os dados pessoais contra acesso não autorizado, perda, alteração ou divulgação indevida. Ainda assim, nenhum sistema é totalmente imune a falhas.</p>
+                        <h2>7. Direitos do titular dos dados</h2><p>Nos termos da Lei Geral de Proteção de Dados (Lei nº 13.709/2018), o usuário pode solicitar:</p><ul><li>Confirmação da existência de tratamento</li><li>Acesso aos dados</li><li>Correção de informações incompletas ou incorretas</li><li>Exclusão de dados, quando aplicável</li><li>Revogação de consentimento</li></ul><p>Solicitações devem ser enviadas para <strong>growthupbrasil@gmail.com</strong>.</p>
+                        <h2>8. Alterações desta Política</h2><p>Esta Política poderá ser atualizada a qualquer momento. A versão vigente estará sempre disponível no site.</p>
+                        <h2>9. Contato</h2><p>Para dúvidas ou solicitações relacionadas a esta Política:</p><p><strong>E-mail:</strong> growthupbrasil@gmail.com<br/><strong>Telefone:</strong> (11) 99139-6481</p>
+                    </div>
+                </div>
+            </div>
+        );
+
+        const TermsOverlay = ({ isActive, onClose }) => (
+            <div className={`policy-overlay ${isActive ? 'active' : ''}`}>
+                <div className="policy-container">
+                    <button onClick={onClose} className="back-btn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>Voltar</button>
+                    <div className="policy-header"><h1>TERMOS E CONDIÇÕES DE USO <span className="highlight">GrowthUP+</span></h1><p>Última atualização: Janeiro de 2026</p></div>
+                    <div className="policy-content">
+                        <p>Ao acessar ou utilizar os serviços da <strong>GrowthUP+</strong>, o usuário declara que leu, compreendeu e concorda integralmente com estes Termos e Condições.</p><p><em>Caso não concorde, não utilize os serviços.</em></p>
+                        <h2>1. Descrição do serviço</h2><p>A GrowthUP+ oferece acesso a uma plataforma de entretenimento mediante planos de assinatura com prazo determinado, conforme condições vigentes no momento da contratação.</p><p>Não oferecemos serviços vitalícios ou acesso permanente.</p>
+                        <h2>2. Elegibilidade</h2><p>Para utilizar os serviços, o usuário deve:</p><ul><li>Ter no mínimo 18 anos ou autorização legal</li><li>Fornecer informações verdadeiras e atualizadas</li><li>Utilizar o serviço exclusivamente para fins pessoais</li></ul>
+                        <h2>3. Planos, pagamentos e acesso</h2><ul><li>Os planos possuem duração definida</li><li>O acesso é liberado após confirmação do pagamento</li><li>Valores, bônus e condições promocionais podem variar</li><li>Os pagamentos são processados por plataformas terceiras</li></ul><p>A GrowthUP+ não se responsabiliza por falhas ou indisponibilidades das plataformas de pagamento.</p>
+                        <h2>4. Uso permitido e restrições</h2><p>É proibido:</p><ul><li>Compartilhar acessos de forma abusiva</li><li>Revender ou redistribuir o serviço</li><li>Utilizar o serviço para fins comerciais</li><li>Tentar burlar sistemas de segurança</li><li>Utilizar o serviço de maneira ilegal ou não autorizada</li></ul><p>O descumprimento poderá resultar em suspensão ou cancelamento imediato, sem direito a reembolso.</p>
+                        <h2>5. Suspensão e cancelamento</h2><p>A GrowthUP+ poderá suspender ou cancelar o acesso em casos de:</p><ul><li>Violação destes Termos</li><li>Uso indevido ou suspeita de fraude</li><li>Determinação legal ou técnica</li></ul><p>O usuário poderá cancelar sua assinatura conforme as condições do plano contratado.</p>
+                        <h2>6. Reembolsos</h2><ul><li>Reembolsos seguem as regras informadas no momento da contratação</li><li>Testes gratuitos, quando oferecidos, não geram direito a reembolso</li><li>Após o uso do serviço, o valor pode não ser reembolsável</li></ul>
+                        <h2>7. Disponibilidade do serviço</h2><p>O serviço pode sofrer interrupções temporárias devido a manutenções, atualizações ou falhas técnicas. A GrowthUP+ não garante disponibilidade contínua e ininterrupta.</p>
+                        <h2>8. Limitação de responsabilidade</h2><p>A GrowthUP+ não se responsabiliza por:</p><ul><li>Problemas de conexão do usuário</li><li>Dispositivos incompatíveis</li><li>Falhas de terceiros ou provedores externos</li><li>Uso inadequado da plataforma</li></ul>
+                        <h2>9. Alterações dos Termos</h2><p>Os Termos poderão ser alterados a qualquer momento. O uso contínuo dos serviços implica aceitação da versão vigente.</p>
+                        <h2>10. Legislação aplicável</h2><p>Estes Termos são regidos pelas leis da República Federativa do Brasil.</p>
+                        <h2>11. Contato</h2><p><strong>E-mail:</strong> growthupbrasil@gmail.com<br/><strong>Telefone:</strong> (11) 99139-6481</p>
+                    </div>
+                </div>
+            </div>
+        );
+
+        const InstallAppSection = () => {
+            return (
+                <div className="w-full bg-black py-20 border-t border-white/5 relative z-20">
+                    <div className="container mx-auto px-6">
+                        <RevealOnScroll className="text-center mb-16">
+                            <p className="text-[10px] md:text-xs text-gray-500 uppercase tracking-[0.2em] mb-4 font-medium">Faça o Download</p>
+                            <h1 className="text-3xl md:text-5xl lg:text-6xl font-medium text-white leading-tight max-w-4xl mx-auto">Instale o <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-red-800 animate-pulse font-bold mx-2">Nosso APP</span> na sua SmartTV/Celular ou qualquer outro dispositivo.</h1>
+                        </RevealOnScroll>
+                        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-y-10 gap-x-12 items-center justify-items-center text-white">
+                            <div className="group flex items-center justify-center cursor-pointer transform transition-all duration-300 hover:scale-110 mr-8"><span className="samsung-font text-2xl transition-colors">SAMSUNG</span></div>
+                            <div className="group flex items-center justify-center gap-2 cursor-pointer transform transition-all duration-300 hover:scale-110"><span className="text-xl font-medium transition-colors">Android</span><i className="fa-brands fa-android text-2xl transition-colors"></i></div>
+                            <div className="group flex items-center justify-center gap-2 cursor-pointer transform transition-all duration-300 hover:scale-110"><span className="text-2xl font-bold transition-colors">LG</span></div>
+                            <div className="group flex items-center justify-center cursor-pointer transform transition-all duration-300 hover:scale-110"><span className="roku-font text-2xl transition-colors">Roku</span></div>
+                            <div className="group flex items-center justify-center gap-2 cursor-pointer transform transition-all duration-300 hover:scale-110"><i className="fa-brands fa-apple text-3xl transition-colors"></i><span className="text-xl font-medium transition-colors">Apple</span></div>
+                            <div className="group flex items-center justify-center cursor-pointer transform transition-all duration-300 hover:scale-110"><i className="fa-brands fa-amazon text-3xl mt-2 transition-colors"></i></div>
+                            <div className="group col-span-2 md:col-span-1 flex items-center justify-center gap-2 cursor-pointer transform transition-all duration-300 hover:scale-110"><i className="fa-brands fa-chrome text-2xl transition-colors"></i><span className="text-xl font-medium transition-colors">Browser</span></div>
+                        </div>
+                        <p className="text-center text-xs text-gray-600 mt-12 font-medium tracking-wide uppercase">Compatível com as principais plataformas do mercado.</p>
+                    </div>
+                </div>
+            );
+        };
+
+        const AppShowcaseSection = ({ onOpenInstallHelp }) => {
+            const [gifActive, setGifActive] = useState(false);
+            const [videoUrl, setVideoUrl] = useState(null);
+            const [activeTooltip, setActiveTooltip] = useState(null);
+            const [mobileVideoStage, setMobileVideoStage] = useState('idle');
+            const [mobileVideoId, setMobileVideoId] = useState(null);
+            const [desktopVideoStage, setDesktopVideoStage] = useState('idle');
+            const [desktopVideoId, setDesktopVideoId] = useState(null);
+
+            const mainScrollRef = useRef(null);
+            const horizontalScrollRef1 = useRef(null);
+            const horizontalScrollRef2 = useRef(null);
+
+            const toggleTooltip = (id) => { setActiveTooltip(activeTooltip === id ? null : id); if (activeTooltip !== id) setTimeout(() => setActiveTooltip(null), 3000); };
+            const openVideo = (videoId) => setVideoUrl(`https://www.youtube.com/embed/${videoId}?autoplay=1`);
+            const closeVideo = () => setVideoUrl(null);
+
+            const handleMobileClick = () => { if (mobileVideoStage === 'idle') setMobileVideoStage('selecting'); };
+            const handleMobileDeviceSelect = (device) => { setMobileVideoId(device.videoId); setMobileVideoStage('playing'); };
+            const handleDesktopClick = () => { if (desktopVideoStage === 'idle') setDesktopVideoStage('selecting'); };
+            const handleDesktopDeviceSelect = (device) => { setDesktopVideoId(device.videoId); setDesktopVideoStage('playing'); };
+
+            useEffect(() => {
+                const mainScroller = mainScrollRef.current;
+                const sliders = [horizontalScrollRef1.current, horizontalScrollRef2.current];
+                const allDraggables = [mainScroller, ...sliders].filter(Boolean);
+                let isDown = false, startX, startY, mainScrollStart, horizontalScrollStart = new Map(), targetSlider = null, hasDragged = false;
+                const initDrag = (x, y, target) => { isDown = true; hasDragged = false; startX = x; startY = y; mainScrollStart = mainScroller ? mainScroller.scrollTop : 0; if (target.classList.contains('horizontal-scroll')) { targetSlider = target; horizontalScrollStart.set(target, target.scrollLeft); } else { targetSlider = null; } };
+                const endDrag = () => { isDown = false; if (mainScroller) mainScroller.classList.remove('scroll-active'); targetSlider = null; };
+                const performMove = (x, y, e) => { if (!isDown) return; const walkY = (y - startY) * 1.5; const walkX = (x - startX) * 1.5; if (Math.abs(x - startX) > 5 || Math.abs(y - startY) > 5) { hasDragged = true; if (mainScroller) mainScroller.classList.add('scroll-active'); } if (Math.abs(walkY) > Math.abs(walkX)) { if (mainScroller) mainScroller.scrollTop = mainScrollStart - walkY; } else { if (targetSlider) { const startLeft = horizontalScrollStart.get(targetSlider); targetSlider.scrollLeft = startLeft - walkX; } } };
+                const handleMouseDown = (e) => { e.stopPropagation(); initDrag(e.pageX, e.pageY, e.currentTarget); };
+                const handleTouchStart = (e) => { e.stopPropagation(); const touch = e.touches[0]; initDrag(touch.pageX, touch.pageY, e.currentTarget); };
+                const handleMouseMove = (e) => { if (!isDown) return; e.preventDefault(); performMove(e.pageX, e.pageY, e); };
+                const handleTouchMove = (e) => { if (!isDown) return; if (e.cancelable) e.preventDefault(); const touch = e.touches[0]; performMove(touch.pageX, touch.pageY, e); };
+                allDraggables.forEach(el => { el.addEventListener('mousedown', handleMouseDown); el.addEventListener('touchstart', handleTouchStart, { passive: false }); });
+                document.addEventListener('mousemove', handleMouseMove); document.addEventListener('touchmove', handleTouchMove, { passive: false });
+                document.addEventListener('mouseup', endDrag); document.addEventListener('mouseleave', endDrag); document.addEventListener('touchend', endDrag);
+                return () => { allDraggables.forEach(el => { el.removeEventListener('mousedown', handleMouseDown); el.removeEventListener('touchstart', handleTouchStart); }); document.removeEventListener('mousemove', handleMouseMove); document.removeEventListener('touchmove', handleTouchMove); document.removeEventListener('mouseup', endDrag); document.removeEventListener('mouseleave', endDrag); document.removeEventListener('touchend', endDrag); };
+            }, []);
+
+            return (
+                <section className="app-section">
+                    <div className="app-phone">
+                        <h3 className="app-phone-title"><i className="fa-solid fa-play-circle"></i>Experimente.</h3>
+                        <div className="app-phone-container">
+                            <div className="phone-mockup">
+                                <div className="phone-notch"></div>
+                                <div className="phone-screen">
+                                    <div className="app-ui-header">
+                                        <div className="app-ui-icons"><i className="fas fa-bars"></i><span>GrowthUP+</span></div>
+                                        <div className="app-ui-icons">
+                                            <div className={`search-icon-wrapper ${activeTooltip === 'search' ? 'active' : ''}`} onClick={() => toggleTooltip('search')}><i className="fa-solid fa-search"></i><div className="search-tooltip">São mais de 80 mil conteúdos!</div></div>
+                                            <div className={`user-icon-wrapper ${activeTooltip === 'user' ? 'active' : ''}`} onClick={() => toggleTooltip('user')}><i className="fa-solid fa-user-circle"></i><div className="user-tooltip">Logo logo você terá seu acesso! 😄</div></div>
+                                        </div>
+                                    </div>
+                                    <div className={`video-overlay ${videoUrl ? 'active' : ''}`}><button className="close-video-btn" onClick={closeVideo}><i className="fa-solid fa-xmark"></i></button><div className="video-container">{videoUrl && <iframe src={videoUrl} frameBorder="0" allow="autoplay; encrypted-media" allowFullScreen></iframe>}</div></div>
+                                    <div className="app-ui-scroll-content" ref={mainScrollRef}>
+                                        <div className="app-hero-banner">
+                                            <div className={`hero-gif-container ${gifActive ? 'active' : ''}`}><img src="https://i.pinimg.com/originals/a1/5a/b9/a15ab9f44fb47ab505b5a92ab5f98ed8.gif" alt="Futebol GIF" loading="lazy" decoding="async" /></div>
+                                            <div className="app-hero-overlay"></div>
+                                            <div className={`play-btn-app ${gifActive ? 'hidden' : ''}`} onClick={() => setGifActive(true)}><i className="fa-solid fa-play"></i></div>
+                                            <div className="hero-info"><span className="hero-tag">Ao Vivo Agora</span><h3 className="hero-title">Champions League</h3><div className="hero-meta"><span><i className="fa-regular fa-clock"></i> 2º Tempo</span><span>• Final</span><span>• 4K HDR</span></div></div>
+                                        </div>
+                                        <div className="app-section-title">Destaques da Semana</div>
+                                        <div className="movies-row horizontal-scroll" ref={horizontalScrollRef1}>
+                                            <div className="movie-card-app" onClick={() => openVideo('qnR0s1QVknI')}><div className="movie-poster-app"><img src="https://jardimdasamericas.com.br/uploads/2025/12/capa-filme-avatar-fogo-e-cinzas-966f9-large.png" alt="Avatar" loading="lazy" decoding="async"/></div><span className="movie-title-text">Avatar: Fogo e Cinzas</span></div>
+                                            <div className="movie-card-app" onClick={() => openVideo('g0GB20yE9JY')}><div className="movie-poster-app"><img src="https://upload.wikimedia.org/wikipedia/pt/6/60/O_Agente_Secreto_%28Cartaz_brasileiro%29.jpg" alt="O Agente Secreto" loading="lazy" decoding="async"/></div><span className="movie-title-text">O Agente Secreto</span></div>
+                                            <div className="movie-card-app" onClick={() => openVideo('T7_zMl_ZhdQ')}><div className="movie-poster-app"><img src="https://s2-g1.glbimg.com/JlPpzZaM6BQeHE8519IeNARgIJg=/0x0:1382x2048/984x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_59edd422c0c84a879bd37670ae4f538a/internal_photos/bs/2021/k/m/sUy6NaRMiAMJOllVxvOQ/fb2miibwyairfgo.jpg" alt="Batman" loading="lazy" decoding="async"/></div><span className="movie-title-text">The Batman II</span></div>
+                                            <div className="movie-card-app" onClick={() => openVideo('ZiDphkXCZsQ')}><div className="movie-poster-app"><img src="https://ingresso-a.akamaihd.net/prd/img/movie/f1-o-filme/3a0a118e-8bf3-4e10-b45d-f028cd49b001.webp" alt="F1" loading="lazy" decoding="async"/></div><span className="movie-title-text">F1: O Filme</span></div>
+                                        </div>
+                                        <div className="app-section-title">Séries Populares</div>
+                                        <div className="movies-row horizontal-scroll" ref={horizontalScrollRef2}>
+                                            <div className="movie-card-app" onClick={() => openVideo('IcR-6y3Q9XI')}><div className="movie-poster-app"><img src="https://i.imgur.com/VzvStO6.png" alt="TLOU" loading="lazy" decoding="async"/></div><span className="movie-title-text">The Last of Us</span></div>
+                                            <div className="movie-card-app" onClick={() => openVideo('Wb3kaP580kA')}><div className="movie-poster-app"><img src="https://i.imgur.com/30zW0QK.png" alt="Stranger Things" loading="lazy" decoding="async"/></div><span className="movie-title-text">Stranger Things 5</span></div>
+                                            <div className="movie-card-app" onClick={() => openVideo('IgyahanUcOk')}><div className="movie-poster-app"><img src="https://preview.redd.it/tvn-spring-fever-teaser-poster-premieres-january-5-v0-kgb43b5drv4g1.jpg?width=640&crop=smart&auto=webp&s=4d0318de16fd82a564657498104302df46ef8b16" alt="Spring Fever" loading="lazy" decoding="async"/></div><span className="movie-title-text">Spring Fever</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <p className="text-white/60 text-xs text-center mt-6 uppercase tracking-widest font-medium">Navegue como se estivesse no app</p>
+                        </div>
+                    </div>
+                    <div className="app-content">
+                        <div className="app-logo"></div>
+                        <h2 className="app-title">Para curtir <span>onde</span><br/>e <span>quando</span> quiser</h2>
+                        <p className="app-text">Tenha acesso completo direto no seu celular. Assista filmes, séries, canais e esportes ao vivo com total liberdade. Disponível para Android e iOS.</p>
+                        <div className="store-buttons">
+                            <button onClick={onOpenInstallHelp} className="store-btn cursor-pointer"><i className="fa-brands fa-apple"></i><div className="btn-text"><small>Disponível na</small><strong>Apple Store</strong></div></button>
+                            <button onClick={onOpenInstallHelp} className="store-btn cursor-pointer"><i className="fa-brands fa-google-play"></i><div className="btn-text"><small>Baixe no</small><strong>Google Play</strong></div></button>
+                        </div>
+                        <p className="extra-text">Todos os seus lançamentos, filmes, séries, doramas, documentários e animes favoritos, com a experiência e qualidade que você merece.<br/><br/>No GrowthUP+ você terá acesso a mais de 80.000 conteúdos, tudo em uma única plataforma.</p>
+                    </div>
+                </section>
             );
         };
 
@@ -806,6 +969,121 @@
                     </div>
                     <div className="footer-bottom"><div className="bottom-container"><span>© 2026 GrowthUP+. Todos os direitos reservados.</span><a href="#topo">Voltar ao topo <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 15l-6-6-6 6"/></svg></a></div></div>
                 </footer>
+            );
+        };
+
+        const App = () => {
+            const [isScrolled, setIsScrolled] = useState(false);
+            const [activationAnim, setActivationAnim] = useState('idle');
+            const [showVideoSection, setShowVideoSection] = useState(false);
+            const [mobileVideoStage, setMobileVideoStage] = useState('idle');
+            const [mobileVideoId, setMobileVideoId] = useState(null);
+            const [desktopVideoStage, setDesktopVideoStage] = useState('idle');
+            const [desktopVideoId, setDesktopVideoId] = useState(null);
+            const [isPrivacyOpen, setPrivacyOpen] = useState(false);
+            const [isTermsOpen, setTermsOpen] = useState(false);
+            const [isCatalogOpen, setCatalogOpen] = useState(false);
+            const [isInstallHelpOpen, setInstallHelpOpen] = useState(false);
+
+            const whatsappNumber = "5511991396481"; 
+            const messageText = "Vim do site da GrowthUP+\n\nQuero testar o acesso SEM LIMITES na minha TV ou celular.\n\nPode me explicar como funciona o teste e a ativação imediata?";
+
+            const getWhatsAppLink = () => `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(messageText)}`;
+            const getHeaderWhatsAppLink = () => `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(messageText)}`;
+
+            const handleOpenTutorial = () => { setShowVideoSection(true); setTimeout(() => { const section = document.getElementById('video-tutorial-section'); if (section) { section.scrollIntoView({ behavior: 'smooth', block: 'center' }); } }, 100); };
+            const togglePrivacy = () => { setPrivacyOpen(!isPrivacyOpen); document.body.style.overflow = !isPrivacyOpen ? 'hidden' : ''; };
+            const toggleTerms = () => { setTermsOpen(!isTermsOpen); document.body.style.overflow = !isTermsOpen ? 'hidden' : ''; };
+            const toggleCatalog = () => { setCatalogOpen(!isCatalogOpen); document.body.style.overflow = !isCatalogOpen ? 'hidden' : ''; };
+            const toggleInstallHelp = () => { setInstallHelpOpen(!isInstallHelpOpen); document.body.style.overflow = !isInstallHelpOpen ? 'hidden' : ''; };
+
+            const handleMobileClick = () => { if (mobileVideoStage === 'idle') setMobileVideoStage('selecting'); };
+            const handleMobileDeviceSelect = (device) => { setMobileVideoId(device.videoId); setMobileVideoStage('playing'); };
+            const handleDesktopClick = () => { if (desktopVideoStage === 'idle') setDesktopVideoStage('selecting'); };
+            const handleDesktopDeviceSelect = (device) => { setDesktopVideoId(device.videoId); setDesktopVideoStage('playing'); };
+
+            // Logic for Scroll Animation
+            useEffect(() => { 
+                const handleScroll = () => { 
+                    const scrollTop = window.scrollY; 
+                    const docHeight = document.documentElement.scrollHeight - window.innerHeight; 
+                    const scrollPercent = (scrollTop / docHeight) * 100; 
+                    setIsScrolled(scrollTop > 50); 
+                    if (scrollPercent > 50 && activationAnim === 'idle') { setActivationAnim('blinking'); } 
+                    if (scrollPercent < 15 && activationAnim === 'gone') { setActivationAnim('idle'); } 
+                }; 
+                window.addEventListener('scroll', handleScroll); 
+                return () => window.removeEventListener('scroll', handleScroll); 
+            }, [activationAnim]);
+
+            // Logic for Activation Animation Timeout
+            useEffect(() => { 
+                if (activationAnim === 'blinking') { 
+                    const timer = setTimeout(() => setActivationAnim('exploding'), 10000); 
+                    return () => clearTimeout(timer); 
+                } 
+                if (activationAnim === 'exploding') { 
+                    const timer = setTimeout(() => { setActivationAnim('gone'); }, 800); 
+                    return () => clearTimeout(timer); 
+                } 
+            }, [activationAnim]);
+
+            // Logic for Dynamic Title
+            useEffect(() => {
+                const originalTitle = document.title;
+                let titleInterval;
+
+                const handleVisibilityChange = () => {
+                    if (document.hidden) {
+                        let showMessage1 = true;
+                        document.title = "Volte!";
+                        titleInterval = setInterval(() => {
+                            document.title = showMessage1 ? "Não perca..." : "Volte!";
+                            showMessage1 = !showMessage1;
+                        }, 1000);
+                    } else {
+                        if (titleInterval) clearInterval(titleInterval);
+                        document.title = originalTitle;
+                    }
+                };
+
+                document.addEventListener('visibilitychange', handleVisibilityChange);
+
+                return () => {
+                    if (titleInterval) clearInterval(titleInterval);
+                    document.removeEventListener('visibilitychange', handleVisibilityChange);
+                    document.title = originalTitle;
+                };
+            }, []);
+
+            const benefits = [
+                { icon: <Icons.Monitor className="w-8 h-8" />, title: "Sua Smart TV Potencializada", desc: "Transforme sua Roku, Samsung ou LG em uma central de cinema completa." }, 
+                { icon: <Icons.Zap className="w-8 h-8" />, title: "Streaming de Alta Performance", desc: "Infraestrutura dedicada para garantir fluidez total, sem travamentos irritantes." }, 
+                { icon: <Icons.Tv className="w-8 h-8" />, title: "Resolução Ultra 4K + 60 Fps", desc: "Veja cada detalhe. Qualidade de imagem cristalina que valoriza sua TV." }, 
+                { icon: <Icons.Layers className="w-8 h-8" />, title: <>Biblioteca<span className="md:hidden"> </span><br className="hidden md:block"/>Universal</>, desc: "Todos os canais, lançamentos, filmes e séries em um só lugar, no melhor entreterimento." }
+            ];
+
+            return (
+                <div className="min-h-screen relative bg-black" id="topo">
+                    <ExitIntentPopup />
+                    <PrivacyOverlay isActive={isPrivacyOpen} onClose={togglePrivacy} />
+                    <TermsOverlay isActive={isTermsOpen} onClose={toggleTerms} />
+                    <CatalogModal isOpen={isCatalogOpen} onClose={toggleCatalog} />
+                    <InstallHelpModal isOpen={isInstallHelpOpen} onClose={toggleInstallHelp} />
+                    <div className="fixed inset-0 w-full h-full overflow-hidden pointer-events-none"><div className="bg-hero"></div><div className="bg-overlay"></div><UpsideDownSpores /></div>
+                    <div className="fixed w-full flex justify-center px-4 z-50 transition-all duration-500 ease-in-out top-6"><nav className="bg-black/40 backdrop-blur-sm border border-white/10 rounded-full px-6 py-3 flex items-center justify-between w-full max-w-5xl shadow-2xl transition-all duration-300 hover:bg-black/60 pointer-events-auto relative"><div className="flex items-center gap-2"><div className="w-8 h-8 rounded-md flex items-center justify-center text-white font-bold text-lg btn-gradient">G</div><span className="text-xl font-semibold tracking-wide">GrowthUP<span className="text-red-500">+</span></span></div><div className="hidden md:flex items-center gap-8 text-sm font-medium text-gray-300">{['Início', 'Diferenciais', 'Planos'].map((item) => (<a key={item} href={`#${item.split(' ')[0].toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "")}`} className="hover:text-white transition-colors">{item}</a>))}</div><div className="relative group flex flex-col items-center justify-center"><a href={getHeaderWhatsAppLink()} target="_blank" className="btn-gradient text-white font-bold text-xs md:text-sm px-6 py-2 rounded-full uppercase tracking-wider relative z-20">Testar agora</a>{activationAnim !== 'gone' && (<div className={`absolute top-full left-1/2 -translate-x-1/2 mt-4 flex items-center justify-center gap-1.5 whitespace-nowrap text-[10px] font-bold tracking-wide uppercase transition-all z-10 ${activationAnim === 'idle' ? 'anim-appear text-green-400 drop-shadow-[0_0_8px_rgba(74,222,128,0.5)]' : ''} ${activationAnim === 'blinking' ? 'anim-blink' : ''} ${activationAnim === 'exploding' ? 'anim-explode-main exploding text-green-400' : ''}`}>{activationAnim === 'exploding' && (<><span className="particle" style={{'--tx': '-60px', '--ty': '-60px'}}></span><span className="particle" style={{'--tx': '60px', '--ty': '-60px'}}></span><span className="particle" style={{'--tx': '-60px', '--ty': '60px'}}></span><span className="particle" style={{'--tx': '60px', '--ty': '60px'}}></span><span className="particle" style={{'--tx': '0px', '--ty': '-90px'}}></span><span className="particle" style={{'--tx': '0px', '--ty': '90px'}}></span><span className="particle" style={{'--tx': '-90px', '--ty': '0px'}}></span><span className="particle" style={{'--tx': '90px', '--ty': '0px'}}></span><span className="particle" style={{'--tx': '-45px', '--ty': '-85px'}}></span><span className="particle" style={{'--tx': '45px', '--ty': '-85px'}}></span><span className="particle" style={{'--tx': '-85px', '--ty': '25px'}}></span><span className="particle" style={{'--tx': '85px', '--ty': '25px'}}></span><span className="particle" style={{'--tx': '-20px', '--ty': '-100px'}}></span><span className="particle" style={{'--tx': '20px', '--ty': '-100px'}}></span></>)}<i className="fa-brands fa-whatsapp text-sm"></i> Ativação imediata</div>)}</div></nav></div>
+                    <section id="inicio" className="relative z-10 min-h-screen flex flex-col justify-center items-center text-center px-6 md:px-12 lg:px-24 pb-12 w-full max-w-7xl mx-auto transition-all duration-500 pt-32"><RevealOnScroll className="max-w-3xl mb-12 mx-auto"><h1 className="text-4xl md:text-6xl font-semibold leading-tight mb-4 drop-shadow-2xl">SUA TV.<br/>SEM LIMITES.</h1><p className="text-gray-300 text-lg md:text-xl font-light leading-relaxed max-w-2xl mx-auto">Desbloqueie o potencial máximo do seu entretenimento.<br />Milhares de conteúdos em 4K.</p></RevealOnScroll><RevealOnScroll delay={200} className="w-full mb-8"><h2 className="text-white text-lg font-semibold mb-6 pl-1 text-center md:text-left">Filmes, Séries, Canais e muito mais</h2><ExpandingPosters /></RevealOnScroll><RevealOnScroll delay={300}><div className="flex flex-col md:flex-row justify-center items-center gap-6 mb-12 w-full"><p className="text-gray-400 text-sm max-w-2xl leading-relaxed text-center md:text-left mx-auto md:mx-0">Com o GrowthUP+ você vai ter acesso a todos canais ao vivo na sua Smart TV, tablet ou celular, incluindo Netflix, Amazon Prime, Viki, HBO Max, Disney+ Paramount.</p></div></RevealOnScroll></section>
+                    <InstallAppSection />
+                    <AppShowcaseSection onOpenInstallHelp={toggleInstallHelp} />
+                    <section id="diferenciais" className="relative z-10 py-12 md:py-20 bg-gradient-to-b from-[#0a0a0a] to-[#050505] scroll-mt-32"><div className="container mx-auto px-6"><div className="grid md:grid-cols-4 gap-8">{benefits.map((item, idx) => (<RevealOnScroll key={idx} delay={idx * 100}><div className="p-6 rounded-2xl bg-white/[0.02] border border-white/5 hover:border-red-900/30 hover:bg-white/[0.05] transition-all group"><div className="mb-4 text-red-600 group-hover:text-white transition-colors group-hover:scale-110 transform duration-300 origin-left">{item.icon}</div><h3 className="text-lg font-bold text-white mb-3">{item.title}</h3><p className="text-sm text-gray-500 leading-relaxed group-hover:text-gray-400">{item.desc}</p></div></RevealOnScroll>))}</div></div></section>
+                    <EconomySection />
+                    <PricingSection getWhatsAppLink={getWhatsAppLink} />
+                    <ScamAlertSection />
+                    <FAQSection onOpenTutorial={handleOpenTutorial} />
+                    {showVideoSection && (<div id="video-tutorial-section" className="animate-reveal"><section className="relative z-10 py-16 md:hidden border-t border-white/5 bg-black"><div className="container mx-auto px-6"><RevealOnScroll className="text-center mb-10"><h2 className="text-3xl font-black text-white uppercase tracking-tighter mb-4 drop-shadow-xl">Experiência <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-red-800">Reels</span></h2><p className="text-gray-400 tracking-widest text-sm uppercase max-w-2xl mx-auto">Veja como funciona na prática.</p></RevealOnScroll><RevealOnScroll delay={200}><div className="relative mx-auto w-full max-w-[280px] h-[580px] bg-black rounded-[20px] shadow-xl overflow-hidden border-2 border-gray-800/50"><div className="w-full h-full relative cursor-pointer" onClick={handleMobileClick}>{mobileVideoStage === 'selecting' && (<DeviceSelector onSelect={handleMobileDeviceSelect} />)}{mobileVideoStage !== 'playing' ? (<><div className="absolute inset-0 bg-gradient-to-b from-slate-900 to-black flex items-center justify-center overflow-hidden"><div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1611162616475-46b635cb6868?auto=format&fit=crop&w=600&q=80')] bg-cover bg-center opacity-50 mix-blend-overlay"></div><div className="text-center relative z-10 p-6"><div className="inline-block p-4 rounded-full bg-white/10 backdrop-blur-md mb-4 border border-white/20 shadow-red-900/30"><Icons.Play size={48} className="text-white fill-white ml-2" /></div><h3 className="text-2xl font-bold tracking-widest text-white uppercase">Assista o Reels</h3><p className="text-red-500 text-sm mt-2 tracking-widest">Clique para Tocar</p></div></div><div className="absolute bottom-0 left-0 w-full h-1/3 bg-gradient-to-t from-black to-transparent"></div></>) : (<iframe width="100%" height="100%" src={`https://www.youtube.com/embed/${mobileVideoId}?autoplay=1`} title="Growth Up Brasil Shorts" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen className="w-full h-full object-cover"></iframe>)}</div></div></RevealOnScroll></div></section><section className="relative z-10 py-20 bg-black hidden md:block border-t border-white/5"><div className="container mx-auto max-w-5xl px-6"><RevealOnScroll className="text-center mb-12"><h2 className="text-xl font-black text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-red-800 tracking-[0.2em] uppercase drop-shadow-[0_0_10px_rgba(220,38,38,0.5)]">EXPERIÊNCIA VÍDEO</h2><p className="text-xs text-gray-400 font-bold tracking-widest mt-1">VEJA COMO FUNCIONA NA PRÁTICA.</p></RevealOnScroll><RevealOnScroll delay={200} className="relative perspective-1000"><div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-red-900/10 blur-[100px] rounded-full"></div><div className="relative z-10 transform hover:scale-[1.01] transition-transform duration-700"><div className="bg-black border-[6px] border-[#222] rounded-xl shadow-2xl relative overflow-hidden aspect-video cursor-pointer" onClick={handleDesktopClick}>{desktopVideoStage === 'selecting' && (<DeviceSelector onSelect={handleDesktopDeviceSelect} />)}{desktopVideoStage !== 'playing' ? (<><div className="absolute inset-0 bg-gradient-to-br from-slate-900 to-black flex items-center justify-center overflow-hidden"><div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1593784991095-a20506948430?auto=format&fit=crop&w=800&q=80')] bg-cover opacity-40 mix-blend-overlay"></div><div className="text-center relative z-10"><div className="inline-block p-4 rounded-full bg-white/10 backdrop-blur-md mb-4 border border-white/20 shadow-red-900/30"><Icons.Play size={48} className="text-white fill-white ml-2" /></div><h3 className="text-2xl font-bold tracking-widest text-white uppercase">Assista o video</h3><p className="text-red-500 text-sm mt-2 tracking-widest">Clique para tocar</p></div></div><div className="absolute top-0 right-0 w-2/3 h-full bg-gradient-to-l from-white/5 to-transparent skew-x-[-20deg]"></div></>) : (<iframe width="100%" height="100%" src={`https://www.youtube.com/embed/${desktopVideoId}?autoplay=1`} title="Growth Up Brasil Shorts" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen className="w-full h-full"></iframe>)}</div><div className="h-4 w-1/3 bg-[#333] mx-auto rounded-b-xl mt-1 shadow-lg"></div></div></RevealOnScroll></div></section></div>)}
+                    <Footer openPrivacy={togglePrivacy} openTerms={toggleTerms} openCatalog={toggleCatalog} />
+                    <a href={getWhatsAppLink()} target="_blank" rel="noopener noreferrer" onClick={trackLead} className="fixed bottom-6 right-6 z-50 group" aria-label="WhatsApp"><div className="absolute inset-0 bg-green-500 blur-lg opacity-40 group-hover:opacity-60 transition-opacity animate-pulse"></div><div className="relative bg-black border border-green-500/50 text-green-400 p-4 rounded-full shadow-2xl hover:scale-110 hover:text-white hover:bg-green-600 transition-all duration-300"><Icons.WhatsApp width={32} height={32} fill="currentColor" /></div></a>
+                </div>
             );
         };
 

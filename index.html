@@ -15,6 +15,9 @@
     <meta name="apple-mobile-web-app-title" content="GrowthUP+">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="theme-color" content="#000000">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.tailwindcss.com https://unpkg.com https://connect.facebook.net https://www.googletagmanager.com https://cdnjs.cloudflare.com; style-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com https://cdnjs.cloudflare.com https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com https://cdnjs.cloudflare.com; img-src 'self' data: https: http:; media-src 'self' https:; frame-src https://www.youtube.com https://www.facebook.com; connect-src 'self' https://connect.facebook.net https://www.facebook.com https://pay.cakto.com.br;">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+    <meta http-equiv="X-Frame-Options" content="SAMEORIGIN">
     
     <script>
     !function(f,b,e,v,n,t,s)
@@ -23,9 +26,9 @@
     n.queue=[];t=b.createElement(e);t.async=!0;
     t.src=v;s=b.getElementsByTagName(e)[0];
     s.parentNode.insertBefore(t,s)}(window, document,'script',
-    'https://connect.facebook.net/en_US/fbevents.js');
+  'https://connect.facebook.net/en_US/fbevents.js');
     
-    // ⚠️ IMPORTANTE: SUBSTITUA 'SEU_PIXEL_ID_AQUI' PELO SEU ID REAL DO META PIXEL
+    // Meta Pixel desabilitado (adicione seu ID quando criar a conta Meta Business)
     // fbq('init', 'SEU_PIXEL_ID_AQUI'); 
     // fbq('track', 'PageView');
     </script>
@@ -977,8 +980,6 @@
         };
 
         const App = () => {
-            const [isScrolled, setIsScrolled] = useState(false);
-            const [activationAnim, setActivationAnim] = useState('idle');
             const [showVideoSection, setShowVideoSection] = useState(false);
             const [mobileVideoStage, setMobileVideoStage] = useState('idle');
             const [mobileVideoId, setMobileVideoId] = useState(null);
@@ -1100,6 +1101,10 @@
 
         const root = ReactDOM.createRoot(document.getElementById('root'));
         root.render(<App />);
+
+        // Proteção básica
+        (function(){const _0x=['contextmenu','addEventListener','Ação\x20bloqueada\x20por\x20segurança'];if(typeof window!==_0x[3]){document[_0x[1]](_0x[0],(e)=>{if(e.target.tagName!=='INPUT'&&e.target.tagName!=='TEXTAREA'){e.preventDefault();}},false);}})();
     </script>
 </body>
 </html>
+

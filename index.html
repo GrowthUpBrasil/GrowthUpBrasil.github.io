@@ -356,22 +356,17 @@
             const [isVisible, setIsVisible] = useState(false);
 
             useEffect(() => {
-                // PRÉ-CARREGAMENTO DA IMAGEM DO POPUP
-                const preloadImage = new Image();
-                preloadImage.src = "https://i.imgur.com/W49BBW8.jpeg";
-
-                // Se já foi exibido nesta sessão, não faz nada
-                try { if (sessionStorage.getItem('exit_popup_shown')) return; } catch (e) { return; }
+                let triggered = false;
 
                 const showPopup = () => {
-                    try { if (sessionStorage.getItem('exit_popup_shown')) return; } catch (e) {}
+                    if (triggered) return;
+                    triggered = true;
                     setIsVisible(true);
-                    try { sessionStorage.setItem('exit_popup_shown', 'true'); } catch (e) {}
                     document.body.style.overflow = 'hidden'; // Bloqueia scroll
                 };
 
                 const handleMouseLeave = (e) => {
-                    if (e.clientY <= 0) showPopup();
+                    if (e.clientY <= 20) showPopup();
                 };
 
                 const handleVisibilityChange = () => {
@@ -394,10 +389,16 @@
                 
                 initHistory();
 
+                // Fallback timer: shows popup after 45 seconds if no other trigger was fired
+                const fallbackTimer = setTimeout(() => {
+                    showPopup();
+                }, 45000);
+
                 return () => {
                     document.removeEventListener('mouseleave', handleMouseLeave);
                     document.removeEventListener('visibilitychange', handleVisibilityChange);
                     window.removeEventListener('popstate', handlePopState);
+                    clearTimeout(fallbackTimer);
                 };
             }, []);
 
@@ -496,7 +497,7 @@
                 const initDrag = (x, y, target) => { isDown = true; hasDragged = false; startX = x; startY = y; mainScrollStart = mainScroller ? mainScroller.scrollTop : 0; if (target.classList.contains('horizontal-scroll')) { targetSlider = target; horizontalScrollStart.set(target, target.scrollLeft); } else { targetSlider = null; } };
                 const endDrag = () => { isDown = false; if (mainScroller) mainScroller.classList.remove('scroll-active'); targetSlider = null; };
                 const performMove = (x, y, e) => { if (!isDown) return; const walkY = (y - startY) * 1.5; const walkX = (x - startX) * 1.5; if (Math.abs(x - startX) > 5 || Math.abs(y - startY) > 5) { hasDragged = true; if (mainScroller) mainScroller.classList.add('scroll-active'); } if (Math.abs(walkY) > Math.abs(walkX)) { if (mainScroller) mainScroller.scrollTop = mainScrollStart - walkY; } else { if (targetSlider) { const startLeft = horizontalScrollStart.get(targetSlider); targetSlider.scrollLeft = startLeft - walkX; } } };
-                const handleMouseDown = (e) => { e.stopPropagation(); initDrag(e.pageX, e.pageY, e.currentTarget); };
+                const handleMouseDown = (e) => { e.stopPropagation(); initDrag(e.pageX, e.currentTarget); };
                 const handleTouchStart = (e) => { e.stopPropagation(); const touch = e.touches[0]; initDrag(touch.pageX, touch.pageY, e.currentTarget); };
                 const handleMouseMove = (e) => { if (!isDown) return; e.preventDefault(); performMove(e.pageX, e.pageY, e); };
                 const handleTouchMove = (e) => { if (!isDown) return; if (e.cancelable) e.preventDefault(); const touch = e.touches[0]; performMove(touch.pageX, touch.pageY, e); };
@@ -654,7 +655,7 @@
                 const initDrag = (x, y, target) => { isDown = true; hasDragged = false; startX = x; startY = y; mainScrollStart = mainScroller ? mainScroller.scrollTop : 0; if (target.classList.contains('horizontal-scroll')) { targetSlider = target; horizontalScrollStart.set(target, target.scrollLeft); } else { targetSlider = null; } };
                 const endDrag = () => { isDown = false; if (mainScroller) mainScroller.classList.remove('scroll-active'); targetSlider = null; };
                 const performMove = (x, y, e) => { if (!isDown) return; const walkY = (y - startY) * 1.5; const walkX = (x - startX) * 1.5; if (Math.abs(x - startX) > 5 || Math.abs(y - startY) > 5) { hasDragged = true; if (mainScroller) mainScroller.classList.add('scroll-active'); } if (Math.abs(walkY) > Math.abs(walkX)) { if (mainScroller) mainScroller.scrollTop = mainScrollStart - walkY; } else { if (targetSlider) { const startLeft = horizontalScrollStart.get(targetSlider); targetSlider.scrollLeft = startLeft - walkX; } } };
-                const handleMouseDown = (e) => { e.stopPropagation(); initDrag(e.pageX, e.pageY, e.currentTarget); };
+                const handleMouseDown = (e) => { e.stopPropagation(); initDrag(e.pageX, e.currentTarget); };
                 const handleTouchStart = (e) => { e.stopPropagation(); const touch = e.touches[0]; initDrag(touch.pageX, touch.pageY, e.currentTarget); };
                 const handleMouseMove = (e) => { if (!isDown) return; e.preventDefault(); performMove(e.pageX, e.pageY, e); };
                 const handleTouchMove = (e) => { if (!isDown) return; if (e.cancelable) e.preventDefault(); const touch = e.touches[0]; performMove(touch.pageX, touch.pageY, e); };

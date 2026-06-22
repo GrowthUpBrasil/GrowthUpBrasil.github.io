@@ -49,16 +49,25 @@
     <noscript><img height="1" width="1" style="display:none"
     src="https://www.facebook.com/tr?id=SEU_PIXEL_ID_AQUI&ev=PageView&noscript=1"
     /></noscript>
+    
     <script src="https://cdn.tailwindcss.com"></script>
-    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Great+Vibes&family=Oswald:wght@500;700&family=Poppins:wght@700;800;900&family=Pacifico&display=swap" rel="stylesheet">
     
     <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
     <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-    
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <!-- Configuração customizada do Babel para evitar injeção de imports automáticos no navegador -->
+    <script>
+        if (window.Babel) {
+            window.Babel.registerPreset("react-classic", {
+                presets: [
+                    [window.Babel.availablePresets["react"], { runtime: "classic" }]
+                ]
+            });
+        }
+    </script>
 
     <style>
         :root { --ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1); }
@@ -300,10 +309,7 @@
 <body>
     <div id="root"></div>
 
-    <script type="text/babel">
-        /** @jsxRuntime classic */
-        /** @jsx React.createElement */
-        /** @jsxFrag React.Fragment */
+    <script type="text/babel" data-presets="env,react-classic">
 
         const { useState, useEffect, useRef, useMemo } = React;
 
@@ -847,11 +853,11 @@
                 { name: "Basic", type: "Mensal", tag: "Começar", price: 23.90, screens: "1 Tela", months: 1, discount: null, highlight: false },
                 { name: "Basic +", type: "Mensal", tag: "Compartilhar", price: 29.80, screens: "2 Telas", months: 1, discount: null, highlight: false },
                 { name: "Flex", type: "3 Meses", tag: "Conveniência", price: 59.80, screens: "1 Tela", months: 3, discount: null, highlight: false },
-                { name: "Flex +", type: "3 Meses", tag: "Flexibilidade", price: 74.80, screens: "2 Telas", months: 3, discount: null, highlight: false },
-                { name: "Pro", type: "6 Meses", tag: "Favorito", price: 109.80, screens: "1 Tela", months: 6, discount: "Mais Escolhido", highlight: true },
-                { name: "Pro +", type: "6 Meses", tag: "Equilíbrio", price: 129.80, screens: "2 Telas", months: 6, discount: null, highlight: false },
-                { name: "Premium", type: "12 Meses", tag: "Economia", price: 199.80, screens: "1 Tela", months: 12, discount: "Maior Economia", highlight: true },
-                { name: "Premium +", type: "12 Meses", tag: "Completo", price: 229.80, screens: "2 Telas", months: 12, discount: null, highlight: false }
+                { name: "Flex +", type: "3 Meses", tag: "Flexibilidade", price: 74.80, screens: "2 Telas", months: 3, discount: "Custo-Benefício", highlight: true },
+                { name: "Pro", type: "6 Meses", tag: "Favorito", price: 109.80, screens: "1 Tela", months: 6, discount: null, highlight: false },
+                { name: "Pro +", type: "6 Meses", tag: "Equilíbrio", price: 129.80, screens: "2 Telas", months: 6, discount: "Mais Escolhido", highlight: true },
+                { name: "Premium", type: "12 Meses", tag: "Economia", price: 199.80, screens: "1 Tela", months: 12, discount: null, highlight: false },
+                { name: "Premium +", type: "12 Meses", tag: "Completo", price: 229.80, screens: "2 Telas", months: 12, discount: "Maior Economia", highlight: true }
             ];
 
             return (

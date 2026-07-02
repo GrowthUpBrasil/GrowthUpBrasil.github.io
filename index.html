@@ -67,7 +67,8 @@
 
     <style>
         :root { --ease-out-expo: cubic-bezier(0.19, 1, 0.22, 1); }
-        html { scroll-behavior: smooth; }
+        /* Alterado de smooth para auto para permitir que o JS controle 100% da animação */
+        html { scroll-behavior: auto; }
         * { -webkit-tap-highlight-color: transparent; }
         body { 
             background-color: #000; 
@@ -195,7 +196,7 @@
         .search-tooltip::before { right: 68px; }
         .user-icon-wrapper:hover .user-tooltip, .user-icon-wrapper.active .user-tooltip, .search-icon-wrapper:hover .search-tooltip, .search-icon-wrapper.active .search-tooltip { opacity: 1; visibility: visible; transform: translateY(0) scale(1); }
         
-        .app-ui-scroll-content { flex: 1; overflow-y: auto; padding-bottom: 20px; scrollbar-width: none; }
+        .app-ui-scroll-content { flex: 1; overflow-y: auto; padding-bottom: 20px; scrollbar-width: none; touch-action: pan-y; }
         .app-ui-scroll-content::-webkit-scrollbar { display: none; }
         .app-hero-banner { height: 280px; position: relative; background: url('https://registrodemarca.arenamarcas.com.br/wp-content/uploads/2020/05/Hist%C3%B3ria-da-Champions-League.jpg') center/cover; display: flex; align-items: flex-end; overflow: hidden; }
         .hero-gif-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; opacity: 0; transition: opacity 0.8s ease-in-out; pointer-events: none; }
@@ -207,7 +208,7 @@
         .hero-title { font-size: 22px; font-weight: 800; line-height: 1.1; margin-bottom: 8px; text-shadow: 0 2px 10px rgba(0,0,0,0.8); }
         .hero-meta { font-size: 11px; color: #ddd; display: flex; gap: 10px; }
         .app-section-title { padding: 0 20px; margin: 25px 0 12px 0; font-size: 13px; font-weight: 700; color: #fff; display: flex; justify-content: space-between; align-items: center; }
-        .horizontal-scroll { display: flex; gap: 12px; padding: 0 20px; overflow-x: auto; scrollbar-width: none; user-select: none; cursor: grab; }
+        .horizontal-scroll { display: flex; gap: 12px; padding: 0 20px; overflow-x: auto; scrollbar-width: none; user-select: none; touch-action: pan-x; cursor: grab; }
         .horizontal-scroll.scroll-active { cursor: grabbing !important; }
         .horizontal-scroll::-webkit-scrollbar { display: none; }
         .movie-card-app { min-width: 90px; height: 160px; display: flex; flex-direction: column; gap: 6px; text-decoration: none; color: white; -webkit-user-drag: none; cursor: pointer; }
@@ -906,7 +907,7 @@
                         <div 
                             ref={carouselRef}
                             onScroll={handleScroll}
-                            className="flex overflow-x-auto snap-x snap-mandatory md:grid md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 w-full max-w-[1400px] mx-auto items-stretch pb-10 px-[14vw] sm:px-[20vw] md:px-0 scrollbar-hide"
+                            className="flex overflow-x-auto snap-x snap-mandatory touch-pan-x md:grid md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 w-full max-w-[1400px] mx-auto items-stretch pb-10 px-[14vw] sm:px-[20vw] md:px-0 scrollbar-hide"
                         >
                             {plans.map((plan, idx) => (
                                 <div 
@@ -1148,30 +1149,49 @@
             const handleDesktopClick = () => { if (desktopVideoStage === 'idle') setDesktopVideoStage('selecting'); };
             const handleDesktopDeviceSelect = (device) => { setDesktopVideoId(device.videoId); setDesktopVideoStage('playing'); };
 
-            // Efeito Gostosinho de Navegação
+            // Efeito Gostosinho de Navegação - Animação Matemática Premium
             const handleSmoothScroll = (e, targetId) => {
                 e.preventDefault();
                 const targetElement = document.getElementById(targetId);
                 if (targetElement) {
                     const headerOffset = 80;
                     const elementPosition = targetElement.getBoundingClientRect().top;
-                    const offsetPosition = elementPosition + window.scrollY - headerOffset;
+                    const startPosition = window.pageYOffset;
+                    const targetPosition = startPosition + elementPosition - headerOffset;
                     
-                    window.scrollTo({
-                        top: offsetPosition,
-                        behavior: "smooth"
-                    });
-                    window.history.pushState(null, null, `#${targetId}`);
+                    let startTime = null;
+                    const duration = 1000; // Duração cravada em 1 segundo (1000ms)
+
+                    const animation = (currentTime) => {
+                        if (startTime === null) startTime = currentTime;
+                        const timeElapsed = currentTime - startTime;
+                        const progress = Math.min(timeElapsed / duration, 1);
+                        
+                        // Curva de aceleração EaseInOutQuart
+                        const ease = progress < 0.5 
+                            ? 8 * progress * progress * progress * progress 
+                            : 1 - Math.pow(-2 * progress + 2, 4) / 2;
+
+                        window.scrollTo(0, startPosition + (targetPosition - startPosition) * ease);
+
+                        if (timeElapsed < duration) {
+                            requestAnimationFrame(animation);
+                        } else {
+                            window.history.pushState(null, null, `#${targetId}`);
+                        }
+                    };
+
+                    requestAnimationFrame(animation);
                 }
             };
 
-            // Lógica de Blindagem do Site (Anticópia) - Movida e corrigida
+            // Lógica de Blindagem do Site (Anticópia)
             useEffect(() => {
                 const handleContextMenu = (e) => e.preventDefault();
                 document.addEventListener('contextmenu', handleContextMenu);
                 
                 const handleDragStart = (e) => {
-                    if (e.target.tagName && e.target.tagName.toLowerCase() === 'img') {
+                    if (e.target && e.target.tagName && e.target.tagName.toLowerCase() === 'img') {
                         e.preventDefault();
                     }
                 };
